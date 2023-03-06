@@ -106,7 +106,7 @@ include("../db/connect.php");
                     break;
 
                 default:
-                include_once("index.php");
+                include_once("../deposito/deposito.php");
                     break;
             }
         ?>

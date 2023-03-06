@@ -38,17 +38,17 @@
                             <?php
                                 $d1 = new DateTime('now');
                                 $d2 = new DateTime($dados["validade"]);
-                                $intervalo = $d1->diff( $d2 );
+                                $intervalo = $d2->diff( $d1 );
 
                                 $vencimentoDIAS = $intervalo->d;
                                 $vencimentoMES = $intervalo->m;
                             
-                                if ($vencimentoMES <= 1) {
-                                    echo "vencimento em " . $vencimentoDIAS;
+                                if (($vencimentoMES <= 1) and ($vencimentoDIAS > 0)) {
+                                    echo "o produto está vencido em " . $vencimentoDIAS . "dia(s)";
                                 }else{
-                                    echo "Diferença de " . $vencimentoDIAS . " dias ";
-                                    echo "e " . $vencimentoMES . " meses ";
-                                    echo "e " . $intervalo->y . " anos.";
+                                    echo "Diferença de " . $vencimentoDIAS . " dia(s) ";
+                                    echo "e " . $vencimentoMES . " mese(s) ";
+                                    echo "e " . $intervalo->y . " ano(s).";
                                 }
                             ?>
                         </td>
