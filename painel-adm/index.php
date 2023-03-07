@@ -75,7 +75,7 @@ include("../db/connect.php");
     </nav>
     <main>
         <?php
-            $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"estoque";
+            $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"deposito";
             switch ($menuop) {
                 case 'deposito':
                     include_once("deposito/deposito.php");
