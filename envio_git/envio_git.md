@@ -1,4 +1,4 @@
-#enviando arquivos para o git
+### Enviando arquivos para o git para um novo diretório
 
 git init
 
