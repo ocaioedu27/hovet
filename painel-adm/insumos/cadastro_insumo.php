@@ -9,7 +9,7 @@
                 <input type="text" class="form-control" name="nomeInsumo">
             </div>
             <div class="form-group">
-                <label for="unidadeInsumo">Tipo de Insumo</label>
+                <label for="unidadeInsumo">Unidade</label>
                 <select class="form-control-sm" name="unidadeInsumo">
 					<option>Caixa</option>
 					<option>Pacote</option>
