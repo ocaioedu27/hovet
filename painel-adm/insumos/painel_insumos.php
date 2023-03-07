@@ -4,12 +4,12 @@
             <h3>Todos os Insumos</h3>
             <a href="index.php?menuop=cadastro_insumo">Cadastrar</a>
             <a href="#">Excluir</a>
-            <a href="#">Modificar dados</a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
                 <thead>
                     <tr>
+                        <th>Selecionar</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Unidade</th>
@@ -34,6 +34,9 @@
                         
                     ?>
                     <tr>
+                        <td>
+                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>">Editar</a>
+                        </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["unidade"]?></td>

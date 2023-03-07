@@ -10,6 +10,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
+                        <th>Editar</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>
@@ -25,6 +26,9 @@
                         
                     ?>
                     <tr>
+                        <td>
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">Editar Dados</a>
+                        </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["mail"]?></td>

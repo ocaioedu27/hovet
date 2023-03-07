@@ -92,6 +92,14 @@ include("../db/connect.php");
                 case 'inserir_usuario':
                     include_once("usuarios/inserir_usuario.php");
                     break;
+
+                case 'editar_usuario':
+                    include_once("usuarios/editar_usuario.php");
+                    break;
+    
+                case 'atualizar_usuario':
+                    include_once("usuarios/atualizar_usuario.php");
+                    break;
     
                 case 'insumos':
                     include_once("insumos/painel_insumos.php");
@@ -103,6 +111,14 @@ include("../db/connect.php");
                 
                 case 'inserir_insumo':
                     include_once("insumos/inserir_insumo.php");
+                    break;
+                    
+                case 'editar_insumo':
+                    include_once("insumos/editar_insumo.php");
+                    break;
+    
+                case 'atualizar_insumo':
+                    include_once("insumos/atualizar_insumo.php");
                     break;
 
                 default:
