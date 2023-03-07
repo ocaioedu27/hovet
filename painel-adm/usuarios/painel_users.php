@@ -4,7 +4,6 @@
             <h3>Todos os usuários</h3>
             <a href="index.php?menuop=cadastro_usuario">Cadastrar</a>
             <a href="#">Excluir</a>
-            <a href="#">Modificar dados</a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
