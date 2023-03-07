@@ -18,7 +18,17 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sql = "SELECT * FROM insumos";
+                        $sql = "SELECT 
+                        id,
+                        nome,
+                        unidade,
+                        CASE
+                            WHEN insumo_tipo='1' THEN 'Medicamento'
+                            WHEN insumo_tipo='2' THEN 'Materiais de procedimentos médicos'
+                        ELSE
+                            'NÃO ESPECIFICADO'
+                        END AS insumo_tipo
+                        FROM insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
@@ -27,15 +37,7 @@
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["unidade"]?></td>
-                        <td>
-                            <?php
-                            if($dados["insumo_tipo"] == 1 ){
-                                echo "Medicamento";
-                            }else{
-                                echo "Materiais de procedimentos médicos";
-                            }
-                            ?>
-                        </td>
+                        <td><?=$dados["insumo_tipo"]?></td>
                     </tr>
                     <?php
                         }
