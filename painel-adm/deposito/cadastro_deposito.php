@@ -39,7 +39,7 @@ $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . m
                     $result_tipo = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     while($tipo = mysqli_fetch_assoc($result_tipo)){
                     ?>
-					<option value="<?=$tipo["id"]?>"><?=$tipo["tipo"]?></option>
+					<option ><?=$tipo["id"]?></option>
 
                     <?php
                         }

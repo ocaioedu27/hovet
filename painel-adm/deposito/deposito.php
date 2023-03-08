@@ -33,38 +33,18 @@
                             <a href="">Excluir</a>
                         </td>
                         <td><?=$dados["id"]?></td>
-
-                        <!--pega o nome do produto a partir do id cadastrado-->
-                        <?php
-                            $id_produto_nome = $dados["nome_produtoID"];
-                            $sql_select = "SELECT * FROM insumos where id=$id_produto_nome";
-                            $result = mysqli_query($conexao,$sql_select) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                            while($nome_produto = mysqli_fetch_assoc($result)){
-                                
-                        ?>
-                        <td><?=$nome_produto["nome"]?></td>
-                        <?php
-                            }
-                        ?>
-
+                        <td><?=$dados["nome_insumoNome"]?></td>
                         <td><?=$dados["quantidade"]?></td>
 
                         <!--pega o nome do produto a partir do id cadastrado-->
                         <?php
-                            $id_produto_tipo = $dados["tipo_produtoID"];
-                            $sql_select = "SELECT * FROM insumos where id=$id_produto_tipo";
+                            $id_produto_tipo = $dados["tipo_insumoTipo"];
+                            $sql_select = "SELECT tipo FROM tipos_insumos where id=$id_produto_tipo";
                             $result = mysqli_query($conexao,$sql_select) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                             while($tipo_produto = mysqli_fetch_assoc($result)){
                                 
                         ?>
-                        <td>
-                            <?php
-                            if($tipo_produto["insumo_tipo"] == 1 ){
-                                echo "Medicamento";
-                            }else{
-                                echo "Materiais de procedimentos médicos";
-                            }
-                            ?>
+                        <td><?=$tipo_produto["tipo"]?>
                         </td>
                         <?php
                             }
