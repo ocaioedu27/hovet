@@ -1,3 +1,11 @@
+<?php
+//$idInsumo = $_GET["idInsumo"];
+
+$sql = "SELECT * FROM (SELECT nome,insumo_tipo FROM insumos) ims";
+$result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+//$dados = mysqli_fetch_assoc($result);
+?>
+
 <div class="container">
     <div class="cadastro_body">
         <form class="form_cadastro" action="index.php?menuop=inserir_deposito" method="post">
@@ -6,20 +14,47 @@
             </div>
             <div class="form-group">
                 <label for="nomeInsumoDeposito">Nome</label>
-                <input type="text" class="form-control" name="nomeInsumoDeposito" required>
+                <select class="form-control-sm" name="nomeInsumoDeposito" required>
+
+                    <?php
+                    while($dados = mysqli_fetch_assoc($result)){
+                    ?>
+					<option><?=$dados["nome"]?></option>
+
+                    <?php
+                        }
+                    ?>
+				</select>
             </div>
             <div class="form-group">
                 <label for="quantidadeInsumoDeposito">Quantidade</label>
                 <input type="text" class="form-control" name="quantidadeInsumoDeposito" required>
             </div>
             <div class="form-group">
-                <label for="tipoInsumo">Tipo de Insumo</label>
-                <select class="form-control-sm" name="tipoInsumo" required>
-					<option>1</option>
-					<option>2</option>
+                <label for="tipoInsumoDeposito">Tipo de Insumo</label>
+                <select class="form-control-sm" name="tipoInsumoDeposito" required>
+
+                    <?php
+                    $sql = "SELECT * FROM (SELECT * FROM tipos_insumos) tp";
+                    $result_tipo = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                    while($tipo = mysqli_fetch_assoc($result_tipo)){
+                    ?>
+					<option value="<?=$tipo["id"]?>"><?=$tipo["tipo"]?></option>
+
+                    <?php
+                        }
+                    ?>
 				</select>
                 <li>1 - "Medicamento"</li>
                 <li>2 - "Materiais de procedimentos médicos"</li>
+            </div>
+            <div class="form-group">
+                <label for="setorInsumoDeposito">Setor</label>
+                <input type="text" class="form-control" name="setorInsumoDeposito" required>
+            </div>
+            <div class="form-group">
+                <label for="validadeInsumoDeposito">Validade</label>
+                <input type="date" class="form-control" name="validadeInsumoDeposito" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDeposito">

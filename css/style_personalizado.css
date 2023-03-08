@@ -2,7 +2,7 @@ form.form_cadastro{
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    max-width: 25%;
+    max-width: 22%;
     gap: 10px;
 }
 
