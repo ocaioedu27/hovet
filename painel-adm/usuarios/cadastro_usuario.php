@@ -6,19 +6,19 @@
             </div>
             <div class="form-group">
                 <label for="nomeUsuario">Nome Completo</label>
-                <input type="text" class="form-control" name="nomeUsuario">
+                <input type="text" class="form-control" name="nomeUsuario" required>
             </div>
             <div class="form-group">
                 <label for="mailUsuario">E-mail</label>
-                <input type="email" class="form-control" name="mailUsuario">
+                <input type="email" class="form-control" name="mailUsuario" required>
             </div>
             <div class="form-group">
                 <label for="tipoUsuario">Tipo de usuário</label>
-                <input type="text" class="form-control" name="tipoUsuario">
+                <input type="text" class="form-control" name="tipoUsuario" required>
             </div>
             <div class="form-group">
                 <label for="cpfUsuario">CPF</label>
-                <input type="text" class="form-control" name="cpfUsuario">
+                <input type="text" class="form-control" name="cpfUsuario" required>
             </div>
             <!--<div class="form-group">
                     <label for="senhaUsuario">Senha</label>

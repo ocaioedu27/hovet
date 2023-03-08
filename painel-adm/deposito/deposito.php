@@ -3,7 +3,7 @@
     <div class="container_painel">
         <div class="menu_user">
             <h3>Estoque de Insumos</h3>
-            <a href="index.php?menuop=inserir_insumo_deposito">Inserir</a>
+            <a href="index.php?menuop=cadastro_deposito">Inserir</a>
             <a href="#">Retirar</a>
             <a href="#">Modificar</a>
         </div>

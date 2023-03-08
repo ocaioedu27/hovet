@@ -64,7 +64,7 @@ include("../db/connect.php");
                 <li class="float-right nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-expanded="false">
-                        Administrador - Líbia Fonseca
+                        Administrador - id_usuário
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="../index.php">Sair</a>
@@ -79,6 +79,22 @@ include("../db/connect.php");
             switch ($menuop) {
                 case 'deposito':
                     include_once("deposito/deposito.php");
+                    break;
+
+                case 'cadastro_deposito':
+                    include_once("deposito/cadastro_deposito.php");
+                    break;
+
+                case 'inserir_deposito':
+                    include_once("deposito/inserir_deposito.php");
+                    break;
+
+                case 'editar_deposito':
+                    include_once("deposito/editar_deposito.php");
+                    break;
+    
+                case 'atualizar_deposito':
+                    include_once("deposito/atualizar_deposito.php");
                     break;
                 
                 case 'usuarios':

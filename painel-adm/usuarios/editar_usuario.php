@@ -14,23 +14,23 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             <div class="form-group">
                 <label for="idUsuario">ID</label>
-                <input type="text" class="form-control" name="idUsuario" value="<?=$dados["id"]?>">
+                <input type="text" class="form-control" name="idUsuario" value="<?=$dados["id"]?>" required>
             </div>
             <div class="form-group">
                 <label for="nomeUsuario">Nome</label>
-                <input type="text" class="form-control" name="nomeUsuario" value="<?=$dados["nome"]?>">
+                <input type="text" class="form-control" name="nomeUsuario" value="<?=$dados["nome"]?>" required>
             </div>
             <div class="form-group">
                 <label for="mailUsuario">E-mail</label>
-                <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["mail"]?>">
+                <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["mail"]?>" required>
             </div>
             <div class="form-group">
                 <label for="tipoUsuario">Tipo de usuário</label>
-                <input type="text" class="form-control" name="tipoUsuario" value="<?=$dados["tipo_usuario"]?>">
+                <input type="text" class="form-control" name="tipoUsuario" value="<?=$dados["tipo_usuario"]?>" required>
             </div>
             <div class="form-group">
                 <label for="cpfUsuario">CPF</label>
-                <input type="text" class="form-control" name="cpfUsuario" value="<?=$dados["cpf"]?>">
+                <input type="text" class="form-control" name="cpfUsuario" value="<?=$dados["cpf"]?>" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Atualizar" name="btnAtualizarUsuario">
