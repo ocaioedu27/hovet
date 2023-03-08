@@ -2,8 +2,12 @@ form.form_cadastro{
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    max-width: 50%;
+    max-width: 25%;
     gap: 10px;
+}
+
+.form-group{
+    margin-bottom: 0,5rem;
 }
 
 .menu_user{
@@ -112,4 +116,10 @@ main{
     color: red;
     font-size: small;
     list-style: none;
+}
+
+td.operacoes > a {
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 4px;
 }

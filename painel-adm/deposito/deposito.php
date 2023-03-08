@@ -5,12 +5,12 @@
             <h3>Estoque de Insumos</h3>
             <a href="index.php?menuop=cadastro_deposito">Inserir</a>
             <a href="#">Retirar</a>
-            <a href="#">Modificar</a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
                 <thead>
                     <tr>
+                        <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
@@ -28,6 +28,10 @@
                         
                     ?>
                     <tr>
+                        <td class="operacoes">
+                            <a href="">Editar</a>
+                            <a href="">Excluir</a>
+                        </td>
                         <td><?=$dados["id"]?></td>
 
                         <!--pega o nome do produto a partir do id cadastrado-->

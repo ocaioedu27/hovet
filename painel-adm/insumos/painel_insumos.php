@@ -3,13 +3,12 @@
         <div class="menu_user">
             <h3>Todos os Insumos</h3>
             <a href="index.php?menuop=cadastro_insumo">Cadastrar</a>
-            <a href="#">Excluir</a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Selecionar</th>
+                        <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Unidade</th>
@@ -34,8 +33,9 @@
                         
                     ?>
                     <tr>
-                        <td>
+                        <td class="operacoes">
                             <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>">Editar</a>
+                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>">Excluir</a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>

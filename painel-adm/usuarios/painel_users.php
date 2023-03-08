@@ -3,7 +3,6 @@
         <div class="menu_user">
             <h3>Todos os usuários</h3>
             <a href="index.php?menuop=cadastro_usuario">Cadastrar</a>
-            <a href="#">Excluir</a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
@@ -25,8 +24,9 @@
                         
                     ?>
                     <tr>
-                        <td>
-                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">Editar Dados</a>
+                        <td class="operacoes">
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">Editar</a>
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">Excluir</a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>

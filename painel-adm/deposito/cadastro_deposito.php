@@ -1,8 +1,8 @@
 <div class="container">
     <div class="cadastro_body">
-        <form class="form_cad astro" action="index.php?menuop=inserir_deposito" method="post">
+        <form class="form_cadastro" action="index.php?menuop=inserir_deposito" method="post">
             <div class="form-group">
-                <h3>Cadastro de Insumo no Depósito</h3>
+                <h4>Cadastro de Insumo no Depósito</h4>
             </div>
             <div class="form-group">
                 <label for="nomeInsumoDeposito">Nome</label>
