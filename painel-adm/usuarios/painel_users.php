@@ -10,7 +10,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Editar</th>
+                        <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>

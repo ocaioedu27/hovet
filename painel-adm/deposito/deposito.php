@@ -58,8 +58,7 @@
                         <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["setor"]?></td>
                         <td><?=$dados["validade"]?></td>
-                        <td><?=$dados["diasParaVencimento"]?>
-                        </td>
+                        <td><?=$dados["diasParaVencimento"]?></td>
                     </tr>
                     <?php
                         }

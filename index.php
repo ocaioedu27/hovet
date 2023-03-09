@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    <section class="container">
+    <div class="wrapper">
         <div class="login-form">
             <form action="" method="post">
                 <div class="logo">
@@ -36,6 +36,9 @@
 
                 <div class="form-group">
                     <input class="form-control" type="password" name="senha" placeholder="Insira seu senha..." required>
+                    <div class="recuperar_senha">
+                        <a href="#" class="float-right">Recuperar Senha</a>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -45,12 +48,11 @@
                 <div class="clearfix">
                     <label class="float-left checkbox-inline" style="display: flex; align-items: center">
                         <input type="checkbox">Lembrar-me</label>
-                    <a href="#" class="float-right">Recuperar Senha</a>
                 </div>
 
             </form>
         </div>
-    </section>
+    </div>
 </body>
 
 </html>
