@@ -56,9 +56,15 @@ include("../db/connect.php");
             </a>
             <div class="col"></div>
             <div class="menu_op_adm">
-                <a href="index.php?menuop=deposito">Deposito</a>
-                <a href="index.php?menuop=usuarios">Usuarios</a>
-                <a href="index.php?menuop=insumos">Insumos</a>
+                <a href="index.php?menuop=deposito">
+                    <button class="btn">Deposito</button>
+                </a>
+                <a href="index.php?menuop=usuarios">
+                    <button class="btn">Usuários</button>
+                </a>
+                <a href="index.php?menuop=insumos">
+                    <button class="btn">Insumos</button>
+                </a>
             </div>
             <div>
                 <li class="float-right nav-item dropdown">

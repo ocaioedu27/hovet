@@ -2,7 +2,9 @@
     <div class="container_painel">
         <div class="menu_user">
             <h3>Todos os usuários</h3>
-            <a href="index.php?menuop=cadastro_usuario">Cadastrar</a>
+            <a href="index.php?menuop=cadastro_usuario">
+                <button class="btn">Cadastrar</button>
+            </a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
@@ -25,8 +27,12 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">Editar</a>
-                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">Excluir</a>
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">
+                                <button class="btn">Editar</button>
+                            </a>
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">
+                                <button class="btn">Excluir</button>
+                            </a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>

@@ -3,8 +3,12 @@
     <div class="container_painel">
         <div class="menu_user">
             <h3>Estoque de Insumos</h3>
-            <a href="index.php?menuop=cadastro_deposito">Inserir</a>
-            <a href="#">Retirar</a>
+            <a href="index.php?menuop=cadastro_deposito">
+                <button class="btn">Inserir</button>
+            </a>
+            <a href="#">
+                <button class="btn">Retirar</button>
+            </a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
@@ -29,8 +33,12 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <a href="">Editar</a>
-                            <a href="">Excluir</a>
+                            <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>">
+                                <button class="btn">Editar</button>
+                            </a>
+                            <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>">
+                                <button class="btn">Excluir</button>
+                            </a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome_insumoNome"]?></td>

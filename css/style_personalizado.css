@@ -17,12 +17,8 @@ form.form_cadastro{
     margin-bottom: 5px;
 }
 
-.menu_user > a{
-    border: 1px solid black;
-    background-color: white;
-    border-radius: 5px;
+.menu_user > button{
     color: black;
-    padding: 3px;
 }
 
 .menu_user > h3{
@@ -62,7 +58,7 @@ form.form_cadastro{
   
 #tabela_listar td, #tabela_listar th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 2px;
     border-radius: 4px;
 }
   
@@ -95,13 +91,6 @@ form.form_cadastro{
     margin-bottom: 0;
 }
 
-.menu_op_adm > a {
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 20px;
-    background-color: #ffffff;
-}
-
 main{
     padding: 10px;
 }
@@ -118,8 +107,40 @@ main{
     list-style: none;
 }
 
-td.operacoes > a {
-    border: 1px solid black;
-    padding: 3px;
-    border-radius: 4px;
+button.btn{
+    background: none;
+    border: 2px solid #000;
+    font-family: "montserrat", sans-serif;
+    padding: 1px 8px;
+    min-width: 20px;
+    margin: 4px;
+    cursor: pointer;
+    transition: color 0.4s linear;
+    position: relative;
+}
+
+button.btn:hover{
+    color: #fff;
+}
+
+button.btn::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: -1;
+    transition: transform 0.5s;
+    transform-origin: 0 0;
+    transition-timing-function: cubic-bezier(0.5,1.6,0.4,0.7);
+}
+
+button.btn::before{
+    transform: scaleX(0);    
+}
+
+button.btn:hover::before{
+    transform: scaleX(1);
 }

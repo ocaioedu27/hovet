@@ -2,12 +2,14 @@
     <div class="container_painel">
         <div class="menu_user">
             <h3>Todos os Insumos</h3>
-            <a href="index.php?menuop=cadastro_insumo">Cadastrar</a>
+            <a href="index.php?menuop=cadastro_insumo">
+                <button class="btn">Cadastrar</button>
+            </a>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
                 <thead>
-                    <tr>
+                    <tr class="tabela_dados">
                         <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
@@ -32,10 +34,14 @@
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
-                    <tr>
+                    <tr class="tabela_dados">
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>">Editar</a>
-                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>">Excluir</a>
+                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>">
+                                <button class="btn">Editar</button>
+                            </a>
+                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>">
+                                <button class="btn">Excluir</button>
+                            </a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
