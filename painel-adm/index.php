@@ -51,31 +51,21 @@ include("../db/connect.php");
     ?>
     <nav class="navbar">
         <div class="container navbar-header">
-            <a href="index.php?menuop=deposito" class="">
+            <a href="index.php?menuop=deposito" class="logo">
                 <img class="float-left" src="../img/logo.png">
             </a>
-            <div class="col"></div>
             <div class="menu_op_adm">
-                <a href="index.php?menuop=deposito">
-                    <button class="btn">Deposito</button>
-                </a>
-                <a href="index.php?menuop=usuarios">
-                    <button class="btn">Usuários</button>
-                </a>
-                <a href="index.php?menuop=insumos">
-                    <button class="btn">Insumos</button>
-                </a>
-            </div>
-            <div class="login_user">
-                <li class="float-right nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Administrador - id_usuário
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../index.php">Sair</a>
+                <a href="index.php?menuop=deposito">Deposito</a>
+                <a href="index.php?menuop=usuarios">Usuários</a>
+                <a href="index.php?menuop=insumos">Insumos</a>
+                <div class="login_user">
+                    <div class="dropdown">
+                        <span>ADM</span>
+                        <div class="dropdown-content">
+                            <a href="../index.php">Sair</a>
+                        </div>
                     </div>
-                </li>
+                </div>
             </div>
         </div>
     </nav>
