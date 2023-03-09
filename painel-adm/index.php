@@ -51,9 +51,11 @@ include("../db/connect.php");
     ?>
     <nav class="navbar">
         <div class="container navbar-header">
-            <a href="index.php?menuop=deposito" class="logo">
-                <img class="float-left" src="../img/logo.png">
-            </a>
+            <div class="logo">
+                <a href="index.php?menuop=deposito">
+                    <img class="float-left" src="../img/logo.png">
+                </a>
+            </div>
             <div class="menu_op_adm">
                 <a href="index.php?menuop=deposito">Deposito</a>
                 <a href="index.php?menuop=usuarios">Usuários</a>

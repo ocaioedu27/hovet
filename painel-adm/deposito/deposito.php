@@ -26,7 +26,19 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sql = "SELECT * FROM deposito";
+                        $sql = "SELECT 
+                                    id,
+                                    nome_insumoNome as nome,
+                                    quantidade,
+                                    CASE
+                                        WHEN tipo_insumoTipo='1' THEN 'Medicamento'
+                                        WHEN tipo_insumoTipo='2' THEN 'Materiais de procedimentos médicos'
+                                    ELSE
+                                        'Não especificado'
+                                    END as tipo,
+                                    setor,
+                                    date_format(validade, '%d/%m/%Y') as validade,
+                                    datediff(validade, curdate()) as diasParaVencimento FROM deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
@@ -41,41 +53,12 @@
                             </a>
                         </td>
                         <td><?=$dados["id"]?></td>
-                        <td><?=$dados["nome_insumoNome"]?></td>
+                        <td><?=$dados["nome"]?></td>
                         <td><?=$dados["quantidade"]?></td>
-
-                        <!--pega o nome do produto a partir do id cadastrado-->
-                        <?php
-                            $id_produto_tipo = $dados["tipo_insumoTipo"];
-                            $sql_select = "SELECT tipo FROM tipos_insumos where id=$id_produto_tipo";
-                            $result = mysqli_query($conexao,$sql_select) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                            while($tipo_produto = mysqli_fetch_assoc($result)){
-                                
-                        ?>
-                        <td><?=$tipo_produto["tipo"]?>
-                        </td>
-                        <?php
-                            }
-                        ?>
+                        <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["setor"]?></td>
                         <td><?=$dados["validade"]?></td>
-                        <td>
-                            <?php
-                                $d1 = new DateTime('now');
-                                $d2 = new DateTime($dados["validade"]);
-                                $intervalo = $d2->diff( $d1 );
-
-                                $vencimentoDIAS = $intervalo->d;
-                                $vencimentoMES = $intervalo->m;
-                            
-                                if (($vencimentoMES <= 1) and ($vencimentoDIAS > 0)) {
-                                    echo "o produto está vencido em " . $vencimentoDIAS . " dia(s)";
-                                }else{
-                                    echo "Diferença de " . $vencimentoDIAS . " dia(s) ";
-                                    echo "e " . $vencimentoMES . " mese(s) ";
-                                    echo "e " . $intervalo->y . " ano(s).";
-                                }
-                            ?>
+                        <td><?=$dados["diasParaVencimento"]?>
                         </td>
                     </tr>
                     <?php
