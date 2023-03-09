@@ -66,7 +66,7 @@ include("../db/connect.php");
                     <button class="btn">Insumos</button>
                 </a>
             </div>
-            <div>
+            <div class="login_user">
                 <li class="float-right nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-expanded="false">
