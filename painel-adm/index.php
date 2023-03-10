@@ -4,6 +4,10 @@
 $notificacoes = 4;
 
 include("../db/connect.php");
+
+include("../db/protect.php");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -58,9 +62,9 @@ include("../db/connect.php");
                 <a href="index.php?menuop=insumos">Insumos</a>
                 <div class="login_user">
                     <div class="dropdown">
-                        <span>ADM</span>
+                        <span><?php echo $_SESSION['nome'];?></span>
                         <div class="dropdown-content">
-                            <a href="../index.php">Sair</a>
+                            <a href="../index.php"><?=session_destroy()?>Sair</a>
                         </div>
                     </div>
                 </div>

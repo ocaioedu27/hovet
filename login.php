@@ -4,13 +4,13 @@
             <img src="img/logo.png" alt="HOVET">
         </div>
         <h2>Login</h2>
-        <form action="autentica.php" method="post">
+        <form action="" method="POST">
 
             <div class="input-box">
                 <span class="icon">
                     <ion-icon name="mail"></ion-icon>
                 </span>
-                <input type="email" name="e-mail"required>
+                <input type="email" name="mail"required>
                 <label>E-mail</label>
             </div>
 

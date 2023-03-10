@@ -20,10 +20,10 @@
                 <label for="cpfUsuario">CPF</label>
                 <input type="text" class="form-control" name="cpfUsuario" required>
             </div>
-            <!--<div class="form-group">
+            <div class="form-group">
                     <label for="senhaUsuario">Senha</label>
                     <input type="password" class="form-control" name="senhaUsuario">
-                </div>-->
+            </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarUsuario">
             </div>

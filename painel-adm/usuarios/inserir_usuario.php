@@ -7,16 +7,19 @@
     $mailUsuario = mysqli_real_escape_string($conexao,$_POST["mailUsuario"]);
     $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
     $cpfUsuario = mysqli_real_escape_string($conexao,$_POST["cpfUsuario"]);
+    $senhaUsuario = mysqli_real_escape_string($conexao,$_POST["senhaUsuario"]);
     $sql = "INSERT INTO usuarios (
         nome,
         mail,
         tipo_usuario,
-        cpf)
+        cpf,
+        senha)
         VALUES(
             '{$nomeUsuario}',
             '{$mailUsuario}',
             '{$tipoUsuario}',
-            '{$cpfUsuario}'
+            '{$cpfUsuario}',
+            '{$senhaUsuario}'
         )";
         mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
 

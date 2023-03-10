@@ -1,6 +1,10 @@
 <?php
 include("config.php");
 
-$conexao = mysqli_connect(SERVIDOR, USUARIO, SENHA, BANCO) or die("Erro na conexão com o servidor! " . mysqli_connect_error());
+$conexao = new mysqli(SERVIDOR, USUARIO, SENHA, BANCO);
+
+if($conexao->error){
+    die("Erro na conexão com o servidor! " . $conexao->error);
+}
 
 ?>
