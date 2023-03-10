@@ -21,7 +21,7 @@
                         <th>Tipo de Insumo</th>
                         <th>Setor</th>
                         <th>Validade</th>
-                        <th>Criticidade de vencimento</th>
+                        <th>Dias para o vencimento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,8 +58,32 @@
                         <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["setor"]?></td>
                         <td><?=$dados["validade"]?></td>
-                        <td><?=$dados["diasParaVencimento"]?></td>
-                    </tr>
+                        <td 
+                            <?php 
+                                $cores = ['30','45'];
+ 
+                                if($dados["diasParaVencimento"] <= $cores[0]){                                    
+                                ?>
+                                    class="vermelho"
+                                <?php
+                                } else if($dados["diasParaVencimento"] <= $cores[1]){
+                                    ?>
+                                    class="amarelo"
+                                <?php
+                                } else if($dados["diasParaVencimento"] > $cores[1]){
+                                    ?>
+                                    class="verde"
+                                <?php
+                                } 
+                                ?>
+                                ><?php if ($dados["diasParaVencimento"] <= 0){
+                                    echo "INSUMO VENCIDO!";
+                                } else{
+                                    echo $dados["diasParaVencimento"] . " dia(s) para o vencimento";
+                                }
+                                ?>
+                            </td>
+                        </tr>
                     <?php
                         }
                     ?>

@@ -23,10 +23,10 @@
 <body>
     <div class="wrapper">
         <div class="login-form">
+            <div class="logo">
+                <img src="img/logo.png" alt="HOVET">
+            </div>
             <form action="" method="post">
-                <div class="logo">
-                    <img src="img/logo.png" alt="HOVET">
-                </div>
                 <h2 class="text-center">ENTRE NO SISTEMA
                 </h2>
 

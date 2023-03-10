@@ -29,10 +29,6 @@ include("../db/connect.php");
     <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="../img/favicon/favicon.ico" type="image/x-icon">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
-
-
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
