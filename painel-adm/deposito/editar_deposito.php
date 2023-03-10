@@ -21,7 +21,7 @@ $dados = mysqli_fetch_assoc($result);
 
 <div class="container">
     <div class="cadastro_body">
-        <form class="form_cadastro" action="index.php?menuop=atualizar_insumo" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_deposito" method="post">
             <div class="form-group">
                 <h4>Edição de Insumo no Depósito</h4>
             </div>
@@ -58,7 +58,7 @@ $dados = mysqli_fetch_assoc($result);
                 <input type="text" class="form-control" name="validadeInsumoDeposito" value="<?=$dados["validade"]?>" readonly>
             </div>
             <div class="form-group">
-                <input type="submit" value="Atualizar" name="btnAtualizarInsumo">
+                <input type="submit" value="Atualizar" name="btnAtualizarInsumoDeposito">
             </div>
         </form>
     </div>
