@@ -33,24 +33,18 @@ $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . m
             <div class="form-group">
                 <label for="tipoInsumoDeposito">Tipo de Insumo</label>
                 <select class="form-control-sm" name="tipoInsumoDeposito" required>
-
-                    <?php
-                    $sql = "SELECT * FROM (SELECT * FROM tipos_insumos) tp";
-                    $result_tipo = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                    while($tipo = mysqli_fetch_assoc($result_tipo)){
-                    ?>
-					<option ><?=$tipo["id"]?></option>
-
-                    <?php
-                        }
-                    ?>
+					<option >1</option>
+					<option >2</option>
 				</select>
                 <li>1 - "Medicamento"</li>
                 <li>2 - "Materiais de procedimentos médicos"</li>
             </div>
             <div class="form-group">
                 <label for="setorInsumoDeposito">Setor</label>
-                <input type="text" class="form-control" name="setorInsumoDeposito" required>
+                <select class="form-control-sm" name="setorInsumoDeposito" required>
+					<option>Setor 1</option>
+					<option>Setor 2</option>
+				</select>
             </div>
             <div class="form-group">
                 <label for="validadeInsumoDeposito">Validade</label>

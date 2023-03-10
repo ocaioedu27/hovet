@@ -14,7 +14,7 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             <div class="form-group">
                 <label for="idInsumo">ID</label>
-                <input type="text" class="form-control" name="idInsumo" value="<?=$dados["id"]?>" required>
+                <input type="text" class="form-control" name="idInsumo" value="<?=$dados["id"]?>" readonly>
             </div>
             <div class="form-group">
                 <label for="nomeInsumo">Nome</label>
