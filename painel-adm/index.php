@@ -64,7 +64,7 @@ include("../db/protect.php");
                     <div class="dropdown">
                         <span><?php echo $_SESSION['nome'];?></span>
                         <div class="dropdown-content">
-                            <a href="../index.php"><?=session_destroy()?>Sair</a>
+                            <a href="../db/logout.php">Sair</a>
                         </div>
                     </div>
                 </div>
