@@ -60,17 +60,17 @@
                         <td><?=$dados["validade"]?></td>
                         <td 
                             <?php 
-                                $cores = ['30','45'];
+                                $dias = ['30','45'];
  
-                                if($dados["diasParaVencimento"] <= $cores[0]){                                    
+                                if($dados["diasParaVencimento"] <= $dias[0]){                                    
                                 ?>
                                     class="vermelho"
                                 <?php
-                                } else if($dados["diasParaVencimento"] <= $cores[1]){
+                                } else if($dados["diasParaVencimento"] <= $dias[1]){
                                     ?>
                                     class="amarelo"
                                 <?php
-                                } else if($dados["diasParaVencimento"] > $cores[1]){
+                                } else if($dados["diasParaVencimento"] > $dias[1]){
                                     ?>
                                     class="verde"
                                 <?php
