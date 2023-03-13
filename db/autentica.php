@@ -26,7 +26,7 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 			header("Location: /hovet/painel-adm/index.php");
 
 		} else {
-			echo "<script language='javascript'>alert('Erro ao realizar o login! Email ou senha incorreto(s)!!'); </script>";
+			echo "<script language='javascript'>window.alert('Erro ao realizar o login! Email ou senha incorreto(s)!!'); </script>";
 			echo "<script language='javascript'>window.location='/hovet/index.php';</script>";
 		}
 	}

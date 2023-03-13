@@ -170,6 +170,7 @@ include("../db/protect.php");
             var checkBox = document.getElementById("ischeckEdit");
             var acao_edit = document.getElementById("mostraEditar");
             var icone = document.getElementById("editarNada");
+
             if (checkBox.checked == true){
                 acao_edit.style.display = "block";
                 icone.style.display = "none";
@@ -191,7 +192,7 @@ include("../db/protect.php");
                 icone.style.display = "block";
             }
         }
-</script>
+    </script>
 </body>
 
 </html>

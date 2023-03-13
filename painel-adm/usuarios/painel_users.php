@@ -27,35 +27,16 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <div class="operacao">
-                                <label for="ischeckEdit"></label>
-                                <input type="checkbox" id="ischeckEdit" onclick="mostraEdicao()">
-                                <div id="editarNada">
-                                    <button class="btn">
-                                        <ion-icon name="create-outline"></ion-icon>
-                                    </button>
-                                </div>
-                                <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>" id="mostraEditar" style="display: none;">
-                                    <button class="btn">
-                                        <ion-icon name="create-outline"></ion-icon>
-                                    </button>
-                                </a>
-                            </div>
-
-                            <div class="operacao">
-                                <label for="isCheckedDelete"></label>
-                                <input type="checkbox" id="isCheckedDelete" onclick="mostraExclusao()">
-                                <div id="excluirNada">
-                                    <button class="btn">
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </button>
-                                </div>
-                                <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>" id="mostraExcluir" style="display: none;">
-                                    <button class="btn">
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </button>
-                                </a>
-                            </div>
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">
+                                <button class="btn">
+                                    <ion-icon name="create-outline"></ion-icon>
+                                </button>
+                            </a>
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">
+                                <button class="btn">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
+                            </a>
                         </td>
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
