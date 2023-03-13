@@ -22,7 +22,7 @@
             </div>
             <div class="form-group">
                     <label for="senhaUsuario">Senha</label>
-                    <input type="password" class="form-control" name="senhaUsuario">
+                    <input type="password" class="form-control" name="senhaUsuario" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarUsuario">

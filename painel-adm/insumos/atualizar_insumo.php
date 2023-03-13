@@ -12,7 +12,10 @@
         insumo_tipo = {$tipoInsumo}
         WHERE id={$idInsumo}
         ";
-        mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
+    mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
 
-        echo "O Insumo foi atualizado no sistema com sucesso!";
+    echo "O Insumo foi atualizado no sistema com sucesso!";
+
+
+    header('Location: index.php?menuop=insumos');
 ?>

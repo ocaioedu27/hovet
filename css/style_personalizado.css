@@ -288,3 +288,13 @@ div.top_cards {
 .vencimentoProx > h2 {
     color: red;
 }
+
+.operacao{
+    display: flex;
+    justify-content: center;
+}
+
+td.operacoes {
+    display: flex;
+    justify-content: center;
+}
