@@ -77,7 +77,7 @@ include("../db/protect.php");
     </nav>
     <main>
         <?php
-            $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"deposito";
+            $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"pagina_principal";
             switch ($menuop) {
                 case 'pagina_principal':
                     include_once("home.php");

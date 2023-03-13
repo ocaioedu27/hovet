@@ -28,10 +28,14 @@
                     <tr>
                         <td class="operacoes">
                             <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">
-                                <button class="btn">Editar</button>
+                                <button class="btn">
+                                    <ion-icon name="create-outline"></ion-icon>
+                                </button>
                             </a>
                             <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">
-                                <button class="btn">Excluir</button>
+                                <button class="btn">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </button>
                             </a>
                         </td>
                         <td><?=$dados["id"]?></td>

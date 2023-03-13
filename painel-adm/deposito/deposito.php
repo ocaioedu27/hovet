@@ -52,7 +52,7 @@
                             </a>
                             <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>">
                                 <button class="btn">
-                                    <ion-icon name="close-circle-outline"></ion-icon>
+                                    <ion-icon name="trash-outline"></ion-icon>
                                 </button>
                             </a>
                         </td>

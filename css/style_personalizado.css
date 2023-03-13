@@ -241,6 +241,8 @@ span.icon {
 .cards_wrapper{
     margin-top: 30px;
     max-width: 100%;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .group_cards{
@@ -253,10 +255,10 @@ span.icon {
     width: 300px;
     height: 340px;
     background: transparent;
-    border: 2px solid rgba(255, 255, 255, .5);
+    border: 1px solid rgba(255, 255, 255, .5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -264,8 +266,25 @@ span.icon {
     padding-left: 10px;
 }
 
-div.cards h4 {
+div.top_cards h2 {
+    display: flex;
+    justify-content: center;
+}
+
+div.top_cards {
+    margin-bottom: 20px;
+}
+
+.titulo{
     display: flex;
     align-items: center;
     gap: 4px;
+}
+
+.titulo > h4 {
+    margin-bottom: 0 !important;
+}
+
+.vencimentoProx > h2 {
+    color: red;
 }
