@@ -3,10 +3,10 @@ body{
    justify-content: center;
    align-items: center;
    min-height: 100vh;
-   background: url(../img/background_images/7566433.jpg) no-repeat;
+   background: linear-gradient(#04AA6D 50%, #fff 50%);
    background-size: cover;
    background-position: center;
- 	color: #fff;
+ 	color: #183518;
 }
 
 .wrapper{
@@ -37,7 +37,7 @@ body{
    position: relative;
    width: 100%;
    height: 50px;
-   border-bottom: 2px solid #fff;
+   border-bottom: 2px solid #183518;
    margin: 30px 0;
 }
 
@@ -47,7 +47,7 @@ body{
    left: 5px;
    transform: translateY(-50%);
    font-size: 1em;
-   color: #fff;
+   color: #183518;
    font-weight: 500;
    pointer-events: none;
    transition: .5s;
@@ -65,7 +65,7 @@ body{
    border: none;
    outline: none;
    font-size: 1em;
-   color: #fff;
+   color: #183518;
    font-weight: 600;
    padding: 0 35px 0 5px;
 }
@@ -74,13 +74,13 @@ body{
    position: absolute;
    right: 8px;
    font-size: 1.2em;
-   color: #fff;
+   color: #183518;
    line-height: 57px;
 }
 
 .remember-forgot{
    font-size: .9em;
-   color: #fff;
+   color: #183518;
    font-weight: 500;
    margin: -15px 0 15px;
    display: flex;
@@ -98,7 +98,7 @@ body{
 }
 
 .remember-forgot a {
-   color: #fff;
+   color: #183518;
    text-decoration: none;
 }
 
@@ -109,13 +109,14 @@ body{
 .btn {
    width: 100%;
    height: 45px;
-   background: #fff;
+   background: #183518;
    border: none;
    outline: none;
    border-radius: 6px;
    cursor: pointer;
    font-size: 1em;
    font-weight: 500;
+   color: #fff;
 }
 
 .logo{

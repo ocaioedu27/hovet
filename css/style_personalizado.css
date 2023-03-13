@@ -85,12 +85,16 @@ form.form_cadastro{
     background-color: #ddd;
 }
   
-  #tabela_listar th {
+#tabela_listar th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: #04AA6D;
     color: white;
+}
+
+#tabela_listar td{
+    text-align: center;
 }
 
 .menu_header{
@@ -227,3 +231,29 @@ button.btn:hover::before{
 .amarelo{
     background-color: yellow;
 }
+
+.cards_wrapper{
+    margin-top: 30px;
+    max-width: 100%;
+}
+
+.group_cards{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.cards{
+    position: relative;
+    width: 300px;
+    height: 340px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-left: 10px;
+ }

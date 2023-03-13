@@ -52,11 +52,12 @@ include("../db/protect.php");
     <nav class="navbar">
         <div class="container navbar-header">
             <div class="logo">
-                <a href="index.php?menuop=deposito">
+                <a href="index.php?menuop=pagina_principal">
                     <img class="float-left" src="../img/logo.png">
                 </a>
             </div>
             <div class="menu_op_adm">
+                <a href="index.php?menuop=pagina_principal">Página Principal</a>
                 <a href="index.php?menuop=deposito">Deposito</a>
                 <a href="index.php?menuop=usuarios">Usuários</a>
                 <a href="index.php?menuop=insumos">Insumos</a>
@@ -75,6 +76,10 @@ include("../db/protect.php");
         <?php
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"deposito";
             switch ($menuop) {
+                case 'pagina_principal':
+                    include_once("home.php");
+                    break;
+
                 case 'deposito':
                     include_once("deposito/deposito.php");
                     break;
@@ -136,11 +141,14 @@ include("../db/protect.php");
                     break;
 
                 default:
-                include_once("../deposito/deposito.php");
+                include_once("home.php");
                     break;
             }
         ?>
     </main>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 
 </html>
