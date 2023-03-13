@@ -46,10 +46,14 @@
                     <tr>
                         <td class="operacoes">
                             <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>">
-                                <button class="btn">Editar</button>
+                                <button class="btn">
+                                    <ion-icon name="create-outline"></ion-icon>
+                                </button>
                             </a>
                             <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>">
-                                <button class="btn">Excluir</button>
+                                <button class="btn">
+                                    <ion-icon name="close-circle-outline"></ion-icon>
+                                </button>
                             </a>
                         </td>
                         <td><?=$dados["id"]?></td>

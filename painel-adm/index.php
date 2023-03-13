@@ -63,7 +63,10 @@ include("../db/protect.php");
                 <a href="index.php?menuop=insumos">Insumos</a>
                 <div class="login_user">
                     <div class="dropdown">
-                        <span><?php echo $_SESSION['nome'];?></span>
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                            <?php echo $_SESSION['nome'];?>
+                        </span>
                         <div class="dropdown-content">
                             <a href="../db/logout.php">Sair</a>
                         </div>

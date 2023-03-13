@@ -232,6 +232,12 @@ button.btn:hover::before{
     background-color: yellow;
 }
 
+span.icon {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
 .cards_wrapper{
     margin-top: 30px;
     max-width: 100%;
@@ -256,4 +262,10 @@ button.btn:hover::before{
     align-items: flex-start;
     flex-direction: column;
     padding-left: 10px;
- }
+}
+
+div.cards h4 {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
