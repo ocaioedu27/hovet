@@ -1,4 +1,3 @@
-
 <section class="painel_usuarios">
     <div class="container_painel">
         <div class="menu_user">
@@ -45,12 +44,12 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <ion-icon name="create-outline"></ion-icon>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <ion-icon name="trash-outline"></ion-icon>
                                 </button>
@@ -62,32 +61,24 @@
                         <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["setor"]?></td>
                         <td><?=$dados["validade"]?></td>
-                        <td 
-                            <?php 
+                        <td <?php 
                                 $dias = ['30','45'];
  
                                 if($dados["diasParaVencimento"] <= $dias[0]){                                    
-                                ?>
-                                    class="vermelho"
-                                <?php
+                                ?> class="vermelho" <?php
                                 } else if($dados["diasParaVencimento"] <= $dias[1]){
-                                    ?>
-                                    class="amarelo"
-                                <?php
+                                    ?> class="amarelo" <?php
                                 } else if($dados["diasParaVencimento"] > $dias[1]){
-                                    ?>
-                                    class="verde"
-                                <?php
+                                    ?> class="verde" <?php
                                 } 
-                                ?>
-                                ><?php if ($dados["diasParaVencimento"] <= 0){
+                                ?>><?php if ($dados["diasParaVencimento"] <= 0){
                                     echo "INSUMO VENCIDO!";
                                 } else{
                                     echo $dados["diasParaVencimento"] . " dia(s) para o vencimento";
                                 }
                                 ?>
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
                     <?php
                         }
                     ?>

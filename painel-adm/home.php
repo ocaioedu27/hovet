@@ -9,7 +9,7 @@
                     <div class="titulo">
                         <h4>Insumos</h4>
                         <span class="icon">
-                                <ion-icon name="file-tray-full-outline"></ion-icon>
+                            <ion-icon name="file-tray-full-outline"></ion-icon>
                         </span>
                     </div>
                     <?php
@@ -30,7 +30,15 @@
                             <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                         </span>
                     </div>
-                    <h2>2</h2>
+                    <?php
+                        $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                        while($vencidos = mysqli_fetch_assoc($result)){
+                     ?>
+                    <h2><?=$vencidos['vencidos_proxVencimento']?></h2>
+                    <?php
+                        }
+                    ?>
                     <p>Próximos ou Vencidos</p>
                 </div>
             </div>

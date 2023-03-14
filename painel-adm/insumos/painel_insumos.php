@@ -36,12 +36,12 @@
                     ?>
                     <tr class="tabela_dados">
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <ion-icon name="create-outline"></ion-icon>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <ion-icon name="trash-outline"></ion-icon>
                                 </button>

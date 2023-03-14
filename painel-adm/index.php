@@ -61,6 +61,7 @@ include("../db/protect.php");
                 <a href="index.php?menuop=deposito">Deposito</a>
                 <a href="index.php?menuop=usuarios">Usuários</a>
                 <a href="index.php?menuop=insumos">Insumos</a>
+                <a href="index.php?menuop=painel_teste">Teste popup</a>
                 <div class="login_user">
                     <div class="dropdown">
                         <span class="icon">
@@ -155,6 +156,10 @@ include("../db/protect.php");
                     include_once("insumos/excluir_insumo.php");
                     break;
 
+                case 'painel_teste':
+                    include_once("../pgs_modelo/painel_teste.php");
+                    break;
+
                 default:
                 include_once("home.php");
                     break;
@@ -164,47 +169,18 @@ include("../db/protect.php");
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script type="text/javascript">
+        $('.confirmaEdit').on('click', function(){
+            return confirm('Deseja editar?');
+        });
 
-    <script>
-        function mostraEdicao() {
-            var checkBox = document.getElementById("ischeckEdit");
-            var acao_edit = document.getElementById("mostraEditar");
-            var icone = document.getElementById("editarNada");
+        $('.confirmaDelete').on('click', function(){
+            return confirm('Tem certeza que deseja excluir?');
+        });
 
-            if (checkBox.checked == true){
-                acao_edit.style.display = "block";
-                icone.style.display = "none";
-            } else {
-                acao_edit.style.display = "none";
-                icone.style.display = "block";
-            }
-        }
-        
-        function mostraExclusao() {
-            var checkBox = document.getElementById("isCheckedDelete");
-            var acao_excluir = document.getElementById("mostraExcluir");
-            var icone = document.getElementById("excluirNada");
-            if (checkBox.checked == true){
-                acao_excluir.style.display = "block";
-                icone.style.display = "none";
-            } else {
-                acao_excluir.style.display = "none";
-                icone.style.display = "block";
-            }
-        }
     </script>
+
 </body>
 
 </html>
-
-<!-- 1ª verificação, se existir algo vindo do botão ($_GET(btnbuscarVeterinario), faz uma chamada via script do objeto -->
-
-
-<?php 
-if(isset($_GET['btnbuscarVeterinario'])){?>
-<script type="text/javascript">
-$('#link-veterinario');
-click();
-</script>
-
-<?php } ?>

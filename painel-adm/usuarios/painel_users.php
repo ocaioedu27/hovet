@@ -27,12 +27,12 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <ion-icon name="create-outline"></ion-icon>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>">
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <ion-icon name="trash-outline"></ion-icon>
                                 </button>
