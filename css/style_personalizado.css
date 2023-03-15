@@ -220,16 +220,16 @@ button.btn:hover::before{
 
 .vermelho{
     color: #fff;
-    background-color: red;
+    background-color: #D1203E;
 }
 
 .verde{
-    color: #fff;
-    background-color: green;
+    color: #000;
+    background-color: #7EE081;
 }
 
 .amarelo{
-    background-color: yellow;
+    background-color: #FFE45E;
 }
 
 span.icon {
