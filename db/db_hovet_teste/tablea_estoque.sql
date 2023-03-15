@@ -7,10 +7,10 @@ create table tipos_movimentacao(
 );
 
 insert into tipos_movimentacao values
-	("Inserção", "Inserção de insumo(s) no estoque."),
-    ("Retirada", "Retirada de insumo(s) do estoque."),
-    ("Doação", "Doação de insumo(s) que irão para o estoque."),
-    ("Permuta", "Troca de insumo(s) do estoque com outras instituições.");
+	(null,"Inserção", "Inserção de insumo(s) no estoque."),
+    (null,"Retirada", "Retirada de insumo(s) do estoque."),
+    (null,"Doação", "Doação de insumo(s) que irão para o estoque."),
+    (null,"Permuta", "Troca de insumo(s) do estoque com outras instituições.");
     
 select * from tipos_movimentacao;
     
@@ -30,11 +30,31 @@ insert into deposito values
 	(null, 3, 6, 3, "Setor 2", "2023-09-10"),
 	(null, 4, 43, 4, "Setor 4", "2023-11-04");
 
+
+select 
+	id,
+    nome_insumoNome as nome,
+    quantidade,
+    CASE
+        WHEN tipo_insumoTipo='1' THEN 'Medicamento'
+        WHEN tipo_insumoTipo='2' THEN 'Materiais de procedimentos médicos'
+    ELSE
+        'NÃO ESPECIFICADO'
+    END AS tipo,
+    setor,
+    date_format(validade, "%d/%m/%Y") as validade,
+    datediff(validade, curdate()) as diasParaVencimento from deposito;
+    
+    
+Select datediff(validade, curdate()) as diaVencimento from deposito where id=2;
+
+SELECT 
+	count(id) as vencidos
+    FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day;
+    
 select * from deposito;
 
-SELECT validade, DATEDIFF(DAY, validade, GETDATE()) AS dayToVencimento from deposito;
-
-select * from (select nome from insumos) ism;
+select * from (select tipo from tipos_insumos) ism;
 
 delete from deposito where id=4;
 
