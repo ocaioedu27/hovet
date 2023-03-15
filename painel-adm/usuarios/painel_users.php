@@ -1,10 +1,22 @@
 <section class="painel_usuarios">
     <div class="container_painel">
-        <div class="menu_user">
-            <h3>Todos os usuários</h3>
-            <a href="index.php?menuop=cadastro_usuario">
-                <button class="btn">Cadastrar</button>
-            </a>
+        <div class="menu_header">
+            <div class="menu_user">
+                <h3>Todos os usuários</h3>
+                <a href="index.php?menuop=cadastro_usuario">
+                    <button class="btn">Cadastrar</button>
+                </a>
+            </div>
+            <div>
+                <form action="index.php?menuop=usuarios" method="post" class="form_buscar">
+                    <input type="text" name="txt_pesquisa_usuarios" placeholder="Buscar">
+                    <button type="submit" class="btn">
+                        <span class="icon">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </span>
+                    </button>
+                </form>
+            </div>
         </div>
         <div class="menu_user">
             <table id="tabela_listar">
@@ -20,7 +32,16 @@
                 </thead>
                 <tbody>
                     <?php
-                        $sql = "SELECT * FROM usuarios";
+                        $txt_pesquisa_usuarios = (isset($_POST["txt_pesquisa_usuarios"]))?$_POST["txt_pesquisa_usuarios"]:"";
+
+                        $sql = "SELECT * FROM usuarios 
+
+                        WHERE
+                            id='{$txt_pesquisa_usuarios}' or
+                            nome LIKE '%{$txt_pesquisa_usuarios}%' or
+                            tipo_usuario LIKE '%{$txt_pesquisa_usuarios}%' or
+                            mail LIKE '%{$txt_pesquisa_usuarios}%'
+                            ORDER BY nome ASC";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
@@ -29,12 +50,17 @@
                         <td class="operacoes">
                             <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
-                                    <ion-icon name="create-outline"></ion-icon>
+                                    <span class="icon">
+                                        <ion-icon name="create-outline"></ion-icon>
+                                    </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>"
+                                class="confirmaDelete">
                                 <button class="btn">
-                                    <ion-icon name="trash-outline"></ion-icon>
+                                    <span class="icon">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </span>
                                 </button>
                             </a>
                         </td>

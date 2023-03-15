@@ -23,7 +23,6 @@ form.form_cadastro{
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-bottom: 5px;
 }
 
 .menu_user > button{
@@ -236,6 +235,7 @@ span.icon {
     display: flex;
     gap: 2px;
     align-items: center;
+    padding: 4px;
 }
 
 .cards_wrapper{
@@ -297,4 +297,14 @@ div.top_cards {
 td.operacoes {
     display: flex;
     justify-content: center;
+}
+
+.form_buscar{
+    display: flex;
+    align-items: center;
+}
+
+.form_buscar input{
+    padding: 2px;
+    border-radius: .25em;
 }

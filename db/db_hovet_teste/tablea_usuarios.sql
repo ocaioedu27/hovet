@@ -11,11 +11,7 @@ create table usuarios(
 );
 
 insert into usuarios value(
-	null, "Caio Silva", "caiosilva@mail.com", "ADM", "01234567891", "1234");
-
-insert into usuarios values
-	(null, "Caio Silva", "caiosilva@mail.com", "veterinario(a)", "11111111111"),
-	(null, "Beatriz Andrade", "beaandrade@mail.com", "professor(a)", "22222222222");
+	null, "ADM", "adm@mail.com", "administrador", "01234567891", "1234");
 
 select * from usuarios;
 
