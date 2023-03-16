@@ -110,7 +110,7 @@
                         if ($i >= ($pagina_insumos) && $i <= ($pagina_insumos+5)) {
                             
                             if ($i==$pagina_insumos) {
-                                echo $i;
+                                echo "<span>$i</span>";
                             } else {
                                 echo " <a href=\"?menuop=insumos&pagina_insumos=$i\">$i</a> ";
                             } 

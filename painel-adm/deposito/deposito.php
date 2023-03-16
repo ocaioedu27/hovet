@@ -139,7 +139,7 @@
                         if ($i >= ($pagina_deposito) && $i <= ($pagina_deposito+5)) {
                             
                             if ($i==$pagina_deposito) {
-                                echo $i;
+                                echo "<span>$i</span>";
                             } else {
                                 echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
                             } 

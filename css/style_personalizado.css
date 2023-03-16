@@ -322,5 +322,21 @@ td.operacoes {
 
 .paginacao{
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.paginacao a {
+    color: #000;
+    background-color: #f2f2f2;
+    border-radius: 3px;
+    padding: 0 11px;
+}
+
+.paginacao > span {
+    color: #000;
+    background-color: #f2f2f2;
+    border-radius: 3px;
+    padding: 0 11px;
 }

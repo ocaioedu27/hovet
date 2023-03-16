@@ -103,7 +103,7 @@
                         if ($i >= ($pagina_usuarios) && $i <= ($pagina_usuarios+5)) {
                             
                             if ($i==$pagina_usuarios) {
-                                echo $i;
+                                echo "<span>$i</span>";
                             } else {
                                 echo " <a href=\"?menuop=usuarios&pagina_usuarios=$i\">$i</a> ";
                             } 
