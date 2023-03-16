@@ -1,4 +1,5 @@
 use dbhovetTeste;
+show tables;
 
 create table tipos_insumos(
 	id int primary key auto_increment,
@@ -8,6 +9,28 @@ create table tipos_insumos(
 insert into tipos_insumos values
 	(null, "Medicamentos"),
     (null, "Materiais de procedimentos médicos");
+
+create table categorias_teste (
+	id int auto_increment unique not null,
+    categoria varchar(100) primary key not null);
+
+insert into categorias_teste values
+	(null, "Medicamentos"),
+    (null, "Materiais de procedimentos médicos");
+    
+create table insumos_teste (
+	id int primary key not null auto_increment unique,
+    nome varchar(50),
+    categoria_nome varchar(100),
+    foreign key(categoria_nome) references categorias_teste(categoria));
+    
+insert into insumos_teste values
+	(null, "imosec", "Medicamentos"),
+    (null, "Touca Cirurgica", "Materiais de procedimentos médicos");
+    
+drop tables insumos_teste, categorias_teste;
+
+select * from insumos_teste;
     
 select * from tipos_insumos;
     
