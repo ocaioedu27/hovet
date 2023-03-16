@@ -1,5 +1,5 @@
 <section class="painel_usuarios">
-    <div class="container_painel">
+    <div class="container">
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Estoque de Insumos</h3>
@@ -21,7 +21,7 @@
                 </form>
             </div>
         </div>
-        <div class="menu_user">
+        <div class="tabelas">
             <table id="tabela_listar">
                 <thead>
                     <tr>
@@ -37,9 +37,11 @@
                 </thead>
                 <tbody>
                     <?php
-                        $quantidade_registros = 15;
+                        $quantidade_registros_deposito = 10;
 
-                        $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
+                        $pagina_deposito = (isset($_GET['pagina_deposito']))?(int)$_GET['pagina_deposito']:1;
+
+                        $inicio_deposito = ($quantidade_registros_deposito * $pagina_deposito) - $quantidade_registros_deposito;
 
                         $txt_pesquisa_deposito = (isset($_POST["txt_pesquisa_deposito"]))?$_POST["txt_pesquisa_deposito"]:"";
 
@@ -61,7 +63,8 @@
                                         id='{$txt_pesquisa_deposito}' or
                                         nome_insumoNome LIKE '%{$txt_pesquisa_deposito}%' or
                                         tipo_insumoTipo LIKE '%{$txt_pesquisa_deposito}%'
-                                        ORDER BY nome_insumoNome ASC";
+                                        ORDER BY nome_insumoNome ASC 
+                                        LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
@@ -115,6 +118,43 @@
                     ?>
                 </tbody>
             </table>
+            <div class="paginacao">
+                <?php
+                    $sqlTotalDeposito = "SELECT id FROM deposito";
+                    $queryTotalDeposito = mysqli_query($conexao,$sqlTotalDeposito) or die(mysqli_error($conexao));
+
+                    $numTotalDeposito = mysqli_num_rows($queryTotalDeposito);
+                    $totalPaginasDeposito = ceil($numTotalDeposito/$quantidade_registros_deposito);
+                    
+                    echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
+
+                    if ($pagina_deposito>6) {
+                        ?>
+                            <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                        <?php
+                    } 
+
+                    for($i=1;$i<=$totalPaginasDeposito;$i++){
+
+                        if ($i >= ($pagina_deposito) && $i <= ($pagina_deposito+5)) {
+                            
+                            if ($i==$pagina_deposito) {
+                                echo $i;
+                            } else {
+                                echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
+                            } 
+                        }          
+                    }
+
+                    if ($pagina_deposito<($totalPaginasDeposito-5)) {
+                        ?>
+                            <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                        <?php
+                    }
+                    
+                    echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasDeposito\">Fim</a>";
+                ?>
+            </div>
         </div>
     </div>
 </section>

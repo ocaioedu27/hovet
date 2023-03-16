@@ -7,6 +7,12 @@
     font-family: 'Poppins', sans-serif;
 }
 
+@media (min-width: 1200px){
+    .container{
+        max-width: 96% !important;
+    }
+}
+
 form.form_cadastro{
     display: flex;
     flex-wrap: wrap;
@@ -307,4 +313,14 @@ td.operacoes {
 .form_buscar input{
     padding: 2px;
     border-radius: .25em;
+}
+
+.tabelas{
+    display: flex;
+    flex-direction: column;
+}
+
+.paginacao{
+    display: flex;
+    gap: 8px;
 }
