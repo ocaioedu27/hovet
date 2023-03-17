@@ -43,12 +43,7 @@
                         id,
                         nome,
                         unidade,
-                        CASE
-                            WHEN insumo_tipo='1' THEN 'Medicamento'
-                            WHEN insumo_tipo='2' THEN 'Materiais de procedimentos médicos'
-                        ELSE
-                            'NÃO ESPECIFICADO'
-                        END AS insumo_tipo
+                        insumo_tipo
 
                         FROM insumos 
 

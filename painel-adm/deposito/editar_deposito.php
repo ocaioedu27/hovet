@@ -3,15 +3,10 @@ $idInsumoDeposito = $_GET["idInsumoDeposito"];
 
 $sql = "SELECT 
 id,
-nome_insumoNome as nome,
+nome,
 quantidade,
-CASE
-    WHEN tipo_insumoTipo='1' THEN 'Medicamento'
-    WHEN tipo_insumoTipo='2' THEN 'Materiais de procedimentos médicos'
-ELSE
-    'Não especificado'
-END as tipo,
-setor,
+tipo_insumoTipo,
+setor_Setor,
 date_format(validade, '%d/%m/%Y') as validade,
 datediff(validade, curdate()) as diasParaVencimento FROM deposito WHERE id={$idInsumoDeposito}";
 
@@ -35,22 +30,19 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             <div class="form-group">
                 <label for="quantidadeInsumoDeposito">Quantidade</label>
-                <input type="text" class="form-control" name="quantidadeInsumoDeposito" value="<?=$dados["quantidade"]?>" required>
+                <input type="text" class="form-control" name="quantidadeInsumoDeposito" value="<?=$dados["quantidade"]?>" readonly>
             </div>
             <div class="form-group">
                 <label for="tipoInsumoDeposito">Tipo</label>
                 <select class="form-control-sm" name="tipoInsumoDeposito" required>
-					<option>1</option>
-					<option>2</option>
+					<option >Medicamentos</option>
+					<option >Materiais de procedimentos médicos</option>
 				</select>
-                <li>1 - "Medicamento"</li>
-                <li>2 - "Materiais de procedimentos médicos"</li>
             </div>
             <div class="form-group">
                 <label for="setorInsumoDeposito">Setor</label>
-                <select class="form-control-sm" name="setorInsumoDeposito" required>
-					<option>Setor 1</option>
-					<option>Setor 2</option>
+                <select class="form-control-sm" name="setorInsumoDeposito" readonly>
+					<option><?=$dados["setor_Setor"]?></option>
 				</select>
             </div>
             <div class="form-group">

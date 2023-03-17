@@ -45,7 +45,7 @@
                         WHERE
                             id='{$txt_pesquisa_usuarios}' or
                             nome LIKE '%{$txt_pesquisa_usuarios}%' or
-                            tipo_usuario LIKE '%{$txt_pesquisa_usuarios}%' or
+                            tipo_usuario_Tipo LIKE '%{$txt_pesquisa_usuarios}%' or
                             mail LIKE '%{$txt_pesquisa_usuarios}%'
                             ORDER BY nome ASC 
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
@@ -74,7 +74,7 @@
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["mail"]?></td>
-                        <td><?=$dados["tipo_usuario"]?></td>
+                        <td><?=$dados["tipo_usuario_Tipo"]?></td>
                         <td><?=$dados["cpf"]?></td>
                     </tr>
                     <?php

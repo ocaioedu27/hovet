@@ -47,23 +47,19 @@
 
                         $sql = "SELECT 
                                     id,
-                                    nome_insumoNome as nome,
+                                    nome,
                                     quantidade,
-                                    CASE
-                                        WHEN tipo_insumoTipo='1' THEN 'Medicamento'
-                                        WHEN tipo_insumoTipo='2' THEN 'Materiais de procedimentos médicos'
-                                    ELSE
-                                        'Não especificado'
-                                    END as tipo,
-                                    setor,
+                                    tipo_insumoTipo,
+                                    setor_Setor,
                                     date_format(validade, '%d/%m/%Y') as validade,
                                     datediff(validade, curdate()) as diasParaVencimento 
                                     FROM deposito 
                                     WHERE
                                         id='{$txt_pesquisa_deposito}' or
-                                        nome_insumoNome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        tipo_insumoTipo LIKE '%{$txt_pesquisa_deposito}%'
-                                        ORDER BY nome_insumoNome ASC 
+                                        nome LIKE '%{$txt_pesquisa_deposito}%' or
+                                        tipo_insumoTipo LIKE '%{$txt_pesquisa_deposito}%' or
+                                        setor_Setor LIKE '%{$txt_pesquisa_deposito}%'
+                                        ORDER BY nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
@@ -92,8 +88,8 @@
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["quantidade"]?></td>
-                        <td><?=$dados["tipo"]?></td>
-                        <td><?=$dados["setor"]?></td>
+                        <td><?=$dados["tipo_insumoTipo"]?></td>
+                        <td><?=$dados["setor_Setor"]?></td>
                         <td><?=$dados["validade"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];

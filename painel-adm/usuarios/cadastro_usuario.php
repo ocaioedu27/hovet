@@ -14,7 +14,20 @@
             </div>
             <div class="form-group">
                 <label for="tipoUsuario">Tipo de usuário</label>
-                <input type="text" class="form-control" name="tipoUsuario" required>
+                <select class="form-control-sm" name="tipoUsuario" required>
+                    <?php
+                    
+                    $sql_allTipos = "SELECT * FROM tipo_usuario WHERE id!=5";
+                    $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                    
+                    while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
+                    ?>
+					<option><?=$tipoUsu["tipo"]?></option>
+
+                    <?php
+                        }
+                    ?>
+				</select>
             </div>
             <div class="form-group">
                 <label for="cpfUsuario">CPF</label>

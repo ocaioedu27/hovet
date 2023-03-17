@@ -10,7 +10,7 @@
     $sql = "UPDATE usuarios SET 
         nome = '{$nomeUsuario}',
         mail = '{$mailUsuario}',
-        tipo_usuario = '{$tipoUsuario}',
+        tipo_usuario_Tipo = '{$tipoUsuario}',
         cpf = '{$cpfUsuario}'
         WHERE id={$idUsuario}
         ";

@@ -42,7 +42,7 @@
 
 .card p{
 	margin: 0;
-	podding: 0;
+	padding: 0;
 }
 .icone-card{
 	font-size: 70px;
@@ -74,7 +74,7 @@
 
 /* Função houver para acender e apagar o botão qnd passar o mouse */
 .btn-secondary:houver{
-	background-color: #00FF00 !important;
+	background-color: #04AA6D !important;
 }	
 
 /* estilizando registro*/

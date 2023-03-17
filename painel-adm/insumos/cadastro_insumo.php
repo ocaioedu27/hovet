@@ -18,11 +18,9 @@
             <div class="form-group">
                 <label for="tipoInsumo">Tipo de Insumo</label>
                 <select class="form-control-sm" name="tipoInsumo" required>
-					<option>1</option>
-					<option>2</option>
+					<option>Medicamentos</option>
+					<option>Materiais de procedimentos médicos</option>
 				</select>
-                <li>1 - "Medicamento"</li>
-                <li>2 - "Materiais de procedimentos médicos"</li>
             </div>
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarInsumo">

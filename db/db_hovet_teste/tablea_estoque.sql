@@ -13,49 +13,51 @@ insert into tipos_movimentacao values
     (null,"Permuta", "Troca de insumo(s) do estoque com outras instituições.");
     
 select * from tipos_movimentacao;
+
+#################################################################################
+
+## Depósito ##
+
+create table setores (
+	id int auto_increment not null unique,
+    setor varchar(100) primary key not null
+);
+
+insert into setores values
+	(null, 'Clínica'),
+    (null, 'Anestesia'),
+    (null, 'Grandes Animais');
     
 create table deposito(
 	id int primary key auto_increment,
-    nome_insumoNome varchar(256) not null,
+    nome varchar(256) not null,
     quantidade int not null,
-    tipo_insumoTipo int not null,
-    foreign key(tipo_insumoTipo) references tipos_insumos(id),
-    setor varchar(100) not null,
+    tipo_insumoTipo varchar(100) not null,
+    foreign key(tipo_insumoTipo) references tipos_insumos(tipo),
+    setor_Setor varchar(100) not null,
+    foreign key(setor_Setor) references setores(setor),
     validade date not null
 );
 
-insert into deposito values
-	(null, 1, 21, 1, "Setor 1", "2023-03-01"),
-	(null, 2, 22, 2, "Setor 3", "2023-11-18"),
-	(null, 3, 6, 3, "Setor 2", "2023-09-10"),
-	(null, 4, 43, 4, "Setor 4", "2023-11-04");
-
-
-select 
-	id,
-    nome_insumoNome as nome,
-    quantidade,
-    CASE
-        WHEN tipo_insumoTipo='1' THEN 'Medicamento'
-        WHEN tipo_insumoTipo='2' THEN 'Materiais de procedimentos médicos'
-    ELSE
-        'NÃO ESPECIFICADO'
-    END AS tipo,
-    setor,
-    date_format(validade, "%d/%m/%Y") as validade,
-    datediff(validade, curdate()) as diasParaVencimento from deposito;
-    
-    
-Select datediff(validade, curdate()) as diaVencimento from deposito where id=2;
+INSERT INTO `deposito` (`id`, `nome`, `quantidade`, `tipo_insumoTipo`, `setor_Setor`, `validade`) VALUES
+(null, 'Dorflex', 10, 'Medicamentos', 'Clínica', '2023-03-25'),
+(null, 'Luva cirúrgica', 5, 'Materiais de procedimentos médicos', 'Clínica', '2023-03-01'),
+(null, 'Touca corúrgica', 8, 'Medicamentos', 'Anestesia', '2023-04-24'),
+(null, 'Paracetamol', 2, 'Medicamentos', 'Clínica', '2023-05-10'),
+(null, 'Dipirona', 5, 'Medicamentos', 'Anestesia', '2023-04-14'),
+(null, 'Torsilax', 12, 'Medicamentos', 'Grandes Animais', '2023-04-01'),
+(null, 'Paracetamol', 8, 'Medicamentos', 'Clínica', '2023-04-27'),
+(null, 'Acetona', 12, 'Materiais de procedimentos médicos', 'Anestesia', '2023-05-24'),
+(null, 'Melatonina', 5, 'Medicamentos', 'Grandes Animais', '2023-05-12'),
+(null, 'Imosec', 8, 'Medicamentos', 'Anestesia', '2023-07-06'),
+(null, 'Pregabalina', 12, 'Medicamentos', 'Clínica', '2023-04-05'),
+(null, 'Acetona', 5, 'Materiais de procedimentos médicos', 'Grandes Animais', '2023-06-09'),
+(null, 'Melatonina', 8, 'Medicamentos', 'Anestesia', '2023-06-14');
 
 SELECT 
 	count(id) as vencidos
     FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day;
     
 select * from deposito;
-
-select * from (select tipo from tipos_insumos) ism;
-
-delete from deposito where id=4;
 
 drop table deposito;

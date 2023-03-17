@@ -26,11 +26,26 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             <div class="form-group">
                 <label for="tipoUsuario">Tipo de usuário</label>
-                <input type="text" class="form-control" name="tipoUsuario" value="<?=$dados["tipo_usuario"]?>" required>
+                <select class="form-control-sm" name="tipoUsuario">
+                    <?php
+                    
+                    $sql_allTipos = "SELECT * FROM tipo_usuario WHERE id!=5";
+                    $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                    
+                    while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
+                    ?>
+					    <option>
+                            <?=$tipos_usuarios = $tipoUsu["tipo"];?>
+                        </option>
+                    <?php
+                        }
+                    ?>
+				</select>
+                <p>Atualmente: <?=$dados["tipo_usuario_Tipo"]?></p>
             </div>
             <div class="form-group">
                 <label for="cpfUsuario">CPF</label>
-                <input type="text" class="form-control" name="cpfUsuario" value="<?=$dados["cpf"]?>" required>
+                <input type="text" class="form-control" name="cpfUsuario" value="<?=$dados["cpf"]?>" readonly>
             </div>
             <div class="form-group">
                 <input type="submit" value="Atualizar" name="btnAtualizarUsuario">

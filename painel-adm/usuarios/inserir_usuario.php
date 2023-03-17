@@ -11,7 +11,7 @@
     $sql = "INSERT INTO usuarios (
         nome,
         mail,
-        tipo_usuario,
+        tipo_usuario_Tipo,
         cpf,
         senha)
         VALUES(

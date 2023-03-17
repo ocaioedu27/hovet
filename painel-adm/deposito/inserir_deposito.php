@@ -9,10 +9,10 @@
     $setorInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["setorInsumoDeposito"]);
     $validadeInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["validadeInsumoDeposito"]);
     $sql = "INSERT INTO deposito (
-        nome_insumoNome,
+        nome,
         quantidade,
         tipo_insumoTipo,
-        setor,
+        setor_Setor,
         validade)
         VALUES(
             '{$nomeInsumoDeposito}',
