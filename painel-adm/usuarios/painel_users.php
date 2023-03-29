@@ -40,13 +40,15 @@
 
                         $txt_pesquisa_usuarios = (isset($_POST["txt_pesquisa_usuarios"]))?$_POST["txt_pesquisa_usuarios"]:"";
 
-                        $sql = "SELECT * FROM usuarios 
-
+                        $sql = "SELECT u.id, u.nome, u.mail, u.cpf, t.tipo 
+                            FROM usuarios AS u
+                            INNER JOIN tipo_usuario AS t
+                            on u.tipo_usuario_ID = t.id
                         WHERE
-                            id='{$txt_pesquisa_usuarios}' or
-                            nome LIKE '%{$txt_pesquisa_usuarios}%' or
-                            tipo_usuario_Tipo LIKE '%{$txt_pesquisa_usuarios}%' or
-                            mail LIKE '%{$txt_pesquisa_usuarios}%'
+                            u.id='{$txt_pesquisa_usuarios}' or
+                            u.nome LIKE '%{$txt_pesquisa_usuarios}%' or
+                            t.tipo LIKE '%{$txt_pesquisa_usuarios}%' or
+                            u.mail LIKE '%{$txt_pesquisa_usuarios}%'
                             ORDER BY nome ASC 
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -74,7 +76,7 @@
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["mail"]?></td>
-                        <td><?=$dados["tipo_usuario_Tipo"]?></td>
+                        <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["cpf"]?></td>
                     </tr>
                     <?php

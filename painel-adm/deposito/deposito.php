@@ -45,20 +45,17 @@
 
                         $txt_pesquisa_deposito = (isset($_POST["txt_pesquisa_deposito"]))?$_POST["txt_pesquisa_deposito"]:"";
 
-                        $sql = "SELECT 
-                                    id,
-                                    nome,
-                                    quantidade,
-                                    tipo_insumoTipo,
-                                    setor_Setor,
-                                    date_format(validade, '%d/%m/%Y') as validade,
-                                    datediff(validade, curdate()) as diasParaVencimento 
-                                    FROM deposito 
+                        $sql = "SELECT
+                                    d.id, d.nome, d.quantidade, date_format(d.validade, '%d/%m/%Y') AS validade, tpIn.tipo, s.setor, datediff(d.validade, curdate()) as diasParaVencimento
+                                    FROM deposito AS d 
+                                    INNER JOIN tipos_insumos AS tpIn 
+                                    ON d.tipo_tipoInsumos_ID = tpIn.id 
+                                    INNER JOIN setores AS s ON d.setor_setorID = s.id 
                                     WHERE
-                                        id='{$txt_pesquisa_deposito}' or
-                                        nome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        tipo_insumoTipo LIKE '%{$txt_pesquisa_deposito}%' or
-                                        setor_Setor LIKE '%{$txt_pesquisa_deposito}%'
+                                        d.id='{$txt_pesquisa_deposito}' or
+                                        d.nome LIKE '%{$txt_pesquisa_deposito}%' or
+                                        tpIn.id LIKE '%{$txt_pesquisa_deposito}%' or
+                                        s.setor LIKE '%{$txt_pesquisa_deposito}%'
                                         ORDER BY nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -67,6 +64,7 @@
                     ?>
                     <tr>
                         <td class="operacoes">
+                            <!--
                             <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>"
                                 class="confirmaEdit">
                                 <button class="btn">
@@ -75,6 +73,7 @@
                                     </span>
                                 </button>
                             </a>
+                            -->
                             <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
@@ -88,8 +87,8 @@
                         <td><?=$dados["id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["quantidade"]?></td>
-                        <td><?=$dados["tipo_insumoTipo"]?></td>
-                        <td><?=$dados["setor_Setor"]?></td>
+                        <td><?=$dados["tipo"]?></td>
+                        <td><?=$dados["setor"]?></td>
                         <td><?=$dados["validade"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];

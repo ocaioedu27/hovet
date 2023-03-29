@@ -1,17 +1,24 @@
 <?php
 $idUsuario = $_GET["idUsuario"];
 
-$sql = "SELECT * FROM usuarios WHERE id={$idUsuario}";
+$sql = "SELECT u.id, u.nome, u.mail, t.tipo, u.cpf FROM usuarios as u INNER JOIN tipo_usuario as t on u.tipo_usuario_ID = t.id WHERE u.id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
 
 <div class="container">
     <div class="cadastro_body">
+        <div class="voltar">
+            <h4>Edição de Usuário</h4>
+            <a href="index.php?menuop=usuarios" class="confirmaVolta">
+                <button class="btn">
+                    <span class="icon">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </span>
+                </button>
+            </a>
+        </div>
         <form class="form_cad astro" action="index.php?menuop=atualizar_usuario" method="post">
-            <div class="form-group">
-                <h3>Edição de Usuário</h3>
-            </div>
             <div class="form-group">
                 <label for="idUsuario">ID</label>
                 <input type="text" class="form-control" name="idUsuario" value="<?=$dados["id"]?>" readonly>
@@ -34,14 +41,14 @@ $dados = mysqli_fetch_assoc($result);
                     
                     while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
                     ?>
-					    <option>
-                            <?=$tipos_usuarios = $tipoUsu["tipo"];?>
-                        </option>
+					    <option><?=$tipoUsu["id"]?> - <?=$tipoUsu["tipo"]?></option>
                     <?php
                         }
                     ?>
 				</select>
-                <p>Atualmente: <?=$dados["tipo_usuario_Tipo"]?></p>
+                <p>
+                    <code>Atualmente: <?=$dados["tipo"]?></code>
+                </p>
             </div>
             <div class="form-group">
                 <label for="cpfUsuario">CPF</label>

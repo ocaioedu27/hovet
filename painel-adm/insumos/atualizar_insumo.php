@@ -6,16 +6,19 @@
     $nomeInsumo = mysqli_real_escape_string($conexao,$_POST["nomeInsumo"]);
     $unidadeInsumo = mysqli_real_escape_string($conexao,$_POST["unidadeInsumo"]);
     $tipoInsumo = mysqli_real_escape_string($conexao,$_POST["tipoInsumo"]);
+    $tipoInsumo = $tipoInsumo[0];
     $sql = "UPDATE insumos SET 
         nome = '{$nomeInsumo}',
         unidade = '{$unidadeInsumo}',
-        insumo_tipo = {$tipoInsumo}
+        insumo_tipo_ID = {$tipoInsumo}
         WHERE id={$idInsumo}
         ";
-    mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
-
-    echo "O Insumo foi atualizado no sistema com sucesso!";
-
-
-    header('Location: index.php?menuop=insumos');
+        if(mysqli_query($conexao, $sql)){
+			echo "<script language='javascript'>window.alert('Insumo atualizado com sucesso!'); </script>";
+			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=insumos';</script>";
+        } else{
+            die("Erro ao executar a inserção. " . mysqli_error($conexao));
+			echo "<script language='javascript'>window.alert('Erro ao atualizar insumo!'); </script>";
+			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=cadastro_insumo';</script>";
+        }
 ?>

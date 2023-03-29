@@ -40,13 +40,22 @@ include("db/autentica.php");
                 case 'login':
                     include_once("login.php");
                     break;
+
+                case 'novo_cadastro_login':
+                    include_once("cadastro.php");
+                    break;
+
+                case 'inserir_usuario':
+                    include_once("painel-adm/usuarios/inserir_usuario.php");
+                    break;
+
                 default:
                     include_once("login.php");
                     break;
                 }
         ?>
     </main> 
-    
+    <script src="js/script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

@@ -351,3 +351,12 @@ td.operacoes {
     border-radius: 3px;
     padding: 0 11px;
 }
+
+.voltar{
+    display: flex;
+    align-items: center;
+}
+
+.voltar h4{
+    margin-bottom: 0;
+}

@@ -172,11 +172,15 @@ include("../db/protect.php");
     
     <script type="text/javascript">
         $('.confirmaEdit').on('click', function(){
-            return confirm('Deseja editar?');
+            return confirm('O item será editado, deseja editar?');
         });
 
         $('.confirmaDelete').on('click', function(){
-            return confirm('Tem certeza que deseja excluir?');
+            return confirm('O item será excluído, deseja confirmar?');
+        });
+
+        $('.confirmaVolta').on('click', function(){
+            return confirm('O formulário será perdido, deseja voltar?');
         });
 
     </script>

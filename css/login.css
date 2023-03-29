@@ -21,6 +21,11 @@ body{
    display: flex;
    justify-content: center;
    align-items: center;
+   transition: height .2s ease;
+}
+
+.wrapper.active{
+   height: 520px;
 }
 
 .wrapper .form-box{
@@ -134,4 +139,30 @@ body{
    border-radius: 50% ;
    box-shadow: 0px 2px 2px rgba(0, 0, 0, 1.0);
 
+}
+
+.login-register{
+   font-size: .9em;
+   color: #162938;
+   text-align: center;
+   font-weight: 500;
+   margin: 25px 0 10px;
+}
+
+.login-register p a{
+   color: #162938;
+   text-decoration: none;
+   font-weight: 600;
+}
+
+.login-register p a:hover{
+   text-decoration: underline;
+}
+
+.select_cadastro_novo{
+   position: absolute;
+   right: 50%;
+   top: 14px;
+   border: 2px solid;
+   background: none;
 }

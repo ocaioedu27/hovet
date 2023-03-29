@@ -1,9 +1,16 @@
 <div class="container">
     <div class="cadastro_body">
+        <div class="voltar">
+            <h4>Cadastro de Insumo no Depósito</h4>
+            <a href="index.php?menuop=deposito" class="confirmaVolta">
+                <button class="btn">
+                    <span class="icon">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </span>
+                </button>
+            </a>
+        </div>
         <form class="form_cadastro" action="index.php?menuop=inserir_deposito" method="post">
-            <div class="form-group">
-                <h4>Cadastro de Insumo no Depósito</h4>
-            </div>
             <div class="form-group">
                 <label for="nomeInsumoDeposito">Nome</label>
                 <select class="form-control-sm" name="nomeInsumoDeposito" required>
@@ -28,8 +35,18 @@
             <div class="form-group">
                 <label for="tipoInsumoDeposito">Tipo de Insumo</label>
                 <select class="form-control-sm" name="tipoInsumoDeposito" required>
-					<option >Medicamentos</option>
-					<option >Materiais de procedimentos médicos</option>
+                    <?php
+                    
+                    $sql_alltipos = "SELECT * FROM tipos_insumos";
+                    $result_alltipos = mysqli_query($conexao,$sql_alltipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                    
+                    while($tiposInsu = mysqli_fetch_assoc($result_alltipos)){
+                    ?>
+					<option><?=$tiposInsu["id"]?> - <?=$tiposInsu["tipo"]?></option>
+
+                    <?php
+                        }
+                    ?>
 				</select>
             </div>
             <div class="form-group">
@@ -37,12 +54,12 @@
                 <select class="form-control-sm" name="setorInsumoDeposito" required>
                     <?php
                     
-                    $sql_allSetores = "SELECT setor FROM setores";
+                    $sql_allSetores = "SELECT * FROM setores";
                     $result_allSetores = mysqli_query($conexao,$sql_allSetores) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     
                     while($setor = mysqli_fetch_assoc($result_allSetores)){
                     ?>
-					<option><?=$setor["setor"]?></option>
+					<option><?=$setor["id"]?> - <?=$setor["setor"]?></option>
 
                     <?php
                         }

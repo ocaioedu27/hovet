@@ -1,14 +1,7 @@
 <?php
 $idInsumoDeposito = $_GET["idInsumoDeposito"];
 
-$sql = "SELECT 
-id,
-nome,
-quantidade,
-tipo_insumoTipo,
-setor_Setor,
-date_format(validade, '%d/%m/%Y') as validade,
-datediff(validade, curdate()) as diasParaVencimento FROM deposito WHERE id={$idInsumoDeposito}";
+$sql = "SELECT * FROM deposito WHERE id={$idInsumoDeposito}";
 
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
@@ -16,6 +9,16 @@ $dados = mysqli_fetch_assoc($result);
 
 <div class="container">
     <div class="cadastro_body">
+        <div class="voltar">
+            <h4>Cadastro de Insumo no Depósito</h4>
+            <a href="index.php?menuop=deposito" class="confirmaVolta">
+                <button class="btn">
+                    <span class="icon">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </span>
+                </button>
+            </a>
+        </div>
         <form class="form_cadastro" action="index.php?menuop=atualizar_deposito" method="post">
             <div class="form-group">
                 <h4>Edição de Insumo no Depósito</h4>

@@ -6,11 +6,12 @@
     $nomeUsuario = mysqli_real_escape_string($conexao,$_POST["nomeUsuario"]);
     $mailUsuario = mysqli_real_escape_string($conexao,$_POST["mailUsuario"]);
     $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
+    $tipoUsuario = $tipoUsuario[0];
     $cpfUsuario = mysqli_real_escape_string($conexao,$_POST["cpfUsuario"]);
     $sql = "UPDATE usuarios SET 
         nome = '{$nomeUsuario}',
         mail = '{$mailUsuario}',
-        tipo_usuario_Tipo = '{$tipoUsuario}',
+        tipo_usuario_ID = {$tipoUsuario},
         cpf = '{$cpfUsuario}'
         WHERE id={$idUsuario}
         ";

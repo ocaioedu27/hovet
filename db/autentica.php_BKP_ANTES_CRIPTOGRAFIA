@@ -8,7 +8,7 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 		$email = $conexao->real_escape_string($_POST['mail']);
 		$senha = $conexao->real_escape_string($_POST['senha']);
 
-		$sql_code = "SELECT * FROM usuarios WHERE mail = '$email' LIMIT 1";
+		$sql_code = "SELECT * FROM usuarios WHERE mail = '$email' AND senha = '$senha'";
 		$sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
 
 		$quantidade = $sql_query->num_rows;
@@ -16,21 +16,14 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 		if ($quantidade == 1) {
 			$usuario = $sql_query->fetch_assoc();
 
-			if (password_verify($senha, $usuario['senha'])) {
-			
-				if(!isset($_SESSION)){
-					session_start();
-				}
-
-				$_SESSION['id'] = $usuario['id'];
-				$_SESSION['nome'] = $usuario['nome'];
-
-				header("Location: /hovet/painel-adm/index.php");
-
-			} else{
-				echo "<script language='javascript'>window.alert('Erro ao realizar o login! Email ou senha incorreto(s)!!'); </script>";
-				echo "<script language='javascript'>window.location='/hovet/index.php';</script>"; 
+			if(!isset($_SESSION)){
+				session_start();
 			}
+
+			$_SESSION['id'] = $usuario['id'];
+			$_SESSION['nome'] = $usuario['nome'];
+
+			header("Location: /hovet/painel-adm/index.php");
 
 		} else {
 			echo "<script language='javascript'>window.alert('Erro ao realizar o login! Email ou senha incorreto(s)!!'); </script>";
