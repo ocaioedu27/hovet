@@ -74,18 +74,20 @@
             <div class="top_cards">
                 <h2>Relatórios</h2>
             </div>
-            <div class="cards">
-                <div class="relatorioInserts">
-                    <a href="#">Relatório de Cadastro de Insumos</a>
-                </div>
-                <div class="relatorioRetiradas">
-                    <a href="#">Relatório de Retirada de Insumos</a>
-                </div>
-                <div class="relatorioDoacoes">
-                    <a href="#">Relatório de Doações de Insumos</a>
-                </div>
-                <div class="relatorioPermutas">
-                    <a href="#">Relatório de Permutas de Insumos</a>
+            <div class="cards re">
+                <div class="relatorios">
+                    <div class="relatorio">
+                        <a href="index.php?menuop=#">Relatório de Cadastro de Insumos</a>
+                    </div>
+                    <div class="relatorio">
+                        <a href="index.php?menuop=#">Relatório de Retirada de Insumos</a>
+                    </div>
+                    <div class="relatorio">
+                        <a href="index.php?menuop=#">Relatório de Doações de Insumos</a>
+                    </div>
+                    <div class="relatorio">
+                        <a href="index.php?menuop=#">Relatório de Permutas de Insumos</a>
+                    </div>
                 </div>
             </div>
         </div>

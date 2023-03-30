@@ -6,12 +6,19 @@ $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . m
 $dados = mysqli_fetch_assoc($result);
 ?>
 
-<div class="container">
-    <div class="cadastro_body">
-        <form class="form_cad astro" action="index.php?menuop=atualizar_insumo" method="post">
-            <div class="form-group">
-                <h3>Edição de Insumo</h3>
-            </div>
+<div class="container cadastro_all">
+    <div class="cards edita_insumo">
+        <div class="voltar">
+            <h4>Edição de Insumo</h4>
+            <a href="index.php?menuop=insumos" class="confirmaVolta">
+                <button class="btn">
+                    <span class="icon">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </span>
+                </button>
+            </a>
+        </div>
+        <form class="form_cadastro" action="index.php?menuop=atualizar_insumo" method="post">
             <div class="form-group">
                 <label for="idInsumo">ID</label>
                 <input type="text" class="form-control" name="idInsumo" value="<?=$dados["id"]?>" readonly>
@@ -44,7 +51,7 @@ $dados = mysqli_fetch_assoc($result);
 				</select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Atualizar" name="btnAtualizarInsumo">
+                <input type="submit" value="Atualizar" name="btnAtualizarInsumo" class="btn_cadastrar">
             </div>
         </form>
     </div>

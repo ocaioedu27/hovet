@@ -318,8 +318,12 @@ span.icon {
     justify-content: center;
     align-items: flex-start;
     flex-direction: column;
-    padding-left: 10px;
     margin-top: 20px;
+}
+
+.cards.re{
+    align-items: center;
+    padding-left: 0;
 }
 
 .cards.cadastro_insumo{
@@ -327,14 +331,32 @@ span.icon {
     height: 390px;
 }
 
+.cards.edita_insumo{
+    width: 340px;
+    height: 490px;
+}
+
 .cards.cadastro_usuarios{
     width: 340px;
     height: 590px;
 }
 
+.cards.edita_usuarios{
+    width: 340px;
+    height: 650px;
+}
+
 .cards.cadastro_deposito{
     width: 340px;
     height: 570px;
+}
+
+.content_cards > div {
+    padding-left: 20px;
+}
+
+.content_cards > div.top_cards {
+    padding-left: 0;
 }
 
 div.top_cards h2 {
@@ -409,7 +431,7 @@ td.operacoes {
 .voltar{
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin: 0 auto;
 }
 
 .voltar h4{
@@ -419,4 +441,31 @@ td.operacoes {
 select.form-control-sm{
     width: 50%;
     background: none;
+}
+
+.relatorios{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 260px;
+}
+
+.relatorio{
+    width: 120px;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px;
+    margin: 4px;
+    text-align: center;
+    transition: .5s;
+}
+
+.relatorio a{
+    color: #0B0B0B;
+    text-decoration: none;
+}
+
+.relatorio:hover{
+    color: #fff;
+    background-color: #04AA6D;
 }

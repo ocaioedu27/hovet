@@ -46,7 +46,8 @@
                         WHERE
                             i.id='{$txt_pesquisa_insumos}' or
                             i.nome LIKE '%{$txt_pesquisa_insumos}%' or
-                            t.tipo LIKE '%{$txt_pesquisa_insumos}%'
+                            t.tipo LIKE '%{$txt_pesquisa_insumos}%' or
+                            i.unidade LIKE '%{$txt_pesquisa_insumos}%'
                             ORDER BY nome ASC 
                             LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
