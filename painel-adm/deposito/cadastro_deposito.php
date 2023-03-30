@@ -1,7 +1,7 @@
-<div class="container">
-    <div class="cadastro_body">
+<div class="container cadastro_all">
+    <div class="cards cadastro_deposito">
         <div class="voltar">
-            <h4>Cadastro de Insumo no Depósito</h4>
+            <h4>Cadastro no Depósito</h4>
             <a href="index.php?menuop=deposito" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
@@ -71,7 +71,7 @@
                 <input type="date" class="form-control" name="validadeInsumoDeposito" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDeposito">
+                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDeposito" class="btn_cadastrar">
             </div>
         </form>
     </div>

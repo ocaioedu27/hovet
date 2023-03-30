@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="cadastro_body">
+<div class="container cadastro_all">
+    <div class="cards cadastro_insumo">
         <div class="voltar">
             <h4>Cadastro de Insumo</h4>
             <a href="index.php?menuop=insumos" class="confirmaVolta">
@@ -39,7 +39,7 @@
 				</select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumo">
+                <input type="submit" value="Cadastrar" name="btnAdicionarInsumo" class="btn_cadastrar">
             </div>
         </form>
     </div>

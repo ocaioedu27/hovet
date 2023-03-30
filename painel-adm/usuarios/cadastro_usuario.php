@@ -1,5 +1,5 @@
-<div class="container">
-    <div class="cadastro_body">
+<div class="container cadastro_all">
+    <div class="cards cadastro_usuarios">
         <div class="voltar">
             <h4>Cadastro de Usuário</h4>
             <a href="index.php?menuop=usuarios" class="confirmaVolta">
@@ -45,7 +45,7 @@
                     <input type="password" class="form-control" name="senhaUsuario" required>
             </div>
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarUsuario">
+                <input type="submit" value="Cadastrar" name="btnAdicionarUsuario" class="btn_cadastrar">
             </div>
         </form>
     </div>

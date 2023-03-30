@@ -3,8 +3,9 @@
         <div class="logo">
             <img src="img/logo.png" alt="HOVET">
         </div>
-        <h2>Realizando Cadastro</h2>
         <form action="index.php?menuop=inserir_usuario" method="post">
+            
+            <h2>Realizando Cadastro</h2>
 
             <!--<div class="input-box">
                 <span class="icon">

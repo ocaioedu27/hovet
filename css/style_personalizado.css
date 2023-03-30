@@ -7,6 +7,20 @@
     font-family: 'Poppins', sans-serif;
 }
 
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container.navbar-header {
+    flex-direction: row;
+}
+
+.container.cadastro_all {
+    flex-direction: row !important;
+}
+
 @media (min-width: 1200px){
     .container{
         max-width: 96% !important;
@@ -18,11 +32,13 @@ form.form_cadastro{
     flex-direction: column;
     flex-wrap: wrap;
     margin: 0 auto;
-    max-width: 22%;
+    max-width: 85%;
     gap: 10px;
 }
 
 .form-group{
+    display: flex;
+    flex-direction: column;
     margin-bottom: 0,5rem;
 }
 
@@ -33,6 +49,26 @@ form.form_cadastro{
     margin-top: 4px;
     border-radius: 4px;
     color: #D1203E;
+}
+
+input.btn_cadastrar{
+    
+   width: 100%;
+   height: 45px;
+   background: #0B0B0B;
+   border: none;
+   outline: none;
+   border-radius: 6px;
+   cursor: pointer;
+   font-size: 1em;
+   font-weight: 500;
+   color: #fff;
+}
+
+input.btn_cadastrar:hover{
+    background-color: #fff;
+    color: #0B0B0B;
+    border: 1px solid;
 }
 
 .menu_user{
@@ -188,6 +224,8 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 50%;
+    background-color: #ced4da;
 }
 
 .form-group li{
@@ -281,6 +319,22 @@ span.icon {
     align-items: flex-start;
     flex-direction: column;
     padding-left: 10px;
+    margin-top: 20px;
+}
+
+.cards.cadastro_insumo{
+    width: 340px;
+    height: 390px;
+}
+
+.cards.cadastro_usuarios{
+    width: 340px;
+    height: 590px;
+}
+
+.cards.cadastro_deposito{
+    width: 340px;
+    height: 570px;
 }
 
 div.top_cards h2 {
@@ -355,8 +409,14 @@ td.operacoes {
 .voltar{
     display: flex;
     align-items: center;
+    margin-bottom: 5px;
 }
 
 .voltar h4{
     margin-bottom: 0;
+}
+
+select.form-control-sm{
+    width: 50%;
+    background: none;
 }
