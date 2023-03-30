@@ -1,7 +1,7 @@
 <div class="wrapper active">
     <div class="form-box register">
         <div class="logo">
-            <img src="img/logo.png" alt="HOVET">
+            <img src="img/logo_hovet.jpg" alt="HOVET">
         </div>
         <form action="index.php?menuop=inserir_usuario" method="post">
             

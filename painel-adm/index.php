@@ -53,15 +53,32 @@ include("../db/protect.php");
         <div class="container navbar-header">
             <div class="logo">
                 <a href="index.php?menuop=pagina_principal">
-                    <img class="float-left" src="../img/logo.png">
+                    <img class="float-left" src="../img/logo_hovet.jpg">
                 </a>
             </div>
             <div class="menu_op_adm">
                 <a href="index.php?menuop=pagina_principal">Página Principal</a>
                 <a href="index.php?menuop=deposito">Deposito</a>
+                <div class="dropdown">
+                    <a href="index.php?menuop=insumos">Insumos</a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="#">Todos os insumos</a>
+                            </li>
+                            <li>
+                                <a href="#">Material de procedimento</a>
+                            </li>
+                            <li>
+                                <a href="#">Medicamentos</a>
+                            </li>
+                            <li>
+                                <a href="#">Medicamentos controlados</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <a href="index.php?menuop=usuarios">Usuários</a>
-                <a href="index.php?menuop=insumos">Insumos</a>
-                <a href="index.php?menuop=painel_teste">Teste popup</a>
                 <div class="login_user">
                     <div class="dropdown">
                         <span class="icon">

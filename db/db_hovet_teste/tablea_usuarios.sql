@@ -2,7 +2,7 @@
 use dbhovetTeste;
 
 create table tipo_usuario (
-	id int primary key auto_increment unique,
+	id int primary key auto_increment,
     tipo varchar(100) not null
 );
 

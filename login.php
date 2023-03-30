@@ -1,7 +1,7 @@
 <div class="wrapper">
     <div class="form-box login">
         <div class="logo">
-            <img src="img/logo.png" alt="HOVET">
+            <img src="img/logo_hovet.jpg" alt="HOVET">
         </div>
         <h2>Login</h2>
         <form action="" method="POST">
