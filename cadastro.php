@@ -70,8 +70,8 @@
                 <span class="icon">
                     <ion-icon name=""></ion-icon>
                 </span>
-                <input type="text" name="cpfUsuario" required>
-                <label for="cpfUsuario">CPF</label>
+                <input type="text" name="siapeUsuario" required>
+                <label for="siapeUsuario">SIAPE</label>
             </div>
 
             <div class="input-box">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="remember-forgot">
-                <label><input type="checkbox" required>Estou de acordo com os termos e condições</label>
+                <label><input type="checkbox" name="login_cadastro" required>Estou de acordo com os termos e condições</label>
             </div>
             <button class="btn" type="submit" name="btn-cadastrar">Cadastrar</button>
             <div class="login-register">

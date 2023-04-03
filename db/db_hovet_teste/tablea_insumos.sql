@@ -7,7 +7,8 @@ create table tipos_insumos (
 
 insert into tipos_insumos values
 	(null, "Medicamentos"),
-    (null, "Materiais de procedimentos médicos");
+    (null, "Material de procedimento"),
+    (null, "Medicamentos controlados");
     
 select * from tipos_insumos;
     
@@ -34,7 +35,7 @@ INSERT INTO `insumos` (`id`, `nome`, `unidade`, `insumo_tipo_ID`) VALUES
 SELECT i.id, i.nome, i.unidade, t.tipo 
                             FROM insumos AS i
                             INNER JOIN tipos_insumos AS t
-                            on i.insumo_tipo_ID = t.id;
+                            on i.insumo_tipo_ID = t.id where i.insumo_tipo_ID=2 or i.unidade="%caix%";
 select * from insumos;
 
 drop table insumos;

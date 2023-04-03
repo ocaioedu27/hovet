@@ -23,7 +23,7 @@ create table usuarios(
     mail varchar(100) unique not null,
     tipo_usuario_ID int not null,
     foreign key(tipo_usuario_ID) references tipo_usuario(id),
-    cpf varchar(11) unique not null,
+    siape varchar(50) unique not null,
     senha varchar(256) not null
 );
 

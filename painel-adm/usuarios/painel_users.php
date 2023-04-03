@@ -27,7 +27,7 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Tipo de usuario</th>
-                        <th>CPF</th>
+                        <th>SIAPE</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
 
                         $txt_pesquisa_usuarios = (isset($_POST["txt_pesquisa_usuarios"]))?$_POST["txt_pesquisa_usuarios"]:"";
 
-                        $sql = "SELECT u.id, u.nome, u.mail, u.cpf, t.tipo 
+                        $sql = "SELECT u.id, u.nome, u.mail, u.siape, t.tipo 
                             FROM usuarios AS u
                             INNER JOIN tipo_usuario AS t
                             on u.tipo_usuario_ID = t.id
@@ -48,6 +48,7 @@
                             u.id='{$txt_pesquisa_usuarios}' or
                             u.nome LIKE '%{$txt_pesquisa_usuarios}%' or
                             t.tipo LIKE '%{$txt_pesquisa_usuarios}%' or
+                            u.siape LIKE '%{$txt_pesquisa_usuarios}%' or
                             u.mail LIKE '%{$txt_pesquisa_usuarios}%'
                             ORDER BY nome ASC 
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
@@ -77,7 +78,7 @@
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["mail"]?></td>
                         <td><?=$dados["tipo"]?></td>
-                        <td><?=$dados["cpf"]?></td>
+                        <td><?=$dados["siape"]?></td>
                     </tr>
                     <?php
                         }

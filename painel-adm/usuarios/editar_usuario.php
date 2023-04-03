@@ -1,7 +1,7 @@
 <?php
 $idUsuario = $_GET["idUsuario"];
 
-$sql = "SELECT u.id, u.nome, u.mail, t.tipo, u.cpf FROM usuarios as u INNER JOIN tipo_usuario as t on u.tipo_usuario_ID = t.id WHERE u.id={$idUsuario}";
+$sql = "SELECT u.id, u.nome, u.mail, t.tipo, u.siape FROM usuarios as u INNER JOIN tipo_usuario as t on u.tipo_usuario_ID = t.id WHERE u.id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
@@ -51,8 +51,8 @@ $dados = mysqli_fetch_assoc($result);
                 </p>
             </div>
             <div class="form-group">
-                <label for="cpfUsuario">CPF</label>
-                <input type="text" class="form-control" name="cpfUsuario" value="<?=$dados["cpf"]?>" readonly>
+                <label for="siapeUsuario">SIAPE</label>
+                <input type="text" class="form-control" name="siapeUsuario" value="<?=$dados["siape"]?>" readonly>
             </div>
             <div class="form-group">
                 <input type="submit" value="Atualizar" name="btnAtualizarUsuario" class="btn_cadastrar">

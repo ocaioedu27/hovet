@@ -64,16 +64,16 @@ include("../db/protect.php");
                     <div class="dropdown-content">
                         <ul>
                             <li>
-                                <a href="#">Todos os insumos</a>
+                                <a href="index.php?menuop=insumos">Todos os insumos</a>
                             </li>
                             <li>
-                                <a href="#">Material de procedimento</a>
+                                <a href="index.php?menuop=insumos_procedimentos">Material de procedimento</a>
                             </li>
                             <li>
-                                <a href="#">Medicamentos</a>
+                                <a href="index.php?menuop=insumos_medicamentos">Medicamentos</a>
                             </li>
                             <li>
-                                <a href="#">Medicamentos controlados</a>
+                                <a href="index.php?menuop=insumos_controlados">Medicamentos controlados</a>
                             </li>
                         </ul>
                     </div>
@@ -85,7 +85,7 @@ include("../db/protect.php");
                             <ion-icon name="person-outline"></ion-icon>
                             <?php echo $_SESSION['nome'];?>
                         </span>
-                        <div class="dropdown-content">
+                        <div class="dropdown-content sair">
                             <a href="../db/logout.php">Sair</a>
                         </div>
                     </div>
@@ -152,6 +152,18 @@ include("../db/protect.php");
                 case 'insumos':
                     include_once("insumos/painel_insumos.php");
                     break;
+
+                case 'insumos_medicamentos':
+                    include_once("insumos/insumos_medicamentos.php");
+                    break;
+
+                case 'insumos_procedimentos':
+                    include_once("insumos/insumos_procedimentos.php");
+                    break;
+
+                case 'insumos_controlados':
+                    include_once("insumos/insumos_controlados.php");
+                    break;        
                 
                 case 'cadastro_insumo':
                     include_once("insumos/cadastro_insumo.php");

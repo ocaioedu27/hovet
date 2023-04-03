@@ -17,8 +17,9 @@
 			echo "<script language='javascript'>window.alert('Insumo atualizado com sucesso!'); </script>";
 			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=insumos';</script>";
         } else{
-            die("Erro ao executar a inserção. " . mysqli_error($conexao));
-			echo "<script language='javascript'>window.alert('Erro ao atualizar insumo!'); </script>";
-			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=cadastro_insumo';</script>";
+            echo "<script language='javascript'>window.alert('Erro ao atualizar insumo!'); </script>";
+            echo " <a href=\"/hovet/painel-adm/index.php?menuop=editar_usuario\">Voltar ao formulário de edição</a> <br/>";
+    
+            die("Erro: " . mysqli_error($conexao));
         }
 ?>

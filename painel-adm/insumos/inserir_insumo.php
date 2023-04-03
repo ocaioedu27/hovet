@@ -16,13 +16,16 @@
             '{$unidadeInsumo}',
             {$tipoInsumo}
         )";
+
         if(mysqli_query($conexao, $sql)){
 			echo "<script language='javascript'>window.alert('Insumo cadastrado com sucesso!'); </script>";
 			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=insumos';</script>";
+
         } else{
-            die("Erro ao executar a inserção. " . mysqli_error($conexao));
-			echo "<script language='javascript'>window.alert('Erro ao cadastrar insumo!'); </script>";
-			echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=cadastro_insumo';</script>";
+            echo "<script language='javascript'>window.alert('Erro ao cadastrar insumo!'); </script>";
+            echo " <a href=\"/hovet/painel-adm/index.php?menuop=cadastro_insumo\">Voltar ao formulário de cadastro</a> <br/>";
+    
+            die("Erro: " . mysqli_error($conexao));
         }
 
 ?>

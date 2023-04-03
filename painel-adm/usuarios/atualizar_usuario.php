@@ -7,15 +7,24 @@
     $mailUsuario = mysqli_real_escape_string($conexao,$_POST["mailUsuario"]);
     $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
     $tipoUsuario = $tipoUsuario[0];
-    $cpfUsuario = mysqli_real_escape_string($conexao,$_POST["cpfUsuario"]);
+    $siapeUsuario = mysqli_real_escape_string($conexao,$_POST["siapeUsuario"]);
     $sql = "UPDATE usuarios SET 
         nome = '{$nomeUsuario}',
         mail = '{$mailUsuario}',
         tipo_usuario_ID = {$tipoUsuario},
-        cpf = '{$cpfUsuario}'
+        siap = '{$siapeUsuario}'
         WHERE id={$idUsuario}
         ";
-        mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
 
-        echo "O Usuário foi atualizado no sistema com sucesso!";
+        if(mysqli_query($conexao, $sql)){
+    
+            echo "<script language='javascript'>window.alert('Usuário atualizado com sucesso!'); </script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=usuarios';</script>";
+    
+        } else{
+            echo "<script language='javascript'>window.alert('Erro ao atualizar usuário!'); </script>";
+            echo " <a href=\"/hovet/painel-adm/index.php?menuop=cadastro_usuario\">Voltar ao formulário de edição</a> <br/>";
+    
+            die("Erro: " . mysqli_error($conexao));
+        }
 ?>

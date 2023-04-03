@@ -1,3 +1,5 @@
+#create database dbhovetTeste;
+
 use dbhovetTeste;
 
 CREATE TABLE deposito_audit (

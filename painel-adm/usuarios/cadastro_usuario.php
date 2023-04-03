@@ -37,8 +37,8 @@
 				</select>
             </div>
             <div class="form-group">
-                <label for="cpfUsuario">CPF</label>
-                <input type="text" class="form-control" name="cpfUsuario" required>
+                <label for="siapeUsuario">SIAPE</label>
+                <input type="text" class="form-control" name="siapeUsuario" required>
             </div>
             <div class="form-group">
                     <label for="senhaUsuario">Senha</label>
