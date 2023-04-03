@@ -1,4 +1,3 @@
-#create database dbhovetTeste;
 
 use dbhovetTeste;
 
