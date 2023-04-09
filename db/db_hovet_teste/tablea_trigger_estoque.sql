@@ -26,6 +26,17 @@ END$$
 
 DELIMITER ;
 
+# Atualiza Deposito
+DELIMITER $$
+
+CREATE TRIGGER before_deposito_to_dispensario_update
+	BEFORE UPDATE ON dispensario FOR EACH ROW BEGIN
+    UPDATE Deposito set
+    deposito_Qtd
+END$$
+
+DELIMITER ;
+
 drop trigger before_insumo_update;
 
 select * from deposito_audit;

@@ -13,7 +13,7 @@
                         </span>
                     </div>
                     <?php
-                        $sql = "SELECT COUNT(*) as qtd FROM deposito";
+                        $sql = "SELECT COUNT(*) as deposito_Qtd FROM deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                     ?>
@@ -31,7 +31,7 @@
                         </span>
                     </div>
                     <?php
-                        $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day";
+                        $sql = "SELECT count(deposito_id) as vencidos_proxVencimento FROM deposito where deposito_Validade<=curdate() or deposito_Validade <= curdate() + interval 30 day";
                         $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($vencidos = mysqli_fetch_assoc($result)){
                      ?>

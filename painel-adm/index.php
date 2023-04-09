@@ -42,6 +42,9 @@ include("../db/protect.php");
     </script>
 
 
+    <script type="text/javascript"></script>
+
+
 </head>
 
 <body>
@@ -58,7 +61,19 @@ include("../db/protect.php");
             </div>
             <div class="menu_op_adm">
                 <a href="index.php?menuop=pagina_principal">Página Principal</a>
-                <a href="index.php?menuop=deposito">Deposito</a>
+                <div class="dropdown">
+                    <a href="index.php?menuop=deposito">Estoques</a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="index.php?menuop=deposito">Depósito</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=dispensario">Dispensário</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <a href="index.php?menuop=insumos">Insumos</a>
                     <div class="dropdown-content">
@@ -185,9 +200,34 @@ include("../db/protect.php");
                     include_once("insumos/excluir_insumo.php");
                     break;
 
-                case 'painel_teste':
-                    include_once("../pgs_modelo/painel_teste.php");
+                case 'dispensario':
+                    include_once("dispensario/painel_dispensario.php");
                     break;
+
+                case 'cadastro_dispensario':
+                    include_once("dispensario/cadastro_dispensario.php");
+                    break;
+
+                case 'editar_dispensario':
+                    include_once("dispensario/editar_dispensario.php");
+                    break;
+
+                case 'excluir_dispensario':
+                    include_once("dispensario/excluir_dispensario.php");
+                    break;
+
+                case 'atualizar_dispensario':
+                    include_once("dispensario/atualizar_dispensario.php");
+                    break;
+
+                case 'inserir_dispensario':
+                    include_once("dispensario/inserir_dispensario.php");
+                    break;
+
+                case 'pesquisa_deposito':
+                    include_once("dispensario/sch_disp_itens_depst.php");
+                    break;
+    
 
                 default:
                 include_once("home.php");
@@ -198,6 +238,15 @@ include("../db/protect.php");
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="../js/autocomplete.js"></script>
+
+    <!-- <script src="../js/jquery-3.6.4.min.js"></script> -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     
     <script type="text/javascript">
         $('.confirmaEdit').on('click', function(){

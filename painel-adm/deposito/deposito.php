@@ -2,7 +2,7 @@
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Estoque de Insumos</h3>
+                <h3>Depósito</h3>
                 <a href="index.php?menuop=cadastro_deposito">
                     <button class="btn">Inserir</button>
                 </a>
@@ -29,8 +29,6 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
-                        <th>Tipo de Insumo</th>
-                        <th>Setor</th>
                         <th>Validade</th>
                         <th>Dias para o vencimento</th>
                     </tr>
@@ -45,17 +43,15 @@
 
                         $txt_pesquisa_deposito = (isset($_POST["txt_pesquisa_deposito"]))?$_POST["txt_pesquisa_deposito"]:"";
 
-                        $sql = "SELECT
-                                    d.id, d.nome, d.quantidade, date_format(d.validade, '%d/%m/%Y') AS validade, tpIn.tipo, s.setor, datediff(d.validade, curdate()) as diasParaVencimento
-                                    FROM deposito AS d 
-                                    INNER JOIN tipos_insumos AS tpIn 
-                                    ON d.tipo_tipoInsumos_ID = tpIn.id 
-                                    INNER JOIN setores AS s ON d.setor_setorID = s.id 
+                        $sql = "SELECT d.deposito_id, d.deposito_Qtd, date_format(d.deposito_Validade, '%d/%m/%Y') as validadedeposito, i.nome, datediff(d.deposito_Validade, curdate()) as diasParaVencimentodeposito
+                                    FROM deposito d 
+                                    INNER JOIN insumos i 
+                                    ON d.deposito_InsumosID = i.id 
                                     WHERE
-                                        d.id='{$txt_pesquisa_deposito}' or
-                                        d.nome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        tpIn.id LIKE '%{$txt_pesquisa_deposito}%' or
-                                        s.setor LIKE '%{$txt_pesquisa_deposito}%'
+                                        d.deposito_id='{$txt_pesquisa_deposito}' or
+                                        i.nome LIKE '%{$txt_pesquisa_deposito}%' or
+                                        d.deposito_Qtd LIKE '%{$txt_pesquisa_deposito}%' or
+                                        d.deposito_Validade LIKE '%{$txt_pesquisa_deposito}%'
                                         ORDER BY nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -64,17 +60,7 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <!--
-                            <a href="index.php?menuop=editar_deposito&idInsumoDeposito=<?=$dados["id"]?>"
-                                class="confirmaEdit">
-                                <button class="btn">
-                                    <span class="icon">
-                                        <ion-icon name="create-outline"></ion-icon>
-                                    </span>
-                                </button>
-                            </a>
-                            -->
-                            <a href="index.php?menuop=excluir_deposito&idInsumoDeposito=<?=$dados["id"]?>"
+                            <a href="index.php?menuop=excluir_deposito&idInsumodeposito=<?=$dados["deposito_id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
 
@@ -84,26 +70,24 @@
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["id"]?></td>
+                        <td><?=$dados["deposito_id"]?></td>
                         <td><?=$dados["nome"]?></td>
-                        <td><?=$dados["quantidade"]?></td>
-                        <td><?=$dados["tipo"]?></td>
-                        <td><?=$dados["setor"]?></td>
-                        <td><?=$dados["validade"]?></td>
+                        <td><?=$dados["deposito_Qtd"]?></td>
+                        <td><?=$dados["validadedeposito"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];
  
-                                if($dados["diasParaVencimento"] <= $dias[0]){                                    
+                                if($dados["diasParaVencimentodeposito"] <= $dias[0]){                                    
                                 ?> class="vermelho" <?php
-                                } else if($dados["diasParaVencimento"] <= $dias[1]){
+                                } else if($dados["diasParaVencimentodeposito"] <= $dias[1]){
                                     ?> class="amarelo" <?php
-                                } else if($dados["diasParaVencimento"] > $dias[1]){
+                                } else if($dados["diasParaVencimentodeposito"] > $dias[1]){
                                     ?> class="verde" <?php
                                 } 
-                                ?>><?php if ($dados["diasParaVencimento"] <= 0){
+                                ?>><?php if ($dados["diasParaVencimentodeposito"] <= 0){
                                     echo "INSUMO VENCIDO!";
                                 } else{
-                                    echo $dados["diasParaVencimento"] . " dia(s) para o vencimento";
+                                    echo $dados["diasParaVencimentodeposito"] . " dia(s) para o vencimento";
                                 }
                                 ?>
                         </td>
@@ -115,11 +99,11 @@
             </table>
             <div class="paginacao">
                 <?php
-                    $sqlTotalDeposito = "SELECT id FROM deposito";
-                    $queryTotalDeposito = mysqli_query($conexao,$sqlTotalDeposito) or die(mysqli_error($conexao));
+                    $sqlTotaldeposito = "SELECT deposito_id FROM deposito";
+                    $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
 
-                    $numTotalDeposito = mysqli_num_rows($queryTotalDeposito);
-                    $totalPaginasDeposito = ceil($numTotalDeposito/$quantidade_registros_deposito);
+                    $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+                    $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                     
                     echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
 
@@ -129,7 +113,7 @@
                         <?php
                     } 
 
-                    for($i=1;$i<=$totalPaginasDeposito;$i++){
+                    for($i=1;$i<=$totalPaginasdeposito;$i++){
 
                         if ($i >= ($pagina_deposito) && $i <= ($pagina_deposito+5)) {
                             
@@ -141,13 +125,13 @@
                         }          
                     }
 
-                    if ($pagina_deposito<($totalPaginasDeposito-5)) {
+                    if ($pagina_deposito<($totalPaginasdeposito-5)) {
                         ?>
                             <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasDeposito\">Fim</a>";
+                    echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
                 ?>
             </div>
         </div>

@@ -21,3 +21,4 @@ function aparece() {
     formBoxLogin.style.display = "block";
     formBoxRegister.style.display = "none";
 }
+
