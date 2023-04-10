@@ -17,7 +17,7 @@
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                     ?>
-                    <h2><?=$dados['qtd']?></h2>
+                    <h2><?=$dados['deposito_Qtd']?></h2>
                     <?php
                         }
                     ?>

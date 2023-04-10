@@ -66,11 +66,13 @@ create table dispensario(
 	dispensario_id int primary key auto_increment,
     dispensario_Qtd int not null,
     dispensario_Validade date not null,
-    dispensario_InsumosID int not null,
-	foreign key(dispensario_InsumosID) references insumos(id),
+    dispensario_depositoId int not null,
+	foreign key(dispensario_depositoId) references deposito(deposito_id),
     dispensario_localId int not null,
     foreign key(dispensario_localId) references local_dispensario(local_id)
 );
+
+drop table dispensario;
 
 insert into dispensario values 
 	(null, 20, '2023-04-05', 1, 1),
@@ -153,6 +155,7 @@ SELECT
 	dep.deposito_InsumosID,
     dep.deposito_Validade,
     dep.deposito_Qtd,
+    dep.deposito_id,
     ins.nome 
 	FROM deposito dep 
     INNER JOIN insumos ins 
@@ -163,7 +166,9 @@ select * from deposito;
 update deposito dep 
 	inner join dispensario disp 
     set 
-		dep.deposito_Qtd = dep.deposito_Qtd-disp
+		dep.deposito_Qtd = dep.deposito_Qtd-disp;
+        
+select * from deposito;
 
 
 select sum(quantidade) from deposito WHERE nome like '%mela%' or id=2;

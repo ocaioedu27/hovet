@@ -2,16 +2,24 @@
     <h2>Inserir Insumo no Dispensário</h2>
 </header>
 <?php 
-$quantidadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["quantidadeInsumodispensario"]);
-$validadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["validadeInsumodispensario"]);
+
 $depositoID_Insumodispensario = mysqli_real_escape_string($conexao,$_POST["depositoID_Insumodispensario"]);
-$depositoID_Insumodispensario = $depositoID_Insumodispensario[0];
+$depositoID_Insumodispensario = strtok($depositoID_Insumodispensario, " ");
+// echo "id do insumo no deposito: " . $depositoID_Insumodispensario;
+
+$quantidadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["quantidadeInsumoDispensario"]);
+echo "\nQuantidade de insumo no dispensario: " . $quantidadeInsumodispensario;
+
+$validadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["validadeInsumoDeposito"]);
+echo "\nValidade do insumo vindo do deposito: " . $validadeInsumodispensario;
+
 $localInsumodispensario = mysqli_real_escape_string($conexao,$_POST["localInsumodispensario"]);
-$localInsumodispensario = $localInsumodispensario[0];
+$localInsumodispensario = strtok($localInsumodispensario, " ");
+
 $sql = "INSERT INTO dispensario (
     dispensario_Qtd,
     dispensario_Validade,
-    dispensario_InsumosID,
+    dispensario_depositoId,
     dispensario_localId)
     VALUES(
         {$quantidadeInsumodispensario},
@@ -20,9 +28,7 @@ $sql = "INSERT INTO dispensario (
         {$localInsumodispensario}
     )";
 
-$resultado_inserir_disp = mysqli_query($conexao, $sql);
-
-if ($resultado_inserir_disp) {
+if (mysqli_query($conexao, $sql)) {
     echo "O Insumo foi cadastrado no dispensário do sistema com sucesso!";    
 } else {
     die("Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
@@ -34,11 +40,9 @@ $novaQtdInsumo_deposito = $quantidadeInsumoDeposito-$quantidadeInsumodispensario
 
 $sql_atualiza_qtd_deposito = "UPDATE deposito 
     SET deposito_Qtd = '{$novaQtdInsumo_deposito}' 
-    WHERE id={$insumoID_Insumodispensario}";
+    WHERE deposito_id={$depositoID_Insumodispensario}";
 
-$resultado_atualiza_deposito_qtd = mysqli_query($conexao, $sql_atualiza_qtd_deposito);
-
-if ($resultado_atualiza_deposito_qtd) {
+if (mysqli_query($conexao, $sql_atualiza_qtd_deposito)) {
     echo "Quantidade do insumo no Depósito atualizada com sucesso!";
 } else {
     die("Erro ao executar a inserção. " . mysqli_error($conexao));

@@ -352,6 +352,11 @@ span.icon {
 
 .cards.cadastro_deposito{
     width: 340px;
+    height: 410px;
+}
+
+.cards.cadastro_dispensario{
+    width: 340px;
     height: 625px;
 }
 
@@ -435,7 +440,7 @@ td.operacoes {
 .voltar{
     display: flex;
     align-items: center;
-    margin: 0 auto;
+    margin: 0 24px;
 }
 
 .voltar h4{

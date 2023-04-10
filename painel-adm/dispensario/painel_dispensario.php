@@ -25,6 +25,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
+                        <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
@@ -52,7 +53,7 @@
                                     lcd.local_nome
                                     FROM dispensario d 
                                     INNER JOIN insumos i 
-                                    ON d.dispensario_InsumosID = i.id 
+                                    ON d.dispensario_depositoId = i.id 
                                     INNER JOIN local_dispensario lcd 
                                     ON d.dispensario_localId = lcd.local_id
                                     WHERE

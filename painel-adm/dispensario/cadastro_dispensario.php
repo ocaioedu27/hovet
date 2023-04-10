@@ -1,7 +1,7 @@
 
 
 <div class="container cadastro_all">
-    <div class="cards cadastro_deposito">
+    <div class="cards cadastro_dispensario">
         <div class="voltar">
             <h4>Movendo itens do Depósto para o Dispensário</h4>
             <a href="index.php?menuop=dispensario" class="confirmaVolta">
@@ -16,11 +16,9 @@
             <div class="form-group">
                 <label for="depositoID_Insumodispensario">Nome</label>
                 <select class="form-control-sm" name="depositoID_Insumodispensario" id="depositoID_Insumodispensario" required>
-                    <option>2123</option>
                     <?php
                     
                     $sql = "SELECT
-                        dep.deposito_InsumosID,
                         dep.deposito_Validade,
                         dep.deposito_Qtd,
                         dep.deposito_id,
