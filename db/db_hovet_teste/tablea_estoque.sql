@@ -1,26 +1,28 @@
 use dbhovetTeste;
 
-create table tipos_movimentacao(
-	id int primary key auto_increment,
-    tipo varchar(256),
-    Descricao varchar(256)
+create table tipos_movimentacoes(
+	tipos_movimentacoes_id int primary key auto_increment,
+    tipos_movimentacoes_movimentacao varchar(256),
+    tipos_movimentacoes_descricao varchar(256)
 );
 
-insert into tipos_movimentacao values
+insert into tipos_movimentacoes values
 	(null,"Inserção", "Inserção de insumo(s) no estoque."),
     (null,"Retirada", "Retirada de insumo(s) do estoque."),
     (null,"Doação", "Doação de insumo(s) que irão para o estoque."),
     (null,"Permuta", "Troca de insumo(s) do estoque com outras instituições.");
     
-select * from tipos_movimentacao;
+select * from tipos_movimentacoes;
+
+drop table tipos_movimentacoes;
 
 #################################################################################
 
 ## Depósito ##
 
 create table setores (
-	id int primary key auto_increment,
-    setor varchar(100) not null
+	setores_id int primary key auto_increment,
+    setores_setor varchar(100) not null
 );
 
 insert into setores values
@@ -75,10 +77,10 @@ create table dispensario(
 drop table dispensario;
 
 insert into dispensario values 
-	(null, 20, '2023-04-05', 1, 1),
-    (null, 10, '2023-04-09', 3, 2);
+	(null, 10, '2023-04-06', 2, 2);
     
 select * from dispensario;
+select * from deposito;
 
 create table local_dispensario (
 	local_id int primary key not null auto_increment,
@@ -102,9 +104,26 @@ SELECT
     lcd.local_nome
 	FROM dispensario d 
     INNER JOIN insumos i 
-    ON d.dispensario_InsumosID = i.id
+    #ON d.dispensario_depositoId = i.id
+    INNER JOIN deposito deps
+    ON deps.deposito_InsumosID = i.id
     INNER JOIN local_dispensario lcd 
     ON d.dispensario_localId = lcd.local_id;
+    
+SELECT 
+	disp.dispensario_id,
+	disp.dispensario_Qtd,
+	date_format(disp.dispensario_Validade, '%d/%m/%Y') AS validadeDispensario,
+    i.nome,
+    datediff(disp.dispensario_Validade, curdate()) AS diasParaVencimentoDispensario,
+    lcd.local_nome
+    FROM dispensario disp
+	INNER JOIN deposito deps
+    ON disp.dispensario_depositoId = deps.deposito_id
+    INNER JOIN insumos i
+    ON deps.deposito_InsumosID = i.id
+    INNER JOIN local_dispensario lcd 
+    ON disp.dispensario_localId = lcd.local_id;
     
 
 create table armario(
@@ -169,6 +188,8 @@ update deposito dep
 		dep.deposito_Qtd = dep.deposito_Qtd-disp;
         
 select * from deposito;
+
+select * from dispensario;
 
 
 select sum(quantidade) from deposito WHERE nome like '%mela%' or id=2;

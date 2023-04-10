@@ -6,9 +6,21 @@
                 <a href="index.php?menuop=cadastro_deposito">
                     <button class="btn">Inserir</button>
                 </a>
-                <a href="#">
-                    <button class="btn">Retirar</button>
-                </a>
+                <div class="dropdown">
+                    <a href="#">
+                        <button class="btn">Retirar</button>
+                    </a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="index.php?menuop=cadastro_dispensario">Mover para o dispensário</a>
+                            </li>
+                            <li>
+                                <a href="#">Permutar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div>
                 <form action="index.php?menuop=deposito" method="post" class="form_buscar">
@@ -29,6 +41,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
+                        <th>Unidade</th>
                         <th>Validade</th>
                         <th>Dias para o vencimento</th>
                     </tr>
@@ -43,13 +56,20 @@
 
                         $txt_pesquisa_deposito = (isset($_POST["txt_pesquisa_deposito"]))?$_POST["txt_pesquisa_deposito"]:"";
 
-                        $sql = "SELECT d.deposito_id, d.deposito_Qtd, date_format(d.deposito_Validade, '%d/%m/%Y') as validadedeposito, i.nome, datediff(d.deposito_Validade, curdate()) as diasParaVencimentodeposito
+                        $sql = "SELECT
+                                    d.deposito_id, 
+                                    d.deposito_Qtd,
+                                    date_format(d.deposito_Validade, '%d/%m/%Y') as validadedeposito,
+                                    i.nome,
+                                    i.unidade,
+                                    datediff(d.deposito_Validade, curdate()) as diasParaVencimentodeposito
                                     FROM deposito d 
                                     INNER JOIN insumos i 
                                     ON d.deposito_InsumosID = i.id 
                                     WHERE
                                         d.deposito_id='{$txt_pesquisa_deposito}' or
                                         i.nome LIKE '%{$txt_pesquisa_deposito}%' or
+                                        i.unidade LIKE '%{$txt_pesquisa_deposito}%' or
                                         d.deposito_Qtd LIKE '%{$txt_pesquisa_deposito}%' or
                                         d.deposito_Validade LIKE '%{$txt_pesquisa_deposito}%'
                                         ORDER BY nome ASC 
@@ -73,6 +93,7 @@
                         <td><?=$dados["deposito_id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["deposito_Qtd"]?></td>
+                        <td><?=$dados["unidade"]?></td>
                         <td><?=$dados["validadedeposito"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];

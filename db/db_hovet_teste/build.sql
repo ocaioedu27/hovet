@@ -3,6 +3,9 @@ create database dbhovetTeste;
 
 use dbhovetTeste;
 
+
+######################################################
+
 #Criando a tabela de tipos de usuários 
 create table tipo_usuario (
 	id int primary key auto_increment,
@@ -32,32 +35,18 @@ create table usuarios(
 ######################################################
 
 #Criando a tabela do depósito
+
 create table deposito(
-	id int primary key auto_increment,
-    nome varchar(256) not null,
-    quantidade int not null,
-    tipo_tipoInsumos_ID int not null,
-    foreign key(tipo_tipoInsumos_ID) references tipos_insumos(id),
-    setor_setorID int not null,
-    foreign key(setor_setorID) references setores(id),
-    validade date not null
+	deposito_id int primary key auto_increment,
+    deposito_Qtd int not null,
+    deposito_Validade date not null,
+    deposito_InsumosID int not null,
+	foreign key(deposito_InsumosID) references insumos(id)
 );
 
 # Inserção de conteúdo para o depósito
-INSERT INTO `deposito` (`id`, `nome`, `quantidade`, `tipo_tipoInsumos_ID`, `setor_setorID`, `validade`) VALUES
-(null, 'Dorflex', 10, 1, 1, '2023-03-25'),
-(null, 'Luva cirúrgica', 5, 2, 1, '2023-03-01'),
-(null, 'Touca corúrgica', 8, 1, 2, '2023-04-24'),
-(null, 'Paracetamol', 2, 1, 1, '2023-05-10'),
-(null, 'Dipirona', 5, 1, 2, '2023-04-14'),
-(null, 'Torsilax', 12, 1, 3, '2023-04-01'),
-(null, 'Paracetamol', 8, 1, 1, '2023-04-27'),
-(null, 'Acetona', 12, 2, 2, '2023-05-24'),
-(null, 'Melatonina', 5, 1, 3, '2023-05-12'),
-(null, 'Imosec', 8, 1, 2, '2023-07-06'),
-(null, 'Pregabalina', 12, 1, 1, '2023-04-05'),
-(null, 'Acetona', 5, 2, 3, '2023-06-09'),
-(null, 'Melatonina', 8, 1, 2, '2023-06-14');
+INSERT INTO `deposito` (`deposito_id`, `deposito_Qtd`, `deposito_Validade`, `deposito_InsumosID`) VALUES
+(null, 'Dorflex', 10, 1, 1, '2023-03-25');
 
 ######################################################
 

@@ -5,9 +5,11 @@
     $idInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["idInsumoDeposito"]);
     $nomeInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["nomeInsumoDeposito"]);
     $tipoInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["tipoInsumoDeposito"]);
-    $tipoInsumoDeposito = $tipoInsumoDeposito[0];
+    // $tipoInsumoDeposito = $tipoInsumoDeposito[0];
+    $tipoInsumoDeposito = strtok($tipoInsumoDeposito, " ");
     $setorInsumoDeposito = mysqli_real_escape_string($conexao,$_POST["setorInsumoDeposito"]);
-    $setorInsumoDeposito = $setorInsumoDeposito[0];
+    // $setorInsumoDeposito = $setorInsumoDeposito[0];
+    $setorInsumoDeposito = strtok($setorInsumoDeposito, " ");
     $sql = "UPDATE deposito SET 
         nome_insumoNome = '{$nomeInsumoDeposito}',
         tipo_tipoInsumos_ID = {$tipoInsumoDeposito},

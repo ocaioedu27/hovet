@@ -6,7 +6,8 @@
     $nomeUsuario = mysqli_real_escape_string($conexao,$_POST["nomeUsuario"]);
     $mailUsuario = mysqli_real_escape_string($conexao,$_POST["mailUsuario"]);
     $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
-    $tipoUsuario = $tipoUsuario[0];
+    // $tipoUsuario = $tipoUsuario[0];
+    $tipoUsuario = strtok($tipoUsuario, " ");
     $siapeUsuario = mysqli_real_escape_string($conexao,$_POST["siapeUsuario"]);
     $senhaUsuario = mysqli_real_escape_string($conexao,$_POST["senhaUsuario"]);
     $senhaUsuario = password_hash($senhaUsuario, PASSWORD_DEFAULT);

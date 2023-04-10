@@ -26,18 +26,22 @@ END$$
 
 DELIMITER ;
 
-# Atualiza Deposito
+# Atualiza Deposito depois de passar insumo para o dispensario
 DELIMITER $$
 
-CREATE TRIGGER before_deposito_to_dispensario_update
-	BEFORE UPDATE ON dispensario FOR EACH ROW BEGIN
-    UPDATE Deposito set
-    deposito_Qtd
+CREATE TRIGGER after_deposito_from_dispensario
+	AFTER INSERT 
+    ON dispensario
+    FOR EACH ROW
+    BEGIN
+		UPDATE deposito as deps set
+		deposito_Qtd = deposito_Qtd - NEW.dispensario_Qtd
+		WHERE deposito_id = NEW.dispensario_depositoId;
 END$$
 
 DELIMITER ;
 
-drop trigger before_insumo_update;
+drop trigger after_deposito_from_dispensario;
 
 select * from deposito_audit;
 

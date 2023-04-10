@@ -6,7 +6,8 @@
     $nomeInsumo = mysqli_real_escape_string($conexao,$_POST["nomeInsumo"]);
     $unidadeInsumo = mysqli_real_escape_string($conexao,$_POST["unidadeInsumo"]);
     $tipoInsumo = mysqli_real_escape_string($conexao,$_POST["tipoInsumo"]);
-    $tipoInsumo = $tipoInsumo[0];
+    $tipoInsumo = strtok($tipoInsumo, " ");
+    // $tipoInsumo = $tipoInsumo[0];
     $sql = "INSERT INTO insumos (
         nome,
         unidade,

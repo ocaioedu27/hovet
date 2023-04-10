@@ -29,6 +29,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
+                        <th>Unidade</th>
                         <th>Validade</th>
                         <th>Local</th>
                         <th>Dias para o vencimento</th>
@@ -44,23 +45,27 @@
 
                         $txt_pesquisa_dispensario = (isset($_POST["txt_pesquisa_dispensario"]))?$_POST["txt_pesquisa_dispensario"]:"";
 
-                        $sql = "SELECT
-                                    d.dispensario_id,
-                                    d.dispensario_Qtd,
-                                    date_format(d.dispensario_Validade, '%d/%m/%Y') as validadeDispensario,
-                                    i.nome,
-                                    datediff(d.dispensario_Validade, curdate()) as diasParaVencimentoDispensario,
-                                    lcd.local_nome
-                                    FROM dispensario d 
-                                    INNER JOIN insumos i 
-                                    ON d.dispensario_depositoId = i.id 
-                                    INNER JOIN local_dispensario lcd 
-                                    ON d.dispensario_localId = lcd.local_id
+                        $sql = "SELECT 
+                                        disp.dispensario_id,
+                                        disp.dispensario_Qtd,
+                                        date_format(disp.dispensario_Validade, '%d/%m/%Y') AS validadeDispensario,
+                                        i.nome,
+                                        i.unidade,
+                                        datediff(disp.dispensario_Validade, curdate()) AS diasParaVencimentoDispensario,
+                                        lcd.local_nome
+                                        FROM dispensario disp
+                                        INNER JOIN deposito deps
+                                        ON disp.dispensario_depositoId = deps.deposito_id
+                                        INNER JOIN insumos i
+                                        ON deps.deposito_InsumosID = i.id
+                                        INNER JOIN local_dispensario lcd 
+                                        ON disp.dispensario_localId = lcd.local_id
                                     WHERE
-                                        d.dispensario_id='{$txt_pesquisa_dispensario}' or
+                                        disp.dispensario_id='{$txt_pesquisa_dispensario}' or
                                         i.nome LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        d.dispensario_Qtd LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        d.dispensario_Validade LIKE '%{$txt_pesquisa_dispensario}%' or
+                                        i.unidade LIKE '%{$txt_pesquisa_deposito}%' or
+                                        disp.dispensario_Qtd LIKE '%{$txt_pesquisa_dispensario}%' or
+                                        disp.dispensario_Validade LIKE '%{$txt_pesquisa_dispensario}%' or
                                         lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%'
                                         ORDER BY nome ASC 
                                         LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
@@ -83,6 +88,7 @@
                         <td><?=$dados["dispensario_id"]?></td>
                         <td><?=$dados["nome"]?></td>
                         <td><?=$dados["dispensario_Qtd"]?></td>
+                        <td><?=$dados["unidade"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
                         <td><?=$dados["local_nome"]?></td>
                         <td <?php 

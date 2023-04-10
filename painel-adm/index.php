@@ -62,7 +62,7 @@ include("../db/protect.php");
             <div class="menu_op_adm">
                 <a href="index.php?menuop=pagina_principal">Página Principal</a>
                 <div class="dropdown">
-                    <a href="index.php?menuop=deposito">Estoques</a>
+                    <a href="#">Estoques</a>
                     <div class="dropdown-content">
                         <ul>
                             <li>
@@ -75,7 +75,7 @@ include("../db/protect.php");
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="index.php?menuop=insumos">Insumos</a>
+                    <a href="#">Insumos</a>
                     <div class="dropdown-content">
                         <ul>
                             <li>
