@@ -25,7 +25,7 @@ include("../db/protect.php");
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 
-    <link rel="stylesheet" href="../css/painel.css">
+    <!-- <link rel="stylesheet" href="../css/painel.css"> -->
     <link rel="stylesheet" href="../css/style_personalizado.css">
 
     <!--REFERENCIA PARA O FAVICON -->
@@ -61,15 +61,19 @@ include("../db/protect.php");
             </div>
             <div class="menu_op_adm">
                 <a href="index.php?menuop=pagina_principal">Página Principal</a>
+                <a href="index.php?menuop=deposito">Depósito</a>
                 <div class="dropdown">
-                    <a href="#">Estoques</a>
-                    <div class="dropdown-content">
+                    <a href="#">Dispensário</a>
+                    <div class="dropdown-content dispensario">
                         <ul>
                             <li>
-                                <a href="index.php?menuop=deposito">Depósito</a>
+                                <a href="index.php?menuop=dispensario">Dispensário - Geral</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=dispensario">Dispensário</a>
+                                <a href="index.php?menuop=painel_armario">Armário</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=painel_gaveteiro">Estante - Gaveteiros</a>
                             </li>
                         </ul>
                     </div>
@@ -222,6 +226,14 @@ include("../db/protect.php");
 
                 case 'inserir_dispensario':
                     include_once("dispensario/inserir_dispensario.php");
+                    break;
+                    
+                case 'painel_armario':
+                    include_once("dispensario/armario/painel_armario.php");
+                    break;
+
+                case 'painel_gaveteiro':
+                    include_once("dispensario/estante/gaveteiro/painel_gaveteiro.php");
                     break;
 
                 case 'pesquisa_deposito':

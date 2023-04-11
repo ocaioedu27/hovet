@@ -5,7 +5,7 @@
     $quantidadeInsumodeposito = mysqli_real_escape_string($conexao,$_POST["quantidadeInsumodeposito"]);
     $validadeInsumodeposito = mysqli_real_escape_string($conexao,$_POST["validadeInsumodeposito"]);
     $insumoID_Insumodeposito = mysqli_real_escape_string($conexao,$_POST["insumoID_Insumodeposito"]);
-    $insumoID_Insumodeposito = $insumoID_Insumodeposito[0];
+    $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito, " ");
     $sql = "INSERT INTO deposito (
         deposito_Qtd,
         deposito_Validade,

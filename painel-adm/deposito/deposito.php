@@ -14,8 +14,6 @@
                         <ul>
                             <li>
                                 <a href="index.php?menuop=cadastro_dispensario">Mover para o dispensário</a>
-                            </li>
-                            <li>
                                 <a href="#">Permutar</a>
                             </li>
                         </ul>
@@ -83,7 +81,6 @@
                             <a href="index.php?menuop=excluir_deposito&idInsumodeposito=<?=$dados["deposito_id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
-
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
                                     </span>

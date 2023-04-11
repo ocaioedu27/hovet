@@ -47,6 +47,51 @@
     <div class="group_cards">
         <div class="content_cards">
             <div class="top_cards">
+                <h2>Dispensário</h2>
+            </div>
+            <div class="cards">
+                <div class="sub_dados">
+                    <div class="titulo">
+                        <h4>Insumos</h4>
+                        <span class="icon">
+                            <ion-icon name="file-tray-full-outline"></ion-icon>
+                        </span>
+                    </div>
+                    <?php
+                        $sql = "SELECT COUNT(*) as dispensario_Qtd FROM dispensario";
+                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                        while($dados = mysqli_fetch_assoc($rs)){
+                    ?>
+                    <h2><?=$dados['dispensario_Qtd']?></h2>
+                    <?php
+                        }
+                    ?>
+                    <p>Total de insumos</p>
+                </div>
+                <div class="vencimentoProx">
+                    <div class="titulo">
+                        <h4 style="color: red;">Vencimento</h4>
+                        <span class="icon">
+                            <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
+                        </span>
+                    </div>
+                    <?php
+                        $sql = "SELECT count(dispensario_id) as vencidos_proxVencimento FROM dispensario where dispensario_Validade<=curdate() or dispensario_Validade <= curdate() + interval 30 day";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                        while($vencidos = mysqli_fetch_assoc($result)){
+                     ?>
+                    <h2><?=$vencidos['vencidos_proxVencimento']?></h2>
+                    <?php
+                        }
+                    ?>
+                    <p>Próximos ou Vencidos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group_cards">
+        <div class="content_cards">
+            <div class="top_cards">
                 <h2>Movimentacoes</h2>
             </div>
             <div class="cards">

@@ -11,6 +11,35 @@ ul {
     margin-bottom: 0;
 }
 
+.navbar{
+	background-color: #04AA6D !important;	
+}
+
+.navbar img{
+	width: 90px;
+}
+.navbar li{
+	list-style: none;
+	margin-bottom: 10px;
+}
+.navbar a{
+	color: #071e51;
+	font-size: 15px;
+}
+.navbar a:hover{
+	color: #244181;
+}
+.nav{
+	background-color:#04AA6D !important;
+}
+.nav a{
+	color: #071e51;
+	font-size: 14px;
+}
+.nav .active{
+	background-color:#696969 !important;
+}
+
 .container{
     display: flex;
     justify-content: center;
@@ -110,10 +139,41 @@ input.btn_cadastrar:hover{
     z-index: 1;
     transition: .9s;
     border-radius: 6px;
+    margin-left: 20px;
 }
 
 .dropdown-content a{
     margin-left: 0 !important;
+    position: relative;
+    font-size: 1.1em;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dropdown-content a::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+    color: #0B0B0B;
+}
+
+.dropdown-content a:hover::after{
+    color: #fff;
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.dropdown-content.dispensario {
+    width: 210px;
 }
 
 .dropdown:hover .dropdown-content {
@@ -165,7 +225,7 @@ input.btn_cadastrar:hover{
 .menu_op_adm {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 30px;
     margin-bottom: 0;
 }
 
@@ -175,7 +235,6 @@ input.btn_cadastrar:hover{
     color: #fff;
     text-decoration: none;
     font-weight: 500;
-    margin-left: 30px;
 }
 
 .menu_op_adm a::after{
@@ -194,6 +253,7 @@ input.btn_cadastrar:hover{
 }
 
 .menu_op_adm a:hover::after{
+    color: #fff;
     transform-origin: left;
     transform: scaleX(1);
 }

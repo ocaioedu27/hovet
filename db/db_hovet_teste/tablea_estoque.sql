@@ -68,8 +68,8 @@ create table dispensario(
 	dispensario_id int primary key auto_increment,
     dispensario_Qtd int not null,
     dispensario_Validade date not null,
-    dispensario_depositoId int not null,
-	foreign key(dispensario_depositoId) references deposito(deposito_id),
+    dispensario_depositoId int,
+	foreign key(dispensario_depositoId) references deposito(deposito_id) on delete cascade,
     dispensario_localId int not null,
     foreign key(dispensario_localId) references local_dispensario(local_id)
 );
@@ -127,39 +127,54 @@ SELECT
     
 
 create table armario(
-	armario_id int primary key not null,
-    nome varchar (20) not null,
-    foreign key(id_armario_dispensarioId) references dispensario(dispensario_id)
+	armario_id int primary key auto_increment,
+    armario_dispensario_id int not null,
+    foreign key(armario_dispensario_id) references dispensario(dispensario_id) on delete cascade
 	);
     
-insert into armario values 
-	(1);
+# Salvando dados que foram para o dispensario e diferenciando pelo tipo de local
+insert into armario (armario_dispensario_id)
+	SELECT dispensario_id FROM dispensario WHERE dispensario_localId = 1;
     
-select * from armario a 
-	inner join dispensario dis
-    on a.id_armario_dispensarioId = dis.dispensario_id;
+# Para delete cascade
+alter table armario drop foreign key armario_ibfk_1;
 
+alter table armario add constraint armario_ibfk_1
+	foreign key (armario_dispensario_id)
+    references dispensario(dispensario_id) on delete cascade;
+    
+select * from armario;
+
+show create table armario;
+
+drop table armario;
 
 create table estante(
-	estante_id int primary key not null,
-    nome varchar (20) not null,
-	id_dispensarioId int not null,
-    foreign key(id_estante_dispensarioId) references dispensario(dispensario_id)
+	estante_id int primary key auto_increment,
+    estante_gaveteiro_id int not null,
+    foreign key(estante_gaveteiro_id) references gaveteiro(gaveteiro_id),
+	estante_dispensario_id int not null,
+    foreign key(estante_dispensario_id) references dispensario(dispensario_id)
 	);
-    
-insert into estante value (2);
 
-select * from estante e 
-	inner join dispensario dis
-    on e.id_estante_dispensarioId = dis.dispensario_id;
+insert into estante values ();
+
+drop table estante;
+
     
 create table gaveteiro (
-	gaveteiro_id int primary key not null,
-    inicial varchar (10) not null,
-    id_estanteId_dispensarioId int not null,
-    foreign key (id_gaveteiro_estanteId) references estante(id_dispensarioId));
+	gaveteiro_id int primary key auto_increment,
+    gaveteiro_fileira varchar (10) not null);
     
-insert into gaveteiro value (2);
+insert into gaveteiro values 
+	(null, 'a - e'),
+    (null, 'f - i'),
+    (null, 'j - n'),
+    (null, 'o - r'),
+    (null, 's - w'),
+    (null, 'x - z');
+    
+drop table gaveteiro;
 
 select * from gaveteiro;
 
