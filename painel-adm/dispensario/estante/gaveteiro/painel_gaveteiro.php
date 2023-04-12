@@ -61,7 +61,7 @@
                                         INNER JOIN local_dispensario lcd 
                                         ON disp.dispensario_localId = lcd.local_id
                                     WHERE
-                                        disp.dispensario_localId = 3 AND 
+                                        (disp.dispensario_localId = 3 or disp.dispensario_localId = 2) AND 
                                         (disp.dispensario_id='{$txt_pesquisa_dispensario_gaveteiro}' or
                                         i.nome LIKE '%{$txt_pesquisa_dispensario_gaveteiro}%' or
                                         i.unidade LIKE '%{$txt_pesquisa_deposito}%' or

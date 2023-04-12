@@ -15,7 +15,11 @@
             '{$validadeInsumodeposito}',
             {$insumoID_Insumodeposito}
         )";
-        mysqli_query($conexao, $sql) or die("Erro ao executar a inserção. " . mysqli_error($conexao));
 
-        echo "O Insumo foi cadastrado no Depósito do sistema com sucesso!";
+        if (mysqli_query($conexao, $sql)) { 
+            echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";   
+        } else {
+            die("Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+        }
 ?>

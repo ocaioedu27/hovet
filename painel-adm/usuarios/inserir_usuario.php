@@ -38,14 +38,13 @@
         }
 
     } else{
-        echo "<script language='javascript'>window.alert('Erro ao cadastrar usuário'); </script>";
 
-        if ($eh_login_cadastro != null) {    
-            echo " <a href=\"/hovet/index.php?menuop=novo_cadastro_login\">Voltar ao formulário de cadastro</a> <br/>";
+        if ($eh_login_cadastro != null) {
+            die("//painel_login/Cadastro de novo usuário - Erro ao cadastrar novo usuário: " . mysqli_error($conexao));
         } else {
-            echo " <a href=\"/hovet/painel-adm/index.php?menuop=cadastro_usuario\">Voltar ao formulário de cadastro</a> <br/>";
+            die("//painel_usuarios/Cadastro de novo usuário - Erro ao cadastrar novo usuário: " . mysqli_error($conexao));
+            echo " <br/><br/><a href=\"/hovet/painel-adm/index.php?menuop=cadastro_usuario\">Voltar ao formulário de cadastro</a> <br/>";
         }
 
-        die("Erro: " . mysqli_error($conexao));
     }
 ?>

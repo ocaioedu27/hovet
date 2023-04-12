@@ -23,7 +23,8 @@ $sql = "INSERT INTO dispensario (
     )";
 
 if (mysqli_query($conexao, $sql)) {
-    echo "O Insumo foi cadastrado no dispensário do sistema com sucesso!";    
+    echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
+    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";   
 } else {
     die("Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
 }

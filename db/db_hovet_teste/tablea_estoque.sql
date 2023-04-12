@@ -124,61 +124,7 @@ SELECT
     ON deps.deposito_InsumosID = i.id
     INNER JOIN local_dispensario lcd 
     ON disp.dispensario_localId = lcd.local_id;
-    
 
-create table armario(
-	armario_id int primary key auto_increment,
-    armario_dispensario_id int not null,
-    foreign key(armario_dispensario_id) references dispensario(dispensario_id) on delete cascade
-	);
-    
-# Salvando dados que foram para o dispensario e diferenciando pelo tipo de local
-insert into armario (armario_dispensario_id)
-	SELECT dispensario_id FROM dispensario WHERE dispensario_localId = 1;
-    
-# Para delete cascade
-alter table armario drop foreign key armario_ibfk_1;
-
-alter table armario add constraint armario_ibfk_1
-	foreign key (armario_dispensario_id)
-    references dispensario(dispensario_id) on delete cascade;
-    
-select * from armario;
-
-show create table armario;
-
-drop table armario;
-
-create table estante(
-	estante_id int primary key auto_increment,
-    estante_gaveteiro_id int not null,
-    foreign key(estante_gaveteiro_id) references gaveteiro(gaveteiro_id),
-	estante_dispensario_id int not null,
-    foreign key(estante_dispensario_id) references dispensario(dispensario_id)
-	);
-
-insert into estante values ();
-
-drop table estante;
-
-    
-create table gaveteiro (
-	gaveteiro_id int primary key auto_increment,
-    gaveteiro_fileira varchar (10) not null);
-    
-insert into gaveteiro values 
-	(null, 'a - e'),
-    (null, 'f - i'),
-    (null, 'j - n'),
-    (null, 'o - r'),
-    (null, 's - w'),
-    (null, 'x - z');
-    
-drop table gaveteiro;
-
-select * from gaveteiro;
-
-select * from gaveteiro g inner join dispensario dis on g.id_gaveteiro_estanteId = dis.dispensario_id;
 
 select * from dispensario;
 
