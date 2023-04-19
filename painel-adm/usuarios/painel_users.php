@@ -40,17 +40,17 @@
 
                         $txt_pesquisa_usuarios = (isset($_POST["txt_pesquisa_usuarios"]))?$_POST["txt_pesquisa_usuarios"]:"";
 
-                        $sql = "SELECT u.id, u.nome, u.mail, u.siape, t.tipo 
+                        $sql = "SELECT u.usuario_id, u.usuario_nome, u.usuario_mail, u.usuario_siape, t.tipo_usuario_tipo 
                             FROM usuarios AS u
                             INNER JOIN tipo_usuario AS t
-                            on u.tipo_usuario_ID = t.id
+                            on u.usuario_tipo_usuario_id = t.tipo_usuario_id
                         WHERE
-                            u.id='{$txt_pesquisa_usuarios}' or
-                            u.nome LIKE '%{$txt_pesquisa_usuarios}%' or
-                            t.tipo LIKE '%{$txt_pesquisa_usuarios}%' or
-                            u.siape LIKE '%{$txt_pesquisa_usuarios}%' or
-                            u.mail LIKE '%{$txt_pesquisa_usuarios}%'
-                            ORDER BY nome ASC 
+                            u.usuario_id='{$txt_pesquisa_usuarios}' or
+                            u.usuario_nome LIKE '%{$txt_pesquisa_usuarios}%' or
+                            t.tipo_usuario_tipo LIKE '%{$txt_pesquisa_usuarios}%' or
+                            u.usuario_siape LIKE '%{$txt_pesquisa_usuarios}%' or
+                            u.usuario_mail LIKE '%{$txt_pesquisa_usuarios}%'
+                            ORDER BY usuario_nome ASC 
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
@@ -58,14 +58,14 @@
                     ?>
                     <tr>
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["usuario_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["id"]?>"
+                            <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["usuario_id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
@@ -74,11 +74,11 @@
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["id"]?></td>
-                        <td><?=$dados["nome"]?></td>
-                        <td><?=$dados["mail"]?></td>
-                        <td><?=$dados["tipo"]?></td>
-                        <td><?=$dados["siape"]?></td>
+                        <td><?=$dados["usuario_id"]?></td>
+                        <td><?=$dados["usuario_nome"]?></td>
+                        <td><?=$dados["usuario_mail"]?></td>
+                        <td><?=$dados["tipo_usuario_tipo"]?></td>
+                        <td><?=$dados["usuario_siape"]?></td>
                     </tr>
                     <?php
                         }
@@ -87,7 +87,7 @@
             </table>
             <div class="paginacao">
                 <?php
-                    $sqlTotalUsuarios = "SELECT id FROM usuarios";
+                    $sqlTotalUsuarios = "SELECT usuario_id FROM usuarios";
                     $queryTotalUsuarios = mysqli_query($conexao,$sqlTotalUsuarios) or die(mysqli_error($conexao));
 
                     $numTotalUsuarios = mysqli_num_rows($queryTotalUsuarios);

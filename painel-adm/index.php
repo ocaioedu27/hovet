@@ -15,7 +15,7 @@ include("../db/protect.php");
 
 <head>
 
-    <title>Painel Administrativo</title>
+    <title>HOVET</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,8 +30,8 @@ include("../db/protect.php");
 
     <!--REFERENCIA PARA O FAVICON -->
 
-    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="../img/favicon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/favicon.jpg" type="image/x-icon">
+    <link rel="icon" href="../img/favicon/favicon.jpg" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -102,7 +102,7 @@ include("../db/protect.php");
                     <div class="dropdown">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
-                            <?php echo $_SESSION['nome'];?>
+                            <?php echo $_SESSION['usuario_nome'];?>
                         </span>
                         <div class="dropdown-content sair">
                             <a href="../db/logout.php">Sair</a>
@@ -226,6 +226,10 @@ include("../db/protect.php");
 
                 case 'inserir_dispensario':
                     include_once("dispensario/inserir_dispensario.php");
+                    break;
+
+                case 'retirar_dispensario':
+                    include_once("dispensario/retirar_dispensario.php");
                     break;
                     
                 case 'painel_armario':

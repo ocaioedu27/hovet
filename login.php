@@ -28,11 +28,11 @@
                 <a href="#">Esqueceu a senha?</a>
             </div>
             <button class="btn" type="submit" name="btn-login">LOGIN</button>
-            <div class="login-register">
+            <!-- <div class="login-register">
                 <p>Não tem acesso?
                     <a href="index.php?menuop=novo_cadastro_login" class="register-link">Realizar Cadastro</a>
                 </p>
-            </div>
+            </div> -->
         </form>
     </div>
 </div>

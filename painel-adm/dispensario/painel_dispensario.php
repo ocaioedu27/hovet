@@ -6,7 +6,7 @@
                 <a href="index.php?menuop=cadastro_dispensario">
                     <button class="btn">Inserir</button>
                 </a>
-                <a href="#">
+                <a href="index.php?menuop=retirar_dispensario">
                     <button class="btn">Retirar</button>
                 </a>
             </div>

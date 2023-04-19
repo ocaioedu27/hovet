@@ -72,7 +72,11 @@ form.form_cadastro{
 .form-group{
     display: flex;
     flex-direction: column;
-    margin-bottom: 0,5rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-group:last-child{
+    align-items: center;
 }
 
 .form-group > p {
@@ -86,7 +90,7 @@ form.form_cadastro{
 
 input.btn_cadastrar{
     
-   width: 100%;
+   width: 50%;
    height: 45px;
    background: #0B0B0B;
    border: none;
@@ -99,8 +103,8 @@ input.btn_cadastrar{
 }
 
 input.btn_cadastrar:hover{
-    background-color: #fff;
-    color: #0B0B0B;
+    background-color: #04AA6D;
+    color: #fff;
     border: 1px solid;
 }
 
@@ -424,6 +428,11 @@ span.icon {
     height: 625px;
 }
 
+.cards.retirar_dispensario{
+    width: 640px;
+    height: 690px;
+}
+
 .content_cards > div {
     padding-left: 20px;
 }
@@ -504,7 +513,10 @@ td.operacoes {
 .voltar{
     display: flex;
     align-items: center;
-    margin: 0 24px;
+    margin: 0 auto;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .voltar h4{
@@ -541,4 +553,15 @@ select.form-control-sm{
 .relatorio:hover{
     color: #fff;
     background-color: #04AA6D;
+}
+
+form.form_retirar_dispensario {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+}
+
+input.form-control.descricao_retira_dispensario {
+    height: 8rem;
 }

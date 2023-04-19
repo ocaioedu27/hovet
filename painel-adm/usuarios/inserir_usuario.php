@@ -12,11 +12,11 @@
     $senhaUsuario = mysqli_real_escape_string($conexao,$_POST["senhaUsuario"]);
     $senhaUsuario = password_hash($senhaUsuario, PASSWORD_DEFAULT);
     $sql = "INSERT INTO usuarios (
-        nome,
-        mail,
-        tipo_usuario_ID,
-        siape,
-        senha)
+        usuario_nome,
+        usuario_mail,
+        usuario_tipo_usuario_id,
+        usuario_siape,
+        usuario_senha)
         VALUES(
             '{$nomeUsuario}',
             '{$mailUsuario}',

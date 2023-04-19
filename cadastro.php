@@ -57,7 +57,7 @@
                     
                     while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
                     ?>
-					<option><?=$tipoUsu["id"]?> - <?=$tipoUsu["tipo"]?></option>
+					<option><?=$tipoUsu["tipo_usuario_id"]?> - <?=$tipoUsu["tipo_usuario_tipo"]?></option>
 
                     <?php
                         }

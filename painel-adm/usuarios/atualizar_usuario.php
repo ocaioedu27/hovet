@@ -10,11 +10,11 @@
     $tipoUsuario = strtok($tipoUsuario, " ");
     $siapeUsuario = mysqli_real_escape_string($conexao,$_POST["siapeUsuario"]);
     $sql = "UPDATE usuarios SET 
-        nome = '{$nomeUsuario}',
-        mail = '{$mailUsuario}',
-        tipo_usuario_ID = {$tipoUsuario},
-        siap = '{$siapeUsuario}'
-        WHERE id={$idUsuario}
+        usuario_nome = '{$nomeUsuario}',
+        usuario_mail = '{$mailUsuario}',
+        usuario_tipo_usuario_id = {$tipoUsuario},
+        usuario_siap = '{$siapeUsuario}'
+        WHERE usuario_id={$idUsuario}
         ";
 
         if(mysqli_query($conexao, $sql)){

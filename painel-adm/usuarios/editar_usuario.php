@@ -1,7 +1,7 @@
 <?php
 $idUsuario = $_GET["idUsuario"];
 
-$sql = "SELECT u.id, u.nome, u.mail, t.tipo, u.siape FROM usuarios as u INNER JOIN tipo_usuario as t on u.tipo_usuario_ID = t.id WHERE u.id={$idUsuario}";
+$sql = "SELECT u.usuario_id, u.usuario_nome, u.usuario_mail, t.tipo_usuario_tipo, u.usuario_siape FROM usuarios as u INNER JOIN tipo_usuario as t on u.usuario_tipo_usuario_id = t.tipo_usuario_id WHERE u.usuario_id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
