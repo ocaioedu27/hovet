@@ -35,8 +35,8 @@ CREATE TRIGGER after_deposito_from_dispensario
     FOR EACH ROW
     BEGIN
 		UPDATE deposito as deps set
-		deposito_Qtd = deposito_Qtd - NEW.dispensario_Qtd
-		WHERE deposito_id = NEW.dispensario_depositoId;
+		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
+		WHERE deposito_id = NEW.dispensario_deposito_id;
 END$$
 
 DELIMITER ;

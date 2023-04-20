@@ -39,16 +39,16 @@
 
                         $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
 
-                        $sql = "SELECT i.id, i.nome, i.unidade, t.tipo 
+                        $sql = "SELECT i.insumos_id, i.insumos_nome, i.insumos_unidade, t.tipos_insumos_tipo
                         FROM insumos AS i
                         INNER JOIN tipos_insumos AS t
-                        on i.insumo_tipo_ID = t.id
+                        on i.insumos_tipo_insumos_id = t.tipos_insumos_id
                         WHERE
-                            i.insumo_tipo_ID=3 AND
-                            (i.id='{$txt_pesquisa_insumos}' or
-                            i.nome LIKE '%{$txt_pesquisa_insumos}%' or 
-                            i.unidade LIKE '%{$txt_pesquisa_insumos}%')
-                            ORDER BY nome ASC 
+                            i.insumos_tipo_insumos_id=3 AND
+                            (i.insumos_id='{$txt_pesquisa_insumos}' or
+                            i.insumos_nome LIKE '%{$txt_pesquisa_insumos}%' or 
+                            i.insumos_unidade LIKE '%{$txt_pesquisa_insumos}%')
+                            ORDER BY insumos_nome ASC 
                             LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
@@ -56,14 +56,14 @@
                     ?>
                     <tr class="tabela_dados">
                         <td class="operacoes">
-                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["inusmos_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["inusmos_id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -71,10 +71,10 @@
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["id"]?></td>
-                        <td><?=$dados["nome"]?></td>
-                        <td><?=$dados["unidade"]?></td>
-                        <td><?=$dados["tipo"]?></td>
+                        <td><?=$dados["insumos_id"]?></td>
+                        <td><?=$dados["insumos_nome"]?></td>
+                        <td><?=$dados["insumos_unidade"]?></td>
+                        <td><?=$dados["tipos_insumos_tipo"]?></td>
                     </tr>
                     <?php
                         }
@@ -83,7 +83,7 @@
             </table>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT id,insumo_tipo_ID FROM insumos WHERE insumo_tipo_ID=3";
+                    $sqlTotalInsumos = "SELECT insumos_id,insumos_tipo_insumos_id FROM insumos WHERE insumos_tipo_insumos_id=3";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);

@@ -1,7 +1,7 @@
 <?php
 $idInsumo = $_GET["idInsumo"];
 
-$sql = "SELECT * FROM insumos WHERE id={$idInsumo}";
+$sql = "SELECT * FROM insumos WHERE insumos_id={$idInsumo}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
@@ -21,11 +21,11 @@ $dados = mysqli_fetch_assoc($result);
         <form class="form_cadastro" action="index.php?menuop=atualizar_insumo" method="post">
             <div class="form-group">
                 <label for="idInsumo">ID</label>
-                <input type="text" class="form-control" name="idInsumo" value="<?=$dados["id"]?>" readonly>
+                <input type="text" class="form-control" name="idInsumo" value="<?=$dados["insumos_id"]?>" readonly>
             </div>
             <div class="form-group">
                 <label for="nomeInsumo">Nome</label>
-                <input type="text" class="form-control" name="nomeInsumo" value="<?=$dados["nome"]?>" required>
+                <input type="text" class="form-control" name="nomeInsumo" value="<?=$dados["insumos_nome"]?>" required>
             </div>
             <div class="form-group">
                 <label for="unidadeInsumo">Unidade do Insumo</label>
@@ -44,7 +44,7 @@ $dados = mysqli_fetch_assoc($result);
                     
                     while($tipoInsumo = mysqli_fetch_assoc($result_allTipos)){
                     ?>
-					    <option><?=$tipoInsumo["id"]?> - <?=$tipoInsumo["tipo"]?></option>
+					    <option><?=$tipoInsumo["tipos_insumos_id"]?> - <?=$tipoInsumo["tipos_insumos_tipo"]?></option>
                     <?php
                         }
                     ?>

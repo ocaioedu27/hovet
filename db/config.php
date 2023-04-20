@@ -3,5 +3,5 @@
 define("SERVIDOR", "localhost");
 define("USUARIO", "root");
 define("SENHA", "");
-define("BANCO", "dbhovetTeste");
+define("BANCO", "hovet_db");
 ?>

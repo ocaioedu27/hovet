@@ -32,7 +32,7 @@
                     
                     while($tipoInsumo = mysqli_fetch_assoc($result_allTipos)){
                     ?>
-					    <option><?=$tipoInsumo["id"]?> - <?=$tipoInsumo["tipo"]?></option>
+					    <option><?=$tipoInsumo["tipos_insumos_id"]?> - <?=$tipoInsumo["tipos_insumos_tipo"]?></option>
                     <?php
                         }
                     ?>

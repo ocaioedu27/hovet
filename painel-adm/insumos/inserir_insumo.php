@@ -9,9 +9,9 @@
     $tipoInsumo = strtok($tipoInsumo, " ");
     // $tipoInsumo = $tipoInsumo[0];
     $sql = "INSERT INTO insumos (
-        nome,
-        unidade,
-        insumo_tipo_ID)
+        insumos_nome,
+        insumos_unidade,
+        insumos_tipo_insumos_id)
         VALUES(
             '{$nomeInsumo}',
             '{$unidadeInsumo}',

@@ -29,14 +29,12 @@ create table usuarios(
 
 insert into usuarios value
 (null, "Adm", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
-#usar essa senha 'teste' para trocar após o primeiro login
+#usar essa senha 1234 para trocar após o primeiro login
 
-select u.id, u.nome, u.mail, u.cpf, t.tipo 
+select u.usuario_id, u.usuario_nome, u.usuario_mail, u.usuario_siape, t.tipo_usuario_tipo 
 	from usuarios AS u 
     inner join tipo_usuario AS t 
-    on u.tipo_usuario_ID = t.id;
-
-select us.id, us.nome, us.mail, tp.tipo, us.cpf from usuarios AS us, tipo_usuario as tp WHERE us.tipo_usuario_ID = tp.id;
+    on u.usuario_tipo_usuario_id = t.tipo_usuario_id;
 
 -- drop table usuarios;
 

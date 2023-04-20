@@ -1,7 +1,8 @@
 #Criando o banco 
-create database dbhovetTeste;
+create database hovet_db;
 
-use dbhovetTeste;
+use hovet_db;
+
 
 
 ######################################################

@@ -30,14 +30,14 @@ insert into setores values
     (null, 'Anestesia'),
     (null, 'Grandes Animais');
     
-#drop table setores;
+drop table setores;
     
 create table deposito(
 	deposito_id int primary key auto_increment,
-    deposito_Qtd int not null,
-    deposito_Validade date not null,
-    deposito_InsumosID int not null,
-	foreign key(deposito_InsumosID) references insumos(id)
+    deposito_qtd int not null,
+    deposito_validade date not null,
+    deposito_insumos_id int,
+	foreign key(deposito_insumos_id) references insumos(insumos_id) on delete set null
 );
 
 insert into deposito values 
@@ -64,33 +64,32 @@ SELECT
 drop table deposito;
 
 
+##### Dispensario ####
+
+create table local_dispensario (
+	local_id int primary key not null auto_increment,
+    local_nome varchar (20) not null
+);
+-- drop table local_dispensario;
+insert into local_dispensario values
+	(null, 'Armário'),
+	(null, 'Estante'),
+	(null, 'Gaveteiro');
+
 create table dispensario(
 	dispensario_id int primary key auto_increment,
-    dispensario_Qtd int not null,
-    dispensario_Validade date not null,
-    dispensario_depositoId int,
-	foreign key(dispensario_depositoId) references deposito(deposito_id) on delete cascade,
-    dispensario_localId int not null,
-    foreign key(dispensario_localId) references local_dispensario(local_id)
+    dispensario_qtd int not null,
+    dispensario_validade date not null,
+    dispensario_deposito_id int,
+	foreign key(dispensario_deposito_id) references deposito(deposito_id) on delete cascade,
+    dispensario_local_id int not null,
+    foreign key(dispensario_local_id) references local_dispensario(local_id)
 );
 
 drop table dispensario;
 
 insert into dispensario values 
 	(null, 10, '2023-04-06', 2, 2);
-    
-select * from dispensario;
-select * from deposito;
-
-create table local_dispensario (
-	local_id int primary key not null auto_increment,
-    local_nome varchar (20) not null
-);
-drop table local_dispensario;
-insert into local_dispensario values
-	(null, 'Armário'),
-	(null, 'Estante'),
-	(null, 'Gaveteiro');
 
 delete from dispensario where dispensario_id = 2;
 
