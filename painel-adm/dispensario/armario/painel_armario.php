@@ -47,30 +47,30 @@
 
                         $sql = "SELECT 
                                         disp.dispensario_id,
-                                        disp.dispensario_Qtd,
-                                        date_format(disp.dispensario_Validade, '%d/%m/%Y') AS validadeDispensario,
-                                        i.nome,
-                                        i.unidade,
-                                        datediff(disp.dispensario_Validade, curdate()) AS diasParaVencimentoDispensario,
+                                        disp.dispensario_qtd,
+                                        date_format(disp.dispensario_validade, '%d/%m/%Y') AS validadeDispensario,
+                                        i.insumos_nome,
+                                        i.insumos_unidade,
+                                        datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
                                         lcd.local_nome
                                         FROM dispensario disp
                                         INNER JOIN deposito deps
-                                        ON disp.dispensario_depositoId = deps.deposito_id
+                                        ON disp.dispensario_deposito_id = deps.deposito_id
                                         INNER JOIN insumos i
-                                        ON deps.deposito_InsumosID = i.id
+                                        ON deps.deposito_insumos_id = i.insumos_id
                                         INNER JOIN local_dispensario lcd 
-                                        ON disp.dispensario_localId = lcd.local_id
+                                        ON disp.dispensario_local_id = lcd.local_id
                                     WHERE
-                                        disp.dispensario_localId = 1 AND 
+                                        disp.dispensario_local_id = 1 AND 
                                         (disp.dispensario_id='{$txt_pesquisa_dispensario_armario}' or
-                                        i.nome LIKE '%{$txt_pesquisa_dispensario_armario}%' or
-                                        i.unidade LIKE '%{$txt_pesquisa_deposito}%' or
-                                        disp.dispensario_Qtd LIKE '%{$txt_pesquisa_dispensario_armario}%' or
-                                        disp.dispensario_Validade LIKE '%{$txt_pesquisa_dispensario_armario}%' or
+                                        i.insumos_nome LIKE '%{$txt_pesquisa_dispensario_armario}%' or
+                                        i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
+                                        disp.dispensario_qtd LIKE '%{$txt_pesquisa_dispensario_armario}%' or
+                                        disp.dispensario_validade LIKE '%{$txt_pesquisa_dispensario_armario}%' or
                                         lcd.local_nome LIKE '%{$txt_pesquisa_dispensario_armario}%')
-                                        ORDER BY nome ASC 
+                                        ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                        $rs = mysqli_query($conexao,$sql) or die("//dispensario/painel_armario/select_all - Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
@@ -87,9 +87,9 @@
                             </a>
                         </td>
                         <td><?=$dados["dispensario_id"]?></td>
-                        <td><?=$dados["nome"]?></td>
-                        <td><?=$dados["dispensario_Qtd"]?></td>
-                        <td><?=$dados["unidade"]?></td>
+                        <td><?=$dados["insumos_nome"]?></td>
+                        <td><?=$dados["dispensario_qtd"]?></td>
+                        <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
                         <td><?=$dados["local_nome"]?></td>
                         <td <?php 
@@ -117,8 +117,8 @@
             </table>
             <div class="paginacao">
                 <?php
-                    $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_localId=1";
-                    $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
+                    $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_local_id=1";
+                    $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die("//dispensario/painel_armario/select_paginacao - Erro ao executar a consulta! " . mysqli_error($conexao));
 
                     $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
                     $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);

@@ -16,12 +16,12 @@
                 <select class="form-control-sm" name="insumoID_Insumodeposito" required>
                     <?php
                     
-                    $sql = "SELECT id, nome FROM insumos";
+                    $sql = "SELECT insumos_id, insumos_nome FROM insumos";
                     $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     
                     while($dados = mysqli_fetch_assoc($result)){
                     ?>
-					<option><?=$dados["id"]?> - <?=$dados["nome"]?></option>
+					<option><?=$dados["insumos_id"]?> - <?=$dados["insumos_nome"]?></option>
 
                     <?php
                         }

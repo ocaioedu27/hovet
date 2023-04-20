@@ -1,8 +1,6 @@
 <!-- Variavél de notoficações, só mostra notificações se existir valores -->
 <?php
 
-$notificacoes = 4;
-
 include("../db/connect.php");
 
 include("../db/protect.php");
@@ -121,7 +119,7 @@ include("../db/protect.php");
                     break;
 
                 case 'deposito':
-                    include_once("deposito/deposito.php");
+                    include_once("deposito/painel_deposito.php");
                     break;
 
                 case 'cadastro_deposito':
@@ -242,6 +240,14 @@ include("../db/protect.php");
 
                 case 'pesquisa_deposito':
                     include_once("dispensario/sch_disp_itens_depst.php");
+                    break;
+                
+                case 'relatorio_insumos_deposito_prestes_expirar':
+                    include_once("deposito/relatorios_deposito/expira_deposito.php");
+                    break;
+
+                case 'relatorio_insumos_deposito_estoque_critico':
+                    include_once("");
                     break;
     
 

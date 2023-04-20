@@ -56,21 +56,21 @@
 
                         $sql = "SELECT
                                     d.deposito_id, 
-                                    d.deposito_Qtd,
-                                    date_format(d.deposito_Validade, '%d/%m/%Y') as validadedeposito,
-                                    i.nome,
-                                    i.unidade,
-                                    datediff(d.deposito_Validade, curdate()) as diasParaVencimentodeposito
+                                    d.deposito_qtd,
+                                    date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
+                                    i.insumos_nome,
+                                    i.insumos_unidade,
+                                    datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito
                                     FROM deposito d 
                                     INNER JOIN insumos i 
-                                    ON d.deposito_InsumosID = i.id 
+                                    ON d.deposito_insumos_id = i.insumos_id 
                                     WHERE
                                         d.deposito_id='{$txt_pesquisa_deposito}' or
-                                        i.nome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        i.unidade LIKE '%{$txt_pesquisa_deposito}%' or
-                                        d.deposito_Qtd LIKE '%{$txt_pesquisa_deposito}%' or
-                                        d.deposito_Validade LIKE '%{$txt_pesquisa_deposito}%'
-                                        ORDER BY nome ASC 
+                                        i.insumos_nome LIKE '%{$txt_pesquisa_deposito}%' or
+                                        i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
+                                        d.deposito_qtd LIKE '%{$txt_pesquisa_deposito}%' or
+                                        d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%'
+                                        ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
@@ -88,9 +88,9 @@
                             </a>
                         </td>
                         <td><?=$dados["deposito_id"]?></td>
-                        <td><?=$dados["nome"]?></td>
-                        <td><?=$dados["deposito_Qtd"]?></td>
-                        <td><?=$dados["unidade"]?></td>
+                        <td><?=$dados["insumos_nome"]?></td>
+                        <td><?=$dados["deposito_qtd"]?></td>
+                        <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["validadedeposito"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];

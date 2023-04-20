@@ -122,16 +122,16 @@
             <div class="cards re">
                 <div class="relatorios">
                     <div class="relatorio">
-                        <a href="index.php?menuop=#">Relatório de Cadastro de Insumos</a>
+                        <a href="index.php?menuop=relatorio_insumos_deposito_prestes_expirar"><strong>Depósito</strong> - Relatório de insumos prestes a expirar (mês/ano)</a>
                     </div>
                     <div class="relatorio">
-                        <a href="index.php?menuop=#">Relatório de Retirada de Insumos</a>
+                        <a href="index.php?menuop=relatorio_insumos_deposito_estoque_critico"><strong>Depósito</strong> - Relatório de insumos com estoque crítico</a>
                     </div>
                     <div class="relatorio">
-                        <a href="index.php?menuop=#">Relatório de Doações de Insumos</a>
+                        <a href="index.php?menuop=relatorio_insumos_deposito_insercao_retirada"><strong>Depósito</strong> - Relatório de insercão e retiradas de certo insumo</a>
                     </div>
                     <div class="relatorio">
-                        <a href="index.php?menuop=#">Relatório de Permutas de Insumos</a>
+                        <a href="index.php?menuop=relatorio_insumos_dispensario_insercao_retirada"><strong>dispensario</strong> - Relatório de insercão e retiradas de certo insumo</a>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,3 @@
-
-
 <div class="container cadastro_all">
     <div class="cards cadastro_dispensario">
         <div class="voltar">
@@ -19,18 +17,18 @@
                     <?php
                     
                     $sql = "SELECT
-                        dep.deposito_Validade,
-                        dep.deposito_Qtd,
+                        dep.deposito_validade,
+                        dep.deposito_qtd,
                         dep.deposito_id,
-                        ins.nome 
+                        ins.insumos_nome 
                         FROM deposito dep 
                         INNER JOIN insumos ins 
-                        ON dep.deposito_InsumosID = ins.id";
+                        ON dep.deposito_insumos_id = ins.insumos_id";
                     $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     
                     while($dados = mysqli_fetch_assoc($result)){
                     ?>
-					<option><?=$dados["deposito_id"]?> - <?=$dados["nome"]?></option>
+					<option><?=$dados["deposito_id"]?> - <?=$dados["insumos_nome"]?></option>
 
                     <?php
                         }

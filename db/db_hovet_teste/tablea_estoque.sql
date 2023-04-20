@@ -131,14 +131,13 @@ delete from dispensario where dispensario_id=4;
 
 
 SELECT
-	dep.deposito_InsumosID,
-    dep.deposito_Validade,
-    dep.deposito_Qtd,
-    dep.deposito_id,
-    ins.nome 
+	dep.deposito_validade,
+	dep.deposito_qtd,
+	dep.deposito_id,
+	ins.insumos_nome 
 	FROM deposito dep 
-    INNER JOIN insumos ins 
-    ON dep.deposito_InsumosID = ins.id;
+	INNER JOIN insumos ins 
+	ON dep.deposito_insumos_id = ins.insumos_id;
     
 select * from deposito;
 

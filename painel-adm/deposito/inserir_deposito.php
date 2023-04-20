@@ -7,9 +7,9 @@
     $insumoID_Insumodeposito = mysqli_real_escape_string($conexao,$_POST["insumoID_Insumodeposito"]);
     $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito, " ");
     $sql = "INSERT INTO deposito (
-        deposito_Qtd,
-        deposito_Validade,
-        deposito_InsumosID)
+        deposito_qtd,
+        deposito_validade,
+        deposito_insumos_id)
         VALUES(
             {$quantidadeInsumodeposito},
             '{$validadeInsumodeposito}',

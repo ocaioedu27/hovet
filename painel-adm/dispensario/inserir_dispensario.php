@@ -11,10 +11,10 @@ $localInsumodispensario = mysqli_real_escape_string($conexao,$_POST["localInsumo
 $localInsumodispensario = strtok($localInsumodispensario, " ");
 
 $sql = "INSERT INTO dispensario (
-    dispensario_Qtd,
-    dispensario_Validade,
-    dispensario_depositoId,
-    dispensario_localId)
+    dispensario_qtd,
+    dispensario_validade,
+    dispensario_deposito_id,
+    dispensario_local_id)
     VALUES(
         {$quantidadeInsumodispensario},
         '{$validadeInsumodispensario}',
@@ -26,7 +26,7 @@ if (mysqli_query($conexao, $sql)) {
     echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";   
 } else {
-    die("Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
+    die("//Dispensario/inserir_dispensario/ - Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
 }
 
 ?>
