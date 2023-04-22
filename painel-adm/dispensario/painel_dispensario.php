@@ -63,7 +63,7 @@
                                     WHERE
                                         disp.dispensario_id='{$txt_pesquisa_dispensario}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
+                                        i.insumos_unidade LIKE '%{$txt_pesquisa_dispensario}%' or
                                         disp.dispensario_qtd LIKE '%{$txt_pesquisa_dispensario}%' or
                                         disp.dispensario_validade LIKE '%{$txt_pesquisa_dispensario}%' or
                                         lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%'

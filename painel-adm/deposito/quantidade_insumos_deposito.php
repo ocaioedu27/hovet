@@ -70,23 +70,6 @@
                         <td><?=$dados["deposito_qtd"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["validadedeposito"]?></td>
-                        <td <?php 
-                                $dias = ['30','45'];
- 
-                                if($dados["diasParaVencimentodeposito"] <= $dias[0]){                                    
-                                ?> class="vermelho" <?php
-                                } else if($dados["diasParaVencimentodeposito"] <= $dias[1]){
-                                    ?> class="amarelo" <?php
-                                } else if($dados["diasParaVencimentodeposito"] > $dias[1]){
-                                    ?> class="verde" <?php
-                                } 
-                                ?>><?php if ($dados["diasParaVencimentodeposito"] <= 0){
-                                    echo "INSUMO VENCIDO!";
-                                } else{
-                                    echo $dados["diasParaVencimentodeposito"] . " dia(s) para o vencimento";
-                                }
-                                ?>
-                        </td>
                     </tr>
                     <?php
                         }
