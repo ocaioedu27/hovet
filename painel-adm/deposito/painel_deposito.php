@@ -19,6 +19,9 @@
                         </ul>
                     </div>
                 </div>
+                <a href="index.php?menuop=quantidade_insumos_deposito">
+                    <button class="btn">Quantidade de insumos</button>
+                </a>
             </div>
             <div>
                 <form action="index.php?menuop=deposito" method="post" class="form_buscar">

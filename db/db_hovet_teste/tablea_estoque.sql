@@ -1,4 +1,4 @@
-use dbhovetTeste;
+use hovet_db;
 
 create table tipos_movimentacoes(
 	tipos_movimentacoes_id int primary key auto_increment,

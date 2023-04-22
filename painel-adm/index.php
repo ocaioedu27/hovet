@@ -141,6 +141,10 @@ include("../db/protect.php");
                 case 'atualizar_deposito':
                     include_once("deposito/atualizar_deposito.php");
                     break;
+    
+                case 'quantidade_insumos_deposito':
+                    include_once("deposito/quantidade_insumos_deposito.php");
+                    break;
                 
                 case 'usuarios':
                     include_once("usuarios/painel_users.php");
