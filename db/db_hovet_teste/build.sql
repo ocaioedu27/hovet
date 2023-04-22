@@ -4,16 +4,14 @@ create database hovet_db;
 use hovet_db;
 
 
-
 ######################################################
 
 #Criando a tabela de tipos de usuários 
 create table tipo_usuario (
-	id int primary key auto_increment,
-    tipo varchar(100) not null
+	tipo_usuario_id int primary key auto_increment,
+    tipo_usuario_tipo varchar(100) not null
 );
 
-#Inserindo os tipos de usuários
 insert into tipo_usuario values
 	(null, 'Médico(a) Veterinário(a)'),
     (null, 'Responsável pelas compras'),
@@ -24,40 +22,28 @@ insert into tipo_usuario values
     
 # Criando a tabela de usuários
 create table usuarios(
-	id int primary key auto_increment not null,
-    nome varchar(100) not null,
-    mail varchar(100) unique not null,
-    tipo_usuario_ID int not null,
-    foreign key(tipo_usuario_ID) references tipo_usuario(id),
-    siape varchar(50) unique not null,
-    senha varchar(256) not null
+	usuario_id int primary key auto_increment,
+    usuario_nome varchar(100) not null,
+    usuario_mail varchar(100) unique not null,
+    usuario_tipo_usuario_id int,
+    foreign key(usuario_tipo_usuario_id) references tipo_usuario(tipo_usuario_id) on delete set null,
+    usuario_siape varchar(50) unique not null,
+    usuario_senha varchar(256) not null
 );
 
-######################################################
-
-#Criando a tabela do depósito
-
-create table deposito(
-	deposito_id int primary key auto_increment,
-    deposito_Qtd int not null,
-    deposito_Validade date not null,
-    deposito_InsumosID int not null,
-	foreign key(deposito_InsumosID) references insumos(id)
-);
-
-# Inserção de conteúdo para o depósito
-INSERT INTO `deposito` (`deposito_id`, `deposito_Qtd`, `deposito_Validade`, `deposito_InsumosID`) VALUES
-(null, 'Dorflex', 10, 1, 1, '2023-03-25');
+# Inserindo conteúdo na tabela usuários
+insert into usuarios value
+(null, "Adm", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
+#usar essa senha 1234 para trocar após o primeiro login
 
 ######################################################
-
 
 # Criando a tabela de tipos de insumos
 create table tipos_insumos (
-	id int primary key auto_increment,
-    tipo varchar(100) not null);
+	tipos_insumos_id int primary key auto_increment,
+    tipos_insumos_tipo varchar(100) not null);
 
-# Inserindo os tipos de insumos
+#inserindo os tipos
 insert into tipos_insumos values
 	(null, "Medicamentos"),
     (null, "Material de procedimento"),
@@ -65,16 +51,15 @@ insert into tipos_insumos values
     
 # Criando a tabela de insumos
 create table insumos(
-	id int primary key auto_increment,
-    nome varchar(256) not null,
-    unidade varchar(150) not null,
-    insumo_tipo_ID int not null,
-    foreign key(insumo_tipo_ID) references tipos_insumos(id)
+	insumos_id int primary key auto_increment,
+    insumos_nome varchar(256) not null,
+    insumos_unidade varchar(150) not null,
+    insumos_tipo_insumos_id int not null,
+    foreign key(insumos_tipo_insumos_id) references tipos_insumos(tipos_insumos_id)
 );
 
-
 # Inserção de conteúdo insumos
-INSERT INTO `insumos` (`id`, `nome`, `unidade`, `insumo_tipo_ID`) VALUES
+INSERT INTO insumos VALUES
 (null, 'Dramin', 'Caixa',  1),
 (null, 'Torsilax', 'Caixa', 1),
 (null, 'Dipirona', 'Caixa', 1),
@@ -85,3 +70,61 @@ INSERT INTO `insumos` (`id`, `nome`, `unidade`, `insumo_tipo_ID`) VALUES
 (null, 'Pregabalina', 'Caixa', 1),
 (null, 'Algodão', 'Pacote', 2),
 (null, 'Esparadrapo', 'Caixa', 2);
+
+######################################################
+
+#Criando a tabela do depósito
+
+create table deposito(
+	deposito_id int primary key auto_increment,
+    deposito_qtd int not null,
+    deposito_validade date not null,
+    deposito_insumos_id int,
+	foreign key(deposito_insumos_id) references insumos(insumos_id) on delete set null
+);
+
+# Inserção de conteúdo para o depósito
+insert into deposito values 
+	(null, 20, '2023-04-05', 1),
+    (null, 10, '2023-04-09', 3);
+
+
+######################################################
+##### Dispensario ####
+
+create table local_dispensario (
+	local_id int primary key not null auto_increment,
+    local_nome varchar (20) not null
+);
+-- drop table local_dispensario;
+insert into local_dispensario values
+	(null, 'Armário'),
+	(null, 'Estante'),
+	(null, 'Gaveteiro');
+
+create table dispensario(
+	dispensario_id int primary key auto_increment,
+    dispensario_qtd int not null,
+    dispensario_validade date not null,
+    dispensario_deposito_id int,
+	foreign key(dispensario_deposito_id) references deposito(deposito_id) on delete cascade,
+    dispensario_local_id int not null,
+    foreign key(dispensario_local_id) references local_dispensario(local_id)
+);
+
+######################################################
+
+# Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
+DELIMITER $$
+
+CREATE TRIGGER after_deposito_from_dispensario
+	AFTER INSERT 
+    ON dispensario
+    FOR EACH ROW
+    BEGIN
+		UPDATE deposito as deps set
+		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
+		WHERE deposito_id = NEW.dispensario_deposito_id;
+END$$
+
+DELIMITER ;

@@ -1,5 +1,5 @@
 
-use dbhovetTeste;
+use hovet_db;
 
 create table tipo_usuario (
 	tipo_usuario_id int primary key auto_increment,

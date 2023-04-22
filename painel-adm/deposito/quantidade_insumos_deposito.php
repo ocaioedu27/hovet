@@ -19,13 +19,10 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
-                        <th>Unidade</th>
                         <th>Validade</th>
-                        <th>Dias para o vencimento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,15 +40,12 @@
                                     d.deposito_qtd,
                                     date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
                                     i.insumos_nome,
-                                    i.insumos_unidade,
-                                    datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito
                                     FROM deposito d 
                                     INNER JOIN insumos i 
                                     ON d.deposito_insumos_id = i.insumos_id 
                                     WHERE
                                         d.deposito_id='{$txt_pesquisa_deposito}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
                                         d.deposito_qtd LIKE '%{$txt_pesquisa_deposito}%' or
                                         d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%'
                                         ORDER BY insumos_nome ASC 

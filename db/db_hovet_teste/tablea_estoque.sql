@@ -150,5 +150,7 @@ select * from deposito;
 
 select * from dispensario;
 
+select sum(deposito_qtd) from deposito where deposito_insumos_id=1;
+
 
 select sum(quantidade) from deposito WHERE nome like '%mela%' or id=2;
