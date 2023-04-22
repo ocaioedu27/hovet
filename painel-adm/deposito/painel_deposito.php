@@ -118,43 +118,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotaldeposito = "SELECT deposito_id FROM deposito";
-                    $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotaldeposito = "SELECT deposito_id FROM deposito";
+                $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
 
-                    $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
-                    $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
-                    
-                    echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
+                $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+                $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
+                
+                echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
 
-                    if ($pagina_deposito>6) {
-                        ?>
-                            <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_deposito>6) {
+                    ?>
+                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasdeposito;$i++){
+                for($i=1;$i<=$totalPaginasdeposito;$i++){
 
-                        if ($i >= ($pagina_deposito) && $i <= ($pagina_deposito+5)) {
-                            
-                            if ($i==$pagina_deposito) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_deposito) && $i <= ($pagina_deposito+5)) {
+                        
+                        if ($i==$pagina_deposito) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_deposito<($totalPaginasdeposito-5)) {
-                        ?>
-                            <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_deposito<($totalPaginasdeposito-5)) {
+                    ?>
+                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>

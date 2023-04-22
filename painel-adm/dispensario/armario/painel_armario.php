@@ -115,43 +115,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_local_id=1";
-                    $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die("//dispensario/painel_armario/select_paginacao - Erro ao executar a consulta! " . mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_local_id=1";
+                $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die("//dispensario/painel_armario/select_paginacao - Erro ao executar a consulta! " . mysqli_error($conexao));
 
-                    $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
-                    $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
-                    
-                    echo "<a href=\"?menuop=painel_armario&pagina_dispensario_armario=1\">Início</a> ";
+                $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
+                $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
+                
+                echo "<a href=\"?menuop=painel_armario&pagina_dispensario_armario=1\">Início</a> ";
 
-                    if ($pagina_dispensario_armario>6) {
-                        ?>
-                            <a href="?menuop=painel_armario?pagina_dispensario_armario=<?php echo $pagina_dispensario_armario-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_dispensario_armario>6) {
+                    ?>
+                        <a href="?menuop=painel_armario?pagina_dispensario_armario=<?php echo $pagina_dispensario_armario-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasdispensario;$i++){
+                for($i=1;$i<=$totalPaginasdispensario;$i++){
 
-                        if ($i >= ($pagina_dispensario_armario) && $i <= ($pagina_dispensario_armario+5)) {
-                            
-                            if ($i==$pagina_dispensario_armario) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=painel_armario&pagina_dispensario_armario=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_dispensario_armario) && $i <= ($pagina_dispensario_armario+5)) {
+                        
+                        if ($i==$pagina_dispensario_armario) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=painel_armario&pagina_dispensario_armario=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_dispensario_armario<($totalPaginasdispensario-5)) {
-                        ?>
-                            <a href="?menuop=painel_armario?pagina_dispensario_armario=<?php echo $pagina_dispensario_armario+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=painel_armario&pagina_dispensario_armario=$totalPaginasdispensario\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_dispensario_armario<($totalPaginasdispensario-5)) {
+                    ?>
+                        <a href="?menuop=painel_armario?pagina_dispensario_armario=<?php echo $pagina_dispensario_armario+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=painel_armario&pagina_dispensario_armario=$totalPaginasdispensario\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>

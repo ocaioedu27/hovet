@@ -81,6 +81,7 @@
                     ?>
                 </tbody>
             </table>
+        </div>
             <div class="paginacao">
                 <?php
                     $sqlTotalInsumos = "SELECT insumos_id FROM insumos";
@@ -118,6 +119,5 @@
                     echo " <a href=\"?menuop=insumos&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
-        </div>
     </div>
 </section>

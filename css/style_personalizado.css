@@ -220,6 +220,39 @@ input.btn_cadastrar:hover{
     text-align: center;
 }
 
+.tabela_listar {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 15px 0 15px;
+}
+  
+.tabela_listar td, .tabela_listar th {
+    border: 1px solid #ddd;
+    padding: 2px;
+    border-radius: 4px;
+}
+  
+.tabela_listar tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+ 
+.tabela_listar tr:hover {
+    background-color: #ddd;
+}
+  
+.tabela_listar th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #04AA6D;
+    color: white;
+}
+
+.tabela_listar td{
+    text-align: center;
+}
+
 .menu_header{
     display: flex;
     align-items: center;
@@ -486,7 +519,6 @@ td.operacoes {
 
 .tabelas{
     display: flex;
-    flex-direction: column;
 }
 
 .paginacao{

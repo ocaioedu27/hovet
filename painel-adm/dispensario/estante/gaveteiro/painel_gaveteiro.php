@@ -115,43 +115,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_local_id=3";
-                    $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario WHERE dispensario_local_id=3";
+                $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
 
-                    $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
-                    $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
-                    
-                    echo "<a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=1\">Início</a> ";
+                $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
+                $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
+                
+                echo "<a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=1\">Início</a> ";
 
-                    if ($pagina_dispensario_gaveteiro>6) {
-                        ?>
-                            <a href="?menuop=painel_gaveteiro?pagina_dispensario_gaveteiro=<?php echo $pagina_dispensario_gaveteiro-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_dispensario_gaveteiro>6) {
+                    ?>
+                        <a href="?menuop=painel_gaveteiro?pagina_dispensario_gaveteiro=<?php echo $pagina_dispensario_gaveteiro-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasdispensario;$i++){
+                for($i=1;$i<=$totalPaginasdispensario;$i++){
 
-                        if ($i >= ($pagina_dispensario_gaveteiro) && $i <= ($pagina_dispensario_gaveteiro+5)) {
-                            
-                            if ($i==$pagina_dispensario_gaveteiro) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_dispensario_gaveteiro) && $i <= ($pagina_dispensario_gaveteiro+5)) {
+                        
+                        if ($i==$pagina_dispensario_gaveteiro) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_dispensario_gaveteiro<($totalPaginasdispensario-5)) {
-                        ?>
-                            <a href="?menuop=painel_gaveteiro?pagina_dispensario_gaveteiro=<?php echo $pagina_dispensario_gaveteiro+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=$totalPaginasdispensario\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_dispensario_gaveteiro<($totalPaginasdispensario-5)) {
+                    ?>
+                        <a href="?menuop=painel_gaveteiro?pagina_dispensario_gaveteiro=<?php echo $pagina_dispensario_gaveteiro+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=painel_gaveteiro&pagina_dispensario_gaveteiro=$totalPaginasdispensario\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>

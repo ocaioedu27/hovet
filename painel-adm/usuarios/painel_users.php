@@ -85,43 +85,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotalUsuarios = "SELECT usuario_id FROM usuarios";
-                    $queryTotalUsuarios = mysqli_query($conexao,$sqlTotalUsuarios) or die(mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotalUsuarios = "SELECT usuario_id FROM usuarios";
+                $queryTotalUsuarios = mysqli_query($conexao,$sqlTotalUsuarios) or die(mysqli_error($conexao));
 
-                    $numTotalUsuarios = mysqli_num_rows($queryTotalUsuarios);
-                    $totalPaginasUsuarios = ceil($numTotalUsuarios/$quantidade_registros_usuarios);
-                    
-                    echo "<a href=\"?menuop=usuarios&pagina_usuarios=1\">Início</a> ";
+                $numTotalUsuarios = mysqli_num_rows($queryTotalUsuarios);
+                $totalPaginasUsuarios = ceil($numTotalUsuarios/$quantidade_registros_usuarios);
+                
+                echo "<a href=\"?menuop=usuarios&pagina_usuarios=1\">Início</a> ";
 
-                    if ($pagina_usuarios>6) {
-                        ?>
-                            <a href="?menuop=usuarios?pagina_usuarios=<?php echo $pagina_usuarios-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_usuarios>6) {
+                    ?>
+                        <a href="?menuop=usuarios?pagina_usuarios=<?php echo $pagina_usuarios-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasUsuarios;$i++){
+                for($i=1;$i<=$totalPaginasUsuarios;$i++){
 
-                        if ($i >= ($pagina_usuarios) && $i <= ($pagina_usuarios+5)) {
-                            
-                            if ($i==$pagina_usuarios) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=usuarios&pagina_usuarios=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_usuarios) && $i <= ($pagina_usuarios+5)) {
+                        
+                        if ($i==$pagina_usuarios) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=usuarios&pagina_usuarios=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_usuarios<($totalPaginasUsuarios-5)) {
-                        ?>
-                            <a href="?menuop=usuarios?pagina_usuarios=<?php echo $pagina_usuarios+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=usuarios&pagina_usuarios=$totalPaginasUsuarios\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_usuarios<($totalPaginasUsuarios-5)) {
+                    ?>
+                        <a href="?menuop=usuarios?pagina_usuarios=<?php echo $pagina_usuarios+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=usuarios&pagina_usuarios=$totalPaginasUsuarios\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>

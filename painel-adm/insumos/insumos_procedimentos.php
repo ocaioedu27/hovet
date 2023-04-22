@@ -81,43 +81,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotalInsumos = "SELECT insumos_id,insumos_tipo_insumos_id FROM insumos WHERE insumos_tipo_insumos_id=2";
-                    $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotalInsumos = "SELECT insumos_id,insumos_tipo_insumos_id FROM insumos WHERE insumos_tipo_insumos_id=2";
+                $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
-                    $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
-                    $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_insumos);
-                    
-                    echo "<a href=\"?menuop=insumos_procedimentos&pagina_insumos=1\">Início</a> ";
+                $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
+                $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_insumos);
+                
+                echo "<a href=\"?menuop=insumos_procedimentos&pagina_insumos=1\">Início</a> ";
 
-                    if ($pagina_insumos>6) {
-                        ?>
-                            <a href="?menuop=insumos_procedimentos?pagina_insumos=<?php echo $pagina_insumos-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_insumos>6) {
+                    ?>
+                        <a href="?menuop=insumos_procedimentos?pagina_insumos=<?php echo $pagina_insumos-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasInsumos;$i++){
+                for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_insumos) && $i <= ($pagina_insumos+5)) {
-                            
-                            if ($i==$pagina_insumos) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=insumos_procedimentos&pagina_insumos=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_insumos) && $i <= ($pagina_insumos+5)) {
+                        
+                        if ($i==$pagina_insumos) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=insumos_procedimentos&pagina_insumos=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_insumos<($totalPaginasInsumos-5)) {
-                        ?>
-                            <a href="?menuop=insumos_procedimentos?pagina_insumos=<?php echo $pagina_insumos+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=insumos_procedimentos&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_insumos<($totalPaginasInsumos-5)) {
+                    ?>
+                        <a href="?menuop=insumos_procedimentos?pagina_insumos=<?php echo $pagina_insumos+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=insumos_procedimentos&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>

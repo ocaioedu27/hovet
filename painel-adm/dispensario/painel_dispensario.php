@@ -114,43 +114,43 @@
                     ?>
                 </tbody>
             </table>
-            <div class="paginacao">
-                <?php
-                    $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario";
-                    $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
+        </div>
+        <div class="paginacao">
+            <?php
+                $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario";
+                $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
 
-                    $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
-                    $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
-                    
-                    echo "<a href=\"?menuop=dispensario&pagina_dispensario=1\">Início</a> ";
+                $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
+                $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
+                
+                echo "<a href=\"?menuop=dispensario&pagina_dispensario=1\">Início</a> ";
 
-                    if ($pagina_dispensario>6) {
-                        ?>
-                            <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario-1?>"> << </a>
-                        <?php
-                    } 
+                if ($pagina_dispensario>6) {
+                    ?>
+                        <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario-1?>"> << </a>
+                    <?php
+                } 
 
-                    for($i=1;$i<=$totalPaginasdispensario;$i++){
+                for($i=1;$i<=$totalPaginasdispensario;$i++){
 
-                        if ($i >= ($pagina_dispensario) && $i <= ($pagina_dispensario+5)) {
-                            
-                            if ($i==$pagina_dispensario) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=dispensario&pagina_dispensario=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                    if ($i >= ($pagina_dispensario) && $i <= ($pagina_dispensario+5)) {
+                        
+                        if ($i==$pagina_dispensario) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=dispensario&pagina_dispensario=$i\">$i</a> ";
+                        } 
+                    }          
+                }
 
-                    if ($pagina_dispensario<($totalPaginasdispensario-5)) {
-                        ?>
-                            <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario+1?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=dispensario&pagina_dispensario=$totalPaginasdispensario\">Fim</a>";
-                ?>
-            </div>
+                if ($pagina_dispensario<($totalPaginasdispensario-5)) {
+                    ?>
+                        <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario+1?>"> >> </a>
+                    <?php
+                }
+                
+                echo " <a href=\"?menuop=dispensario&pagina_dispensario=$totalPaginasdispensario\">Fim</a>";
+            ?>
         </div>
     </div>
 </section>
