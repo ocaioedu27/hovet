@@ -10,13 +10,13 @@
                 </button>
             </a>
         </div>
-        <form action="" class="form_retirar_dispensario">
+        <form action="index.php?menuop=atualizar_dispensario" class="form_retirar_dispensario" method="post">
 
             <div class="form-group requisicao_devolucao">
-                <label for="operacao_retira_dispensario">Tipo de operação</label>
-                <select class="form-control-sm" name="operacao_retira_dispensario">
-                    <option>Requição de Material</option>
-                    <option>Devolução de Material</option>
+                <label for="operacao_dispensario">Tipo de operação</label>
+                <select class="form-control-sm" name="operacao_dispensario">
+                    <option>1 - Requição de Material</option>
+                    <option>2 - Devolução de Material</option>
                 </select>
                 
             </div>
@@ -56,9 +56,9 @@
             </div>
 
             <div class="form-group">
-                <label for="data_retira_dispensario">Data
-                    <input type="date" class="form-control"  name="data_retira_dispensario" id="" required>
-                </label>
+                <label for="data_operacao_dispensario">Data</label>
+                <input type="date" class="form-control-sm"  name="data_operacao_dispensario" id="" required>
+            
             </div>
 
             <div class="form-group">
@@ -87,13 +87,19 @@
             </div>
 
             <div class="form-group">
-                <label for="quantidade_retira_dispensario">Quantidade</label>
-                <input type="text" class="form-control" name="quantidade_retira_dispensario" required>
+                <label for="quantidade_operacao_dispensario">Quantidade</label>
+                <input type="text" class="form-control" name="quantidade_operacao_dispensario" required>
             </div>
 
             <div class="form-group">
-                <label for="quantidade_atual_dispensario"> Disponível no Dispensário
+                <label for="quantidade_atual_dispensario"> Quantidade atual no Dispensário
                     <input type="text" class="form-control" name="quantidade_atual_dispensario" id="quantidade_atual_dispensario" readonly>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="validade_insumo_dispensario"> Validade do Insumo
+                    <input type="text" class="form-control" name="validade_insumo_dispensario" id="validade_insumo_dispensario" readonly>
                 </label>
             </div>
 

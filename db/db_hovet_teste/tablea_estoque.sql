@@ -7,10 +7,12 @@ create table tipos_movimentacoes(
 );
 
 insert into tipos_movimentacoes values
-	(null,"Inserção", "Inserção de insumo(s) no estoque."),
-    (null,"Retirada", "Retirada de insumo(s) do estoque."),
-    (null,"Doação", "Doação de insumo(s) que irão para o estoque."),
-    (null,"Permuta", "Troca de insumo(s) do estoque com outras instituições.");
+	(null,"Compra", "Compra de insumo(s) para o Depósito."),
+    (null,"Retirada", "Retirada de insumo(s) do Depósito."),
+    (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
+    (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições.");
+    
+update insumos set tipos_movimentacoes_movimentacao="Compra" where tipos_movimentacoes_id=1;
     
 select * from tipos_movimentacoes;
 
@@ -158,15 +160,24 @@ SELECT DISTINCT i.insumos_id, i.insumos_nome
                             ON dep.deposito_insumos_id = i.insumos_id;
 
 SELECT 
-	sum(d.dispensario_qtd) as dispensario_qtd_insumo
+	sum(d.dispensario_qtd) as dispensario_qtd_insumo,
+    i.insumos_nome
 	FROM dispensario d
     inner join deposito dep
+    on d.dispensario_id = dep.deposito_id
     inner join insumos i
     on dep.deposito_insumos_id = i.insumos_id;
 
 select * from dispensario;
 
-select sum(deposito_qtd) from deposito where deposito_insumos_id=1;
-
-
-select sum(quantidade) from deposito WHERE nome like '%mela%' or id=2;
+SELECT 
+	sum(disp.dispensario_qtd),
+	i.insumos_id, 
+    i.insumos_nome 
+	FROM dispensario disp
+	INNER JOIN deposito dep
+	ON disp.dispensario_deposito_id = dep.deposito_id
+	INNER JOIN insumos i
+	ON dep.deposito_insumos_id = i.insumos_id
+    where
+    i.insumos_nome = 'Imosec';

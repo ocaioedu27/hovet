@@ -28,6 +28,7 @@ $(document).ready(function(){
         // console.log('teste');
         
         var $quantidade_atual_dispensario = $("input[name='quantidade_atual_dispensario']");
+        var $validade_insumo_dispensario = $("input[name='validade_insumo_dispensario']");
         var dispensario_id = $(this).val()
         dispensario_id = dispensario_id.split(' ')[0];
 
@@ -37,6 +38,7 @@ $(document).ready(function(){
                 console.log(retorno);
 
                 $quantidade_atual_dispensario.val(retorno.quantidade_atual_dispensario);
+                $validade_insumo_dispensario.val(retorno.validade_insumo_dispensario);
                 // console.log($quantidadeInsumoDispensario);
         });
     });
