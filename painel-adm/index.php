@@ -6,6 +6,29 @@ include("../db/connect.php");
 include("../db/protect.php");
 
 
+function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
+
+    $sql_identifica_movimentacao = "INSERT 
+                                        INTO movimentacoes 
+                                        (movimentacoes_origem,
+                                        movimentacoes_destino,
+                                        movimentacoes_tipos_movimentacoes_id,
+                                        movimentacoes_usuario_id,
+                                        movimentacoes_insumos_id) 
+                                        VALUE ('{$local_origem}','{$local_destino}',{$tipo_movimentacao},{$usuario_id},{$insumo_id})";
+
+    if (mysqli_query($conexao, $sql_identifica_movimentacao)) { 
+        echo "<script language='javascript'>window.alert('Movimentação registrada com sucesso!!'); </script>";
+        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";   
+    } else {
+        die("Erro ao executar a atualização da movimentação. " . mysqli_error($conexao));   
+    }
+
+}
+
+// echo prepara_dados_movimentacao($tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id, $data_operacao);
+
+
 ?>
 
 <!DOCTYPE html>

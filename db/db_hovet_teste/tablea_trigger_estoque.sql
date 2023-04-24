@@ -41,6 +41,19 @@ END$$
 
 DELIMITER ;
 
+# Atualiza movimentacoes depois de deletar insumo do deposito
+DELIMITER $$
+
+CREATE TRIGGER before_deposito_delete
+	BEFORE DELETE
+    ON deposito
+    FOR EACH ROW
+    BEGIN
+		INSERT INTO movimentacoes;
+END$$
+
+DELIMITER ;
+
 drop trigger after_deposito_from_dispensario;
 
 select * from deposito_audit;

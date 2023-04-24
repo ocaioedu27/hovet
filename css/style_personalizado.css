@@ -11,6 +11,10 @@ ul {
     margin-bottom: 0;
 }
 
+label{
+    margin-bottom: 0;
+}
+
 .navbar{
 	background-color: #04AA6D !important;	
 }
@@ -64,8 +68,8 @@ form.form_cadastro{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin: 0 auto;
-    max-width: 85%;
+    padding: 10px;
+    max-width: 100%;
     gap: 10px;
 }
 
@@ -457,13 +461,13 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 390px;
-    height: 540px;
+    width: 790px;
+    height: 440px;
 }
 
 .cards.cadastro_dispensario{
-    width: 340px;
-    height: 625px;
+    width: 740px;
+    height: 425px;
 }
 
 .cards.retirar_dispensario{
@@ -561,7 +565,7 @@ td.operacoes {
 }
 
 select.form-control-sm{
-    width: 50%;
+    width: 100%;
     background: none;
 }
 
@@ -605,4 +609,14 @@ input.form-control.descricao_retira_dispensario {
 
 span.span_select_qtd {
     margin-right: 4px;
+}
+
+.form-group.valida_movimentacao {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.largura_metade {
+    width: 30% !important;
 }

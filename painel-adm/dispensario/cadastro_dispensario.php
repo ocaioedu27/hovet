@@ -13,7 +13,7 @@
         <form class="form_cadastro" action="index.php?menuop=inserir_dispensario" method="post">
             <div class="form-group">
                 <label for="depositoID_Insumodispensario">Nome</label>
-                <select class="form-control-sm" name="depositoID_Insumodispensario" id="depositoID_Insumodispensario" required>
+                <select class="form-control-sm largura_metade" name="depositoID_Insumodispensario" id="" required>
                     <?php
                     
                     $sql = "SELECT
@@ -35,32 +35,46 @@
                     ?>
 				</select>
             </div>
-            <div class="form-group">
-                <label for="quantidadeInsumoDispensario">Quantidade</label>
-                <input type="text" class="form-control" name="quantidadeInsumoDispensario" required>
-                <label for="quantidadeInsumoDeposito"> Disponível no Depósito<input type="text" class="form-control" name="quantidadeInsumoDeposito" id="auto_complete_DepsQtd" readonly>
+            <div class="form-group valida_movimentacao">
+                <label for="quantidadeInsumoDispensario">Quantidade
+                    <input type="text" class="form-control" name="quantidadeInsumoDispensario" required>
                 </label>
-            </div>
-            <div class="form-group">
-                <label for="validadeInsumoDeposito">Validade</label>
-                <input type="date" class="form-control" name="validadeInsumoDeposito" id="auto_complete_validade" required>
-            </div>
-            <div class="form-group">
-                <label for="localInsumodispensario">Local</label>
-                <select class="form-control-sm" name="localInsumodispensario" id="depositoID_Insumodispensario" required>
-                    <?php
-                    $sql = "SELECT * FROM local_dispensario";
-                    $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                    
-                    while($dados = mysqli_fetch_assoc($result)){
-                    ?>
-					<option><?=$dados["local_id"]?> - <?=$dados["local_nome"]?></option>
 
-                    <?php
-                        }
-                    ?>
-				</select>
+                <label for="validadeInsumoDeposito">Validade
+                    <input type="date" class="form-control" name="validadeInsumoDeposito" id="auto_complete_validade" readonly>
+                </label>
+
+                <label for="localInsumodispensario" style="
+                        display: flex; 
+                        flex-direction: column;">Local
+                    <select class="form-control-sm" name="localInsumodispensario" id="depositoID_Insumodispensario" required>
+                        <?php
+                        $sql = "SELECT * FROM local_dispensario";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                        
+                        while($dados = mysqli_fetch_assoc($result)){
+                        ?>
+                        <option><?=$dados["local_id"]?> - <?=$dados["local_nome"]?></option>
+
+                        <?php
+                            }
+                        ?>
+                    </select>
+                </label>
+                
             </div>
+            <div class="form-group">
+                <label for="quantidadeInsumoDeposito"> Disponível no Depósito</label>
+                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDeposito" readonly>
+            </div>
+            <div class="form-group">
+            </div>
+
+            <div class="form-group valida_movimentacao">
+                <label for="movimentacao_deposito_to_dispensario">Confirmo que os dados estão validados</label>
+                <input type="checkbox" class="form-control-sm" name="movimentacao_deposito_to_dispensario" required>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDispensario" class="btn_cadastrar">
             </div>

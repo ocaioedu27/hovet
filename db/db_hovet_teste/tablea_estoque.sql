@@ -12,11 +12,34 @@ insert into tipos_movimentacoes values
     (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
     (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições.");
     
-update insumos set tipos_movimentacoes_movimentacao="Compra" where tipos_movimentacoes_id=1;
-    
 select * from tipos_movimentacoes;
 
-drop table tipos_movimentacoes;
+-- drop table tipos_movimentacoes;
+
+create table movimentacoes (
+	movimentacoes_id int primary key auto_increment,
+    movimentacoes_origem varchar (50),
+    movimentacoes_destino varchar (50),
+    movimentacoes_tipos_movimentacoes_id int,
+    foreign key (movimentacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
+    movimentacoes_usuario_id int,
+    foreign key (movimentacoes_usuario_id) references usuarios(usuario_id),
+    movimentacoes_insumos_id int,
+    foreign key (movimentacoes_insumos_id) references insumos(insumos_id),
+    data_operacao datetime not null default current_timestamp()
+);
+
+show create table test.data_teste;
+
+insert into movimentacoes 
+	(movimentacoes_origem,
+    movimentacoes_destino,
+    movimentacoes_tipos_movimentacoes_id,
+    movimentacoes_usuario_id,
+    movimentacoes_insumos_id) 
+    VALUE ("","",num,nummovimentacoes,num);
+    
+select * from movimentacoes;
 
 #################################################################################
 

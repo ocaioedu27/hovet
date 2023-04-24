@@ -96,20 +96,40 @@
             </div>
             <div class="cards">
                 <div>
-                    <h4>Inserções</h5>
-                        <h5>7</h5>
+                    <?php
+                        $sql = "SELECT count(*) AS quantidade_compras FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=1";
+                        $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                        $dados = mysqli_fetch_assoc($result);
+                    ?>
+                    <h4>Compras</h5>
+                        <h5><?=$dados['quantidade_compras']?></h5>
                 </div>
                 <div>
-                    <h4>Retiradas</h4>
-                    <h5>2</h5>
+                    <?php
+                        $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=2";
+                        $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                        $dados = mysqli_fetch_assoc($result);
+                    ?>
+                    <h4>Retiradas</h5>
+                        <h5><?=$dados['quantidade_retiradas']?></h5>
                 </div>
                 <div>
-                    <h4>Doações</h4>
-                    <h5>3</h5>
+                    <?php
+                        $sql = "SELECT count(*) AS quantidade_doacoes FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=3";
+                        $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                        $dados = mysqli_fetch_assoc($result);
+                    ?>
+                    <h4>Doações</h5>
+                        <h5><?=$dados['quantidade_doacoes']?></h5>
                 </div>
                 <div>
-                    <h4>Permutas</h4>
-                    <h5>4</h5>
+                    <?php
+                        $sql = "SELECT count(*) AS quantidade_permutas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=4";
+                        $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                        $dados = mysqli_fetch_assoc($result);
+                    ?>
+                    <h4>Permutas</h5>
+                        <h5><?=$dados['quantidade_permutas']?></h5>
                 </div>
             </div>
         </div>
