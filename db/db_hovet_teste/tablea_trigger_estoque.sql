@@ -49,7 +49,13 @@ CREATE TRIGGER before_deposito_delete
     ON deposito
     FOR EACH ROW
     BEGIN
-		INSERT INTO movimentacoes;
+		INSERT INTO movimentacoes  
+					(movimentacoes_origem,
+					movimentacoes_destino,
+					movimentacoes_tipos_movimentacoes_id,
+					movimentacoes_insumos_id)
+                    value
+                    ('Depósito', 'Lixo', 5, OLD.deposito_insumos_id);
 END$$
 
 DELIMITER ;

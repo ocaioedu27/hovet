@@ -114,23 +114,6 @@ create table dispensario(
 
 ######################################################
 
-# Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
-DELIMITER $$
-
-CREATE TRIGGER after_deposito_from_dispensario
-	AFTER INSERT 
-    ON dispensario
-    FOR EACH ROW
-    BEGIN
-		UPDATE deposito as deps set
-		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
-		WHERE deposito_id = NEW.dispensario_deposito_id;
-END$$
-
-DELIMITER ;
-
-######################################################
-
 create table tipos_movimentacoes(
 	tipos_movimentacoes_id int primary key auto_increment,
     tipos_movimentacoes_movimentacao varchar(256),
@@ -156,3 +139,42 @@ create table movimentacoes (
     foreign key (movimentacoes_insumos_id) references insumos(insumos_id),
     data_operacao datetime not null default current_timestamp()
 );
+
+######################################################
+
+# Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
+DELIMITER $$
+
+CREATE TRIGGER after_deposito_from_dispensario
+	AFTER INSERT 
+    ON dispensario
+    FOR EACH ROW
+    BEGIN
+		UPDATE deposito as deps set
+		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
+		WHERE deposito_id = NEW.dispensario_deposito_id;
+END$$
+
+DELIMITER ;
+
+
+DELIMITER ;
+
+# Atualiza movimentacoes depois de deletar insumo do deposito
+DELIMITER $$
+
+CREATE TRIGGER before_deposito_delete
+	BEFORE DELETE
+    ON deposito
+    FOR EACH ROW
+    BEGIN
+		INSERT INTO movimentacoes  
+					(movimentacoes_origem,
+					movimentacoes_destino,
+					movimentacoes_tipos_movimentacoes_id,
+					movimentacoes_insumos_id)
+                    value
+                    ('Depósito', 'Lixo', 5, OLD.deposito_insumos_id);
+END$$
+
+DELIMITER ;
