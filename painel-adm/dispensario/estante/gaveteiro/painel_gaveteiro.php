@@ -6,8 +6,11 @@
                 <a href="index.php?menuop=cadastro_dispensario">
                     <button class="btn">Inserir</button>
                 </a>
-                <a href="#">
+                <a href="index.php?menuop=retirar_dispensario">
                     <button class="btn">Retirar</button>
+                </a>
+                <a href="index.php?menuop=quantidade_insumos_dispensario">
+                    <button class="btn">Quantidade de insumos</button>
                 </a>
             </div>
             <div>
