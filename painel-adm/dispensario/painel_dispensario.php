@@ -9,6 +9,9 @@
                 <a href="index.php?menuop=retirar_dispensario">
                     <button class="btn">Retirar</button>
                 </a>
+                <a href="index.php?menuop=quantidade_insumos_dispensario">
+                    <button class="btn">Quantidade de insumos</button>
+                </a>
             </div>
             <div>
                 <form action="index.php?menuop=dispensario" method="post" class="form_buscar">

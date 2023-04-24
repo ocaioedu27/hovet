@@ -141,12 +141,15 @@ SELECT
     
 select * from deposito;
 
-update deposito dep 
-	inner join dispensario disp 
-    set 
-		dep.deposito_Qtd = dep.deposito_Qtd-disp;
+-- update deposito dep 
+-- 	inner join dispensario disp 
+--     set 
+-- 		dep.deposito_Qtd = dep.deposito_Qtd-disp;
         
-select * from deposito;
+select distinct i.insumos_id, i.insumos_nome 
+	from deposito d
+    inner join insumos i
+    on d.deposito_insumos_id = i.insumos_id;
 
 select * from dispensario;
 

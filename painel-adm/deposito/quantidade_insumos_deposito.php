@@ -6,7 +6,23 @@
             </div>
             <div>
                 <form action="index.php?menuop=quantidade_insumos_deposito" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
+                    <span class="span_select_qtd">Selecione o Insumo</span>
+                    <select name="txt_pesquisa_deposito">
+                        <option> - selecione - </option>
+                        <?php
+                            $sql_listar = "SELECT DISTINCT i.insumos_id, i.insumos_nome 
+                            FROM deposito d
+                            INNER JOIN insumos i
+                            ON d.deposito_insumos_id = i.insumos_id";
+                            $result_insumos = mysqli_query($conexao,$sql_listar) or die("//Deposito/quantidade_insumos/ - Erro ao executar a consulta! " . mysqli_error($conexao));
+                            while($insumos = mysqli_fetch_assoc($result_insumos)){
+                        ?>
+                        <option><?=$insumos["insumos_nome"]?></option>
+    
+                        <?php
+                            }
+                        ?>
+                    </select>
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -44,10 +60,7 @@
                                     INNER JOIN insumos i 
                                     ON d.deposito_insumos_id = i.insumos_id 
                                     WHERE
-                                        d.deposito_id='{$txt_pesquisa_deposito}' or
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_deposito}%' or
-                                        d.deposito_qtd LIKE '%{$txt_pesquisa_deposito}%' or
-                                        d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%'
+                                        i.insumos_nome='{$txt_pesquisa_deposito}'
                                         ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -63,6 +76,43 @@
                     <?php
                         }
                     ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="tabelas">
+            <table class="tabela_listar qtd_total">
+                <thead>
+                    <tr>
+                        <th>Quantidade total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        // $insumo_selecionado = (isset($_POST["txt_pesquisa_deposito"]))?$_POST["txt_pesquisa_deposito"]:"";
+                        $insumo_selecionado = $_POST['txt_pesquisa_deposito'];
+                        if ($insumo_selecionado == " - selecione - ") {
+                            $insumo_selecionado = "";
+                        }
+                        
+                        $sql_qtd = "SELECT 
+                            sum(d.deposito_qtd) as deposito_qtd_insumo
+                            FROM deposito d 
+                            INNER JOIN insumos i
+                            ON d.deposito_insumos_id = i.insumos_id
+                            WHERE 
+                            i.insumos_nome='{$insumo_selecionado}'";
+                        
+                        $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//Deposito/quantidade_insumos_deposito/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
+
+                        $qtd_processada = mysqli_fetch_assoc($resultado_qtd);
+
+                        if ($qtd_processada['deposito_qtd_insumo'] == null) {
+                            $qtd_processada['deposito_qtd_insumo'] = 'Nenhum insumo selecionado'; 
+                        }
+                    ?>
+                    <tr>
+                        <td><?=$qtd_processada['deposito_qtd_insumo']?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>

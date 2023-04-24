@@ -234,6 +234,10 @@ include("../db/protect.php");
                     include_once("dispensario/retirar_dispensario.php");
                     break;
                     
+                case 'quantidade_insumos_dispensario':
+                    include_once("dispensario/quantidade_insumos_dispensario.php");
+                    break;
+                    
                 case 'painel_armario':
                     include_once("dispensario/armario/painel_armario.php");
                     break;

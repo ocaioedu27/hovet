@@ -253,6 +253,11 @@ input.btn_cadastrar:hover{
     text-align: center;
 }
 
+table.tabela_listar.qtd_total {
+    width: 15%;
+    margin-top: 10px;
+}
+
 .menu_header{
     display: flex;
     align-items: center;
@@ -596,4 +601,8 @@ form.form_retirar_dispensario {
 
 input.form-control.descricao_retira_dispensario {
     height: 8rem;
+}
+
+span.span_select_qtd {
+    margin-right: 4px;
 }
