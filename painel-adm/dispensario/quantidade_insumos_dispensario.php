@@ -12,8 +12,10 @@
                         <?php
                             $sql_listar = "SELECT DISTINCT i.insumos_id, i.insumos_nome 
                             FROM dispensario disp
+                            INNER JOIN deposito dep
+                            ON disp.dispensario_deposito_id = dep.deposito_id
                             INNER JOIN insumos i
-                            ON disp.dispensario_deposito_id = i.insumos_id";
+                            ON dep.deposito_insumos_id = i.insumos_id";
                             $result_insumos = mysqli_query($conexao,$sql_listar) or die("//Dispensario/quantidade_insumos/ - Erro ao executar a consulta! " . mysqli_error($conexao));
                             while($insumos = mysqli_fetch_assoc($result_insumos)){
                         ?>
@@ -38,6 +40,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
+                        <th>Local</th>
                         <th>Validade</th>
                     </tr>
                 </thead>
@@ -55,10 +58,15 @@
                                     d.dispensario_id, 
                                     d.dispensario_qtd,
                                     date_format(d.dispensario_validade, '%d/%m/%Y') as validadedispensario,
-                                    i.insumos_nome
+                                    i.insumos_nome,
+                                    lcd.local_nome
                                     FROM dispensario d 
-                                    INNER JOIN insumos i 
-                                    ON d.dispensario_deposito_id = i.insumos_id 
+                                    INNER JOIN deposito dep 
+                                    ON d.dispensario_deposito_id = dep.deposito_id
+                                    INNER JOIN insumos i
+                                    ON dep.deposito_insumos_id = i.insumos_id
+                                    INNER JOIN local_dispensario lcd 
+                                    ON d.dispensario_local_id = lcd.local_id 
                                     WHERE
                                         i.insumos_nome='{$txt_pesquisa_dispensario}'
                                         ORDER BY insumos_nome ASC 
@@ -71,6 +79,7 @@
                         <td><?=$dados["dispensario_id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["dispensario_qtd"]?></td>
+                        <td><?=$dados["local_nome"]?></td>
                         <td><?=$dados["validadedispensario"]?></td>
                     </tr>
                     <?php
@@ -96,11 +105,13 @@
                         
                         $sql_qtd = "SELECT 
                             sum(d.dispensario_qtd) as dispensario_qtd_insumo
-                            FROM dispensario d 
+                            FROM dispensario d
+                            INNER JOIN deposito dep
+                            ON d.dispensario_deposito_id = dep.deposito_id
                             INNER JOIN insumos i
-                            ON d.dispensario_deposito_id = i.insumos_id
-                            WHERE 
-                            i.insumos_nome='{$insumo_selecionado}'";
+                            ON dep.deposito_insumos_id = i.insumos_id
+                            where
+                            i.insumos_nome = '{$insumo_selecionado}'";
                         
                         $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//dispensario/quantidade_insumos_dispensario/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
 

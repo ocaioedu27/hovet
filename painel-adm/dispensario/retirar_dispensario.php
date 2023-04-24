@@ -63,7 +63,7 @@
 
             <div class="form-group">
                 <label for="dispensario_id">Informe o insumo</label>
-                <select  name="dispensario_id" id="dispensario_id" >
+                <select name="dispensario_id" id="dispensario_id" >
                     <?php
                     $sql = "SELECT
                         disp.dispensario_qtd,
@@ -92,9 +92,11 @@
             </div>
 
             <div class="form-group">
-                <label for="descricao_retira_dispensario">Descrição</label>
-                <textarea class="form-control" name="descricao_retira_dispensario" rows="5" cols="33" required></textarea>
+                <label for="quantidade_atual_dispensario"> Disponível no Dispensário
+                    <input type="text" class="form-control" name="quantidade_atual_dispensario" id="quantidade_atual_dispensario" readonly>
+                </label>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Retirar" name="btnRetirarInsumoDispensario" class="btn_cadastrar">
             </div>

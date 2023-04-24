@@ -150,6 +150,19 @@ select distinct i.insumos_id, i.insumos_nome
 	from deposito d
     inner join insumos i
     on d.deposito_insumos_id = i.insumos_id;
+    
+SELECT DISTINCT i.insumos_id, i.insumos_nome 
+                            FROM dispensario disp
+                            INNER JOIN insumos i
+                            INNER JOIN deposito dep
+                            ON dep.deposito_insumos_id = i.insumos_id;
+
+SELECT 
+	sum(d.dispensario_qtd) as dispensario_qtd_insumo
+	FROM dispensario d
+    inner join deposito dep
+    inner join insumos i
+    on dep.deposito_insumos_id = i.insumos_id;
 
 select * from dispensario;
 
