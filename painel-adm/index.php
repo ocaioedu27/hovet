@@ -25,6 +25,18 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
 }
 
+// // function gerar_pdf(){
+
+// use Dompdf\Dompdf;
+
+// require_once '';
+
+// $dompdf = new Dompdf();
+
+// echo '';
+
+// // }
+
 ?>
 
 <!DOCTYPE html>
