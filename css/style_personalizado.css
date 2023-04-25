@@ -191,7 +191,7 @@ input.btn_cadastrar:hover{
 }
 
 .dropdown-content.sair {
-    width: 400px;
+    width: 200px;
 }
 
 .dropdown-content.sair a:hover {
@@ -639,4 +639,23 @@ span.span_select_qtd {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.container_home{
+    flex-direction: row;
+}
+
+.gap_home {
+    gap: 30px;
+}
+
+section.menu_lateral{
+    background-color: #0B0B0B;
+    position: absolute;
+    left: 0;
+    width: 8%;
+    height: 100%;
+    top: 65px;
+    color: #fff;
+
 }

@@ -1,4 +1,3 @@
-<!-- Variavél de notoficações, só mostra notificações se existir valores -->
 <?php
 
 include("../db/connect.php");
@@ -78,7 +77,19 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 </a>
             </div>
             <div class="menu_op_adm">
-                <a href="index.php?menuop=pagina_principal">Página Principal</a>
+                <div class="dropdown">
+                    <a href="#">Página principal</a>
+                    <div class="dropdown-content dispensario">
+                        <ul>
+                            <li>
+                                <a href="index.php?menuop=pagina_principal">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=listar_notas_fiscais">Listar Notas Fiscais</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <a href="index.php?menuop=deposito">Depósito</a>
                 <div class="dropdown">
                     <a href="#">Dispensário</a>
@@ -132,6 +143,21 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
         </div>
     </nav>
     <main>
+        <!-- <section class="menu_lateral">
+            <div class="">
+                <div class="menu_op menu lateral">
+                    <div>
+                        <p>teste</p>
+                        <ul>
+                            <li>teste</li>
+                            <li>teste</li>
+                            <li>teste</li>
+                            <li>teste</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section> -->
         <?php
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"pagina_principal";
             switch ($menuop) {
@@ -277,6 +303,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
                 case 'relatorio_insumos_deposito_estoque_critico':
                     include_once("");
+                    break;
+
+                case 'listar_notas_fiscais':
+                    include_once("deposito/relatorios_deposito/listar_notas_fiscais.php");
                     break;
     
 
