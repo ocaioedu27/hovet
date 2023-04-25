@@ -143,6 +143,15 @@ create table movimentacoes (
     data_operacao datetime not null default current_timestamp()
 );
 
+create table notas_fiscais (
+	notas_fiscais_id int primary key auto_increment,
+    notas_fiscais_nome varchar(100) not null,
+    notas_fiscais_caminho varchar (100) not null,
+    notas_fiscais_data_upload datetime not null default current_timestamp(),
+    notas_fiscais_insumos_id int,
+    foreign key(notas_fiscais_insumos_id) references insumos(insumos_id) on delete set null
+);
+
 ######################################################
 
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
