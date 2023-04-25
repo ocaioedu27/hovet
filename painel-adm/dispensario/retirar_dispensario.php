@@ -22,7 +22,7 @@
                         
                         while($dados = mysqli_fetch_assoc($result)){
                         ?>
-                        <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_nome"]?></option>
+                        <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
 
                         <?php
                             }
