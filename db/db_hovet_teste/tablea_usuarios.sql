@@ -19,7 +19,9 @@ drop table tipo_usuario;
 
 create table usuarios(
 	usuario_id int primary key auto_increment,
-    usuario_nome varchar(100) not null,
+    usuario_nome_completo varchar(100) not null,
+    usuario_primeiro_nome varchar(100) not null,
+    usuario_sobrenome varchar(100) not null,
     usuario_mail varchar(100) unique not null,
     usuario_tipo_usuario_id int,
     foreign key(usuario_tipo_usuario_id) references tipo_usuario(tipo_usuario_id) on delete set null,
@@ -28,7 +30,7 @@ create table usuarios(
 );
 
 insert into usuarios value
-(null, "Adm", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
+(null, "Diretor(a) do HOVET", "Diretor(a)", "do Hovet", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
 #usar essa senha 1234 para trocar após o primeiro login
 
 select u.usuario_id, u.usuario_nome, u.usuario_mail, u.usuario_siape, t.tipo_usuario_tipo 
@@ -36,11 +38,13 @@ select u.usuario_id, u.usuario_nome, u.usuario_mail, u.usuario_siape, t.tipo_usu
     inner join tipo_usuario AS t 
     on u.usuario_tipo_usuario_id = t.tipo_usuario_id;
 
--- drop table usuarios;
+drop table usuarios;
 
 describe usuarios;
 
 show create table usuarios;
 
 select * from usuarios;
+
+delete from usuarios where usuario_id=1;
 

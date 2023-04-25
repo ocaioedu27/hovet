@@ -1,5 +1,5 @@
 
-use dbhovetTeste;
+use hovet_db;
 
 CREATE TABLE deposito_audit (
 	id int PRIMARY KEY NOT NULL auto_increment,
@@ -42,26 +42,13 @@ END$$
 DELIMITER ;
 
 # Atualiza movimentacoes depois de deletar insumo do deposito
-DELIMITER $$
 
-CREATE TRIGGER before_deposito_delete
-	BEFORE DELETE
-    ON deposito
-    FOR EACH ROW
-    BEGIN
-		INSERT INTO movimentacoes  
-					(movimentacoes_origem,
-					movimentacoes_destino,
-					movimentacoes_tipos_movimentacoes_id,
-					movimentacoes_insumos_id)
-                    value
-                    ('Depósito', 'Lixo', 5, OLD.deposito_insumos_id);
-END$$
+# Atualiza movimentacoes depois de deletar insumo do dispensario
 
-DELIMITER ;
-
-drop trigger after_deposito_from_dispensario;
+drop trigger before_dispensario_delete;
 
 select * from deposito_audit;
 
 show tables;
+
+show triggers;

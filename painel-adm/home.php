@@ -106,7 +106,7 @@
                 </div>
                 <div>
                     <?php
-                        $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=2";
+                        $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=6";
                         $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                         $dados = mysqli_fetch_assoc($result);
                     ?>

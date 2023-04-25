@@ -29,4 +29,17 @@ if (mysqli_query($conexao, $sql)) {
     die("//Dispensario/inserir_dispensario/ - Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
 }
 
+$tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
+$tipo_movimentacao = strtok($tipo_movimentacao, " ");
+
+$local_origem = "Depósito";
+
+$local_destino = "Dispenário";
+
+$usuario_id = $_SESSION['usuario_id'];
+
+$insumo_id = $depositoID_Insumodispensario;
+
+atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
+
 ?>

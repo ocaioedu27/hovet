@@ -40,17 +40,17 @@
 
                         $txt_pesquisa_usuarios = (isset($_POST["txt_pesquisa_usuarios"]))?$_POST["txt_pesquisa_usuarios"]:"";
 
-                        $sql = "SELECT u.usuario_id, u.usuario_nome, u.usuario_mail, u.usuario_siape, t.tipo_usuario_tipo 
+                        $sql = "SELECT u.usuario_id, u.usuario_primeiro_nome, u.usuario_mail, u.usuario_siape, t.tipo_usuario_tipo 
                             FROM usuarios AS u
                             INNER JOIN tipo_usuario AS t
                             on u.usuario_tipo_usuario_id = t.tipo_usuario_id
                         WHERE
                             u.usuario_id='{$txt_pesquisa_usuarios}' or
-                            u.usuario_nome LIKE '%{$txt_pesquisa_usuarios}%' or
+                            u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_usuarios}%' or
                             t.tipo_usuario_tipo LIKE '%{$txt_pesquisa_usuarios}%' or
                             u.usuario_siape LIKE '%{$txt_pesquisa_usuarios}%' or
                             u.usuario_mail LIKE '%{$txt_pesquisa_usuarios}%'
-                            ORDER BY usuario_nome ASC 
+                            ORDER BY usuario_primeiro_nome ASC 
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
@@ -75,7 +75,7 @@
                             </a>
                         </td>
                         <td><?=$dados["usuario_id"]?></td>
-                        <td><?=$dados["usuario_nome"]?></td>
+                        <td><?=$dados["usuario_primeiro_nome"]?></td>
                         <td><?=$dados["usuario_mail"]?></td>
                         <td><?=$dados["tipo_usuario_tipo"]?></td>
                         <td><?=$dados["usuario_siape"]?></td>

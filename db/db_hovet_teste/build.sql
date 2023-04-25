@@ -23,7 +23,9 @@ insert into tipo_usuario values
 # Criando a tabela de usuários
 create table usuarios(
 	usuario_id int primary key auto_increment,
-    usuario_nome varchar(100) not null,
+    usuario_nome_completo varchar(100) not null,
+    usuario_primeiro_nome varchar(100) not null,
+    usuario_sobrenome varchar(100) not null,
     usuario_mail varchar(100) unique not null,
     usuario_tipo_usuario_id int,
     foreign key(usuario_tipo_usuario_id) references tipo_usuario(tipo_usuario_id) on delete set null,
@@ -31,9 +33,8 @@ create table usuarios(
     usuario_senha varchar(256) not null
 );
 
-# Inserindo conteúdo na tabela usuários
 insert into usuarios value
-(null, "Adm", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
+(null, "Diretor(a) do HOVET", "Diretor(a)", "do Hovet", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
 #usar essa senha 1234 para trocar após o primeiro login
 
 ######################################################
@@ -54,22 +55,23 @@ create table insumos(
 	insumos_id int primary key auto_increment,
     insumos_nome varchar(256) not null,
     insumos_unidade varchar(150) not null,
+    insumos_descricao varchar(256) not null,
     insumos_tipo_insumos_id int not null,
     foreign key(insumos_tipo_insumos_id) references tipos_insumos(tipos_insumos_id)
 );
 
 # Inserção de conteúdo insumos
-INSERT INTO insumos VALUES
-(null, 'Dramin', 'Caixa',  1),
-(null, 'Torsilax', 'Caixa', 1),
-(null, 'Dipirona', 'Caixa', 1),
-(null, 'Paracetamol', 'Caixa', 1),
-(null, 'Imosec', 'Caixa', 1),
-(null, 'Melatonina', 'Caixa', 1),
-(null, 'Acetona', 'Caixa', 2),
-(null, 'Pregabalina', 'Caixa', 1),
-(null, 'Algodão', 'Pacote', 2),
-(null, 'Esparadrapo', 'Caixa', 2);
+INSERT INTO insumos (insumos_id,insumos_nome,insumos_unidade,insumos_descricao,insumos_tipo_insumos_id) VALUES
+(null, 'Dramin','Caixa','Dramin 50mg Com 10 Caps Gel', 1),
+(null, 'Torsilax','Caixa','Torsilax 30mg Com 30 comp', 1),
+(null, 'Dipirona', 'Caixa','Dipirona Sódica 500mg 10 Comprimidos Ems Genérico', 1),
+(null, 'Paracetamol','Caixa','Paracetamol 750mg 12 Comprimidos', 1),
+(null, 'Imosec','Caixa','Imosec 12 Cápsulas tipo C', 1),
+(null, 'Melatonina','Caixa','Melatonina Raia 0,21mg 60 Comprimidos', 1),
+(null, 'Alcool','Pacote','álcool etílico hidratado 70º INPM', 2),
+(null, 'Pregabalina','Caixa','Cápsulas de 75 com 150mg', 1),
+(null, 'Algodão','Pacote','Pacote Algodão 500g', 2),
+(null, 'Esparadrapo','Caixa','Esparadrapo Impermeável Branco 5CM X 4,5M Pacote com 12', 2);
 
 ######################################################
 
@@ -125,7 +127,8 @@ insert into tipos_movimentacoes values
     (null,"Retirada", "Retirada de insumo(s) do Depósito."),
     (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
     (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições."),
-    (null,"Exclusão", "Exclusão de um insumo");
+    (null,"Exclusão", "Exclusão de um insumo"),
+    (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário");
 
 create table movimentacoes (
 	movimentacoes_id int primary key auto_increment,
@@ -134,9 +137,9 @@ create table movimentacoes (
     movimentacoes_tipos_movimentacoes_id int,
     foreign key (movimentacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
     movimentacoes_usuario_id int,
-    foreign key (movimentacoes_usuario_id) references usuarios(usuario_id),
+    foreign key (movimentacoes_usuario_id) references usuarios(usuario_id) on delete set null,
     movimentacoes_insumos_id int,
-    foreign key (movimentacoes_insumos_id) references insumos(insumos_id),
+    foreign key (movimentacoes_insumos_id) references insumos(insumos_id) on delete set null,
     data_operacao datetime not null default current_timestamp()
 );
 
@@ -153,28 +156,6 @@ CREATE TRIGGER after_deposito_from_dispensario
 		UPDATE deposito as deps set
 		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
 		WHERE deposito_id = NEW.dispensario_deposito_id;
-END$$
-
-DELIMITER ;
-
-
-DELIMITER ;
-
-# Atualiza movimentacoes depois de deletar insumo do deposito
-DELIMITER $$
-
-CREATE TRIGGER before_deposito_delete
-	BEFORE DELETE
-    ON deposito
-    FOR EACH ROW
-    BEGIN
-		INSERT INTO movimentacoes  
-					(movimentacoes_origem,
-					movimentacoes_destino,
-					movimentacoes_tipos_movimentacoes_id,
-					movimentacoes_insumos_id)
-                    value
-                    ('Depósito', 'Lixo', 5, OLD.deposito_insumos_id);
 END$$
 
 DELIMITER ;

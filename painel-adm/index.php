@@ -26,9 +26,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
 }
 
-// echo prepara_dados_movimentacao($tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id, $data_operacao);
-
-
 ?>
 
 <!DOCTYPE html>
@@ -123,9 +120,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     <div class="dropdown">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
-                            <?php echo $_SESSION['usuario_nome'];?>
+                            <?php echo $_SESSION['usuario_primeiro_nome'];?>
                         </span>
                         <div class="dropdown-content sair">
+                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$_SESSION['usuario_id']?>">Meus dados</a>
                             <a href="../db/logout.php">Sair</a>
                         </div>
                     </div>

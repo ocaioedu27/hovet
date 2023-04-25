@@ -12,19 +12,33 @@
         </div>
         <form class="form_cadastro" action="index.php?menuop=inserir_usuario" method="post">
             <div class="form-group">
-                <label for="nomeUsuario">Nome Completo</label>
-                <input type="text" class="form-control" name="nomeUsuario" required>
+                <label for="nomeCompletoUsuario">Nome Completo</label>
+                <input type="text" class="form-control" name="nomeCompletoUsuario" required>
             </div>
+
+            <div class="form-group valida_movimentacao">
+                <div>
+                    <label for="primeiroNomeUsuario">Primeiro nome</label>
+                    <input type="text" class="form-control" name="primeiroNomeUsuario" required>
+                </div>
+
+                <div class="displey-flex-cl">
+                    <label for="sobrenomeUsuario">Sobrenome</label>
+                    <input type="text" class="form-control" name="sobrenomeUsuario" required>
+                </div>  
+            </div>
+
             <div class="form-group">
                 <label for="mailUsuario">E-mail</label>
                 <input type="email" class="form-control" name="mailUsuario" required>
             </div>
+
             <div class="form-group">
                 <label for="tipoUsuario">Tipo de usuário</label>
                 <select class="form-control-sm" name="tipoUsuario" required>
                     <?php
                     
-                    $sql_allTipos = "SELECT * FROM tipo_usuario";
+                    $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";
                     $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     
                     while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){

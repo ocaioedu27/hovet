@@ -83,13 +83,14 @@ form.form_cadastro{
     align-items: center;
 }
 
-.form-group > p {
+.p_formatado {
     background: #e9ecef;
     border: 1px solid #ced4da;
-    padding: 0.375rem 0.75rem;
-    margin-top: 4px;
+    padding: 2px;
+    margin-top: 0;
     border-radius: 4px;
     color: #D1203E;
+    margin-bottom: 0;
 }
 
 input.btn_cadastrar{
@@ -185,11 +186,16 @@ input.btn_cadastrar:hover{
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .dropdown-content.sair {
-    width: 60px;
+    width: 400px;
+}
+
+.dropdown-content.sair a:hover {
+    color: #04AA6D !important;
 }
 
 #tabela_listar {
@@ -456,8 +462,8 @@ span.icon {
 }
 
 .cards.edita_usuarios{
-    width: 340px;
-    height: 650px;
+    width: 740px;
+    height: 520px;
 }
 
 .cards.cadastro_deposito{
@@ -467,12 +473,12 @@ span.icon {
 
 .cards.cadastro_dispensario{
     width: 740px;
-    height: 425px;
+    height: 510px;
 }
 
 .cards.retirar_dispensario{
     width: 640px;
-    height: 722px;
+    height: 440px;
 }
 
 .content_cards > div {
@@ -618,5 +624,19 @@ span.span_select_qtd {
 }
 
 .largura_metade {
-    width: 30% !important;
+    width: 50% !important;
+}
+
+.largura_um_quarto{
+    width: 25% !important;
+}
+
+.largura_um_terco{
+    width: 75% !important;
+}
+
+.display-flex-cl{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }

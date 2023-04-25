@@ -1,7 +1,18 @@
 <?php
 $idUsuario = $_GET["idUsuario"];
 
-$sql = "SELECT u.usuario_id, u.usuario_nome, u.usuario_mail, t.tipo_usuario_tipo, u.usuario_siape FROM usuarios as u INNER JOIN tipo_usuario as t on u.usuario_tipo_usuario_id = t.tipo_usuario_id WHERE u.usuario_id={$idUsuario}";
+$sql = "SELECT 
+            u.usuario_id,
+            u.usuario_nome_completo,
+            u.usuario_sobrenome,
+            u.usuario_primeiro_nome,
+            u.usuario_mail,
+            t.tipo_usuario_tipo,
+            u.usuario_siape 
+            FROM usuarios AS u 
+            INNER JOIN tipo_usuario AS t 
+            ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
+            WHERE u.usuario_id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
@@ -19,41 +30,74 @@ $dados = mysqli_fetch_assoc($result);
             </a>
         </div>
         <form class="form_cadastro" action="index.php?menuop=atualizar_usuario" method="post">
-            <div class="form-group">
-                <label for="idUsuario">ID</label>
-                <input type="text" class="form-control" name="idUsuario" value="<?=$dados["id"]?>" readonly>
+            <div class="form-group valida_movimentacao">
+                <div class="display-flex-cl">
+                    <label for="idUsuario">ID</label>
+                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["usuario_id"]?>" readonly>
+                </div>
+
+                <div class="display-flex-cl">
+                    <label for="nomeCompletoUsuario">Nome Completo</label>
+                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="nomeUsuario">Nome</label>
-                <input type="text" class="form-control" name="nomeUsuario" value="<?=$dados["nome"]?>" required>
+            
+            <div class="form-group valida_movimentacao">
+                <div>
+                    <label for="primeiroNomeUsuario">Primeiro Nome</label>
+                    <input type="text" class="form-control" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
+                </div>
+
+                <div class="displey-flex-cl">
+                    <label for="sobrenomeUsuario">Sobrenome</label>
+                    <input type="text" class="form-control" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
+                </div>  
             </div>
-            <div class="form-group">
-                <label for="mailUsuario">E-mail</label>
-                <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["mail"]?>" required>
+
+            <div class="form-group valida_movimentacao">
+
+                <div class="display-flex-cl">
+                    <label for="tipoUsuario">Tipo de usuário</label>
+                    <select class="form-control-sm largura_metade" name="tipoUsuario">
+                        <?php
+                        
+                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";
+                        $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                        
+                        while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
+                        ?>
+                            <option><?=$tipoUsu["tipo_usuario_id"]?> - <?=$tipoUsu["tipo_usuario_tipo"]?></option>
+                        <?php
+                            }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="display-flex-cl">
+                    <label for="">Atualmente: </label>
+                    <p class="p_formatado">
+                        <code><?=$dados["tipo_usuario_tipo"]?></code>
+                    </p>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="tipoUsuario">Tipo de usuário</label>
-                <select class="form-control-sm" name="tipoUsuario">
-                    <?php
-                    
-                    $sql_allTipos = "SELECT * FROM tipo_usuario WHERE id!=5";
-                    $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                    
-                    while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
-                    ?>
-					    <option><?=$tipoUsu["id"]?> - <?=$tipoUsu["tipo"]?></option>
-                    <?php
-                        }
-                    ?>
-				</select>
-                <p>
-                    <code>Atualmente: <?=$dados["tipo"]?></code>
-                </p>
+
+            <div class="form-group valida_movimentacao">
+
+                <div class="diplay-flex-cl">
+                    <label for="mailUsuario">E-mail</label>
+                    <input type="email" class="form-control largura_um_terco" name="mailUsuario" value="<?=$dados["usuario_mail"]?>" required>
+                </div>
+
+                <div class="diplay-flex-cl">
+                    <label for="siapeUsuario">SIAPE</label>
+                    <input type="text" class="form-control" name="siapeUsuario" value="<?=$dados["usuario_siape"]?>" readonly>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="siapeUsuario">SIAPE</label>
-                <input type="text" class="form-control" name="siapeUsuario" value="<?=$dados["siape"]?>" readonly>
+
+            <div class="form-group valida_movimentacao">
+                <a href="#">Trocar senha</a>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Atualizar" name="btnAtualizarUsuario" class="btn_cadastrar">
             </div>

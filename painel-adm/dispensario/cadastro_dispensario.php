@@ -13,7 +13,7 @@
         <form class="form_cadastro" action="index.php?menuop=inserir_dispensario" method="post">
             <div class="form-group">
                 <label for="depositoID_Insumodispensario">Nome</label>
-                <select class="form-control-sm largura_metade" name="depositoID_Insumodispensario" id="" required>
+                <select class="form-control-sm largura_um_quarto" name="depositoID_Insumodispensario" id="" required>
                     <?php
                     
                     $sql = "SELECT
@@ -34,6 +34,22 @@
                         }
                     ?>
 				</select>
+            </div>
+            <div class="form-group">
+                <?php
+                    $sql_mov = "SELECT 
+                        tipos_movimentacoes_id,
+                        tipos_movimentacoes_movimentacao
+                        FROM tipos_movimentacoes
+                        WHERE tipos_movimentacoes_movimentacao='Move para o Dispensário'";
+                        
+                    $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//dispensario/sql_mov - erro ao realiza" . mysqli_error($conexao));
+
+                    $dados_mov = mysqli_fetch_assoc($resultado_mov);
+                    
+                ?>
+                <label for="mov_dep_to_disp">Tipo de operação</label>
+                <input type="text" class="form-control largura_metade" name="mov_dep_to_disp" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
             </div>
             <div class="form-group valida_movimentacao">
                 <label for="quantidadeInsumoDispensario">Quantidade
@@ -65,7 +81,7 @@
             </div>
             <div class="form-group">
                 <label for="quantidadeInsumoDeposito"> Disponível no Depósito</label>
-                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDeposito" readonly>
+                <input type="text" class="form-control largura_um_quarto" name="quantidadeInsumoDeposito" readonly>
             </div>
             <div class="form-group">
             </div>

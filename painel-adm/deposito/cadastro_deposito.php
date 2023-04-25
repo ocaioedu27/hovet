@@ -17,7 +17,7 @@
                 <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" required>
                     <?php
                     
-                    $sql = "SELECT * FROM tipos_movimentacoes";
+                    $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
                     $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                     
                     while($dados = mysqli_fetch_assoc($result)){

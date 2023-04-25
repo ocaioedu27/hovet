@@ -12,6 +12,8 @@ insert into tipos_movimentacoes values
     (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
     (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições.");
     
+insert into tipos_movimentacoes value (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário");
+    
 select * from tipos_movimentacoes;
 
 -- drop table tipos_movimentacoes;
@@ -23,12 +25,12 @@ create table movimentacoes (
     movimentacoes_tipos_movimentacoes_id int,
     foreign key (movimentacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
     movimentacoes_usuario_id int,
-    foreign key (movimentacoes_usuario_id) references usuarios(usuario_id),
+    foreign key (movimentacoes_usuario_id) references usuarios(usuario_id) on delete set null,
     movimentacoes_insumos_id int,
-    foreign key (movimentacoes_insumos_id) references insumos(insumos_id),
-    data_operacao datetime not null default current_timestamp()
+    foreign key (movimentacoes_insumos_id) references insumos(insumos_id) on delete set null,
+    movimentacoes_data_operacao datetime not null default current_timestamp()
 );
-
+drop table movimentacoes;
 show create table test.data_teste;
 
 insert into movimentacoes 
@@ -204,3 +206,15 @@ SELECT
 	ON dep.deposito_insumos_id = i.insumos_id
     where
     i.insumos_nome = 'Imosec';
+    
+    
+    
+  SELECT disp.dispensario_id,
+        disp.dispensario_deposito_id,
+        dep.deposito_insumos_id
+        FROM dispensario disp
+        INNER JOIN
+        deposito dep
+        ON disp.dispensario_deposito_id = dep.deposito_id
+        WHERE dispensario_id=8;  
+    
