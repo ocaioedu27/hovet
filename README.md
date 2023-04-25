@@ -16,7 +16,7 @@ build.sql
 
 - O usuário é o email:
 
-administrador_a@ufra_hovet.com.br
+diretor_a@ufrahovet.com.br
 
 - A senha padrão é:
 
