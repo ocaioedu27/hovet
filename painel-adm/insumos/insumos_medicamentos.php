@@ -27,6 +27,7 @@
                         <th>Nome</th>
                         <th>Unidade</th>
                         <th>Tipo de Insumo</th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,7 +40,7 @@
 
                         $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
 
-                        $sql = "SELECT i.insumos_id, i.insumos_nome, i.insumos_unidade, t.tipos_insumos_tipo
+                        $sql = "SELECT i.insumos_id, i.insumos_nome, i.insumos_unidade, i.insumos_descricao, t.tipos_insumos_tipo
                         FROM insumos AS i
                         INNER JOIN tipos_insumos AS t
                         on i.insumos_tipo_insumos_id = t.tipos_insumos_id
@@ -47,7 +48,8 @@
                             i.insumos_tipo_insumos_id=1 AND
                             (i.insumos_id='{$txt_pesquisa_insumos}' or
                             i.insumos_nome LIKE '%{$txt_pesquisa_insumos}%' or 
-                            i.insumos_unidade LIKE '%{$txt_pesquisa_insumos}%')
+                            i.insumos_unidade LIKE '%{$txt_pesquisa_insumos}%' or
+                            i.insumos_descricao LIKE '%{$txt_pesquisa_insumos}%')
                             ORDER BY insumos_nome 
                             LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -75,6 +77,7 @@
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["tipos_insumos_tipo"]?></td>
+                        <td><?=$dados["insumos_descricao"]?></td>
                     </tr>
                     <?php
                         }
