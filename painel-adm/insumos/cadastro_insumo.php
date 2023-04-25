@@ -16,6 +16,10 @@
                 <input type="text" class="form-control" name="nomeInsumo" required>
             </div>
             <div class="form-group">
+                <label for="descricaoInsumo">Descrição</label>
+                <input type="text" class="form-control" name="descricaoInsumo" required>
+            </div>
+            <div class="form-group">
                 <label for="unidadeInsumo">Unidade</label>
                 <select class="form-control-sm" name="unidadeInsumo" required>
 					<option>Caixa</option>

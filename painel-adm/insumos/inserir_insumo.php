@@ -5,16 +5,19 @@
     
     $nomeInsumo = mysqli_real_escape_string($conexao,$_POST["nomeInsumo"]);
     $unidadeInsumo = mysqli_real_escape_string($conexao,$_POST["unidadeInsumo"]);
+    $descricaoInsumo = mysqli_real_escape_string($conexao,$_POST["descricaoInsumo"]);
     $tipoInsumo = mysqli_real_escape_string($conexao,$_POST["tipoInsumo"]);
     $tipoInsumo = strtok($tipoInsumo, " ");
     // $tipoInsumo = $tipoInsumo[0];
     $sql = "INSERT INTO insumos (
         insumos_nome,
         insumos_unidade,
+        insumos_descricao,
         insumos_tipo_insumos_id)
         VALUES(
             '{$nomeInsumo}',
             '{$unidadeInsumo}',
+            '{$descricaoInsumo}',
             {$tipoInsumo}
         )";
 

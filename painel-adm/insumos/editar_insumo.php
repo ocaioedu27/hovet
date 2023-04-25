@@ -28,6 +28,10 @@ $dados = mysqli_fetch_assoc($result);
                 <input type="text" class="form-control" name="nomeInsumo" value="<?=$dados["insumos_nome"]?>" required>
             </div>
             <div class="form-group">
+                <label for="descricaoInsumo">Descrição</label>
+                <input type="text" class="form-control" name="descricaoInsumo" value="<?=$dados["insumos_descricao"]?>" required>
+            </div>
+            <div class="form-group">
                 <label for="unidadeInsumo">Unidade do Insumo</label>
                 <select class="form-control-sm" name="unidadeInsumo" required>
 					<option>Caixa</option>

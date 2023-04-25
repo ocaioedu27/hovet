@@ -34,7 +34,7 @@ create table usuarios(
 );
 
 insert into usuarios value
-(null, "Diretor(a) do HOVET", "Diretor(a)", "do Hovet", "adm@mail.com", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
+(null, "Diretor(a) do HOVET", "Diretor(a)", "do Hovet", "diretor_a@ufrahovet.com.br", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
 #usar essa senha 1234 para trocar após o primeiro login
 
 ######################################################

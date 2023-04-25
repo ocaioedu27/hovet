@@ -5,6 +5,7 @@
     $idInsumo = mysqli_real_escape_string($conexao,$_POST["idInsumo"]);
     $nomeInsumo = mysqli_real_escape_string($conexao,$_POST["nomeInsumo"]);
     $unidadeInsumo = mysqli_real_escape_string($conexao,$_POST["unidadeInsumo"]);
+    $descricaoInsumo = mysqli_real_escape_string($conexao,$_POST["descricaoInsumo"]);
     $tipoInsumo = mysqli_real_escape_string($conexao,$_POST["tipoInsumo"]);
     // $tipoInsumo = $tipoInsumo[0];
     $tipoInsumo = strtok($tipoInsumo, " ");
@@ -12,6 +13,7 @@
     $sql = "UPDATE insumos SET 
         insumos_nome = '{$nomeInsumo}',
         insumos_unidade = '{$unidadeInsumo}',
+        insumos_descricao = '{$descricaoInsumo}',
         insumos_tipo_insumos_id = {$tipoInsumo}
         WHERE insumos_id={$idInsumo}
         ";
