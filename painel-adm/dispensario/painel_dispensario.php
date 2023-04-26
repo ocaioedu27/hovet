@@ -7,7 +7,7 @@
                     <button class="btn">Inserir</button>
                 </a>
                 <a href="index.php?menuop=retirar_dispensario">
-                    <button class="btn">Retirar</button>
+                    <button class="btn">Solicitar insumos</button>
                 </a>
                 <a href="index.php?menuop=quantidade_insumos_dispensario">
                     <button class="btn">Quantidade de insumos</button>

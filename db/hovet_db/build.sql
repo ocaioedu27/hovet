@@ -94,6 +94,16 @@ insert into deposito values
 ######################################################
 ##### Dispensario ####
 
+create table setores (
+	setores_id int primary key auto_increment,
+    setores_setor varchar(100) not null
+);
+
+insert into setores values
+	(null, 'Clínica'),
+    (null, 'Anestesia'),
+    (null, 'Grandes Animais');
+
 create table local_dispensario (
 	local_id int primary key not null auto_increment,
     local_nome varchar (20) not null

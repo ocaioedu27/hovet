@@ -1,7 +1,7 @@
 <div class="container cadastro_all">
     <div class="cards retirar_dispensario">
         <div class="voltar form_retirada">
-            <h4>Retirando itens do Dispensário</h4>
+            <h4>Solicitando itens do Dispensário</h4>
             <a href="index.php?menuop=dispensario" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
