@@ -11,59 +11,89 @@
             </a>
         </div>
         <form class="form_cadastro" action="index.php?menuop=inserir_dispensario" method="post">
-            <div class="form-group">
-                <label for="depositoID_Insumodispensario">Nome</label>
-                <select class="form-control-sm largura_um_quarto" name="depositoID_Insumodispensario" id="" required>
+            <div class="form-group valida_movimentacao">
+                <div class="display-flex-cl">
                     <?php
-                    
-                    $sql = "SELECT
-                        dep.deposito_validade,
-                        dep.deposito_qtd,
-                        dep.deposito_id,
-                        ins.insumos_nome 
-                        FROM deposito dep 
-                        INNER JOIN insumos ins 
-                        ON dep.deposito_insumos_id = ins.insumos_id";
-                    $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                    
-                    while($dados = mysqli_fetch_assoc($result)){
-                    ?>
-					<option><?=$dados["deposito_id"]?> - <?=$dados["insumos_nome"]?></option>
+                        $sql_mov = "SELECT 
+                            tipos_movimentacoes_id,
+                            tipos_movimentacoes_movimentacao
+                            FROM tipos_movimentacoes
+                            WHERE tipos_movimentacoes_movimentacao='Move para o Dispensário'";
+                            
+                        $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//dispensario/sql_mov - erro ao realiza" . mysqli_error($conexao));
 
-                    <?php
-                        }
-                    ?>
-				</select>
-            </div>
-            <div class="form-group">
-                <?php
-                    $sql_mov = "SELECT 
-                        tipos_movimentacoes_id,
-                        tipos_movimentacoes_movimentacao
-                        FROM tipos_movimentacoes
-                        WHERE tipos_movimentacoes_movimentacao='Move para o Dispensário'";
+                        $dados_mov = mysqli_fetch_assoc($resultado_mov);
                         
-                    $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//dispensario/sql_mov - erro ao realiza" . mysqli_error($conexao));
+                    ?>
+                    <label for="mov_dep_to_disp">Tipo de operação</label>
+                    <input type="text" class="form-control largura_um_terco" name="mov_dep_to_disp" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
+                </div>
+                
+                <div class="display-flex-cl">
+                    <label for="solicitante_retira_dispensario">Quem está movimentando</label>
+                    <select class="form-control largura_metade" name="solicitante_retira_dispensario" required>
+                        <?php
+                        $sql = "SELECT * FROM usuarios";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                        
+                        while($dados = mysqli_fetch_assoc($result)){
+                        ?>
+                        <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
 
-                    $dados_mov = mysqli_fetch_assoc($resultado_mov);
-                    
-                ?>
-                <label for="mov_dep_to_disp">Tipo de operação</label>
-                <input type="text" class="form-control largura_metade" name="mov_dep_to_disp" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
+                        <?php
+                            }
+                        ?>
+                    </select>
+                </div>
             </div>
             <div class="form-group valida_movimentacao">
-                <label for="quantidadeInsumoDispensario">Quantidade
+                <div class="display-flex-cl">
+                    <label for="depositoID_Insumodispensario">Insumo</label>
+                    <select class="form-control largura_metade" name="depositoID_Insumodispensario" id="" required>
+                        <?php
+                        
+                        $sql = "SELECT
+                            dep.deposito_validade,
+                            dep.deposito_qtd,
+                            dep.deposito_id,
+                            ins.insumos_nome,
+                            ins.insumos_id 
+                            FROM deposito dep 
+                            INNER JOIN insumos ins 
+                            ON dep.deposito_insumos_id = ins.insumos_id";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                        
+                        while($dados = mysqli_fetch_assoc($result)){
+                        ?>
+                        <option><?=$dados["deposito_id"]?> - <?=$dados["insumos_nome"]?></option>
+
+                        <?php
+                            }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="display-flex-cl">
+                    <label for="descricaoInsumoDeposito">Descrição do insumo</label>
+                    <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control" readonly></textarea>
+                    <!-- <input type="text" class="form-control" name="descricaoInsumoDeposito" readonly> -->
+                </div>
+            </div>
+            <div class="form-group valida_movimentacao">
+
+                <div class="display-flex-cl">
+                    <label for="quantidadeInsumoDispensario">Quantidade</label>
                     <input type="text" class="form-control" name="quantidadeInsumoDispensario" required>
-                </label>
+                </div>
 
-                <label for="validadeInsumoDeposito">Validade
+                <div class="display-flex-cl">
+                    <label for="validadeInsumoDeposito">Validade</label>
                     <input type="date" class="form-control" name="validadeInsumoDeposito" id="auto_complete_validade" readonly>
-                </label>
+                </div>
 
-                <label for="localInsumodispensario" style="
-                        display: flex; 
-                        flex-direction: column;">Local
-                    <select class="form-control-sm" name="localInsumodispensario" id="depositoID_Insumodispensario" required>
+                <div class="display-flex-cl">
+                    <label for="localInsumodispensario">Local</label>
+                    <select class="form-control" name="localInsumodispensario" id="depositoID_Insumodispensario" required>
                         <?php
                         $sql = "SELECT * FROM local_dispensario";
                         $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -76,12 +106,14 @@
                             }
                         ?>
                     </select>
-                </label>
+                </div>
                 
             </div>
-            <div class="form-group">
-                <label for="quantidadeInsumoDeposito"> Disponível no Depósito</label>
-                <input type="text" class="form-control largura_um_quarto" name="quantidadeInsumoDeposito" readonly>
+            <div class="form-group valida_movimentacao">
+                <div class="display-flex-cl">
+                    <label for="quantidadeInsumoDeposito"> Disponível no Depósito</label>
+                    <input type="text" class="form-control largura_um_quarto" name="quantidadeInsumoDeposito" readonly>
+                </div>
             </div>
             <div class="form-group">
             </div>

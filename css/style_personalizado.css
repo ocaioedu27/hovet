@@ -7,12 +7,20 @@
     font-family: 'Poppins', sans-serif;
 }
 
+*, *:before, *:after{
+    box-sizing: border-box;
+}
+
 ul {
     margin-bottom: 0;
 }
 
 label{
     margin-bottom: 0;
+}
+
+hr{
+    margin-top: 0;
 }
 
 .navbar{
@@ -467,18 +475,19 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 790px;
-    height: 440px;
+    width: 640px;
+    height: auto;
+    overflow-y: auto;
 }
 
 .cards.cadastro_dispensario{
-    width: 740px;
-    height: 510px;
+    width: 690px;
+    height: 550px;
 }
 
 .cards.retirar_dispensario{
     width: 640px;
-    height: 440px;
+    height: 620px;
 }
 
 .content_cards > div {
@@ -570,6 +579,11 @@ td.operacoes {
     margin-bottom: 0;
 }
 
+.form-control {
+    color: #0B0B0B;
+    border: 1px solid #9f9898;
+}
+
 select.form-control-sm{
     width: 100%;
     background: none;
@@ -658,4 +672,9 @@ section.menu_lateral{
     top: 65px;
     color: #fff;
 
+}
+
+.border_bt_rd{
+    border-bottom: 3px solid #04AA6D;
+    border-radius: 2px;
 }

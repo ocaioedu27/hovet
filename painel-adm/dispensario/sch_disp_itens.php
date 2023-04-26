@@ -1,4 +1,5 @@
 <?php
+    //retorna itens do dispensario para o formulário de requisição 
 
     include_once("../../db/connect.php");
 

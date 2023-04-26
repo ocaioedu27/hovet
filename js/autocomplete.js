@@ -6,6 +6,8 @@ $(document).ready(function(){
         
         var $quantidadeInsumoDeposito = $("input[name='quantidadeInsumoDeposito']");
         var $validadeInsumoDeposito = $("input[name='validadeInsumoDeposito']");
+        // var $descricaoInsumoDeposito = $("input[name='descricaoInsumoDeposito']");
+        var $descricaoInsumoDeposito = $("textarea[name='descricaoInsumoDeposito']");
         var depositoID_Insumodispensario = $(this).val()
         depositoID_Insumodispensario = depositoID_Insumodispensario.split(' ')[0];
 
@@ -16,6 +18,7 @@ $(document).ready(function(){
 
                 $quantidadeInsumoDeposito.val(retorno.quantidadeInsumoDeposito);
                 $validadeInsumoDeposito.val(retorno.validadeInsumoDeposito);
+                $descricaoInsumoDeposito.val(retorno.descricaoInsumoDeposito);
         });
     });
 });

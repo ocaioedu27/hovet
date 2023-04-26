@@ -71,7 +71,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
     </script>
 
 
-    <script type="text/javascript"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
 
 
 </head>

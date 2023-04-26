@@ -121,7 +121,9 @@ create table dispensario(
     dispensario_deposito_id int,
 	foreign key(dispensario_deposito_id) references deposito(deposito_id) on delete cascade,
     dispensario_local_id int not null,
-    foreign key(dispensario_local_id) references local_dispensario(local_id)
+    foreign key(dispensario_local_id) references local_dispensario(local_id) on delete set null,
+    dispensario_insumos_id int,
+    foreign key (dispensario_insumos_id) references insumos(insumos_id) on delete set null
 );
 
 ######################################################

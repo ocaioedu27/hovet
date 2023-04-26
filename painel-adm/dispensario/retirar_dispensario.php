@@ -12,9 +12,10 @@
         </div>
         <form action="index.php?menuop=atualizar_dispensario" class="form_retirar_dispensario" method="post">
 
-            <div class="form-group requisicao_devolucao valida_movimentacao">
+            <div class="form-group valida_movimentacao">
                 
-                <label for="solicitante_retira_dispensario">Solicitante
+                <div class="display-flex-cl">
+                    <label for="solicitante_retira_dispensario">Solicitante</label>
                     <select class="form-control-sm largura_um_terco" name="solicitante_retira_dispensario" required>
                         <?php
                         $sql = "SELECT * FROM usuarios";
@@ -28,14 +29,16 @@
                             }
                         ?>
                     </select>
-                </label>
-
-                <label for="operacao_dispensario">Tipo de operação
+                </div>
+                    
+                <div class="display-flex-cl">
+                    <label for="operacao_dispensario">Tipo de operação</label>
                     <select class="form-control-sm" name="operacao_dispensario">
                         <option>1 - Requição de Material</option>
                         <option>2 - Devolução de Material</option>
                     </select>
-                </label>
+                </div>
+                
                 
             </div>
 
@@ -61,7 +64,7 @@
 
                 <div class="display-flex-cl">
                     <label for="data_operacao_dispensario">Data</label>
-                    <input type="date" class="form-control-sm"  name="data_operacao_dispensario" id="" required>
+                    <input type="date" class="form-control"  name="data_operacao_dispensario" id="" required>
                 </div>
             
             </div>
@@ -110,6 +113,13 @@
                 <label for="quantidade_atual_dispensario"> Quantidade atual no Dispensário
                     <input type="text" class="form-control largura_um_quarto" name="quantidade_atual_dispensario" id="quantidade_atual_dispensario" readonly>
                 </label>
+            </div>
+
+            <div class="form-group valida_movimentacao">
+                <div class="display-flex-cl">
+                    <label for="justifica_requisicao">Justificativa</label>
+                    <textarea name="justifica_requisicao" cols="25" rows="6" class="form-control"></textarea required>
+                </div>
             </div>
 
             <div class="form-group valida_movimentacao">
