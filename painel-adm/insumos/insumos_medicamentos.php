@@ -3,7 +3,7 @@
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Medicamentos</h3>
-                <a href="index.php?menuop=cadastro_insumo">
+                <a href="index.php?menuop=cadastro_insumo" id="operacao_cadastro">
                     <button class="btn">Cadastrar</button>
                 </a>
             </div>
@@ -22,7 +22,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>Operações</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Unidade</th>
@@ -54,10 +54,11 @@
                             LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
+                            $qtd_linhas_tabelas++;
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td class="operacoes">
+                        <td class="operacoes" id="td_operacoes_editar_deletar">
                             <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["inusmos_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
@@ -81,6 +82,7 @@
                     </tr>
                     <?php
                         }
+                        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
             </table>

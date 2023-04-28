@@ -1,8 +1,14 @@
 <?php
 
-include("../db/connect.php");
+include_once("../db/connect.php");
 
-include("../db/protect.php");
+include_once("../db/protect.php");
+
+include_once("../db/restringe_permissoes.php");
+
+$sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
+
+$qtd_linhas_tabelas = 0;
 
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
@@ -49,7 +55,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
@@ -59,8 +64,8 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
     <!--REFERENCIA PARA O FAVICON -->
 
-    <link rel="shortcut icon" href="../img/favicon.jpg" type="image/x-icon">
-    <link rel="icon" href="../img/favicon/favicon.jpg" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="../img/favicon.jpg" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="../img/favicon/logo_hovet.ico" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
@@ -69,10 +74,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
-
-
-    <script type="text/javascript" src="../js/script.js"></script>
-
 
 </head>
 
@@ -97,7 +98,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=pagina_principal">Dashboard</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=listar_notas_fiscais">Listar Notas Fiscais</a>
+                                <a href="index.php?menuop=listar_notas_fiscais" id="listar_notas_fiscais">Listar Notas Fiscais</a>
                             </li>
                         </ul>
                     </div>
@@ -146,6 +147,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                             <?php echo $_SESSION['usuario_primeiro_nome'];?>
                         </span>
                         <div class="dropdown-content sair">
+                            <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
                             <a href="index.php?menuop=editar_usuario&idUsuario=<?=$_SESSION['usuario_id']?>">Meus dados</a>
                             <a href="../db/logout.php">Sair</a>
                         </div>
@@ -289,8 +291,8 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("dispensario/inserir_dispensario.php");
                     break;
 
-                case 'retirar_dispensario':
-                    include_once("dispensario/retirar_dispensario.php");
+                case 'solicitar_dispensario':
+                    include_once("dispensario/solicitar_dispensario.php");
                     break;
                     
                 case 'quantidade_insumos_dispensario':
@@ -335,6 +337,9 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="../js/autocomplete.js"></script>
+    
+    <script type="text/javascript" src="../js/script.js"></script>
+
 
     <!-- <script src="../js/jquery-3.6.4.min.js"></script> -->
 

@@ -171,7 +171,7 @@
                                 <a href="pdf/pdf.php" target="_blank"><strong>Depósito</strong> - Relatório de insercão e retiradas de certo insumo</a>
                             </div>
                             <div class="relatorio">
-                                <a href="pdf/pdf.php" target="_blank"><strong>dispensario</strong> - Relatório de insercão e retiradas de certo insumo</a>
+                                <a href="pdf/pdf.php" target="_blank"><strong>Dispensario</strong> - Relatório de insercão e retiradas de certo insumo</a>
                             </div>
                         </div>
                     </div>

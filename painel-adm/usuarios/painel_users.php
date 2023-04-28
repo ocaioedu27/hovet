@@ -3,7 +3,7 @@
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Todos os usuários</h3>
-                <a href="index.php?menuop=cadastro_usuario">
+                <a href="index.php?menuop=cadastro_usuario" id="operacao_cadastro">
                     <button class="btn">Cadastrar</button>
                 </a>
             </div>
@@ -22,7 +22,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Operações</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>
@@ -54,10 +54,10 @@
                             LIMIT $inicio_usuarios,$quantidade_registros_usuarios";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
-                        
+                            $qtd_linhas_tabelas++;
                     ?>
                     <tr>
-                        <td class="operacoes">
+                        <td class="operacoes" id="td_operacoes_editar_deletar">
                             <a href="index.php?menuop=editar_usuario&idUsuario=<?=$dados["usuario_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
@@ -66,7 +66,7 @@
                                 </button>
                             </a>
                             <a href="index.php?menuop=excluir_usuario&idUsuario=<?=$dados["usuario_id"]?>"
-                                class="confirmaDelete">
+                                class="confirmaDelete" >
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -82,6 +82,7 @@
                     </tr>
                     <?php
                         }
+                        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
             </table>

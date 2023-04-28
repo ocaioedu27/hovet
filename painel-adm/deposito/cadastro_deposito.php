@@ -19,7 +19,7 @@
                 <h3 class="">Dados fiscais</h3>
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
-                        <label for="tipo_insercao_deposito">Operação</label>
+                        <label>Operação</label>
                         <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" required>
                             <?php
                             
@@ -67,46 +67,44 @@
                 </div>
             </div>
 
-            <div id="dados_insumo">
+            <div class="" id="dados_insumo">
                 <hr>
-                <h3 class="">Dados do insumo</h3>
-                <div class="form-group valida_movimentacao">
-                    
-                    <div class="display-flex-cl">
-                        <label>Nome</label>
-                        <select class="form-control" name="insumoID_Insumodeposito[]" required>
-                            <?php
-                            
-                            $sql = "SELECT insumos_id, insumos_nome FROM insumos";
-                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                            
-                            while($dados = mysqli_fetch_assoc($result)){
-                            ?>
-                            <option><?=$dados["insumos_id"]?> - <?=$dados["insumos_nome"]?></option>
-
-                            <?php
-                                }
-                            ?>
-                        </select>
-                    </div>
+                <div>
+                    <h3 class="">Dados do insumo</h3>
+                    <div class="form-group valida_movimentacao">
                         
-                    <div class="display-flex-cl">
-                        <label>Quantidade</label>
-                        <input type="text" class="form-control" name="quantidadeInsumodeposito[]" required>
-                    </div>
+                        <div class="display-flex-cl">
+                            <label>Nome</label>
+                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value)" placeholder="Informe o nome do insumo..." required/>
+                            <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
+                        </div>
+                            
+                        <div class="display-flex-cl">
+                            <label>Quantidade guardada</label>
+                            <input type="text" class="form-control" name="quantidadeInsumodeposito[]" required>
+                        </div>
 
-                    <div class="display-flex-cl">
-                        <label for="validadeInsumoDeposito[]">Validade</label>
-                        <input type="date" class="form-control" name="validadeInsumodeposito[]" required>
-                    </div>
-                
-                    <div class="display-flex-cl">
-                        <label>Descrição</label>
-                        <input type="text" class="form-control" readonly>
-                    </div>
+                        <div class="display-flex-cl">
+                            <label for="validadeInsumoDeposito[]">Validade</label>
+                            <input type="date" class="form-control" name="validadeInsumodeposito[]" required>
+                        </div>
                     
-                    <button class="btn" type="button" onclick="adicionaCampoCadDeposito()" style="padding: 0;">+</button>
+                        <div class="display-flex-cl">
+                            <label>Quantidade Crítica</label>
+                            <input type="text" class="form-control" required>
+                        </div>
 
+                    </div>
+
+                    <div class="form-group valida_movimentacao">
+                    
+                        <div class="display-flex-cl">
+                            <label>Descrição</label>
+                            <textarea type="text" class="form-control largura_um_quarto" id="descricaoInsumoCadDep1" readonly></textarea>
+                        </div>
+                    
+                        <button class="btn" type="button" onclick="adicionaCampoCadDeposito()" style="padding: 0;">+</button>
+                    </div>
                 </div>
             </div>
             

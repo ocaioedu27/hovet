@@ -475,7 +475,7 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 640px;
+    width: 75%;
     height: auto;
     overflow-y: auto;
 }
@@ -677,4 +677,23 @@ section.menu_lateral{
 .border_bt_rd{
     border-bottom: 3px solid #04AA6D;
     border-radius: 2px;
+}
+
+.display-flex-row {
+    display: flex;
+}
+
+.ajuste_span{
+    position: absolute;
+    margin: 6% auto;
+}
+
+.ajuste_span ul{
+    color: #04AA6D;
+    background: beige;
+    padding: 5px;
+}
+
+.ajuste_span li{
+    color: #04AA6D;
 }

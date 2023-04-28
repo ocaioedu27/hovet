@@ -23,8 +23,8 @@ include("db/autentica.php");
 
     <!--REFERENCIA PARA O FAVICON -->
 
-    <link rel="shortcut icon" href="img/favicon/favicon.jpg" type="image/x-icon">
-    <link rel="icon" href="img/favicon/favicon.jpg" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="img/favicon/favicon.jpg" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="img/favicon/logo_hovet.ico" type="image/x-icon">
 
 </head>
 

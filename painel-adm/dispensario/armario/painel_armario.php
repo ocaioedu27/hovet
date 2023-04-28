@@ -4,10 +4,10 @@
             <div class="menu_user">
                 <h3>Dispensário - Armário</h3>
                 <a href="index.php?menuop=cadastro_dispensario">
-                    <button class="btn">Inserir</button>
+                    <button class="btn" id="operacao_cadastro">Inserir</button>
                 </a>
-                <a href="index.php?menuop=retirar_dispensario">
-                    <button class="btn">Retirar</button>
+                <a href="index.php?menuop=solicitar_dispensario">
+                    <button class="btn">Solicitar insumos</button>
                 </a>
                 <a href="index.php?menuop=quantidade_insumos_dispensario">
                     <button class="btn">Quantidade de insumos</button>
@@ -28,7 +28,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Operações</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
@@ -75,10 +75,11 @@
                                         LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
                         $rs = mysqli_query($conexao,$sql) or die("//dispensario/painel_armario/select_all - Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
+                            $qtd_linhas_tabelas++;
                         
                     ?>
                     <tr>
-                        <td class="operacoes">
+                        <td class="operacoes" id="td_operacoes_editar_deletar">
                             <a href="index.php?menuop=excluir_dispensario&idInsumodispensario=<?=$dados["dispensario_id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
@@ -115,6 +116,7 @@
                     </tr>
                     <?php
                         }
+                        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
             </table>

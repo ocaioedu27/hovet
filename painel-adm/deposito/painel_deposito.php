@@ -3,10 +3,10 @@
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Depósito</h3>
-                <a href="index.php?menuop=cadastro_deposito">
+                <a href="index.php?menuop=cadastro_deposito" id="operacao_cadastro">
                     <button class="btn">Inserir</button>
                 </a>
-                <div class="dropdown">
+                <div class="dropdown" id="operacao_retirar">
                     <a href="#">
                         <button class="btn">Retirar</button>
                     </a>
@@ -38,7 +38,7 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Operações</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
@@ -77,10 +77,11 @@
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
+                            $qtd_linhas_tabelas++;
                         
                     ?>
                     <tr>
-                        <td class="operacoes">
+                        <td class="operacoes" id="td_operacoes_editar_deletar">
                             <a href="index.php?menuop=excluir_deposito&idInsumodeposito=<?=$dados["deposito_id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
@@ -115,6 +116,7 @@
                     </tr>
                     <?php
                         }
+                        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
             </table>
