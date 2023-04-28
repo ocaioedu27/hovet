@@ -42,6 +42,7 @@
                         <th>Quantidade</th>
                         <th>Local</th>
                         <th>Validade</th>
+                        <th>Dias para o vencimento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,6 +60,7 @@
                                     d.dispensario_qtd,
                                     date_format(d.dispensario_validade, '%d/%m/%Y') as validadedispensario,
                                     i.insumos_nome,
+                                    datediff(d.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
                                     lcd.local_nome
                                     FROM dispensario d 
                                     INNER JOIN deposito dep 
@@ -81,6 +83,23 @@
                         <td><?=$dados["dispensario_qtd"]?></td>
                         <td><?=$dados["local_nome"]?></td>
                         <td><?=$dados["validadedispensario"]?></td>
+                        <td <?php 
+                                $dias = ['30','45'];
+ 
+                                if($dados["diasParaVencimentoDispensario"] <= $dias[0]){                                    
+                                ?> class="vermelho" <?php
+                                } else if($dados["diasParaVencimentoDispensario"] <= $dias[1]){
+                                    ?> class="amarelo" <?php
+                                } else if($dados["diasParaVencimentoDispensario"] > $dias[1]){
+                                    ?> class="verde" <?php
+                                } 
+                                ?>><?php if ($dados["diasParaVencimentoDispensario"] < 0){
+                                    echo "INSUMO VENCIDO!";
+                                } else{
+                                    echo $dados["diasParaVencimentoDispensario"] . " dia(s) para o vencimento";
+                                }
+                                ?>
+                        </td>
                     </tr>
                     <?php
                         }

@@ -39,6 +39,7 @@
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Validade</th>
+                        <th>Dias para o vencimento</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,7 +56,8 @@
                                     d.deposito_id, 
                                     d.deposito_qtd,
                                     date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-                                    i.insumos_nome
+                                    i.insumos_nome,
+                                    datediff(d.deposito_validade, curdate()) AS diasParaVencimentoDeposito
                                     FROM deposito d 
                                     INNER JOIN insumos i 
                                     ON d.deposito_insumos_id = i.insumos_id 
@@ -72,6 +74,23 @@
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["deposito_qtd"]?></td>
                         <td><?=$dados["validadedeposito"]?></td>
+                        <td <?php 
+                                $dias = ['30','45'];
+ 
+                                if($dados["diasParaVencimentoDeposito"] <= $dias[0]){                                    
+                                ?> class="vermelho" <?php
+                                } else if($dados["diasParaVencimentoDeposito"] <= $dias[1]){
+                                    ?> class="amarelo" <?php
+                                } else if($dados["diasParaVencimentoDeposito"] > $dias[1]){
+                                    ?> class="verde" <?php
+                                } 
+                                ?>><?php if ($dados["diasParaVencimentoDeposito"] < 0){
+                                    echo "INSUMO VENCIDO!";
+                                } else{
+                                    echo $dados["diasParaVencimentoDeposito"] . " dia(s) para o vencimento";
+                                }
+                                ?>
+                        </td>
                     </tr>
                     <?php
                         }
