@@ -1,6 +1,6 @@
 #Criando o banco 
+drop schema if exists hovet_db;
 create database hovet_db;
-
 use hovet_db;
 
 
