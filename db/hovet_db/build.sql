@@ -87,8 +87,8 @@ create table deposito(
 
 # Inserção de conteúdo para o depósito
 insert into deposito values 
-	(null, 20, '2023-04-05', 1),
-    (null, 10, '2023-04-09', 3);
+	(null, 20, '2023-08-05', 1),
+    (null, 10, '2023-08-09', 3);
 
 
 ######################################################
