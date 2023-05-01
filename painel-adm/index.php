@@ -4,7 +4,7 @@ include_once("../db/connect.php");
 
 include_once("../db/protect.php");
 
-include_once("../db/restringe_permissoes.php");
+// include_once("../db/restringe_permissoes.php");
 
 $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
 
@@ -329,6 +329,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
             }
         ?>
+        <?php echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';?>
     </main>
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

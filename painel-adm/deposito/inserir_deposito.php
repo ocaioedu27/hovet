@@ -36,6 +36,7 @@
             echo "<br/>Id do insumo: $insumoID_Insumodeposito";
             echo "<br/>Quantidade: $quantidadeInsumodeposito";
             echo "<br/>Validade: $validadeInsumodeposito";
+            echo "<hr>";
 
             // $sql = "INSERT INTO deposito (
             //     deposito_qtd,

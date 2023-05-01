@@ -20,7 +20,7 @@
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" required>
+                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
@@ -28,7 +28,7 @@
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
+                            <option onclick="removerCampoCadDeposito(<?=$dados['tipos_movimentacoes_id']?>, true)"><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
 
                             <?php
                                 }
@@ -37,8 +37,8 @@
                     </div>
                     
                     <div class="display-flex-cl">
-                        <label for="solicitante_retira_dispensario">Quem está guardando</label>
-                        <select class="form-control-sm largura_um_terco" name="solicitante_retira_dispensario" required>
+                        <label for="quem_esta_guardando_dep">Quem está guardando</label>
+                        <select class="form-control-sm largura_um_terco" name="quem_esta_guardando_dep" required>
                             <?php
                             $sql = "SELECT * FROM usuarios";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group valida_movimentacao">
-                    <div class="display-flex-cl">
+                    <div class="display-flex-cl" id="nota_fiscal_cad_dep">
                         <label for="nota_fiscal_deposito">Nota fiscal</label>
                         <input type="file" class="form-control" name="nota_fiscal_deposito">
                     </div>
@@ -100,7 +100,7 @@
                     
                         <div class="display-flex-cl">
                             <label>Descrição</label>
-                            <textarea type="text" class="form-control largura_um_quarto" id="descricaoInsumoCadDep1" readonly></textarea>
+                            <textarea type="text" class="form-control largura_metade" id="descricaoInsumoCadDep1" readonly></textarea>
                         </div>
                     
                         <button class="btn" type="button" onclick="adicionaCampoCadDeposito()" style="padding: 0;">+</button>
