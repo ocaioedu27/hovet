@@ -20,7 +20,7 @@
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" required>
+                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true)" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
@@ -28,7 +28,7 @@
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option onclick="removerCampoCadDeposito(<?=$dados['tipos_movimentacoes_id']?>, true)"><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
+                            <option><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
 
                             <?php
                                 }
@@ -62,7 +62,7 @@
 
                     <div class="display-flex-cl">
                         <label for="dataCadastroInsumoDeposito">Dia do cadastro</label>
-                        <input type="date" class="form-control largura_um_terco" name="dataCadastroInsumoDeposito" required>
+                        <input type="date" class="form-control largura_metade" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                         
                         <div class="display-flex-cl">
                             <label>Nome</label>
-                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value)" placeholder="Informe o nome do insumo..." required/>
+                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1)" placeholder="Informe o nome do insumo..." required/>
                             <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
                         </div>
                             
@@ -91,7 +91,7 @@
                     
                         <div class="display-flex-cl">
                             <label>Quantidade Crítica</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="qtdCriticaInsumoCadDep1" readonly>
                         </div>
 
                     </div>

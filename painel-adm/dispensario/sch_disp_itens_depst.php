@@ -38,6 +38,7 @@
         $sql_insumo = "SELECT
                                 insumos_descricao,
                                 insumos_nome,
+                                insumos_qtd_critica,
                                 insumos_id
                                 FROM insumos
                                 WHERE  
@@ -55,6 +56,7 @@
                     
                     'idInsumo' => $row_insumoDeposito['insumos_id'],
                     'nomeInsumo' => $row_insumoDeposito['insumos_nome'],
+                    'qtdCriticaInsumo' => $row_insumoDeposito['insumos_qtd_critica'],
                     'descricaoInsumo' => $row_insumoDeposito['insumos_descricao']
                 ];
         

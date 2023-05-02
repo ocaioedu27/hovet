@@ -455,23 +455,23 @@ span.icon {
 }
 
 .cards.cadastro_insumo{
-    width: 340px;
-    height: 434px;
+    width: 510px;
+    height: auto;
 }
 
 .cards.edita_insumo{
-    width: 340px;
-    height: 500px;
+    width: 530px;
+    height: auto;
 }
 
 .cards.cadastro_usuarios{
     width: 340px;
-    height: 590px;
+    height: auto;
 }
 
 .cards.edita_usuarios{
     width: 740px;
-    height: 520px;
+    height: auto;
 }
 
 .cards.cadastro_deposito{
@@ -482,12 +482,12 @@ span.icon {
 
 .cards.cadastro_dispensario{
     width: 690px;
-    height: 550px;
+    height: auto;
 }
 
 .cards.retirar_dispensario{
     width: 640px;
-    height: 620px;
+    height: auto;
 }
 
 .content_cards > div {

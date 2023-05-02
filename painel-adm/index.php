@@ -100,6 +100,9 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                             <li>
                                 <a href="index.php?menuop=listar_notas_fiscais" id="listar_notas_fiscais">Listar Notas Fiscais</a>
                             </li>
+                            <li>
+                                <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Listar Movimentações</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -311,8 +314,12 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("dispensario/sch_disp_itens_depst.php");
                     break;
                 
+                case 'listar_movimentacoes':
+                    include_once("");
+                    break;
+                
                 case 'relatorio_insumos_deposito_prestes_expirar':
-                    include_once("deposito/relatorios_deposito/expira_deposito.php");
+                    include_once("");
                     break;
 
                 case 'relatorio_insumos_deposito_estoque_critico':
