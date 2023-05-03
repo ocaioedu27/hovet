@@ -32,31 +32,31 @@
             $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito, " ");
             $quantidadeInsumodeposito = $dados_enviados_array['quantidadeInsumodeposito'][$chave_cad_deposito];
             $validadeInsumodeposito = $dados_enviados_array['validadeInsumodeposito'][$chave_cad_deposito];
-            echo "<br/>Chave para o insumo: $chave_cad_deposito";
-            echo "<br/>Id do insumo: $insumoID_Insumodeposito";
-            echo "<br/>Quantidade: $quantidadeInsumodeposito";
-            echo "<br/>Validade: $validadeInsumodeposito";
-            echo "<hr>";
+            // echo "<br/>Chave para o insumo: $chave_cad_deposito";
+            // echo "<br/>Id do insumo: $insumoID_Insumodeposito";
+            // echo "<br/>Quantidade: $quantidadeInsumodeposito";
+            // echo "<br/>Validade: $validadeInsumodeposito";
+            // echo "<hr>";
 
-            // $sql = "INSERT INTO deposito (
-            //     deposito_qtd,
-            //     deposito_validade,
-            //     deposito_insumos_id)
-            //     VALUES(
-            //         {$quantidadeInsumodeposito},
-            //         '{$validadeInsumodeposito}',
-            //         {$insumoID_Insumodeposito}
-            //     )";
+            $sql = "INSERT INTO deposito (
+                deposito_qtd,
+                deposito_validade,
+                deposito_insumos_id)
+                VALUES(
+                    {$quantidadeInsumodeposito},
+                    '{$validadeInsumodeposito}',
+                    {$insumoID_Insumodeposito}
+                )";
 
             
 
-            // if (mysqli_query($conexao, $sql)) { 
-            //     echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
-            //     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";
-            //     // echo "insumo inserido com sucesso";   
-            // } else {
-            //     die("Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
-            // }
+            if (mysqli_query($conexao, $sql)) { 
+                echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
+                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";
+                // echo "insumo inserido com sucesso";   
+            } else {
+                die("Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+            }
         }
     } else {
         echo "error";

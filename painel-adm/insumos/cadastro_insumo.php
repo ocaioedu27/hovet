@@ -21,7 +21,7 @@
 
                 <div class="display-flex-cl">
                     <label for="qtdCriticaInsumo">Quantidade Crítica</label>
-                    <input type="number" class="form-control" name="qtdCriticaInsumo" required>
+                    <input type="number" class="form-control" name="qtdCriticaInsumo" min="1" required>
                 </div>
 
             </div>

@@ -20,7 +20,7 @@
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true)" required>
+                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="" id="dados_insumo">
+            <div class="" id="dados_insumo_dep">
                 <hr>
                 <div>
                     <h3 class="">Dados do insumo</h3>
@@ -75,13 +75,13 @@
                         
                         <div class="display-flex-cl">
                             <label>Nome</label>
-                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1)" placeholder="Informe o nome do insumo..." required/>
+                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Informe o nome do insumo..." required/>
                             <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
                         </div>
                             
                         <div class="display-flex-cl">
                             <label>Quantidade guardada</label>
-                            <input type="text" class="form-control" name="quantidadeInsumodeposito[]" required>
+                            <input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" required>
                         </div>
 
                         <div class="display-flex-cl">
@@ -103,7 +103,7 @@
                             <textarea type="text" class="form-control largura_metade" id="descricaoInsumoCadDep1" readonly></textarea>
                         </div>
                     
-                        <button class="btn" type="button" onclick="adicionaCampoCadDeposito()" style="padding: 0;">+</button>
+                        <button class="btn" type="button" onclick="adicionaCampoCad(1)" style="padding: 0;">+</button>
                     </div>
                 </div>
             </div>

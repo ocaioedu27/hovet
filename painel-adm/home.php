@@ -43,7 +43,7 @@
                         </div>
                         <div class="vencimentoProx">
                             <div class="titulo">
-                                <h4 style="color: red;">Vencimento</h4>
+                                <h4 style="color: red;">A vencer</h4>
                                 <span class="icon">
                                     <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                                 </span>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="vencimentoProx">
                             <div class="titulo">
-                                <h4 style="color: red;">Vencimento</h4>
+                                <h4 style="color: red;">A vencer</h4>
                                 <span class="icon">
                                     <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                                 </span>

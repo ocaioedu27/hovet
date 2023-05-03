@@ -10,7 +10,7 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=inserir_dispensario" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario" method="post">
             <div class="dados_solicitacao">
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
@@ -31,8 +31,8 @@
                     </div>
                     
                     <div class="display-flex-cl">
-                        <label for="solicitante_retira_dispensario">Quem está movimentando</label>
-                        <select class="form-control largura_metade" name="solicitante_retira_dispensario" required>
+                        <label for="solicitante_retira_dispensario">Solicitante</label>
+                        <select class="form-control largura_um_terco" name="solicitante_retira_dispensario" required>
                             <?php
                             $sql = "SELECT * FROM usuarios";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -46,86 +46,65 @@
                             ?>
                         </select>
                     </div>
+
+                    <div class="display-flex-cl">
+                        <label>Data da transferência</label>
+                        <input type="date" class="form-control" name="dataTransferDepToDisp" required>
+                    </div>
                 </div>
             </div>
             
-            <div class="dados_insumo">
+            <div id="dados_insumo_disp">
                 <hr>
-                <div class="form-group valida_movimentacao">
-                    <div class="display-flex-cl">
-                        <label for="depositoID_Insumodispensario">Insumo</label>
-                        <select class="form-control largura_metade" name="depositoID_Insumodispensario" id="" required>
-                            <?php
-                            
-                            $sql = "SELECT
-                                dep.deposito_validade,
-                                dep.deposito_qtd,
-                                dep.deposito_id,
-                                ins.insumos_nome,
-                                ins.insumos_id 
-                                FROM deposito dep 
-                                INNER JOIN insumos ins 
-                                ON dep.deposito_insumos_id = ins.insumos_id";
-                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                            
-                            while($dados = mysqli_fetch_assoc($result)){
-                            ?>
-                            <option><?=$dados["deposito_id"]?> - <?=$dados["insumos_nome"]?></option>
-
-                            <?php
-                                }
-                            ?>
-                        </select>
+                <div>
+                    <div class="form-group valida_movimentacao">
+                        <div class="display-flex-cl">
+                            <label>Insumo</label>
+                            <input type="text" class="form-control largura_um_terco" name="insumoID_Insumodispensario[]" id="insumoID_Insumodispensario1" onkeyup="searchInput_cadDeposito(this.value, 1, 2)" placeholder="informe o nome do insumo..." required>
+                            <span class="ajuste_span" id="resultado_cad_disp_insumos1" style="
+    margin: 9.5% auto;"></span>
+                        </div>
+                        <div class="display-flex-cl">
+                            <label for="quantidadeInsumoDisponivelDeposito"> Disponível no Depósito</label>
+                            <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" readonly>
+                        </div>
                     </div>
-                    <div class="display-flex-cl">
-                        <label for="quantidadeInsumoDeposito"> Disponível no Depósito</label>
-                        <input type="text" class="form-control largura_metade" name="quantidadeInsumoDeposito" readonly>
-                    </div>
-                </div>
-                <div class="form-group valida_movimentacao">
+                    <div class="form-group valida_movimentacao">
 
-                    <div class="display-flex-cl">
-                        <label for="quantidadeInsumoDispensario">Quantidade</label>
-                        <input type="text" class="form-control" name="quantidadeInsumoDispensario" required>
-                    </div>
+                        <div class="display-flex-cl">
+                            <label for="quantidadeInsumoDispensario">Quantidade Transferida</label>
+                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" required>
+                        </div>
 
-                    <div class="display-flex-cl">
-                        <label for="validadeInsumoDeposito">Validade</label>
-                        <input type="date" class="form-control" name="validadeInsumoDeposito" id="auto_complete_validade" readonly>
-                    </div>
+                        <div class="display-flex-cl">
+                            <label for="validadeInsumoDeposito">Validade</label>
+                            <input type="date" class="form-control" name="validadeInsumoDeposito[]" id="validadeInsumoDeposito1" readonly>
+                        </div>
 
-                    <div class="display-flex-cl">
-                        <label for="localInsumodispensario">Local</label>
-                        <select class="form-control" name="localInsumodispensario" id="depositoID_Insumodispensario" required>
-                            <?php
-                            $sql = "SELECT * FROM local_dispensario";
-                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                            
-                            while($dados = mysqli_fetch_assoc($result)){
-                            ?>
-                            <option><?=$dados["local_id"]?> - <?=$dados["local_nome"]?></option>
-
-                            <?php
-                                }
-                            ?>
-                        </select>
+                        <div class="display-flex-cl">
+                            <label for="localInsumodispensario">Local</label>
+                            <select class="form-control" name="localInsumodispensario[]" id="localInsumodispensario1" required>
+                                <option>1 - Armário</option>
+                                <option>2 - Estante</option>
+                                <option>3 - Gaveteiro</option>
+                            </select>
+                        </div>
+                        
                     </div>
-                    
-                </div>
-                <div class="form-group valida_movimentacao">
-                </div>
-                <div class="form-group">
-                    <div class="display-flex-cl">
-                        <label for="descricaoInsumoDeposito">Descrição do insumo</label>
-                        <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" readonly></textarea>
-                        <!-- <input type="text" class="form-control" name="descricaoInsumoDeposito" readonly> -->
+                    <div class="form-group valida_movimentacao">
+                        <div class="display-flex-cl">
+                            <label for="descricaoInsumoDeposito">Descrição do insumo</label>
+                            <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDeposito1" readonly></textarea>
+                        </div>
+
+                        <button class="btn" type="button" onclick="adicionaCampoCad(2)" style="padding: 0;">+</button>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group valida_movimentacao">
-                    <label for="movimentacao_deposito_to_dispensario">Confirmo que os dados estão validados</label>
-                    <input type="checkbox" class="form-control-sm" name="movimentacao_deposito_to_dispensario" required>
-                </div>
+            <div class="form-group valida_movimentacao">
+                <label for="movimentacao_deposito_to_dispensario">Confirmo que os dados estão validados</label>
+                <input type="checkbox" class="form-control-sm" name="movimentacao_deposito_to_dispensario" required>
             </div>
 
             <div class="form-group">
