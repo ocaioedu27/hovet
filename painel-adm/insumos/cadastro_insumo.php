@@ -10,57 +10,63 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=inserir_insumo" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_insumo" method="post">
 
-            <div class="form-group valida_movimentacao">
+            <div id="dados_insumos_cad">
+                <hr>
+                <div>
+                    <div class="form-group valida_movimentacao">
 
-                <div class="display-flex-cl">
-                    <label for="nomeInsumo">Nome</label>
-                    <input type="text" class="form-control" name="nomeInsumo" required>
-                </div>
+                        <div class="display-flex-cl">
+                            <label for="nomeInsumo">Nome</label>
+                            <input type="text" class="form-control" name="nomeInsumo[]" required>
+                        </div>
 
-                <div class="display-flex-cl">
-                    <label for="qtdCriticaInsumo">Quantidade Crítica</label>
-                    <input type="number" class="form-control" name="qtdCriticaInsumo" min="1" required>
-                </div>
+                        <div class="display-flex-cl">
+                            <label>Quantidade Crítica</label>
+                            <input type="number" class="form-control" name="qtdCriticaInsumo[]" min="1" required>
+                        </div>
+
+                        <div class="display-flex-cl">    
+                            <label>Unidade</label>
+                            <select class="form-control" name="unidadeInsumo[]" required>
+                                <option>Caixa</option>
+                                <option>Pacote</option>
+                            </select>
+                        </div>
+
+                        <div class="display-flex-cl">
+                            <label>Tipo de Insumo</label>
+                            <select class="form-control" name="tipoInsumo[]" required>
+                                <option>1 - Medicamentos</option>
+                                <option>2 - Material de procedimento</option>
+                                <option>3 - Medicamentos controlados</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group valida_movimentacao">
+
+                        <div class="display-flex-cl">
+                            <label>Descrição</label>
+                            <textarea class="form-control largura_metade" name="descricaoInsumo[]" rows="3" required></textarea>
+                        </div>
+
+                        <button class="btn" type="button" onclick="adicionaCampoCad(3)" style="padding: 0;">+</button>
+
+                    </div>
+
+                </div> 
 
             </div>
 
             <div class="form-group valida_movimentacao">
-                
-                <div class="display-flex-cl">    
-                    <label for="unidadeInsumo">Unidade</label>
-                    <select class="form-control-sm" name="unidadeInsumo" required>
-                        <option>Caixa</option>
-                        <option>Pacote</option>
-                    </select>
-                </div>
-
-                <div class="display-flex-cl">
-                    <label for="tipoInsumo">Tipo de Insumo</label>
-                    <select class="form-control-sm" name="tipoInsumo" required>
-                        <?php
-                        
-                        $sql_allTipos = "SELECT * FROM tipos_insumos ";
-                        $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                        
-                        while($tipoInsumo = mysqli_fetch_assoc($result_allTipos)){
-                        ?>
-                            <option><?=$tipoInsumo["tipos_insumos_id"]?> - <?=$tipoInsumo["tipos_insumos_tipo"]?></option>
-                        <?php
-                            }
-                        ?>
-                    </select>
-                </div>
-
+                <label for="valida_dados_insercao_insumos">Confirmo que os dados estão validados</label>
+                <input type="checkbox" class="form-control-sm" name="valida_dados_insercao_insumos" required>
             </div>
-            <div class="form-group valida_movimentacao">
 
-                <div class="display-flex-cl">
-                    <label for="descricaoInsumo">Descrição</label>
-                    <textarea class="form-control" name="descricaoInsumo" rows="4" required></textarea>
-                </div>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Cadastrar" name="btnAdicionarInsumo" class="btn_cadastrar">
             </div>
