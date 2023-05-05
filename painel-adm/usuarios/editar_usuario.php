@@ -20,7 +20,7 @@ $dados = mysqli_fetch_assoc($result);
 <div class="container cadastro_all">
     <div class="cards edita_usuarios">
         <div class="voltar">
-            <h4>Edição de Usuário</h4>
+            <h4>Dados do Usuário</h4>
             <a href="index.php?menuop=usuarios" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
@@ -45,12 +45,12 @@ $dados = mysqli_fetch_assoc($result);
             <div class="form-group valida_movimentacao">
                 <div>
                     <label for="primeiroNomeUsuario">Primeiro Nome</label>
-                    <input type="text" class="form-control" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
+                    <input type="text" class="form-control largura_metade" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
                 </div>
 
                 <div class="displey-flex-cl">
                     <label for="sobrenomeUsuario">Sobrenome</label>
-                    <input type="text" class="form-control" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
+                    <input type="text" class="form-control largura_metade" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
                 </div>  
             </div>
 
@@ -58,7 +58,7 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="display-flex-cl">
                     <label for="tipoUsuario">Tipo de usuário</label>
-                    <select class="form-control-sm largura_metade" name="tipoUsuario">
+                    <select class="form-control largura_metade" name="tipoUsuario">
                         <?php
                         
                         $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";

@@ -524,6 +524,23 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
 }
 
 
+// PARA VERIFICAR SE SENHAS SÃO IGUAIS
+let passwordUser = document.getElementById('password');
+let confirmPasswordUser = document.getElementById('confirmPassword');
+let span_alerta = document.getElementById('alerta_senhas_iguais');
+let btn_cad_user = document.getElementById('btn_cad_user');
+
+function validaPassword() {
+  if (passwordUser.value != confirmPasswordUser.value) {
+    span_alerta.style.display = 'block';
+    btn_cad_user.type = 'button';
+  } else {
+    span_alerta.style.display = 'none';
+    btn_cad_user.type = 'submit';
+  }
+}
+
+
 //para restringir perfis
 var sessionUserType = document.querySelector('#sessionUserType').value;
 function returnUserSession(sessionUserType){
