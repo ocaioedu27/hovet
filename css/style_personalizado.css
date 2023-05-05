@@ -475,7 +475,7 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 75%;
+    width: 65%;
     height: auto;
     overflow-y: auto;
 }
@@ -486,7 +486,7 @@ span.icon {
 }
 
 .cards.retirar_dispensario{
-    width: 640px;
+    width: 65%;
     height: auto;
 }
 
@@ -646,7 +646,7 @@ span.span_select_qtd {
 }
 
 .largura_um_terco{
-    width: 75% !important;
+    width: 80% !important;
 }
 
 .display-flex-cl{

@@ -34,13 +34,13 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $insumo_id = $array_insumo_id['deposito_insumos_id'];
         
         // echo '<br/>id do insumo: ' . $insumo_id['deposito_insumos_id'];
-        echo "<br/>Chave para o insumo: $chave_cad_dispensario";
-        echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
-        echo "<br/>Id do insumo: $insumo_id";
-        echo "<br/>Quantidade: $quantidadeInsumoDispensario";
-        echo "<br/>Validade: $validadeInsumoDeposito";
-        echo "<br/>Local: $localInsumodispensario";
-        echo "<hr>";
+        // echo "<br/>Chave para o insumo: $chave_cad_dispensario";
+        // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
+        // echo "<br/>Id do insumo: $insumo_id";
+        // echo "<br/>Quantidade: $quantidadeInsumoDispensario";
+        // echo "<br/>Validade: $validadeInsumoDeposito";
+        // echo "<br/>Local: $localInsumodispensario";
+        // echo "<hr>";
 
         $sql_insert = "INSERT INTO dispensario (
             dispensario_qtd,

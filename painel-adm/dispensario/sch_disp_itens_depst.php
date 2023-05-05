@@ -44,6 +44,7 @@
         return json_encode($retorna_valores);
     }
     
+
     // para cadastrar dados no deposito a partir de informacoes dos insumos cadastrados no sistema
     function retorna_dados_insumos($cad_deposito_insumos_nome, $conn){
         $sql_insumo = "SELECT
@@ -80,6 +81,55 @@
             $retorna_valores = ['erro' => true, 'msg_error_insumos' => 'Insumo não encontrado'];
         }
         return json_encode($retorna_valores);
+    }
+
+
+    function retornInsumosDisp($insumos_nome, $conn){
+
+        $resultado_insumo_dispensario = "SELECT
+                                            d.dispensario_id,
+                                            d.dispensario_qtd,
+                                            d.dispensario_validade,
+                                            i.insumos_descricao,
+                                            i.insumos_nome
+                                            FROM dispensario d 
+                                            INNER JOIN insumos i
+                                            ON d.dispensario_insumos_id = i.insumos_id
+                                            WHERE i.insumos_nome LIKE '%{$insumos_nome}%' LIMIT 10";
+        $resultado_insumo_dispensario = mysqli_query($conn, $resultado_insumo_dispensario) or die("//dispensario/sch_disp_itens/ - Erro: " . mysqli_error($conn));
+
+        $valores_insumos_disp = array();
+
+        $quantidade = $resultado_insumo_dispensario->num_rows;
+
+        if ($quantidade != 0) {
+            while ($row_insumoDeposito = mysqli_fetch_assoc($resultado_insumo_dispensario)) {
+        
+                $valores_insumos_disp[] = [
+                    
+                    'idInsumoDisp' => $row_insumoDeposito['dispensario_id'],
+                    'nomeInsumoDisp' => $row_insumoDeposito['insumos_nome'],
+                    'qtdDisponivelInsumoDisp' => $row_insumoDeposito['dispensario_qtd'],
+                    'validadeInsumoDisp' => $row_insumoDeposito['dispensario_validade'],
+                    'descricaoInsumoDisp' => $row_insumoDeposito['insumos_descricao']
+                ];
+        
+            }
+
+            $retorna_valores_disp = ['erro' => false, 'dados_insumos_disp' => $valores_insumos_disp];
+            // $retorna_valores = ['erro' => true, 'msg_error_insumos' => 'Erro: nenhum insumo encontrado'];
+
+        } else{
+            $retorna_valores_disp = ['erro' => true, 'msg_error_insumos_disp' => 'Insumo não encontrado'];
+        }
+        return json_encode($retorna_valores_disp);
+    }
+
+    // para solicitar insumos no dispensario a partir de dados lá cadastrados
+    $request_disp_insumos_nome = $_GET['request_disp_insumos_nome'];
+
+    if(isset($request_disp_insumos_nome)){
+        echo retornInsumosDisp($request_disp_insumos_nome, $conexao);
     }
 
     // para cadastrar insumos no dispensario a partir de dados do deposito
