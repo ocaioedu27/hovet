@@ -75,9 +75,7 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="display-flex-cl">
                     <label for="">Atualmente: </label>
-                    <p class="p_formatado">
-                        <code><?=$dados["tipo_usuario_tipo"]?></code>
-                    </p>
+                    <input type="text" class="form-control" value="<?=$dados["tipo_usuario_tipo"]?>" style="color: red;" readonly>
                 </div>
             </div>
 
