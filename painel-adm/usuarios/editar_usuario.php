@@ -43,12 +43,12 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             
             <div class="form-group valida_movimentacao">
-                <div>
+                <div class="display-flex-cl">
                     <label for="primeiroNomeUsuario">Primeiro Nome</label>
                     <input type="text" class="form-control largura_metade" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
                 </div>
 
-                <div class="displey-flex-cl">
+                <div class="display-flex-cl">
                     <label for="sobrenomeUsuario">Sobrenome</label>
                     <input type="text" class="form-control largura_metade" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
                 </div>  
@@ -58,7 +58,7 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="display-flex-cl">
                     <label for="tipoUsuario">Tipo de usuário</label>
-                    <select class="form-control largura_metade" name="tipoUsuario">
+                    <select class="form-control largura_um_terco" name="tipoUsuario">
                         <?php
                         
                         $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";

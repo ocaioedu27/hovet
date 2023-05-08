@@ -14,7 +14,7 @@
                         <ul>
                             <li>
                                 <a href="index.php?menuop=cadastro_dispensario">Mover para o dispensário</a>
-                                <a href="#">Permutar</a>
+                                <a href="index.php?menuop=permutar_deposito">Permutar</a>
                             </li>
                         </ul>
                     </div>

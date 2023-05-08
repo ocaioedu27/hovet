@@ -154,7 +154,7 @@ create table movimentacoes (
     foreign key (movimentacoes_usuario_id) references usuarios(usuario_id) on delete set null,
     movimentacoes_insumos_id int,
     foreign key (movimentacoes_insumos_id) references insumos(insumos_id) on delete set null,
-    data_operacao datetime not null default current_timestamp()
+    movimentacoes_data_operacao datetime not null default current_timestamp()
 );
 
 create table notas_fiscais (

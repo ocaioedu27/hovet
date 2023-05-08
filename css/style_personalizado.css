@@ -475,6 +475,12 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
+    width: 80%;
+    height: auto;
+    overflow-y: auto;
+}
+
+.cards.permuta{
     width: 65%;
     height: auto;
     overflow-y: auto;
@@ -681,6 +687,8 @@ section.menu_lateral{
 
 .display-flex-row {
     display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .ajuste_span{
@@ -695,7 +703,7 @@ section.menu_lateral{
 }
 
 .ajuste_span li{
-    color: #04AA6D;
+    color: #0ad188;
 }
 
 .alerta_senhas_iguais {
@@ -712,4 +720,10 @@ section.menu_lateral{
 .alerta_senhas_iguais > ion-icon {
     font-size: .85rem;
     color: #D1203E;
+}
+
+div#permuta_dep {
+    background: #0ad188;
+    padding: 10px;
+    border-radius: 10px;
 }

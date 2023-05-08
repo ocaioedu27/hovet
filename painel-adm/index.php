@@ -315,7 +315,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
                 
                 case 'listar_movimentacoes':
-                    include_once("");
+                    include_once("./movimentacoes/painel_movimentacoes.php");
                     break;
                 
                 case 'relatorio_insumos_deposito_prestes_expirar':
@@ -329,7 +329,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 case 'listar_notas_fiscais':
                     include_once("deposito/relatorios_deposito/listar_notas_fiscais.php");
                     break;
-    
+
+                case 'permutar_deposito':
+                    include_once("deposito/permutar_deposito.php");
+                    break;    
 
                 default:
                 include_once("home.php");
