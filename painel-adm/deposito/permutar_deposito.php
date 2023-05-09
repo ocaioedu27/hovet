@@ -35,24 +35,24 @@
                     
                     <div class="display-flex-cl">
                         <label for="solicitante_retira_dispensario">Quem está realizando</label>
-                        <select class="form-control largura_um_terco" name="solicitante_retira_dispensario" required>
                             <?php
-                            $sql = "SELECT * FROM usuarios";
+                            $sql = "SELECT * FROM usuarios WHERE usuario_id={$_SESSION['usuario_id']}";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
-                            while($dados = mysqli_fetch_assoc($result)){
+                            $dados = mysqli_fetch_assoc($result);
                             ?>
-                            <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
+                        <input type="text" class="form-control largura_um_terco" name="quemRealizouPermutaDep" value='<?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?>' readonly>
 
-                            <?php
-                                }
-                            ?>
-                        </select>
                     </div>
 
                     <div class="display-flex-cl">
                         <label>Data da transferência</label>
-                        <input type="date" class="form-control" name="dataTransferDepToDisp" required>
+                        <input type="date" class="form-control largura_um_terco" name="dataTransferPermutaDep" required>
+                    </div>
+
+                    <div class="display-flex-cl">
+                        <label>Institução a Permutar</label>
+                        <input type="text" class="form-control" name="instituicaoPermutaDep" required>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
                                 <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_1" onkeyup="searchInput_cadDeposito(this.value, 1, 4)" placeholder="informe o nome do insumo..." required>
-                                <span class="ajuste_span" id="resultado_permuta_insumos1" style="margin: 9.5% auto;"></span>
+                                <span class="ajuste_span" id="resultado_permuta_insumos1" style="margin: 6.5% auto;"></span>
                             </div>
 
                             <div class="display-flex-cl">
@@ -102,7 +102,7 @@
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
                                 <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_2" onkeyup="searchInput_cadDeposito(this.value, 2, 4)" placeholder="informe o nome do insumo..." required>
-                                <span class="ajuste_span" id="resultado_permuta_insumos2" style="margin: 9.5% auto;"></span>
+                                <span class="ajuste_span" id="resultado_permuta_insumos2" style="margin: 6.5% auto;"></span>
                             </div>
 
                             <div class="display-flex-cl">
@@ -120,7 +120,7 @@
                             
                             <div class="display-flex-cl">
                                 <label> Disponível no Depósito</label>
-                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta2" >
+                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta2" readonly>
                             </div>
                         </div>
                         <div class="form-group valida_movimentacao">
