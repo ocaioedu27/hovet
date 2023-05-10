@@ -480,7 +480,7 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 80%;
+    width: 55%;
     height: auto;
     overflow-y: auto;
 }
@@ -498,6 +498,11 @@ span.icon {
 
 .cards.retirar_dispensario{
     width: 65%;
+    height: auto;
+}
+
+.cards.cadastro_categoria_insumo{
+    width: 25%;
     height: auto;
 }
 

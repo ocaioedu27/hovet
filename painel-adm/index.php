@@ -108,22 +108,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 </div>
                 <a href="index.php?menuop=estoques">Estoques</a>
                 <div class="dropdown">
-                    <a href="#">Dispensário</a>
-                    <div class="dropdown-content dispensario">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=dispensario">Dispensário - Geral</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=painel_armario">Armário</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=painel_gaveteiro">Estante - Gaveteiros</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="dropdown">
                     <a href="#">Insumos</a>
                     <div class="dropdown-content">
                         <ul>
@@ -189,8 +173,12 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 case 'cadastro_estoque':
                     include_once('estoques/cadastro_estoque.php');
                     break;
+                
+                case 'inserir_estoque':
+                    include_once('estoques/inserir_estoque.php');
+                    break;
 
-                case 'deposito_1':
+                case 'deposito':
                     include_once("estoques/deposito/painel_deposito.php");
                     break;
 
@@ -260,6 +248,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 
                 case 'cadastro_insumo':
                     include_once("insumos/cadastro_insumo.php");
+                    break;
+                    
+                case 'cadastro_categoria_insumo':
+                    include_once("insumos/categorias_insumos/cadastro_categoria_insumos.php");
                     break;
                 
                 case 'inserir_insumo':

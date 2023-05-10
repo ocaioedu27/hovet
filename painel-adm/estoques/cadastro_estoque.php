@@ -12,32 +12,36 @@
         </div>
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_estoque" method="post">
 
-            <div id="dados_insumos_cad">
+            <div id="dados_estoque_cad">
                 <hr>
-                <div>
-                    <div class="form-group valida_movimentacao">
+                <div class="display-flex-row">
+                    <div class="form-group">
 
-                        <div class="display-flex-cl">
-                            <label>Nome do Novo Estoque</label>
-                            <input type="text" class="form-control" name="nomeNovoEstoque[]" required>
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>Nome do Novo Estoque</label>
+                                <input type="text" class="form-control" name="nomeNovoEstoque[]" required>
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Tipo do Novo Estoque</label>
+                                <select class="form-control" name="tipoNovoEstoque[]" required>
+                                    <option>Depósito</option>
+                                    <option>Dispensário</option>
+                                </select>
+                            </div>
                         </div>
 
-
-                        <div class="display-flex-cl">
-                            <label>Tipo do Novo Estoque</label>
-                            <select class="form-control" name="tipoNovoEstoque[]" required>
-                                <option>Depósito</option>
-                                <option>Dispensário</option>
-                            </select>
+                        <div class="form-group valida_movimentacao">
+                            <div class="display-flex-cl">
+                                <label>Descrição do Estoque</label>
+                                <textarea name="descricaoNovoEstoque[]" class="form-control" rows="3"></textarea>
+                            </div>
                         </div>
-
-                        <div class="display-flex-cl largura_um_quarto">
-
-                            <button class="btn" type="button" onclick="adicionaCampoCad(3)" style="padding: 0;">+</button>
-
-                        </div>
-
                     </div>
+
+                    <button class="btn" type="button" onclick="adicionaCampoCad(6)" style="padding: 0;">+</button>
 
                 </div> 
 

@@ -115,6 +115,11 @@ function adicionaCampoCad(ondeCadastrou) {
     let dados_insumo_permuta_dep = document.getElementById('dados_insumo_permuta_dep');
     dados_insumo_permuta_dep.insertAdjacentHTML('beforeend', '<div id="insumo_permuta_dep'+controle_campo_cad_deposito+'"><hr><div class="display-flex-row"><div id="permuta_dep"><h4>Item a ser retirado do Depósito</h4><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Insumo</label><input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_'+new_soma_campo_retirada+'" onkeyup="searchInput_cadDeposito(this.value, '+new_soma_campo_retirada+', 4)" placeholder="informe o nome do insumo..." required><span class="ajuste_span" id="resultado_permuta_insumos'+new_soma_campo_retirada+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Validade</label><input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="validadeInsumoDepositoPermuta'+new_soma_campo_retirada+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Quantidade Permutada</label><input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" required></div><div class="display-flex-cl"><label> Disponível no Depósito</label><input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta'+new_soma_campo_retirada+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição do insumo</label><textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDepositoPermuta'+new_soma_campo_retirada+'" readonly></textarea></div></div></div><div id="permuta_dep"><h4>Item a ser atualizado do Depósito</h4><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Insumo</label><input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_'+new_soma_campo_atualizacao+'" onkeyup="searchInput_cadDeposito(this.value, '+new_soma_campo_atualizacao+', 4)" placeholder="informe o nome do insumo..." required><span class="ajuste_span" id="resultado_permuta_insumos'+new_soma_campo_atualizacao+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Validade</label><input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="validadeInsumoDepositoPermuta'+new_soma_campo_atualizacao+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Quantidade Permutada</label><input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" required></div><div class="display-flex-cl"><label> Disponível no Depósito</label><input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta'+new_soma_campo_atualizacao+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição do insumo</label><textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDepositoPermuta'+new_soma_campo_atualizacao+'" readonly></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 5)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(5)" style="padding: 0;">+</button></div></div></div></div></div>');
 
+  } else if (ondeCadastrou == 6){
+    // PARA CADASTRO DE ESTOQUE
+    let dados_estoque_cad = document.getElementById('dados_estoque_cad');
+    dados_estoque_cad.insertAdjacentHTML('beforeend', '<div id="campoCadEstoque'+controle_campo_cad_deposito+'" class="display-flex-row"><hr><div class="form-group"><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome do Novo Estoque</label><input type="text" class="form-control" name="nomeNovoEstoque[]" required></div><div class="display-flex-cl"><label>Tipo do Novo Estoque</label><select class="form-control" name="tipoNovoEstoque[]" required><option>Depósito</option><option>Dispensário</option></select></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição do Estoque</label><textarea name="descricaoNovoEstoque[]" class="form-control" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 6)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(6)" style="padding: 0;">+</button></div></div></div></div>');
+
   }
 }
 
@@ -202,6 +207,13 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
 
       let para_remover_campo_adicional = document.getElementById('insumo_permuta_dep'+idCampoCad)
       para_remover_campo_adicional.remove();
+
+    } else if (cadType == 6) {
+
+      // PARA CAMPOS DE CADASTRO DE ESTOQUE
+
+      let para_remover_campo_adicional = document.getElementById('campoCadEstoque'+idCampoCad)
+      para_remover_campo_adicional.remove();
     }
   }
     
@@ -233,7 +245,9 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
             html_listados += '<div class="display-flex-row">'
             
-            html_listados += '<li style="margin-right: 10px;" onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos'][i].idInsumo+','+ JSON.stringify(resposta_cad_deposito['dados_insumos'][i].descricaoInsumo)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos'][i].nomeInsumo)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos'][i].qtdCriticaInsumo+', 1, null)\'>'+resposta_cad_deposito['dados_insumos'][i].nomeInsumo +' -</li>';
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos'][i].idInsumo+','+ JSON.stringify(resposta_cad_deposito['dados_insumos'][i].descricaoInsumo)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos'][i].nomeInsumo)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos'][i].qtdCriticaInsumo+', 1, null)\'>'+resposta_cad_deposito['dados_insumos'][i].nomeInsumo +'</li>';
+
+            html_listados += '<li>|</li>';
 
             html_listados += '<li> '+resposta_cad_deposito['dados_insumos'][i].descricaoInsumo +'</li>';
 
@@ -294,9 +308,28 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
             html_listados += '<div class="display-flex-row">'
             
-            html_listados += '<li style="margin-right: 10px;" onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_deposito'][i].idInsumoDeposito+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_deposito'][i].quantidadeInsumoDeposito+', 2,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito)+')\'>'+resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito +' -</li>';
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_deposito'][i].idInsumoDeposito+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_deposito'][i].quantidadeInsumoDeposito+', 2,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito)+')\'>'+resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito +'</li>';
 
-            html_listados += '<li> '+resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito +'</li>';
+            html_listados += '<li>|</li>';
+
+            html_listados += '<li>'+resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito +'</li>';
+
+            html_listados += '<li>|</li>';
+
+            let validade_bruta = new Date(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito);
+            let validade_ano = validade_bruta.getFullYear();
+            let validade_mes = validade_bruta.getMonth();
+            let validade_dia = validade_bruta.getDay();
+
+            if (validade_mes<10) {
+              validade_mes = '0'+validade_mes+'';
+            }
+
+            if (validade_dia<10) {
+              validade_dia = '0'+validade_dia+'';
+            }
+
+            html_listados += '<li>'+validade_dia+'/'+validade_mes+'/'+validade_ano+'</li>';
 
             html_listados += '</div>'
             
@@ -356,9 +389,28 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
             html_listados += '<div class="display-flex-row">'
             
-            html_listados += '<li style="margin-right: 10px;" onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_disp'][i].idInsumoDisp+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].descricaoInsumoDisp)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].nomeInsumoDisp)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_disp'][i].qtdDisponivelInsumoDisp+', 3,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].validadeInsumoDisp)+')\'>'+resposta_cad_deposito['dados_insumos_disp'][i].nomeInsumoDisp +' -</li>';
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_disp'][i].idInsumoDisp+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].descricaoInsumoDisp)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].nomeInsumoDisp)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_disp'][i].qtdDisponivelInsumoDisp+', 3,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_disp'][i].validadeInsumoDisp)+')\'>'+resposta_cad_deposito['dados_insumos_disp'][i].nomeInsumoDisp +'</li>';
 
-            html_listados += '<li> '+resposta_cad_deposito['dados_insumos_disp'][i].descricaoInsumoDisp +'</li>';
+            html_listados += '<li>|</li>';
+
+            html_listados += '<li>'+resposta_cad_deposito['dados_insumos_disp'][i].descricaoInsumoDisp +'</li>';
+
+            html_listados += '<li>|</li>';
+
+            let validade_bruta = new Date(resposta_cad_deposito['dados_insumos_disp'][i].validadeInsumoDisp);
+            let validade_ano = validade_bruta.getFullYear();
+            let validade_mes = validade_bruta.getMonth();
+            let validade_dia = validade_bruta.getDay();
+
+            if (validade_mes<10) {
+              validade_mes = '0'+validade_mes+'';
+            }
+
+            if (validade_dia<10) {
+              validade_dia = '0'+validade_dia+'';
+            }
+
+            html_listados += '<li>'+validade_dia+'/'+validade_mes+'/'+validade_ano+'</li>';
 
             html_listados += '</div>'
             
@@ -422,9 +474,28 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
             html_listados += '<div class="display-flex-row">'
             
-            html_listados += '<li style="margin-right: 10px;" onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_deposito'][i].idInsumoDeposito+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_deposito'][i].quantidadeInsumoDeposito+',4,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito)+')\'>'+resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito +' -</li>';
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_cad_deposito['dados_insumos_deposito'][i].idInsumoDeposito+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito)+','+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito)+', '+id_campo_digitado+','+ resposta_cad_deposito['dados_insumos_deposito'][i].quantidadeInsumoDeposito+',4,'+ JSON.stringify(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito)+')\'>'+resposta_cad_deposito['dados_insumos_deposito'][i].nomeInsumoDeposito +'</li>';
+            
+            html_listados += '<li>|</li>';
 
             html_listados += '<li> '+resposta_cad_deposito['dados_insumos_deposito'][i].descricaoInsumoDeposito +'</li>';
+            
+            html_listados += '<li>|</li>';
+
+            let validade_bruta = new Date(resposta_cad_deposito['dados_insumos_deposito'][i].validadeInsumoDeposito);
+            let validade_ano = validade_bruta.getFullYear();
+            let validade_mes = validade_bruta.getMonth();
+            let validade_dia = validade_bruta.getDay();
+
+            if (validade_mes<10) {
+              validade_mes = '0'+validade_mes+'';
+            }
+
+            if (validade_dia<10) {
+              validade_dia = '0'+validade_dia+'';
+            }
+
+            html_listados += '<li>'+validade_dia+'/'+validade_mes+'/'+validade_ano+'</li>';
 
             html_listados += '</div>'
             

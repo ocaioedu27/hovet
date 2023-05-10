@@ -6,6 +6,9 @@
                 <a href="index.php?menuop=cadastro_insumo" id="operacao_cadastro">
                     <button class="btn">Cadastrar</button>
                 </a>
+                <a href="index.php?menuop=cadastro_categoria_insumo" id="operacao_cadastro">
+                    <button class="btn">Nova Categoria</button>
+                </a>
             </div>
             <div>
                 <form action="index.php?menuop=insumos_controlados" method="post" class="form_buscar">
@@ -26,7 +29,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Unidade</th>
-                        <th>Tipo de Insumo</th>
+                        <th>Categoria de Insumo</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>

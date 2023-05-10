@@ -22,7 +22,6 @@
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Descrição</th>
@@ -53,18 +52,10 @@
                         
                     ?>
                     <tr>
-                        <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=estoques&idInsumodispensario=<?=$dados["dispensario_id"]?>"
-                                class="confirmaDelete">
-                                <button class="btn">
-                                    <span class="icon">
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </span>
-                                </button>
-                            </a>
-                        </td>
                         <td><?=$dados["estoques_id"]?></td>
-                        <td><?=$dados["estoques_nome"]?></td>
+                        <td>
+                            <a href="index.php?menuop=<?=$dados["estoques_nome_real"]?>"><?=$dados["estoques_nome"]?></a>
+                        </td>
                         <td><?=$dados["estoques_descricao"]?></td>
                     </tr>
                     <?php

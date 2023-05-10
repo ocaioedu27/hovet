@@ -20,7 +20,7 @@
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
+                        <select class="form-control largura_um_terco" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
@@ -38,7 +38,7 @@
                     
                     <div class="display-flex-cl">
                         <label for="quem_esta_guardando_dep">Quem está guardando</label>
-                        <select class="form-control largura_metade" name="quem_esta_guardando_dep" required>
+                        <select class="form-control largura_um_terco" name="quem_esta_guardando_dep" required>
                             <?php
                             $sql = "SELECT * FROM usuarios";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -53,23 +53,25 @@
                         </select>
                     </div>
 
-                    <div class="display-flex-cl" id="fornecedor_cad_dep1">
-                        <label>Fornecedor</label>
-                        <input type="text" class="form-control" name="fornecedor_cad_insumo_dep">
+                    <div class="display-flex-cl">
+                        <label for="dataCadastroInsumoDeposito">Dia do cadastro</label>
+                        <input type="date" class="form-control largura_um_terco" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
                     </div>
 
                 </div>
 
                 <div class="form-group valida_movimentacao">
+
                     <div class="display-flex-cl" id="nota_fiscal_cad_dep">
                         <label for="nota_fiscal_deposito">Nota fiscal</label>
                         <input type="file" class="form-control" name="nota_fiscal_deposito">
                     </div>
 
-                    <div class="display-flex-cl">
-                        <label for="dataCadastroInsumoDeposito">Dia do cadastro</label>
-                        <input type="date" class="form-control largura_metade" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
+                    <div class="display-flex-cl" id="fornecedor_cad_dep1">
+                        <label>Fornecedor</label>
+                        <input type="text" class="form-control" name="fornecedor_cad_insumo_dep">
                     </div>
+
                 </div>
             </div>
 
@@ -84,11 +86,6 @@
                             <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Informe o nome do insumo..." required/>
                             <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
                         </div>
-                            
-                        <div class="display-flex-cl">
-                            <label>Quantidade guardada</label>
-                            <input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" required>
-                        </div>
 
                         <div class="display-flex-cl">
                             <label for="validadeInsumoDeposito[]">Validade</label>
@@ -100,6 +97,20 @@
                             <input type="text" class="form-control" id="qtdCriticaInsumoCadDep1" readonly>
                         </div>
 
+                    </div>
+
+
+                    <div class="form-group valida_movimentacao">
+                            
+                        <div class="display-flex-cl">
+                            <label>Quantidade guardada</label>
+                            <input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" required>
+                        </div>
+                            
+                        <div class="display-flex-cl">
+                            <label>Depósito onde Será Guardado</label>
+                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" required>
+                        </div>
                     </div>
 
                     <div class="form-group valida_movimentacao">
