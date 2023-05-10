@@ -110,7 +110,7 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
-                        <h2>Movimentacoes</h2>
+                        <h2>Movimentações</h2>
                     </div>
                     <div class="cards">
                         <div>

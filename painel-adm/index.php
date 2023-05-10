@@ -106,7 +106,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                         </ul>
                     </div>
                 </div>
-                <a href="index.php?menuop=deposito">Depósito</a>
+                <a href="index.php?menuop=estoques">Estoques</a>
                 <div class="dropdown">
                     <a href="#">Dispensário</a>
                     <div class="dropdown-content dispensario">
@@ -182,32 +182,40 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("home.php");
                     break;
 
-                case 'deposito':
-                    include_once("deposito/painel_deposito.php");
+                case 'estoques':
+                    include_once('estoques/painel_estoques.php');
+                    break;
+                    
+                case 'cadastro_estoque':
+                    include_once('estoques/cadastro_estoque.php');
+                    break;
+
+                case 'deposito_1':
+                    include_once("estoques/deposito/painel_deposito.php");
                     break;
 
                 case 'cadastro_deposito':
-                    include_once("deposito/cadastro_deposito.php");
+                    include_once("estoques/deposito/cadastro_deposito.php");
                     break;
 
                 case 'inserir_deposito':
-                    include_once("deposito/inserir_deposito.php");
+                    include_once("estoques/deposito/inserir_deposito.php");
                     break;
 
                 case 'editar_deposito':
-                    include_once("deposito/editar_deposito.php");
+                    include_once("estoques/deposito/editar_deposito.php");
                     break;
 
                 case 'excluir_deposito':
-                    include_once("deposito/excluir_deposito.php");
+                    include_once("estoques/deposito/excluir_deposito.php");
                     break;
     
                 case 'atualizar_deposito':
-                    include_once("deposito/atualizar_deposito.php");
+                    include_once("estoques/deposito/atualizar_deposito.php");
                     break;
     
                 case 'quantidade_insumos_deposito':
-                    include_once("deposito/quantidade_insumos_deposito.php");
+                    include_once("estoques/deposito/quantidade_insumos_deposito.php");
                     break;
                 
                 case 'usuarios':
@@ -271,47 +279,47 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
 
                 case 'dispensario':
-                    include_once("dispensario/painel_dispensario.php");
+                    include_once("estoques/dispensario/painel_dispensario.php");
                     break;
 
                 case 'cadastro_dispensario':
-                    include_once("dispensario/cadastro_dispensario.php");
+                    include_once("estoques/dispensario/cadastro_dispensario.php");
                     break;
 
                 case 'editar_dispensario':
-                    include_once("dispensario/editar_dispensario.php");
+                    include_once("estoques/dispensario/editar_dispensario.php");
                     break;
 
                 case 'excluir_dispensario':
-                    include_once("dispensario/excluir_dispensario.php");
+                    include_once("estoques/dispensario/excluir_dispensario.php");
                     break;
 
                 case 'atualizar_dispensario':
-                    include_once("dispensario/atualizar_dispensario.php");
+                    include_once("estoques/dispensario/atualizar_dispensario.php");
                     break;
 
                 case 'inserir_dispensario':
-                    include_once("dispensario/inserir_dispensario.php");
+                    include_once("estoques/dispensario/inserir_dispensario.php");
                     break;
 
                 case 'solicitar_dispensario':
-                    include_once("dispensario/solicitar_dispensario.php");
+                    include_once("estoques/dispensario/solicitar_dispensario.php");
                     break;
                     
                 case 'quantidade_insumos_dispensario':
-                    include_once("dispensario/quantidade_insumos_dispensario.php");
+                    include_once("estoques/dispensario/quantidade_insumos_dispensario.php");
                     break;
                     
                 case 'painel_armario':
-                    include_once("dispensario/armario/painel_armario.php");
+                    include_once("estoques/dispensario/armario/painel_armario.php");
                     break;
 
                 case 'painel_gaveteiro':
-                    include_once("dispensario/estante/gaveteiro/painel_gaveteiro.php");
+                    include_once("estoques/dispensario/estante/gaveteiro/painel_gaveteiro.php");
                     break;
 
                 case 'pesquisa_deposito':
-                    include_once("dispensario/sch_disp_itens_depst.php");
+                    include_once("estoques/dispensario/sch_disp_itens_depst.php");
                     break;
                 
                 case 'listar_movimentacoes':
@@ -327,11 +335,11 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
 
                 case 'listar_notas_fiscais':
-                    include_once("deposito/relatorios_deposito/listar_notas_fiscais.php");
+                    include_once("estoques/deposito/relatorios_deposito/listar_notas_fiscais.php");
                     break;
 
                 case 'permutar_deposito':
-                    include_once("deposito/permutar_deposito.php");
+                    include_once("estoques/deposito/permutar_deposito.php");
                     break;    
 
                 default:

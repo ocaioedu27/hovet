@@ -214,7 +214,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
     if (valor_to_search.length >= 2) {
       // console.log("//deposito - Pesquisar: " + valor_to_search);
 
-      const dados_cad_deposito = await fetch('./dispensario/sch_disp_itens_depst.php?cad_deposito_insumos_nome='+ valor_to_search);
+      const dados_cad_deposito = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?cad_deposito_insumos_nome='+ valor_to_search);
 
       if (dados_cad_deposito) {
         
@@ -274,7 +274,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
     if (valor_to_search.length >= 2) {
       // console.log("//dispensario/ - Pesquisar: " + valor_to_search);
 
-      const dados_cad_deposito = await fetch('./dispensario/sch_disp_itens_depst.php?cad_disp_insumos_nome='+ valor_to_search);
+      const dados_cad_deposito = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?cad_disp_insumos_nome='+ valor_to_search);
       // console.log('//dispensasrio/ - retornou a pesquisa')
 
       if (dados_cad_deposito) {
@@ -336,7 +336,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
     if (valor_to_search.length >= 2) {
       // console.log("//retirada_dispensario/ - Pesquisar: " + valor_to_search);
 
-      const dados_solic_disp = await fetch('./dispensario/sch_disp_itens_depst.php?request_disp_insumos_nome='+ valor_to_search);
+      const dados_solic_disp = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?request_disp_insumos_nome='+ valor_to_search);
       console.log('//dispensasrio/ - retornou a pesquisa')
 
       if (dados_solic_disp) {
@@ -402,7 +402,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
     if (valor_to_search.length >= 2) {
       console.log("//permutar/ - Pesquisar: " + valor_to_search);
 
-      const dados_permuta_dep = await fetch('./dispensario/sch_disp_itens_depst.php?cad_disp_insumos_nome='+ valor_to_search);
+      const dados_permuta_dep = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?cad_disp_insumos_nome='+ valor_to_search);
       // console.log('//permuta/ - retornou a pesquisa')
 
       if (dados_permuta_dep) {

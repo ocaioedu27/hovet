@@ -20,7 +20,7 @@
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control-sm largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
+                        <select class="form-control largura_metade" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE tipos_movimentacoes_movimentacao = 'Compra' or tipos_movimentacoes_movimentacao = 'Doacao'";
@@ -38,7 +38,7 @@
                     
                     <div class="display-flex-cl">
                         <label for="quem_esta_guardando_dep">Quem está guardando</label>
-                        <select class="form-control-sm largura_metade" name="quem_esta_guardando_dep" required>
+                        <select class="form-control largura_metade" name="quem_esta_guardando_dep" required>
                             <?php
                             $sql = "SELECT * FROM usuarios";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -52,6 +52,12 @@
                             ?>
                         </select>
                     </div>
+
+                    <div class="display-flex-cl" id="fornecedor_cad_dep1">
+                        <label>Fornecedor</label>
+                        <input type="text" class="form-control" name="fornecedor_cad_insumo_dep">
+                    </div>
+
                 </div>
 
                 <div class="form-group valida_movimentacao">

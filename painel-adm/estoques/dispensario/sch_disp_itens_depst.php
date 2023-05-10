@@ -1,7 +1,7 @@
 <?php
     //retorna dados do deposito para movimentar do deposito para o dispensario
 
-    include_once("../../db/connect.php");
+    include_once("../../../db/connect.php");
 
     function retornaDadosDeposito($cad_disp_insumos_nome, $conn){
         $resultado_insumoDeposito = "SELECT

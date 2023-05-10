@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=deposito" method="post" class="form_buscar">
+                <form action="index.php?menuop=deposito_1" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -129,11 +129,11 @@
                 $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                 
-                echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
+                echo "<a href=\"?menuop=deposito_1&pagina_deposito=1\">Início</a> ";
 
                 if ($pagina_deposito>6) {
                     ?>
-                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                        <a href="?menuop=deposito_1?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
                     <?php
                 } 
 
@@ -144,18 +144,18 @@
                         if ($i==$pagina_deposito) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=deposito_1&pagina_deposito=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_deposito<($totalPaginasdeposito-5)) {
                     ?>
-                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                        <a href="?menuop=deposito_1?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
+                echo " <a href=\"?menuop=deposito_1&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
             ?>
         </div>
     </div>

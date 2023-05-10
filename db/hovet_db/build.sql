@@ -166,6 +166,21 @@ create table notas_fiscais (
     foreign key(notas_fiscais_insumos_id) references insumos(insumos_id) on delete set null
 );
 
+create table fornecedores (
+	fornecedores_id int primary key auto_increment,
+    fornecedores_nome varchar(100) not null,
+    fornecedores_cpf_cnpj varchar (14) null,
+    fornecedores_rg varchar(7) null,
+    fornecedores_end_logradouro varchar(100) null,
+    fornecedores_end_num varchar(100) null,
+    fornecedores_end_bairro varchar(100) null,
+    fornecedores_end_cep varchar(100) null,
+    fornecedores_end_email varchar(100) null,
+    fornecedores_end_telefone varchar(50) null,
+    fornecedores_end_obserevacao varchar(256) null
+);
+
+
 ######################################################
 
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario

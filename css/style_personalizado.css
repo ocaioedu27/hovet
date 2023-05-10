@@ -454,6 +454,11 @@ span.icon {
     padding-left: 0;
 }
 
+.cards.cadastro_estoque{
+    width: 34%;
+    height: auto;
+}
+
 .cards.cadastro_insumo{
     width: 850px;
     height: auto;
