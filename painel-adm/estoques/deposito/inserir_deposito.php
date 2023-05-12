@@ -31,6 +31,7 @@
             $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito, " ");
             $quantidadeInsumodeposito = $dados_enviados_array['quantidadeInsumodeposito'][$chave_cad_deposito];
             $validadeInsumodeposito = $dados_enviados_array['validadeInsumodeposito'][$chave_cad_deposito];
+            $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_deposito];
             
             $tem_nota_fiscal = $_FILES['nota_fiscal_deposito'];
             // var_dump($tem_nota_fiscal);
@@ -110,11 +111,14 @@
             $sql = "INSERT INTO deposito (
                 deposito_qtd,
                 deposito_validade,
-                deposito_insumos_id)
+                deposito_insumos_id,
+                deposito_estoque_id,
+                )
                 VALUES(
                     {$quantidadeInsumodeposito},
                     '{$validadeInsumodeposito}',
-                    {$insumoID_Insumodeposito}
+                    {$insumoID_Insumodeposito},
+                    {$depositoDestinoInsumodeposito}
                 )";
 
             

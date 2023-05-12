@@ -83,6 +83,36 @@
         return json_encode($retorna_valores);
     }
 
+    function retorna_dados_estoques($cad_deposito_estoque_nome, $conn){
+        $sql_insumo = "SELECT * FROM estoques
+                                WHERE  
+                                estoques_nome LIKE '%{$cad_deposito_estoque_nome}%' LIMIT 10";
+        $resultado_estoques = mysqli_query($conn, $sql_insumo) or die("//estoques/dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
+
+        $valores_estoques = array();
+
+        $quantidade = $resultado_estoques->num_rows;
+
+        if ($quantidade != 0) {
+            while ($row_estoques = mysqli_fetch_assoc($resultado_estoques)) {
+        
+                $valores_estoques[] = [
+                    
+                    'estoqueId' => $row_estoques['estoques_id'],
+                    'estoqueNome' => $row_estoques['estoques_nome']
+                ];
+        
+            }
+
+            $retorna_valores = ['erro' => false, 'dados_estoques' => $valores_estoques];
+            // $retorna_valores = ['erro' => true, 'msg_error_insumos' => 'Erro: nenhum insumo encontrado'];
+
+        } else{
+            $retorna_valores = ['erro' => true, 'msg_error_estoques' => 'Estoque não cadastrado'];
+        }
+        return json_encode($retorna_valores);
+    }
+
 
     function retornInsumosDisp($insumos_nome, $conn){
 
@@ -125,6 +155,15 @@
         return json_encode($retorna_valores_disp);
     }
 
+    function findKeyWord($texto,$palavra){
+
+        if(preg_match("%\b{$palavra}\b%",$texto)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // para solicitar insumos no dispensario a partir de dados lá cadastrados
     $request_disp_insumos_nome = $_GET['request_disp_insumos_nome'];
 
@@ -144,5 +183,13 @@
 
     if(isset($cad_deposito_insumos_nome)){
         echo retorna_dados_insumos($cad_deposito_insumos_nome, $conexao);
+    }
+
+    // para retornar dados da tabela de estoques no momento do cadastro de insumos no deposito
+    $cad_deposito_estoque_nome = $_GET['cad_deposito_estoque_nome'];
+
+    if(isset($cad_deposito_estoque_nome)){
+
+        echo retorna_dados_estoques($cad_deposito_estoque_nome, $conexao);
     }
 ?>
