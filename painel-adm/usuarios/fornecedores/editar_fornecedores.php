@@ -1,27 +1,18 @@
 <?php
-$idUsuario = $_GET["idUsuario"];
+$idFornecedor = $_GET["idFornecedor"];
 
-$sql = "SELECT 
-            u.usuario_id,
-            u.usuario_nome_completo,
-            u.usuario_sobrenome,
-            u.usuario_primeiro_nome,
-            u.usuario_mail,
-            t.tipo_usuario_tipo,
-            u.usuario_siape 
-            FROM usuarios AS u 
-            INNER JOIN tipo_usuario AS t 
-            ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
-            WHERE u.usuario_id={$idUsuario}";
+$sql = "SELECT * 
+            FROM fornecedores
+            WHERE fornecedores_id={$idFornecedor}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
 
 <div class="container cadastro_all">
-    <div class="cards edita_usuarios">
+    <div class="cards cadastro_fornecedor">
         <div class="voltar">
-            <h4>Dados do Usuário</h4>
-            <a href="index.php?menuop=usuarios" class="confirmaVolta">
+            <h4>Editar Fornecedor</h4>
+            <a href="index.php?menuop=fornecedores" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -29,71 +20,64 @@ $dados = mysqli_fetch_assoc($result);
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=atualizar_usuario" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_fornecedores" method="post">
+                <div class="display-flex-row">
+                    <div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>ID do Fornecedor</label>
+                                <input type="text" class="form-control largura_metade" name="idFornecedor" value="<?=$dados['fornecedores_id']?>" readonly>
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Razão Social</label>
+                                <input type="text" class="form-control" name="razaoSocialFornecedor" placeholder="Informe a Razão Social..." value="<?=$dados['fornecedores_razao_social']?>" required>
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" name="logradouroFornecedor" placeholder="Informe o Logradouro..." value="<?=$dados['fornecedores_end_logradouro']?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>CNPJ ou CPF</label>
+                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor" placeholder="Informe somente números..." min="1" value="<?=$dados['fornecedores_cpf_cnpj']?>">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>E-mail</label>
+                                <input type="text" class="form-control" name="emailFornecedor" placeholder="Informe o E-mail..." value="<?=$dados['fornecedores_end_email']?>">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Fone ou FAC</label>
+                                <input type="text" class="form-control" name="foneFacFornecedor" placeholder="Informe o contato..." maxlength="14" value="<?=$dados['fornecedores_end_telefone']?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>Observação</label>
+                                <input type="text" class="form-control " name="observacaoFornecedor" rows="3" value="<?=$dados['fornecedores_observacao']?>">
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+        
             <div class="form-group valida_movimentacao">
-                <div class="display-flex-cl">
-                    <label for="idUsuario">ID</label>
-                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["usuario_id"]?>" readonly>
-                </div>
-
-                <div class="display-flex-cl">
-                    <label for="nomeCompletoUsuario">Nome Completo</label>
-                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" required>
-                </div>
-            </div>
-            
-            <div class="form-group valida_movimentacao">
-                <div class="display-flex-cl">
-                    <label for="primeiroNomeUsuario">Primeiro Nome</label>
-                    <input type="text" class="form-control largura_metade" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
-                </div>
-
-                <div class="display-flex-cl">
-                    <label for="sobrenomeUsuario">Sobrenome</label>
-                    <input type="text" class="form-control largura_metade" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
-                </div>  
-            </div>
-
-            <div class="form-group valida_movimentacao">
-
-                <div class="display-flex-cl">
-                    <label for="tipoUsuario">Tipo de usuário</label>
-                    <select class="form-control largura_um_terco" name="tipoUsuario">
-                        <?php
-                        
-                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";
-                        $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                        
-                        while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
-                        ?>
-                            <option><?=$tipoUsu["tipo_usuario_id"]?> - <?=$tipoUsu["tipo_usuario_tipo"]?></option>
-                        <?php
-                            }
-                        ?>
-                    </select>
-                </div>
-
-                <div class="display-flex-cl">
-                    <label for="">Atualmente: </label>
-                    <input type="text" class="form-control" value="<?=$dados["tipo_usuario_tipo"]?>" style="color: red;" readonly>
-                </div>
-            </div>
-
-            <div class="form-group valida_movimentacao">
-
-                <div class="diplay-flex-cl">
-                    <label for="mailUsuario">E-mail</label>
-                    <input type="email" class="form-control largura_um_terco" name="mailUsuario" value="<?=$dados["usuario_mail"]?>" required>
-                </div>
-
-                <div class="diplay-flex-cl">
-                    <label for="siapeUsuario">SIAPE</label>
-                    <input type="text" class="form-control" name="siapeUsuario" value="<?=$dados["usuario_siape"]?>" readonly>
-                </div>
-            </div>
-
-            <div class="form-group valida_movimentacao">
-                <a href="#">Trocar senha</a>
+                <label>Confirmo que os dados estão validados</label>
+                <input type="checkbox" class="form-control-sm" name="valida_dados_insercao_fornecedor" required>
             </div>
 
             <div class="form-group">

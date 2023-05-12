@@ -15,29 +15,27 @@
             $foneFacFornecedor = $dados_enviados_array['foneFacFornecedor'][$chave_cad_fornecedor];
             $observacaoFornecedor = $dados_enviados_array['observacaoFornecedor'][$chave_cad_fornecedor];
 
-            echo '<br> Chave para o fornecedor: ' . $chave_cad_fornecedor;
-            echo '<br> Razão Social: ' . $razaoSocialFornecedor;
-            echo '<br> Logradouro: ' . $logradouroFornecedor;
-            echo '<br> CNPJ ou CPF: ' . $cnpjCpfFornecedor;
-            echo '<br> E-mail: ' . $emailFornecedor;
-            echo '<br> Fone ou FAC: ' . $foneFacFornecedor;
-            echo '<br> Observações: ' . $observacaoFornecedor;
+            // echo '<br> Chave para o fornecedor: ' . $chave_cad_fornecedor;
+            // echo '<br> Razão Social: ' . $razaoSocialFornecedor;
+            // echo '<br> Logradouro: ' . $logradouroFornecedor;
+            // echo '<br> CNPJ ou CPF: ' . $cnpjCpfFornecedor;
+            // echo '<br> E-mail: ' . $emailFornecedor;
+            // echo '<br> Fone ou FAC: ' . $foneFacFornecedor;
+            // echo '<br> Observações: ' . $observacaoFornecedor;
 
             $sql = "INSERT INTO fornecedores (
                 fornecedores_razao_social,
                 fornecedores_cpf_cnpj,
-                fornecedores_rg,
                 fornecedores_end_logradouro,
                 fornecedores_end_num,
                 fornecedores_end_bairro,
                 fornecedores_end_cep,
                 fornecedores_end_email,
                 fornecedores_end_telefone,
-                fornecedores_end_obserevacao)
+                fornecedores_observacao)
                 VALUES(
                     '{$razaoSocialFornecedor}',
                     '{$cnpjCpfFornecedor}',
-                    '',
                     '{$logradouroFornecedor}',
                     '',
                     '',

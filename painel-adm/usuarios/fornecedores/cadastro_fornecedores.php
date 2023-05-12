@@ -52,7 +52,7 @@
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
-                                <label>Deseja inserir dados a mais?</label>
+                                <label>Deseja inserir uma observação?</label>
                                 <textarea class="form-control " name="observacaoFornecedor[]" rows="3"></textarea>
                             </div>
 
