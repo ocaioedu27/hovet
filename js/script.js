@@ -120,6 +120,11 @@ function adicionaCampoCad(ondeCadastrou) {
     let dados_estoque_cad = document.getElementById('dados_estoque_cad');
     dados_estoque_cad.insertAdjacentHTML('beforeend', '<div id="campoCadEstoque'+controle_campo_cad_deposito+'" class="display-flex-row"><hr><div class="form-group"><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome do Novo Estoque</label><input type="text" class="form-control" name="nomeNovoEstoque[]" required></div><div class="display-flex-cl"><label>Tipo do Novo Estoque</label><select class="form-control" name="tipoNovoEstoque[]" required><option>Depósito</option><option>Dispensário</option></select></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição do Estoque</label><textarea name="descricaoNovoEstoque[]" class="form-control" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 6)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(6)" style="padding: 0;">+</button></div></div></div></div>');
 
+  } else if (ondeCadastrou == 7){
+    // PARA CADASTRO DE FORNECEDOR
+    let dados_fornecedor_cad = document.getElementById('dados_fornecedor_cad');
+    dados_fornecedor_cad.insertAdjacentHTML('beforeend', '<div id="campoCadEstoque'+controle_campo_cad_deposito+'" class="display-flex-row"><div class="form-group"><hr style="border-color: transparent;"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Razão Social</label><input type="text" class="form-control" name="razaoSocialFornecedor[]" placeholder="Informe a Razão Social..." required></div><div class="display-flex-cl"><label>Logradouro</label><input type="text" class="form-control" name="logradouroFornecedor[]" placeholder="Informe o Logradouro..."></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>CNPJ ou CPF</label><input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor[]" placeholder="Informe somente números..." min="1" required></div><div class="display-flex-cl"><label>E-mail</label><input type="text" class="form-control" name="emailFornecedor[]" placeholder="Informe o E-mail..."></div><div class="display-flex-cl"><label>Fone ou FAC</label><input type="text" class="form-control" name="foneFacFornecedor[]" placeholder="Informe o contato..." maxlength="14"></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Deseja inserir dados a mais?</label><textarea class="form-control " name="observacaoFornecedor[]" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 6)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(7)" style="padding: 0;">+</button></div></div></div></div>');
+
   }
 }
 
@@ -129,14 +134,17 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
 
     let nota_fiscal_cad_dep = document.getElementById('nota_fiscal_cad_dep');
     let data_cadastro_dep = document.getElementById('data_cadastro_dep');
+    let fornecedor_cad_dep = document.getElementById('fornecedorCadInsumoDep');
     // console.log('//removerCampoCadDeposito/ehOperacao - valor do tipo de operacao: '+tipo_operacao_cad_dep);
     tipo_operacao_cad_dep = tipo_operacao_cad_dep.split(' ')[0];
     if (tipo_operacao_cad_dep==3) {
       nota_fiscal_cad_dep.style.display = 'none';
-      data_cadastro_dep.classList.add('largura_um_quarto');
+      data_cadastro_dep.classList.add('largura_um_terco');
+      fornecedor_cad_dep.classList.add('largura_metade');
     } else {
       nota_fiscal_cad_dep.style.display = 'flex';
-      data_cadastro_dep.classList.remove('largura_um_quarto')
+      data_cadastro_dep.classList.remove('largura_um_terco');
+      fornecedor_cad_dep.classList.remove('largura_metade');
     }
     // para_operacao.remove();
   }else{
@@ -221,6 +229,13 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
     } else if (cadType == 6) {
 
       // PARA CAMPOS DE CADASTRO DE ESTOQUE
+
+      let para_remover_campo_adicional = document.getElementById('campoCadEstoque'+idCampoCad)
+      para_remover_campo_adicional.remove();
+
+    } else if (cadType == 7) {
+
+      // PARA CAMPOS DE CADASTRO DE FORNECEDOR
 
       let para_remover_campo_adicional = document.getElementById('campoCadEstoque'+idCampoCad)
       para_remover_campo_adicional.remove();

@@ -64,7 +64,7 @@
 
                     <div class="display-flex-cl" id="fornecedor_cad_dep1">
                         <label>Fornecedor</label>
-                        <select class="form-control" name="fornecedorCadInsumoDep" required>
+                        <select class="form-control" name="fornecedorCadInsumoDep" id="fornecedorCadInsumoDep" required>
                             <?php
                             $sql = "SELECT * FROM fornecedores";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));

@@ -12,7 +12,7 @@
         </div>
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_fornecedores" method="post">
 
-            <div id="dados_insumos_cad">
+            <div id="dados_fornecedor_cad">
                 <hr>
                 <div class="display-flex-row">
                     <div>
@@ -58,14 +58,14 @@
 
                         </div>
                     </div>
-
                     <div>
-                        <button class="btn" type="button" onclick="adicionaCampoCad(3)" style="padding: 0;">+</button>
+                        <button class="btn" type="button" onclick="adicionaCampoCad(7)" style="padding: 0;">+</button>
                     </div>
 
-                </div> 
 
+                </div>
             </div>
+
 
             <div class="form-group valida_movimentacao">
                 <label>Confirmo que os dados estão validados</label>

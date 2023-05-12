@@ -21,9 +21,10 @@
         
         $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["tipo_insercao_deposito"]);
         $tipo_movimentacao = strtok($tipo_movimentacao, " ");
-
         
-
+        $fornecedorCadInsumoDep = mysqli_real_escape_string($conexao,$_POST["fornecedorCadInsumoDep"]);
+        $fornecedorCadInsumoDep = strtok($fornecedorCadInsumoDep, " ");
+        
 
         foreach ($dados_enviados_array['insumoID_Insumodeposito'] as $chave_cad_deposito => $valor_cad_deposito) {
 
