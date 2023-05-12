@@ -37,25 +37,20 @@
                     </div>
                     
                     <div class="display-flex-cl">
-                        <label for="quem_esta_guardando_dep">Quem está guardando</label>
-                        <select class="form-control largura_um_terco" name="quem_esta_guardando_dep" required>
-                            <?php
-                            $sql = "SELECT * FROM usuarios";
-                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                            
-                            while($dados = mysqli_fetch_assoc($result)){
-                            ?>
-                            <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
+                        <?php
+                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
-                            <?php
-                                }
-                            ?>
-                        </select>
+                        $dados = mysqli_fetch_assoc($result)
+                        ?>
+
+                        <label for="quem_esta_guardando_dep">Quem está guardando</label>
+                        <input type="text" class="form-control largura_um_terco" name="quem_esta_guardando_dep"       value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
                         <label for="dataCadastroInsumoDeposito">Dia do cadastro</label>
-                        <input type="date" class="form-control largura_um_terco" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
+                        <input type="datetime-local" class="form-control" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
                     </div>
 
                 </div>
@@ -69,7 +64,20 @@
 
                     <div class="display-flex-cl" id="fornecedor_cad_dep1">
                         <label>Fornecedor</label>
-                        <input type="text" class="form-control" name="fornecedor_cad_insumo_dep">
+                        <select class="form-control" name="fornecedorCadInsumoDep" required>
+                            <?php
+                            $sql = "SELECT * FROM fornecedores";
+                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                            
+                            while($dados = mysqli_fetch_assoc($result)){
+                            ?>
+                            <option><?=$dados["fornecedores_id"]?> - <?=$dados["fornecedores_razao_social"]?></option>
+
+                            <?php
+                                }
+                            ?>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="fornecedor_cad_insumo_dep"> -->
                     </div>
 
                 </div>

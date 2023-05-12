@@ -168,9 +168,8 @@ create table notas_fiscais (
 
 create table fornecedores (
 	fornecedores_id int primary key auto_increment,
-    fornecedores_nome varchar(100) not null,
+    fornecedores_razao_social varchar(100) not null,
     fornecedores_cpf_cnpj varchar (14) null,
-    fornecedores_rg varchar(7) null,
     fornecedores_end_logradouro varchar(100) null,
     fornecedores_end_num varchar(100) null,
     fornecedores_end_bairro varchar(100) null,

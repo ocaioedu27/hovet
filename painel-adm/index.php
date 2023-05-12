@@ -6,6 +6,8 @@ include_once("../db/protect.php");
 
 // include_once("../db/restringe_permissoes.php");
 
+$sessionUserID = $_SESSION['usuario_id'];
+
 $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
 
 $qtd_linhas_tabelas = 0;
@@ -126,7 +128,23 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                         </ul>
                     </div>
                 </div>
-                <a href="index.php?menuop=usuarios">Usuários</a>
+                <div class="dropdown">
+                    <a href="">Usuários</a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="index.php?menuop=todos_usuarios">Todos os Usuários</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=usuarios">Usuários</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=fornecedores">Fornecedores</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- <a href="index.php?menuop=usuarios">Usuários</a> -->
                 <div class="login_user">
                     <div class="dropdown">
                         <span class="icon">
@@ -207,27 +225,51 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
                 
                 case 'usuarios':
-                    include_once("usuarios/painel_users.php");
+                    include_once("usuarios/funcionarios/painel_users.php");
                     break;
                 
                 case 'cadastro_usuario':
-                    include_once("usuarios/cadastro_usuario.php");
+                    include_once("usuarios/funcionarios/cadastro_usuario.php");
                     break;
 
                 case 'inserir_usuario':
-                    include_once("usuarios/inserir_usuario.php");
+                    include_once("usuarios/funcionarios/inserir_usuario.php");
                     break;
 
                 case 'editar_usuario':
-                    include_once("usuarios/editar_usuario.php");
+                    include_once("usuarios/funcionarios/editar_usuario.php");
                     break;
     
                 case 'atualizar_usuario':
-                    include_once("usuarios/atualizar_usuario.php");
+                    include_once("usuarios/funcionarios/atualizar_usuario.php");
                     break;
 
                 case 'excluir_usuario':
-                    include_once("usuarios/excluir_usuario.php");
+                    include_once("usuarios/funcionarios/excluir_usuario.php");
+                    break;
+
+                case 'fornecedores':
+                    include_once("usuarios/fornecedores/painel_fornecedores.php");
+                    break;
+                
+                case 'cadastro_fornecedores':
+                    include_once("usuarios/fornecedores/cadastro_fornecedores.php");
+                    break;
+
+                case 'inserir_fornecedores':
+                    include_once("usuarios/fornecedores/inserir_fornecedores.php");
+                    break;
+
+                case 'editar_fornecedores':
+                    include_once("usuarios/fornecedores/editar_fornecedores.php");
+                    break;
+    
+                case 'atualizar_fornecedores':
+                    include_once("usuarios/fornecedores/atualizar_fornecedores.php");
+                    break;
+
+                case 'excluir_fornecedores':
+                    include_once("usuarios/fornecedores/excluir_fornecedores.php");
                     break;
     
                 case 'insumos':

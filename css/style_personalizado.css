@@ -464,6 +464,11 @@ span.icon {
     height: auto;
 }
 
+.cards.cadastro_fornecedor{
+    width: 60%;
+    height: auto;
+}
+
 .cards.edita_insumo{
     width: 530px;
     height: auto;

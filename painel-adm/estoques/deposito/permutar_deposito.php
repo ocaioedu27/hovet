@@ -47,7 +47,7 @@
 
                     <div class="display-flex-cl">
                         <label>Data da transferência</label>
-                        <input type="date" class="form-control largura_um_terco" name="dataTransferPermutaDep" required>
+                        <input type="datetime-local" class="form-control" name="dataTransferPermutaDep" required>
                     </div>
 
                     <div class="display-flex-cl">
@@ -101,13 +101,13 @@
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
-                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_2" onkeyup="searchInput_cadDeposito(this.value, 2, 4)" placeholder="informe o nome do insumo..." required>
-                                <span class="ajuste_span" id="resultado_permuta_insumos2" style="margin: 6.5% auto;"></span>
+                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1, null)" placeholder="informe o nome do insumo..." required>
+                                <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.5% auto;"></span>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label for="validadeInsumoDeposito">Validade</label>
-                                <input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="validadeInsumoDepositoPermuta2" required>
+                                <input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="" required>
                             </div>
                         </div>
 
@@ -119,14 +119,14 @@
                             </div>
                             
                             <div class="display-flex-cl">
-                                <label> Disponível no Depósito</label>
-                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta2" readonly>
+                                <label>Depósito de Destino</label>
+                                <input type="text" class="form-control largura_um_terco" name="destinoInsumoDeposito[]" id="" required>
                             </div>
                         </div>
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label for="descricaoInsumoDeposito">Descrição do insumo</label>
-                                <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDepositoPermuta2" readonly></textarea>
+                                <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoCadDep1" readonly></textarea>
                             </div>
                         </div>
                     </div>
