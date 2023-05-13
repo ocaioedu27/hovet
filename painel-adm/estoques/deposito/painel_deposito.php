@@ -55,10 +55,10 @@ if ($qualEstoque_dep != "") {
                     <tr>
                         <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
-                        <th>Local Cadastrado</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Unidade</th>
+                        <th>Local Cadastrado</th>
                         <th>Validade</th>
                         <th>Dias para o vencimento</th>
                     </tr>
@@ -113,10 +113,10 @@ if ($qualEstoque_dep != "") {
                             </a>
                         </td>
                         <td><?=$dados["deposito_id"]?></td>
-                        <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["deposito_qtd"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
+                        <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["validadedeposito"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];

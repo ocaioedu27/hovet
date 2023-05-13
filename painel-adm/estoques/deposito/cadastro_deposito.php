@@ -57,9 +57,14 @@
 
                 <div class="form-group valida_movimentacao">
 
+                    <div class="display-flex-cl" id="num_nota_fiscal_cad_dep">
+                        <label>Número da Nota fiscal</label>
+                        <input type="text" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" placeholder="Informe o número..." required>
+                    </div>
+
                     <div class="display-flex-cl" id="nota_fiscal_cad_dep">
-                        <label for="nota_fiscal_deposito">Nota fiscal</label>
-                        <input type="file" class="form-control" name="nota_fiscal_deposito">
+                        <label for="nota_fiscal_deposito">Upload da Nota fiscal</label>
+                        <input type="file" class="form-control" name="nota_fiscal_deposito" required>
                     </div>
 
                     <div class="display-flex-cl" id="fornecedor_cad_dep1">

@@ -54,14 +54,14 @@
                             $qtd_linhas_tabelas++;
 
                             $tipo_de_estoque_bruto = $dados['tipos_estoques_tipo'];
-                            $estoques_nome_bruto = $dados['estoques_nome'];
+                            $estoques_nome = $dados['estoques_nome_real'];
 
                             $nome_real_estoque = retiraAcentos($tipo_de_estoque_bruto);
-                            $estoques_nome = retiraAcentos($estoques_nome_bruto);
-                            $estoques_nome = str_replace(" ", "",$estoques_nome);
+                            // $estoques_nome = retiraAcentos($estoques_nome_bruto);
+                            // $estoques_nome = str_replace(" ", "",$estoques_nome);
                             // echo "<br>Nome do estoque: " . $estoques_nome;
                             
-                            $qualEstoque = $estoques_nome_bruto;
+                            // $qualEstoque = $estoques_nome_bruto;
                             // echo $qualEstoque;
                         
                     ?>

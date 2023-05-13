@@ -146,7 +146,9 @@ create table dispensario(
     dispensario_local_id int,
     foreign key(dispensario_local_id) references local_dispensario(local_id) on delete set null,
     dispensario_insumos_id int,
-    foreign key (dispensario_insumos_id) references insumos(insumos_id) on delete set null
+    foreign key (dispensario_insumos_id) references insumos(insumos_id) on delete set null,
+    dispensario_estoques_id int,
+    foreign key (dispensario_estoques_id) references estoques(estoques_id)
 );
 
 ######################################################
@@ -178,13 +180,16 @@ create table movimentacoes (
     movimentacoes_data_operacao datetime not null default current_timestamp()
 );
 
-create table notas_fiscais (
-	notas_fiscais_id int primary key auto_increment,
-    notas_fiscais_nome varchar(100) not null,
-    notas_fiscais_caminho varchar (100) not null,
-    notas_fiscais_data_upload datetime not null default current_timestamp(),
-    notas_fiscais_insumos_id int,
-    foreign key(notas_fiscais_insumos_id) references insumos(insumos_id) on delete set null
+create table compras (
+	compras_id int primary key auto_increment,
+    compras_num_nf varchar(100) not null,
+    compras_nome varchar(100) not null,
+    compras_caminho varchar (100) not null,
+    compras_data_upload datetime not null default current_timestamp(),
+    compras_tipos_movimentacoes_id int,
+    foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
+    compras_insumos_id int,
+    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null
 );
 
 create table fornecedores (

@@ -11,9 +11,9 @@
 
         $quem_guardou = mysqli_real_escape_string($conexao,$_POST["quem_esta_guardando_dep"]);
         $quem_guardou = strtok($quem_guardou, " ");
-        echo "<br/> quem guardou: " . $quem_guardou;
+        // echo "<br/> quem guardou: " . $quem_guardou;
 
-        // $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["tipo_insercao_deposito"]);
+        $$num_nota_fiscal = mysqli_real_escape_string($conexao,$_POST["num_nota_fiscal_cad_dep"]);
         // echo "<br/> tipo de operacao: " . $tipo_movimentacao;
 
         $data_operacao = mysqli_real_escape_string($conexao,$_POST["dataCadastroInsumoDeposito"]);
@@ -33,6 +33,7 @@
             $quantidadeInsumodeposito = $dados_enviados_array['quantidadeInsumodeposito'][$chave_cad_deposito];
             $validadeInsumodeposito = $dados_enviados_array['validadeInsumodeposito'][$chave_cad_deposito];
             $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_deposito];
+            $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
             
             $tem_nota_fiscal = $_FILES['nota_fiscal_deposito'];
             // var_dump($tem_nota_fiscal);
@@ -58,7 +59,7 @@
     
                 // echo "<br/>passou da verificacao de tamanho";
     
-                $pasta_notas_fiscais_deposito = "./deposito/notas_fiscais/";
+                $pasta_notas_fiscais_deposito = "./estoques/deposito/notas_fiscais/";
     
                 // echo "<br/>achou a pasta: $pasta_notas_fiscais_deposito";
     
@@ -78,19 +79,35 @@
                     die("Tipo de arquivo não aceito");
                 }
     
-                $path_nota_fical = $pasta_notas_fiscais_deposito . $novo_nome_nota_fiscal_deposito . "." . $extensao_nota_fiscal;
-                
-                $upload_feito = move_uploaded_file($nota_fiscal_deposito['tmp_name'], $path_nota_fical);
+                $path_nota_fiscal = $pasta_notas_fiscais_deposito . $novo_nome_nota_fiscal_deposito . "." . $extensao_nota_fiscal;
+
+                // echo "<br/>coletou path: $path_nota_fiscal";
+
+                $tmp_name_nf = $nota_fiscal_deposito['tmp_name'];
+                // echo "<br/>Fez o upload? $tmp_name_nf";
+
+                // echo "diretorio executado" . $_SERVER['PHP_SELF'] . "<br />";
+
+
+                $upload_feito = move_uploaded_file($nota_fiscal_deposito['tmp_name'], $path_nota_fiscal);
+
+                // echo "<br/>Fez o upload? $upload_feito";
     
                 if ($upload_feito) {
-                    $sql_salva_db = "INSERT INTO notas_fiscais 
-                                        (notas_fiscais_nome, 
-                                        notas_fiscais_caminho,
-                                        notas_fiscais_insumos_id)
+
+                    // echo "<br> vai pro insert";
+                    $sql_salva_db = "INSERT INTO compras 
+                                        (compras_nome,
+                                        compras_num_nf, 
+                                        compras_caminho,
+                                        compras_insumos_id,
+                                        compras_tipos_movimentacoes_id)
                                         VALUE (
                                         '{$nome_nota_fiscal_deposito}',
-                                        '{$path_nota_fical}',
-                                        {$insumoID_Insumodeposito}
+                                        '{$num_nota_fiscal}',
+                                        '{$path_nota_fiscal}',
+                                        {$insumoID_Insumodeposito},
+                                        {$tipo_movimentacao}
                                         )";
     
                     $inseriu_no_banco = mysqli_query($conexao,$sql_salva_db);
@@ -113,7 +130,7 @@
                 deposito_qtd,
                 deposito_validade,
                 deposito_insumos_id,
-                deposito_estoque_id,
+                deposito_estoque_id
                 )
                 VALUES(
                     {$quantidadeInsumodeposito},
@@ -129,7 +146,7 @@
                 echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";
                 // echo "insumo inserido com sucesso";   
             } else {
-                die("Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+                die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
             }
 
             if ($tipo_movimentacao == 1) {

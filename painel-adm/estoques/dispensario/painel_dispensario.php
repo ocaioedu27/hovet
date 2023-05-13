@@ -1,8 +1,23 @@
+<?php 
+
+echo $qualEstoque;
+
+$qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
+
+// $qualEstoque_dep = $_POST['deposito'];
+
+if ($qualEstoque != "") {
+    $qualEstoque = $qualEstoque;
+    // echo "é disp: " . $qualEstoque;
+}
+
+?>
+
 <section class="painel_usuarios">
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Dispensário</h3>
+                <h3><?=$qualEstoque?></h3>
                 <a href="index.php?menuop=cadastro_dispensario">
                     <button class="btn" id="operacao_cadastro">Inserir</button>
                 </a>
@@ -33,6 +48,7 @@
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Unidade</th>
+                        <th>Local Cadastrado</th>
                         <th>Validade</th>
                         <th>Local</th>
                         <th>Dias para o vencimento</th>
@@ -55,7 +71,8 @@
                                         i.insumos_nome,
                                         i.insumos_unidade,
                                         datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
-                                        lcd.local_nome
+                                        lcd.local_nome,
+                                        es.estoques_nome
                                         FROM dispensario disp
                                         INNER JOIN deposito deps
                                         ON disp.dispensario_deposito_id = deps.deposito_id
@@ -63,13 +80,16 @@
                                         ON deps.deposito_insumos_id = i.insumos_id
                                         INNER JOIN local_dispensario lcd 
                                         ON disp.dispensario_local_id = lcd.local_id
+                                        INNER JOIN estoques es
+                                        ON disp.dispensario_estoques_id = es.estoques_id
                                     WHERE
-                                        disp.dispensario_id='{$txt_pesquisa_dispensario}' or
+                                        es.estoques_nome = '{$qualEstoque}' AND 
+                                        (disp.dispensario_id='{$txt_pesquisa_dispensario}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
                                         i.insumos_unidade LIKE '%{$txt_pesquisa_dispensario}%' or
                                         disp.dispensario_qtd LIKE '%{$txt_pesquisa_dispensario}%' or
                                         disp.dispensario_validade LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%'
+                                        lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%')
                                         ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -93,6 +113,7 @@
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["dispensario_qtd"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
+                        <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
                         <td><?=$dados["local_nome"]?></td>
                         <td <?php 

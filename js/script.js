@@ -132,16 +132,19 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
   if(ehOperacao){
     let tipo_operacao_cad_dep = document.getElementById('tipo_operacao_cad_dep').value;
 
+    let num_nota_fiscal_cad_dep = document.getElementById('num_nota_fiscal_cad_dep');
     let nota_fiscal_cad_dep = document.getElementById('nota_fiscal_cad_dep');
     let data_cadastro_dep = document.getElementById('data_cadastro_dep');
     let fornecedor_cad_dep = document.getElementById('fornecedorCadInsumoDep');
     // console.log('//removerCampoCadDeposito/ehOperacao - valor do tipo de operacao: '+tipo_operacao_cad_dep);
     tipo_operacao_cad_dep = tipo_operacao_cad_dep.split(' ')[0];
     if (tipo_operacao_cad_dep==3) {
+      num_nota_fiscal_cad_dep.style.display = 'none';
       nota_fiscal_cad_dep.style.display = 'none';
       data_cadastro_dep.classList.add('largura_um_terco');
       fornecedor_cad_dep.classList.add('largura_metade');
     } else {
+      num_nota_fiscal_cad_dep.style.display = 'flex'
       nota_fiscal_cad_dep.style.display = 'flex';
       data_cadastro_dep.classList.remove('largura_um_terco');
       fornecedor_cad_dep.classList.remove('largura_metade');
