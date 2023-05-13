@@ -114,12 +114,6 @@ create table deposito(
 	foreign key(deposito_insumos_id) references insumos(insumos_id) on delete set null
 );
 
-# Inserção de conteúdo para o depósito
-insert into deposito values 
-	(null, 20, '2023-08-05', 1),
-    (null, 10, '2023-08-09', 3);
-
-
 ######################################################
 ##### Dispensario ####
 
