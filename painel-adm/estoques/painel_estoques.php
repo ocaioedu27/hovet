@@ -68,11 +68,12 @@
                     <tr>
                         <td><?=$dados["estoques_id"]?></td>
                         <td>
-                            <div>
+                            <!-- <div>
                                 <form action="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>" method="post" class="form_buscar">
                                     <input type="submit" name="<?=$nome_real_estoque?>" class="form-control" value="<?=$dados["estoques_nome"]?>">
                                 </form>
-                            </div>
+                            </div> -->
+                            <a href="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>"><?=$dados["estoques_nome"]?></a>
                         </td>
                         <td><?=$dados["tipos_estoques_tipo"]?></td>
                         <td><?=$dados["estoques_descricao"]?></td>
