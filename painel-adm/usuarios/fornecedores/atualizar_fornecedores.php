@@ -4,8 +4,6 @@
 <?php 
     $idFornecedor = mysqli_real_escape_string($conexao,$_POST["idFornecedor"]);
 
-    // $txt_pesquisa_fornecedores = (isset($_POST["txt_pesquisa_fornecedores"]))?$_POST["txt_pesquisa_fornecedores"]:"";
-
     $razaoSocialFornecedor = mysqli_real_escape_string($conexao,$_POST["razaoSocialFornecedor"]);
 
     if ($razaoSocialFornecedor == "") {
@@ -41,18 +39,6 @@
     if ($observacaoFornecedor == "") {
         $observacaoFornecedor = "---";
     }
-
-    // echo "<br>Razão social: " . $razaoSocialFornecedor;
-
-    // echo "<br>Logradoruo: " . $logradouroFornecedor;
-
-    // echo "<br>cpf ou CNPJ: " . $cnpjCpfFornecedor;
-
-    // echo "<br>Obs: " . $observacaoFornecedor;
-
-    // echo "<br>email: " . $emailFornecedor;
-
-    // echo "<br>fone ou fac: " . $foneFacFornecedor;
 
     $sql = "UPDATE fornecedores SET 
         fornecedores_razao_social = '{$razaoSocialFornecedor}',

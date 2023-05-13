@@ -16,15 +16,14 @@
             echo "<br> Nome do novo estoque: " . $nomeNovoEstoque;
             echo "<br> Tipo: " . $tipoNovoEstoque;
             echo "<br> Descrição: " . $descricaoNovoEstoque;
-            // $sql = "INSERT INTO insumos (
-            //     insumos_nome,
-            //     insumos_unidade,
-            //     insumos_descricao,
-            //     insumos_qtd_critica,
-            //     insumos_tipo_insumos_id)
+
+            // $sql = "INSERT INTO estoques (
+            //     estoques_nome,
+            //     estoques_nome_real,
+            //     estoques_descricao)
             //     VALUES(
-            //         '{$nomeInsumo}',
-            //         '{$unidadeInsumo}',
+            //         '{$nomeNovoEstoque}',
+            //         '{$tipoNovoEstoque}',
             //         '{$descricaoInsumo}',
             //         {$qtdCriticaInsumo},
             //         {$tipoInsumo}

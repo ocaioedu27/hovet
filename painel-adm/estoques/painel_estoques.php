@@ -24,6 +24,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nome</th>
+                        <th>Tipo de Estoque</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>
@@ -39,23 +40,41 @@
 
                         $sql = "SELECT 
                                     *
-                                FROM estoques
+                                FROM estoques e
+                                INNER JOIN tipos_estoques tp
+                                ON e.estoques_tipos_estoques_id = tp.tipos_estoques_id
                                 WHERE
-                                    estoques_id='{$txt_pesquisa_estoques}' or
-                                    estoques_nome LIKE '%{$txt_pesquisa_estoques}%' or
-                                    estoques_descricao LIKE '%{$txt_pesquisa_estoques}%'
+                                    e.estoques_id='{$txt_pesquisa_estoques}' or
+                                    e.estoques_nome LIKE '%{$txt_pesquisa_estoques}%' or
+                                    e.estoques_descricao LIKE '%{$txt_pesquisa_estoques}%'
                                     ORDER BY estoques_nome ASC 
                                     LIMIT $inicio_estoques,$quantidade_registros_estoques";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                             $qtd_linhas_tabelas++;
+
+                            $tipo_de_estoque_bruto = $dados['tipos_estoques_tipo'];
+                            $estoques_nome_bruto = $dados['estoques_nome'];
+
+                            $nome_real_estoque = retiraAcentos($tipo_de_estoque_bruto);
+                            $estoques_nome = retiraAcentos($estoques_nome_bruto);
+                            $estoques_nome = str_replace(" ", "",$estoques_nome);
+                            // echo "<br>Nome do estoque: " . $estoques_nome;
+                            
+                            $qualEstoque = $estoques_nome_bruto;
+                            // echo $qualEstoque;
                         
                     ?>
                     <tr>
                         <td><?=$dados["estoques_id"]?></td>
                         <td>
-                            <a href="index.php?menuop=<?=$dados["estoques_nome_real"]?>"><?=$dados["estoques_nome"]?></a>
+                            <div>
+                                <form action="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>" method="post" class="form_buscar">
+                                    <input type="submit" name="<?=$nome_real_estoque?>" class="form-control" value="<?=$dados["estoques_nome"]?>">
+                                </form>
+                            </div>
                         </td>
+                        <td><?=$dados["tipos_estoques_tipo"]?></td>
                         <td><?=$dados["estoques_descricao"]?></td>
                     </tr>
                     <?php

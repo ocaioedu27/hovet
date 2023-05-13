@@ -4,6 +4,8 @@ include_once("../db/connect.php");
 
 include_once("../db/protect.php");
 
+include_once("../pgs_modelo/caracteres_sem_acento.php");
+
 // include_once("../db/restringe_permissoes.php");
 
 $sessionUserID = $_SESSION['usuario_id'];
@@ -12,6 +14,9 @@ $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
 
 $qtd_linhas_tabelas = 0;
 
+$qualEstoque = "";
+
+// echo $qualEstoque;
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 

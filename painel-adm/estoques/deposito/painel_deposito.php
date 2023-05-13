@@ -1,8 +1,23 @@
+<?php 
+
+echo $qualEstoque;
+
+$qualEstoque_dep = (isset($_POST["deposito"]))?$_POST["deposito"]:"";
+
+// $qualEstoque_dep = $_POST['deposito'];
+
+if ($qualEstoque_dep != "") {
+    $qualEstoque = $qualEstoque_dep;
+    // echo "é dep: " . $qualEstoque;
+}
+
+?>
+
 <section class="painel_usuarios">
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Depósito</h3>
+                <h3><?=$qualEstoque?></h3>
                 <a href="index.php?menuop=cadastro_deposito" id="operacao_cadastro">
                     <button class="btn">Inserir</button>
                 </a>
@@ -24,7 +39,7 @@
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=deposito_1" method="post" class="form_buscar">
+                <form action="index.php?menuop=deposito" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -40,6 +55,7 @@
                     <tr>
                         <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
+                        <th>Local Cadastrado</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Unidade</th>
@@ -49,6 +65,7 @@
                 </thead>
                 <tbody>
                     <?php
+                    
                         $quantidade_registros_deposito = 10;
 
                         $pagina_deposito = (isset($_GET['pagina_deposito']))?(int)$_GET['pagina_deposito']:1;
@@ -61,18 +78,22 @@
                                     d.deposito_id, 
                                     d.deposito_qtd,
                                     date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
+                                    es.estoques_nome,
                                     i.insumos_nome,
                                     i.insumos_unidade,
                                     datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito
                                     FROM deposito d 
                                     INNER JOIN insumos i 
-                                    ON d.deposito_insumos_id = i.insumos_id 
+                                    ON d.deposito_insumos_id = i.insumos_id
+                                    INNER JOIN estoques es
+                                    ON d.deposito_estoque_id = es.estoques_id 
                                     WHERE
-                                        d.deposito_id='{$txt_pesquisa_deposito}' or
+                                        es.estoques_nome = '{$qualEstoque}' and
+                                        (d.deposito_id='{$txt_pesquisa_deposito}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_deposito}%' or
                                         i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
                                         d.deposito_qtd LIKE '%{$txt_pesquisa_deposito}%' or
-                                        d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%'
+                                        d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%')
                                         ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -92,6 +113,7 @@
                             </a>
                         </td>
                         <td><?=$dados["deposito_id"]?></td>
+                        <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["deposito_qtd"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
@@ -129,11 +151,11 @@
                 $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                 
-                echo "<a href=\"?menuop=deposito_1&pagina_deposito=1\">Início</a> ";
+                echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
 
                 if ($pagina_deposito>6) {
                     ?>
-                        <a href="?menuop=deposito_1?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
                     <?php
                 } 
 
@@ -144,18 +166,18 @@
                         if ($i==$pagina_deposito) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=deposito_1&pagina_deposito=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_deposito<($totalPaginasdeposito-5)) {
                     ?>
-                        <a href="?menuop=deposito_1?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=deposito_1&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
+                echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
             ?>
         </div>
     </div>

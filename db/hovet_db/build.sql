@@ -76,6 +76,31 @@ INSERT INTO insumos (insumos_id,insumos_nome,insumos_unidade,insumos_descricao,i
 (null, 'Esparadrapo','Caixa','Esparadrapo Impermeável Branco 5CM X 4,5M Pacote com 12', 2, 100);
 
 ######################################################
+### Criando a tabela de tipos de estoques
+create table tipos_estoques (
+	tipos_estoques_id int primary key auto_increment,
+    tipos_estoques_tipo varchar(50) not null
+);
+
+insert into tipos_estoques values
+	(null,"Depósito"),
+	(null,"Dispensário");
+
+### Criando a tabela estoques
+create table estoques (
+	estoques_id int primary key auto_increment,
+    estoques_nome varchar(100) not null,
+    estoques_tipos_estoques_id int,
+    foreign key (estoques_tipos_estoques_id) references tipos_estoques(tipos_estoques_id) on delete set null,
+    estoques_descricao varchar(100) null
+);
+
+insert into estoques values 
+	(null, "Depósito 1", 1, "Sala do depósito 1"),
+	(null, "Depósito 2", 1, "Sala do depósito 2"),
+    (null, "Dispensário 1", 2,"Sala do Dispensário 1"),
+    (null, "Dispensário 2", 2,"Sala do Dispensário 2");
+
 
 #Criando a tabela do depósito
 
@@ -83,6 +108,8 @@ create table deposito(
 	deposito_id int primary key auto_increment,
     deposito_qtd int not null,
     deposito_validade date not null,
+    deposito_estoque_id int,
+    foreign key (deposito_estoque_id) references estoques(estoques_id) on delete set null,
     deposito_insumos_id int,
 	foreign key(deposito_insumos_id) references insumos(insumos_id) on delete set null
 );
