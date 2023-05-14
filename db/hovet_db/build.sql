@@ -89,17 +89,18 @@ insert into tipos_estoques values
 ### Criando a tabela estoques
 create table estoques (
 	estoques_id int primary key auto_increment,
-    estoques_nome varchar(100) not null,
+    estoques_nome varchar(100) not null unique,
+    estoques_nome_real varchar(100) not null unique,
     estoques_tipos_estoques_id int,
     foreign key (estoques_tipos_estoques_id) references tipos_estoques(tipos_estoques_id) on delete set null,
     estoques_descricao varchar(100) null
 );
 
 insert into estoques values 
-	(null, "Depósito 1", 1, "Sala do depósito 1"),
-	(null, "Depósito 2", 1, "Sala do depósito 2"),
-    (null, "Dispensário 1", 2,"Sala do Dispensário 1"),
-    (null, "Dispensário 2", 2,"Sala do Dispensário 2");
+	(null, "Depósito 1", "deposito1", 1, "Sala do depósito 1"),
+	(null, "Depósito 2", "deposito2", 1, "Sala do depósito 2"),
+    (null, "Dispensário 1", "dispensario1",2,"Sala do Dispensário 1"),
+    (null, "Dispensário 2", "dispensario2",2,"Sala do Dispensário 2");
 
 
 #Criando a tabela do depósito

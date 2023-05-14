@@ -6,10 +6,25 @@ $qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
 
 // $qualEstoque_dep = $_POST['deposito'];
 
-if ($qualEstoque != "") {
-    $qualEstoque = $qualEstoque;
+
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+		// $$chave = $valor;
+        print_r($valor_est);
+	}
+}
+
+$qualEstoque_disp = $valor_est;
+
+if ($qualEstoque_disp != "") {
+    $qualEstoque = $qualEstoque_disp;
     // echo "é disp: " . $qualEstoque;
 }
+
 
 ?>
 
@@ -29,7 +44,7 @@ if ($qualEstoque != "") {
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=dispensario" method="post" class="form_buscar">
+                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_dispensario" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -72,7 +87,8 @@ if ($qualEstoque != "") {
                                         i.insumos_unidade,
                                         datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
                                         lcd.local_nome,
-                                        es.estoques_nome
+                                        es.estoques_nome,
+                                        es.estoques_nome_real
                                         FROM dispensario disp
                                         INNER JOIN deposito deps
                                         ON disp.dispensario_deposito_id = deps.deposito_id
@@ -83,7 +99,7 @@ if ($qualEstoque != "") {
                                         INNER JOIN estoques es
                                         ON disp.dispensario_estoques_id = es.estoques_id
                                     WHERE
-                                        es.estoques_nome = '{$qualEstoque}' AND 
+                                        es.estoques_nome_real = '{$qualEstoque}' AND 
                                         (disp.dispensario_id='{$txt_pesquisa_dispensario}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
                                         i.insumos_unidade LIKE '%{$txt_pesquisa_dispensario}%' or

@@ -182,17 +182,21 @@ if ($qualEstoque_dep != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldeposito = "SELECT deposito_id FROM deposito";
+                $sqlTotaldeposito = "SELECT d.deposito_id 
+                                        FROM deposito d
+                                        INNER JOIN estoques e
+                                        ON e.estoques_id = d.deposito_estoque_id
+                                        WHERE e.estoques_nome_real='{$qualEstoque}'";
                 $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
 
                 $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                 
-                echo "<a href=\"?menuop=deposito&pagina_deposito=1\">Início</a> ";
+                echo "<a href=\"?menuop=deposito&" . $qualEstoque . "=1\">Início</a> ";
 
                 if ($pagina_deposito>6) {
                     ?>
-                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                        <a href="?menuop=deposito&<?=$qualEstoque?>?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
                     <?php
                 } 
 
@@ -203,18 +207,18 @@ if ($qualEstoque_dep != "") {
                         if ($i==$pagina_deposito) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=deposito&pagina_deposito=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=deposito&". $qualEstoque . "=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_deposito<($totalPaginasdeposito-5)) {
                     ?>
-                        <a href="?menuop=deposito?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                        <a href="?menuop=deposito&<?=$qualEstoque?>?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=deposito&pagina_deposito=$totalPaginasdeposito\">Fim</a>";
+                echo " <a href=\"?menuop=deposito&". $qualEstoque . "=$totalPaginasdeposito\">Fim</a>";
             ?>
         </div>
     </div>
