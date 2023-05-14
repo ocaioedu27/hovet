@@ -3,6 +3,24 @@
 </header>
 <?php 
 
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+		// $$chave = $valor;
+        // print_r($valor_est);
+	}
+}
+
+$qualEstoque_dep = $valor_est;
+
+
+if ($qualEstoque_dep != "") {
+    $qualEstoque = $qualEstoque_dep;
+    // echo "é dep: " . $qualEstoque;
+}
 
 $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
@@ -28,6 +46,9 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
         $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
         $localInsumodispensario = strtok($localInsumodispensario, " ");
+        $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_dispensario];
+        $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
+        echo "<br>" . $depositoDestinoInsumodeposito;
 
         $procura_id_insumo_dep = mysqli_query($conexao, "SELECT deposito_insumos_id FROM deposito WHERE deposito_id={$depositoID_Insumodispensario}") or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
         $array_insumo_id = mysqli_fetch_assoc($procura_id_insumo_dep);
@@ -47,18 +68,20 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
             dispensario_validade,
             dispensario_deposito_id,
             dispensario_local_id,
-            dispensario_insumos_id)
+            dispensario_insumos_id,
+            dispensario_estoques_id)
             VALUES(
                 {$quantidadeInsumoDispensario},
                 '{$validadeInsumoDeposito}',
                 {$depositoID_Insumodispensario},
                 {$localInsumodispensario},
-                {$insumo_id}
+                {$insumo_id},
+                {$depositoDestinoInsumodeposito}
             )";
 
         if (mysqli_query($conexao, $sql_insert)) { 
             echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario&" . $qualEstoque . "=1';</script>";
             // echo "insumo inserido com sucesso";   
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
@@ -69,46 +92,17 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 }
 
 
-// $depositoID_Insumodispensario = mysqli_real_escape_string($conexao,$_POST["depositoID_Insumodispensario"]);
-// $depositoID_Insumodispensario = strtok($depositoID_Insumodispensario, " ");
-// $quantidadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["quantidadeInsumoDispensario"]);
-// $validadeInsumodispensario = mysqli_real_escape_string($conexao,$_POST["validadeInsumoDeposito"]);
-// $localInsumodispensario = mysqli_real_escape_string($conexao,$_POST["localInsumodispensario"]);
-// $localInsumodispensario = strtok($localInsumodispensario, " ");
+$tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
+$tipo_movimentacao = strtok($tipo_movimentacao, " ");
 
+$local_origem = "Depósito";
 
+$local_destino = "Dispenário";
 
-// $sql = "INSERT INTO dispensario (
-//     dispensario_qtd,
-//     dispensario_validade,
-//     dispensario_deposito_id,
-//     dispensario_local_id,
-//     dispensario_insumos_id)
-//     VALUES(
-//         {$quantidadeInsumodispensario},
-//         '{$validadeInsumodispensario}',
-//         {$depositoID_Insumodispensario},
-//         {$localInsumodispensario}
-//     )";
+$usuario_id = $_SESSION['usuario_id'];
 
-// if (mysqli_query($conexao, $sql)) {
-//     echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
-//     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";   
-// } else {
-//     die("//Dispensario/inserir_dispensario/ - Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
-// }
+$insumo_id = $depositoID_Insumodispensario;
 
-// $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
-// $tipo_movimentacao = strtok($tipo_movimentacao, " ");
-
-// $local_origem = "Depósito";
-
-// $local_destino = "Dispenário";
-
-// $usuario_id = $_SESSION['usuario_id'];
-
-// $insumo_id = $depositoID_Insumodispensario;
-
-// atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
+atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
 
 ?>

@@ -1,8 +1,32 @@
+<?php
+
+
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+		// $$chave = $valor;
+        // print_r($valor_est);
+	}
+}
+
+$qualEstoque_dep = $valor_est;
+
+
+if ($qualEstoque_dep != "") {
+    $qualEstoque = $qualEstoque_dep;
+    // echo "é dep: " . $qualEstoque;
+}
+
+?>
+
 <div class="container cadastro_all">
     <div class="cards cadastro_deposito">
         <div class="voltar ">
-            <h4 class="">Inserindo no Depósito</h4>
-            <a href="index.php?menuop=deposito" class="confirmaVolta">
+            <h4 class="">Inserindo no Depósito <?=$qualEstoque[-1]?></h4>
+            <a href="index.php?menuop=deposito&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

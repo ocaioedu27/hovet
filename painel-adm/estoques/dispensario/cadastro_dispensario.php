@@ -1,8 +1,32 @@
+<?php
+
+
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+		// $$chave = $valor;
+        // print_r($valor_est);
+	}
+}
+
+$qualEstoque_dep = $valor_est;
+
+
+if ($qualEstoque_dep != "") {
+    $qualEstoque = $qualEstoque_dep;
+    // echo "é dep: " . $qualEstoque;
+}
+
+?>
+
 <div class="container cadastro_all">
     <div class="cards cadastro_dispensario">
         <div class="voltar">
             <h4>Movendo itens do Depósito para o Dispensário</h4>
-            <a href="index.php?menuop=dispensario" class="confirmaVolta">
+            <a href="index.php?menuop=dispensario&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -10,7 +34,7 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario&<?=$qualEstoque?>" method="post">
             <div class="dados_solicitacao">
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">

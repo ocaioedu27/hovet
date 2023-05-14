@@ -14,7 +14,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
 		// $$chave = $valor;
-        // print_r($valor_est);
+        print_r($valor_est);
 	}
 }
 
@@ -33,10 +33,10 @@ if ($qualEstoque_disp != "") {
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Dispensário <?=$qualEstoque[-1]?></h3>
-                <a href="index.php?menuop=cadastro_dispensario">
+                <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
                     <button class="btn" id="operacao_cadastro">Inserir</button>
                 </a>
-                <a href="index.php?menuop=solicitar_dispensario">
+                <a href="index.php?menuop=solicitar_dispensario&<?=$qualEstoque?>">
                     <button class="btn">Solicitar insumos</button>
                 </a>
                 <a href="index.php?menuop=quantidade_insumos_dispensario">
