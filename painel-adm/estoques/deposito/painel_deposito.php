@@ -15,28 +15,12 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
 		// $$chave = $valor;
-        print_r($valor_est);
+        // print_r($valor_est);
 	}
 }
 
 $qualEstoque_dep = $valor_est;
 
-// $teste = $_GET['menuop'];
-// var_dump($teste);
-// print_r($teste);
-
-// $dados_form_buscar = array();
-
-// $estoques_nome = retiraAcentos($qualEstoque_dep);
-// $estoques_nome = str_replace(" ", "",$estoques_nome);
-// echo "<br>Nome do estoque: " . $estoques_nome;
-
-// $qualEstoque = $estoques_nome_bruto;
-// echo $qualEstoque;
-
-// array_push($dados_form_buscar,$estoques_nome);
-
-// print_r($dados_form_buscar);
 
 if ($qualEstoque_dep != "") {
     $qualEstoque = $qualEstoque_dep;
@@ -49,7 +33,7 @@ if ($qualEstoque_dep != "") {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3><?=$qualEstoque?></h3>
+                <h3>Depósito <?=$qualEstoque[-1]?></h3>
                 <a href="index.php?menuop=cadastro_deposito" id="operacao_cadastro">
                     <button class="btn">Inserir</button>
                 </a>
@@ -100,7 +84,9 @@ if ($qualEstoque_dep != "") {
                
                         $quantidade_registros_deposito = 10;
 
-                        $pagina_deposito = (isset($_GET['pagina_deposito']))?(int)$_GET['pagina_deposito']:1;
+                        $pagina_deposito = (isset($_GET[$qualEstoque]))?(int)$_GET[$qualEstoque]:1;
+
+                        // print_r($_GET);
 
                         $inicio_deposito = ($quantidade_registros_deposito * $pagina_deposito) - $quantidade_registros_deposito;
 
@@ -196,7 +182,7 @@ if ($qualEstoque_dep != "") {
 
                 if ($pagina_deposito>6) {
                     ?>
-                        <a href="?menuop=deposito&<?=$qualEstoque?>?pagina_deposito=<?php echo $pagina_deposito-1?>"> << </a>
+                        <a href="?menuop=deposito&<?=$qualEstoque?>=<?php echo $pagina_deposito-1?>"> << </a>
                     <?php
                 } 
 
@@ -214,7 +200,7 @@ if ($qualEstoque_dep != "") {
 
                 if ($pagina_deposito<($totalPaginasdeposito-5)) {
                     ?>
-                        <a href="?menuop=deposito&<?=$qualEstoque?>?pagina_deposito=<?php echo $pagina_deposito+1?>"> >> </a>
+                        <a href="?menuop=deposito&<?=$qualEstoque?>=<?php echo $pagina_deposito+1?>"> >> </a>
                     <?php
                 }
                 

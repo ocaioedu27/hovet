@@ -45,7 +45,7 @@
                         ?>
 
                         <label for="quem_esta_guardando_dep">Quem está guardando</label>
-                        <input type="text" class="form-control largura_um_terco" name="quem_esta_guardando_dep"       value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="quem_esta_guardando_dep" value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
@@ -59,12 +59,12 @@
 
                     <div class="display-flex-cl" id="num_nota_fiscal_cad_dep">
                         <label>Número da Nota fiscal</label>
-                        <input type="text" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" placeholder="Informe o número..." required>
+                        <input type="text" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" id="input_num_nota_fiscal_cad_dep" placeholder="Informe o número..." required>
                     </div>
 
                     <div class="display-flex-cl" id="nota_fiscal_cad_dep">
                         <label for="nota_fiscal_deposito">Upload da Nota fiscal</label>
-                        <input type="file" class="form-control" name="nota_fiscal_deposito" required>
+                        <input type="file" class="form-control" name="nota_fiscal_deposito" id="input_nota_fiscal_cad_dep" required>
                     </div>
 
                     <div class="display-flex-cl" id="fornecedor_cad_dep1">

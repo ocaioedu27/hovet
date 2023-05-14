@@ -136,16 +136,22 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
     let nota_fiscal_cad_dep = document.getElementById('nota_fiscal_cad_dep');
     let data_cadastro_dep = document.getElementById('data_cadastro_dep');
     let fornecedor_cad_dep = document.getElementById('fornecedorCadInsumoDep');
+    let input_num_nota_fiscal_cad_dep = document.getElementById('input_num_nota_fiscal_cad_dep');
+    let input_nota_fiscal_cad_dep = document.getElementById('input_nota_fiscal_cad_dep');
     // console.log('//removerCampoCadDeposito/ehOperacao - valor do tipo de operacao: '+tipo_operacao_cad_dep);
     tipo_operacao_cad_dep = tipo_operacao_cad_dep.split(' ')[0];
     if (tipo_operacao_cad_dep==3) {
       num_nota_fiscal_cad_dep.style.display = 'none';
       nota_fiscal_cad_dep.style.display = 'none';
+      input_num_nota_fiscal_cad_dep.removeAttribute("required");
+      input_nota_fiscal_cad_dep.removeAttribute("required");
       data_cadastro_dep.classList.add('largura_um_terco');
       fornecedor_cad_dep.classList.add('largura_metade');
     } else {
-      num_nota_fiscal_cad_dep.style.display = 'flex'
+      num_nota_fiscal_cad_dep.style.display = 'flex';
       nota_fiscal_cad_dep.style.display = 'flex';
+      input_num_nota_fiscal_cad_dep.setAttribute("required", "required");
+      input_nota_fiscal_cad_dep.setAttribute("required", "required");
       data_cadastro_dep.classList.remove('largura_um_terco');
       fornecedor_cad_dep.classList.remove('largura_metade');
     }

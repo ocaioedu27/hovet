@@ -14,7 +14,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
 		// $$chave = $valor;
-        print_r($valor_est);
+        // print_r($valor_est);
 	}
 }
 
@@ -32,7 +32,7 @@ if ($qualEstoque_disp != "") {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3><?=$qualEstoque?></h3>
+                <h3>Dispensário <?=$qualEstoque[-1]?></h3>
                 <a href="index.php?menuop=cadastro_dispensario">
                     <button class="btn" id="operacao_cadastro">Inserir</button>
                 </a>
@@ -73,7 +73,7 @@ if ($qualEstoque_disp != "") {
                     <?php
                         $quantidade_registros_dispensario = 10;
 
-                        $pagina_dispensario = (isset($_GET['pagina_dispensario']))?(int)$_GET['pagina_dispensario']:1;
+                        $pagina_dispensario = (isset($_GET[$qualEstoque]))?(int)$_GET[$qualEstoque]:1;
 
                         $inicio_dispensario = ($quantidade_registros_dispensario * $pagina_dispensario) - $quantidade_registros_dispensario;
 
@@ -159,17 +159,21 @@ if ($qualEstoque_disp != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldispensario = "SELECT dispensario_id FROM dispensario";
+                $sqlTotaldispensario = "SELECT d.dispensario_id 
+                                            FROM dispensario d
+                                            INNER JOIN estoques e
+                                            ON e.estoques_id = d.dispensario_estoques_id
+                                            WHERE e.estoques_nome_real='{$qualEstoque}'";
                 $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
 
                 $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
                 $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
                 
-                echo "<a href=\"?menuop=dispensario&pagina_dispensario=1\">Início</a> ";
+                echo "<a href=\"?menuop=dispensario&" . $qualEstoque ."=1\">Início</a> ";
 
                 if ($pagina_dispensario>6) {
                     ?>
-                        <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario-1?>"> << </a>
+                        <a href="?menuop=dispensario?<?=$qualEstoque?>=<?php echo $pagina_dispensario-1?>"> << </a>
                     <?php
                 } 
 
@@ -180,18 +184,18 @@ if ($qualEstoque_disp != "") {
                         if ($i==$pagina_dispensario) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=dispensario&pagina_dispensario=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_dispensario<($totalPaginasdispensario-5)) {
                     ?>
-                        <a href="?menuop=dispensario?pagina_dispensario=<?php echo $pagina_dispensario+1?>"> >> </a>
+                        <a href="?menuop=dispensario?<?=$qualEstoque?>=<?php echo $pagina_dispensario+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=dispensario&pagina_dispensario=$totalPaginasdispensario\">Fim</a>";
+                echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "=$totalPaginasdispensario\">Fim</a>";
             ?>
         </div>
     </div>

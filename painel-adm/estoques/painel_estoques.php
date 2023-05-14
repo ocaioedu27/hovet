@@ -57,23 +57,12 @@
                             $estoques_nome = $dados['estoques_nome_real'];
 
                             $nome_real_estoque = retiraAcentos($tipo_de_estoque_bruto);
-                            // $estoques_nome = retiraAcentos($estoques_nome_bruto);
-                            // $estoques_nome = str_replace(" ", "",$estoques_nome);
-                            // echo "<br>Nome do estoque: " . $estoques_nome;
-                            
-                            // $qualEstoque = $estoques_nome_bruto;
-                            // echo $qualEstoque;
                         
                     ?>
                     <tr>
                         <td><?=$dados["estoques_id"]?></td>
                         <td>
-                            <!-- <div>
-                                <form action="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>" method="post" class="form_buscar">
-                                    <input type="submit" name="<?=$nome_real_estoque?>" class="form-control" value="<?=$dados["estoques_nome"]?>">
-                                </form>
-                            </div> -->
-                            <a href="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>"><?=$dados["estoques_nome"]?></a>
+                            <a href="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>=1" class="form-control"><?=$dados["estoques_nome"]?></a>
                         </td>
                         <td><?=$dados["tipos_estoques_tipo"]?></td>
                         <td><?=$dados["estoques_descricao"]?></td>
