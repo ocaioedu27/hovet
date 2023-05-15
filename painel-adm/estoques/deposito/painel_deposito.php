@@ -34,9 +34,22 @@ if ($qualEstoque_dep != "") {
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Depósito <?=$qualEstoque[-1]?></h3>
-                <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>" id="operacao_cadastro">
-                    <button class="btn">Inserir</button>
-                </a>
+                <!-- <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>" id="operacao_cadastro"> -->
+                    <!-- <button class="btn">Inserir</button> -->
+                <!-- </a> -->
+                <div class="dropdown" id="operacao_retirar">
+                    <a href="#">
+                        <button class="btn">Cadastrar</button>
+                    </a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li>
+                                <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>">Cadstrar Novo Insumo</a>
+                                <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="dropdown" id="operacao_retirar">
                     <a href="#">
                         <button class="btn">Retirar</button>
@@ -44,8 +57,8 @@ if ($qualEstoque_dep != "") {
                     <div class="dropdown-content">
                         <ul>
                             <li>
-                                <a href="index.php?menuop=cadastro_dispensario">Mover para o dispensário</a>
-                                <a href="index.php?menuop=permutar_deposito">Permutar</a>
+                                <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">Mover para o dispensário</a>
+                                <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
                             </li>
                         </ul>
                     </div>

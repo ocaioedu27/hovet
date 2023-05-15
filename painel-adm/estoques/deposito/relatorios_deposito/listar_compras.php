@@ -20,10 +20,11 @@
                 <thead>
                     <tr class="tabela_dados">
                         <th>ID</th>
-                        <th>Número da Nota Fiscal</th>
-                        <th>Nota Fiscal</th>
                         <th>Insumo</th>
-                        <th>Data upload</th>
+                        <th>Fornecedor</th>
+                        <th>N° Nota Fiscal</th>
+                        <th>Nota Fiscal</th>
+                        <th>Data da Compra</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,19 +39,22 @@
 
                         $sql = "SELECT 
                                     i.insumos_nome, 
-                                    n.compras_nome,
-                                    n.compras_num_nf,
-                                    n.compras_id,
-                                    n.compras_caminho,
-                                    n.compras_data_upload
-                                    FROM compras n
+                                    c.compras_nome,
+                                    c.compras_num_nf,
+                                    c.compras_id,
+                                    c.compras_caminho,
+                                    c.compras_data_upload,
+                                    f.fornecedores_razao_social
+                                    FROM compras c
                                     INNER JOIN insumos i
-                                    on n.compras_insumos_id = i.insumos_id
+                                    ON c.compras_insumos_id = i.insumos_id
+                                    INNER JOIN fornecedores f
+                                    ON f.fornecedores_id = c.compras_fornecedor_id
                                     WHERE
-                                        n.compras_insumos_id='{$txt_pesquisa_compras}' or
+                                        c.compras_insumos_id='{$txt_pesquisa_compras}' or
                                         i.insumos_nome LIKE '%{$txt_pesquisa_compras}%' or
-                                        n.compras_nome LIKE '%{$txt_pesquisa_compras}%' or
-                                        n.compras_data_upload LIKE '%{$txt_pesquisa_compras}%'
+                                        c.compras_nome LIKE '%{$txt_pesquisa_compras}%' or
+                                        c.compras_data_upload LIKE '%{$txt_pesquisa_compras}%'
                                         ORDER BY compras_data_upload ASC 
                                         LIMIT $inicio_compras,$quantidade_registros_compras";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -59,9 +63,10 @@
                     ?>
                     <tr class="tabela_dados">
                         <td><?=$dados["compras_id"]?></td>
+                        <td><?=$dados["insumos_nome"]?></td>
+                        <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><?=$dados["compras_num_nf"]?></td>
                         <td><a target="_blank" href="<?=$dados['compras_caminho']?>"><?=$dados["compras_nome"]?></a></td>
-                        <td><?=$dados["insumos_nome"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['compras_data_upload']));?></td>
                     </tr>
                     <?php

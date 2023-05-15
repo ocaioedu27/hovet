@@ -13,12 +13,21 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 }
 
 $qualEstoque_dep = $valor_est;
+$dep = 'dep';
 
 
 if ($qualEstoque_dep != "") {
     $qualEstoque = $qualEstoque_dep;
+    if (strpos($qualEstoque, $dep)) {
+        $tipoEstoque = substr($qualEstoque, 0, -1);
+    } else{
+        $tipoEstoque = substr($qualEstoque, 0, -1);
+    }
     // echo "é dep: " . $qualEstoque;
 }
+
+
+$tipoEstoque = $tipoEstoque;
 
 ?>
 
@@ -26,7 +35,7 @@ if ($qualEstoque_dep != "") {
     <div class="cards cadastro_dispensario">
         <div class="voltar">
             <h4>Movendo itens do Depósito para o Dispensário</h4>
-            <a href="index.php?menuop=dispensario&<?=$qualEstoque?>=1" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$tipoEstoque?>&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

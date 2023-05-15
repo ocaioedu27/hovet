@@ -134,14 +134,11 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="">Usuários</a>
+                    <a href="#">Usuários</a>
                     <div class="dropdown-content">
                         <ul>
                             <li>
-                                <a href="index.php?menuop=todos_usuarios">Todos os Usuários</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=usuarios">Usuários</a>
+                                <a href="index.php?menuop=usuarios">Todos os Usuários</a>
                             </li>
                             <li>
                                 <a href="index.php?menuop=fornecedores">Fornecedores</a>

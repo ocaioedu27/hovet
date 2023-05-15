@@ -121,13 +121,15 @@
                                         compras_num_nf, 
                                         compras_caminho,
                                         compras_insumos_id,
-                                        compras_tipos_movimentacoes_id)
+                                        compras_tipos_movimentacoes_id,
+                                        compras_fornecedor_id)
                                         VALUE (
                                         '{$nome_nota_fiscal_deposito}',
                                         '{$num_nota_fiscal}',
                                         '{$path_nota_fiscal}',
                                         {$insumoID_Insumodeposito},
-                                        {$tipo_movimentacao}
+                                        {$tipo_movimentacao},
+                                        {$fornecedorCadInsumoDep}
                                         )";
     
                     $inseriu_no_banco = mysqli_query($conexao,$sql_salva_db);

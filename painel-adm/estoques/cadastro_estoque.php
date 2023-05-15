@@ -27,8 +27,8 @@
                             <div class="display-flex-cl">
                                 <label>Tipo do Novo Estoque</label>
                                 <select class="form-control" name="tipoNovoEstoque[]" required>
-                                    <option>Depósito</option>
-                                    <option>Dispensário</option>
+                                    <option>1 - Depósito</option>
+                                    <option>2 - Dispensário</option>
                                 </select>
                             </div>
                         </div>
