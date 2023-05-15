@@ -742,3 +742,8 @@ div#permuta_dep {
     padding: 10px;
     border-radius: 10px;
 }
+
+.cards_info {
+    width: 400px;
+    height: 200px;
+}

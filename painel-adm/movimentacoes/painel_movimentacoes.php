@@ -6,15 +6,6 @@
                 <a href="#" id="">
                     <button class="btn">Gerar Relatório</button>
                 </a>
-                <a href="#" id="">
-                    <button class="btn">Gerar Relatório</button>
-                </a>
-                <a href="#" id="">
-                    <button class="btn">Gerar Relatório</button>
-                </a>
-                <a href="#" id="">
-                    <button class="btn">Gerar Relatório</button>
-                </a>
             </div>
             <div>
                 <form action="index.php?menuop=listar_movimentacoes" method="post" class="form_buscar">
@@ -92,7 +83,9 @@
                         <td><?=$dados["movimentacoes_id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["movimentacoes_data_operacao"]?></td>
-                        <td><?=$dados["tipos_movimentacoes_movimentacao"]?></td>
+                        <td>
+                            <a href="index.php?menuop=<?=retiraAcentos($dados["tipos_movimentacoes_movimentacao"])?>"><?=$dados["tipos_movimentacoes_movimentacao"]?></a>
+                        </td>
                         <td><?=$dados["movimentacoes_origem"]?></td>
                         <td><?=$dados["movimentacoes_destino"]?></td>
                         <td><?=$dados["usuario_nome_completo"]?></td>

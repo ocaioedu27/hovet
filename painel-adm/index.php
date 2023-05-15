@@ -108,6 +108,9 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=compras" id="listar_notas_fiscais">Listar Compras</a>
                             </li>
                             <li>
+                                <a href="index.php?menuop=doacoes" id="listar_doacoes">Listar Doações</a>
+                            </li>
+                            <li>
                                 <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Listar Movimentações</a>
                             </li>
                         </ul>
@@ -370,7 +373,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("");
                     break;
 
-                case 'compras':
+                case 'compra':
                     include_once("estoques/deposito/relatorios_deposito/listar_compras.php");
                     break;
 

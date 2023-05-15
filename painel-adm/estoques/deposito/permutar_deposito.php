@@ -140,7 +140,8 @@ if ($qualEstoque_dep != "") {
                             
                             <div class="display-flex-cl">
                                 <label>Depósito de Destino</label>
-                                <input type="text" class="form-control largura_um_terco" name="destinoInsumoDeposito[]" id="" required>
+                                <input type="text" class="form-control largura_um_terco" name="depositoDestinoInsumoPermuta[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o Destino..." required>
+                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 6.5% auto;"></span>
                             </div>
                         </div>
                         <div class="form-group valida_movimentacao">

@@ -5,7 +5,7 @@
                 <h3>Todas as Compras</h3>
             </div>
             <div>
-                <form action="index.php?menuop=compras" method="post" class="form_buscar">
+                <form action="index.php?menuop=compra" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_compras" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -83,11 +83,11 @@
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_compras);
                     
-                    echo "<a href=\"?menuop=compras&pagina_compras=1\">Início</a> ";
+                    echo "<a href=\"?menuop=compra&pagina_compras=1\">Início</a> ";
 
                     if ($pagina_compras>6) {
                         ?>
-                            <a href="?menuop=compras?pagina_compras=<?php echo $pagina_compras-1?>"> << </a>
+                            <a href="?menuop=compra?pagina_compras=<?php echo $pagina_compras-1?>"> << </a>
                         <?php
                     } 
 
@@ -98,18 +98,18 @@
                             if ($i==$pagina_compras) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=compras&pagina_compras=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=compra&pagina_compras=$i\">$i</a> ";
                             } 
                         }          
                     }
 
                     if ($pagina_compras<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=compras?pagina_compras=<?php echo $pagina_compras+1?>"> >> </a>
+                            <a href="?menuop=compra?pagina_compras=<?php echo $pagina_compras+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=compras&pagina_compras=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=compra&pagina_compras=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>
