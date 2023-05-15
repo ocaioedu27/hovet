@@ -190,7 +190,9 @@ create table compras (
     compras_tipos_movimentacoes_id int,
     foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
     compras_insumos_id int,
-    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null
+    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null,
+    compras_fornecedor_id int,
+    foreign key (compras_fornecedor_id) references fornecedores(fornecedores_id) on delete set null
 );
 
 create table fornecedores (

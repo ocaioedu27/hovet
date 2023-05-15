@@ -29,14 +29,14 @@ $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 
     $mov_dep_to_disp = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
-    echo "<br/> tipo de movimentação guardou: " . $mov_dep_to_disp;
+    // echo "<br/> tipo de movimentação guardou: " . $mov_dep_to_disp;
 
     $quem_guardou = mysqli_real_escape_string($conexao,$_POST["solicitante_retira_dispensario"]);
-    echo "<br/> quem guardou: " . $quem_guardou;
+    // echo "<br/> quem guardou: " . $quem_guardou;
 
     $dataTransferDepToDisp = mysqli_real_escape_string($conexao,$_POST["dataTransferDepToDisp"]);
-    echo "<br/> Data da transferência: " . $dataTransferDepToDisp;
-    echo "<br/>";
+    // echo "<br/> Data da transferência: " . $dataTransferDepToDisp;
+    // echo "<br/>";
 
     foreach ($dados_enviados_array['insumoID_Insumodispensario'] as $chave_cad_dispensario => $valor_cad_dispensario) {
 

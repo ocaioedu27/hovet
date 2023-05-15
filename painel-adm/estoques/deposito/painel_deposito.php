@@ -55,7 +55,7 @@ if ($qualEstoque_dep != "") {
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=deposito&<?=$qualEstoque?>" method="post" class="form_buscar">
+                <form action="index.php?menuop=deposito&<?=$qualEstoque?>=1" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">

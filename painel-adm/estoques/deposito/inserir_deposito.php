@@ -3,6 +3,25 @@
 </header>
 <?php
 
+    if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+        // Cria variáveis dinamicamente
+        foreach ( $_GET as $chave => $valor ) {
+            $valor_tmp = $chave;
+            $position = strpos($valor_tmp, "menuop");
+            $valor_est = strstr($valor_tmp,$position);
+            // $$chave = $valor;
+            // print_r($valor_est);
+        }
+    }
+
+    $qualEstoque_dep = $valor_est;
+
+
+    if ($qualEstoque_dep != "") {
+        $qualEstoque = $qualEstoque_dep;
+        // echo "é dep: " . $qualEstoque;
+    }
+
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
     // var_dump($dados_enviados_array);
@@ -13,11 +32,12 @@
         $quem_guardou = strtok($quem_guardou, " ");
         // echo "<br/> quem guardou: " . $quem_guardou;
 
-        $$num_nota_fiscal = mysqli_real_escape_string($conexao,$_POST["num_nota_fiscal_cad_dep"]);
-        // echo "<br/> tipo de operacao: " . $tipo_movimentacao;
+        $num_nota_fiscal = mysqli_real_escape_string($conexao,$_POST["num_nota_fiscal_cad_dep"]);
+
+        // echo "<br/> tipo de operacao: " . $num_nota_fiscal;
 
         $data_operacao = mysqli_real_escape_string($conexao,$_POST["dataCadastroInsumoDeposito"]);
-        echo "</br> Data da operação: " . $data_operacao;
+        // echo "</br> Data da operação: " . $data_operacao;
         
         $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["tipo_insercao_deposito"]);
         $tipo_movimentacao = strtok($tipo_movimentacao, " ");
@@ -40,7 +60,7 @@
 
             if ((isset($_FILES['nota_fiscal_deposito'])) && ($tem_nota_fiscal['size'] != 0)) {
                 $nota_fiscal_deposito = $_FILES['nota_fiscal_deposito'];
-                echo "<br/>";
+                // echo "<br/>";
                 // var_dump($nota_fiscal_deposito);
     
                 // echo "<br/>pegou a nota fiscal";
@@ -143,7 +163,7 @@
 
             if (mysqli_query($conexao, $sql)) { 
                 echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito';</script>";
+                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito&" . $qualEstoque . "=1';</script>";
                 // echo "insumo inserido com sucesso";   
             } else {
                 die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   

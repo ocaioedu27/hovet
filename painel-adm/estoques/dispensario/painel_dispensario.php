@@ -14,7 +14,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
 		// $$chave = $valor;
-        print_r($valor_est);
+        // print_r($valor_est);
 	}
 }
 
@@ -44,7 +44,7 @@ if ($qualEstoque_disp != "") {
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>" method="post" class="form_buscar">
+                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>=1" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_dispensario" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
