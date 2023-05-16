@@ -196,6 +196,24 @@ create table fornecedores (
     fornecedores_end_obserevacao varchar(256) null
 );
 
+insert into fornecedores (
+	fornecedores_razao_social,
+    fornecedores_cpf_cnpj,
+    fornecedores_end_logradouro,
+    fornecedores_end_num,
+    fornecedores_end_bairro,
+    fornecedores_end_cep,
+    fornecedores_end_email,
+    fornecedores_end_telefone,
+    fornecedores_observacao) 
+    values 
+    ("Fornecedor Teste 1","00000000000000","End. Teste 1","","","00000000","fornecedor_teste1@testmail.com","000000000","Obs Teste 1"),
+    ("Fornecedor Teste 2","00000000000000","End. Teste 2","","","00000000","fornecedor_teste2@testmail.com","000000000","Obs Teste 2"),
+    ("Fornecedor Teste 3","00000000000000","End. Teste 3","","","00000000","fornecedor_teste3@testmail.com","000000000","Obs Teste 3"),
+    ("Fornecedor Teste 4","00000000000000","End. Teste 4","","","00000000","fornecedor_teste4@testmail.com","000000000","Obs Teste 4"),
+    ("Fornecedor Teste 5","00000000000000","End. Teste 5","","","00000000","fornecedor_teste5@testmail.com","000000000","Obs Teste 5"),
+    ("Fornecedor Teste 6","00000000000000","End. Teste 6","","","00000000","fornecedor_teste6@testmail.com","000000000","Obs Teste 6");
+
 create table status_slc (
 	status_slc_id int primary key auto_increment,
     status_slc_status varchar(100) not null
