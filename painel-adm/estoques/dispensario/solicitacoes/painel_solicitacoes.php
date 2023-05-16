@@ -50,7 +50,6 @@ if ($qualEstoque_dep != "") {
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th>Status</th>
                         <th>ID</th>
                         <th>Solicitante</th>
                         <th>Insumo Solicitado</th>
@@ -58,7 +57,9 @@ if ($qualEstoque_dep != "") {
                         <th>Quantidade Solicitada</th>
                         <th>Data e Horário</th>
                         <th>Setor de Destino</th>
+                        <th>Tipo de Solicitação</th>
                         <th>Justificativa</th>
+                        <th>Status</th>
                         <th id="">Operações</th>
                     </tr>
                 </thead>
@@ -80,11 +81,12 @@ if ($qualEstoque_dep != "") {
                                     u.usuario_primeiro_nome,
                                     i.insumos_nome,
                                     s.solicitacoes_qtd_solicitada,
-                                    s.solicitacoes_data,
+                                    date_format(s.solicitacoes_data, '%d/%m/%Y %H:%i:%s') AS solicitacoes_data,
                                     st.setores_setor,
                                     s.solicitacoes_justificativa,
                                     stt.status_slc_status,
-                                    es.estoques_nome
+                                    es.estoques_nome,
+                                    tp.tipos_movimentacoes_movimentacao
                                     FROM solicitacoes s
                                     INNER JOIN usuarios u
                                     ON s.solicitacoes_solicitante = u.usuario_id
@@ -98,9 +100,12 @@ if ($qualEstoque_dep != "") {
                                     ON s.solicitacoes_status_slc_id = stt.status_slc_id
                                     INNER JOIN estoques es
                                     ON s.solicitacoes_dips_solicitado = es.estoques_id
+                                    INNER JOIN tipos_movimentacoes tp
+                                    ON tp.tipos_movimentacoes_id = s.solicitacoes_tp_movimentacoes_id
                                     WHERE
                                         s.solicitacoes_id='{$txt_pesquisa_solicitacoes}' or
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%'
+                                        i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
+                                        tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%'
                                         ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_deposito,$quantidade_registros_deposito";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -111,6 +116,15 @@ if ($qualEstoque_dep != "") {
                         
                     ?>
                     <tr>
+                        <td><?=$dados_para_while["solicitacoes_id"]?></td>
+                        <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
+                        <td><?=$dados_para_while["insumos_nome"]?></td>
+                        <td><?=$dados_para_while["estoques_nome"]?></td>
+                        <td><?=$dados_para_while["solicitacoes_qtd_solicitada"]?></td>
+                        <td><?=$dados_para_while["solicitacoes_data"]?></td>
+                        <td><?=$dados_para_while["setores_setor"]?></td>
+                        <td><?=$dados_para_while["tipos_movimentacoes_movimentacao"]?></td>
+                        <td><?=$dados_para_while["solicitacoes_justificativa"]?></td>
                         <td style="color: 
                         <?php
                             $status_slc = $dados_para_while["status_slc_status"];
@@ -119,15 +133,7 @@ if ($qualEstoque_dep != "") {
                             } elseif ($status_slc == "Aprovada"){
                                 echo "green";
                             }
-                        ?>"><?=$dados_para_while["status_slc_status"]?></td>
-                        <td><?=$dados_para_while["solicitacoes_id"]?></td>
-                        <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
-                        <td><?=$dados_para_while["insumos_nome"]?></td>
-                        <td><?=$dados_para_while["estoques_nome"]?></td>
-                        <td><?=$dados_para_while["solicitacoes_qtd_solicitada"]?></td>
-                        <td><?=$dados_para_while["solicitacoes_data"]?></td>
-                        <td><?=$dados_para_while["setores_setor"]?></td>
-                        <td><?=$dados_para_while["solicitacoes_justificativa"]?></td>
+                        ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
                             <a href="#"
                                 class="confirmaOperacao">

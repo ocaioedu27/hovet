@@ -99,19 +99,22 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
             <div class="menu_op_adm">
                 <div class="dropdown">
                     <a href="#">Página principal</a>
-                    <div class="dropdown-content dispensario">
+                    <div class="dropdown-content">
                         <ul>
                             <li>
                                 <a href="index.php?menuop=pagina_principal">Dashboard</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=compra" id="listar_notas_fiscais">Listar Compras</a>
+                                <a href="index.php?menuop=compra" id="listar_notas_fiscais">Compras</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=doacoes" id="listar_doacoes">Listar Doações</a>
+                                <a href="index.php?menuop=doacoes" id="listar_doacoes">Doações</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Listar Movimentações</a>
+                                <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Movimentações</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=solicitacoes" id="listar_movimentacoes">Solicitações</a>
                             </li>
                         </ul>
                     </div>
