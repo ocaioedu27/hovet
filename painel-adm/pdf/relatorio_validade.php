@@ -9,10 +9,14 @@ include("../../db/connect.php");
                         date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
                         i.insumos_nome,
                         i.insumos_unidade,
-                        datediff(d.deposito_validade, curdate()) as diasvencimento
-
-            
-             FROM deposito d inner join insumos i on d.deposito_insumos_id = i.insumos_id  where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
+                        datediff(d.deposito_validade, curdate()) as diasvencimento,
+                        es.estoques_nome
+                    FROM deposito d 
+                    inner join insumos i 
+                    on d.deposito_insumos_id = i.insumos_id
+                    inner join estoques es
+                    on es.estoques_id = d.deposito_estoque_id
+                    where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
              
             $res = $conexao->query($sql);
             date_default_timezone_set('America/Sao_Paulo');
@@ -41,11 +45,12 @@ include("../../db/connect.php");
                     $html .= "<table border=1 cellspacing=3  >";
                          $html .= "<thead>
                             <tr>
-                                <th>ID</th>
+                                <th> ID </th>
                                 <th> Insumo </th>
-                                <th>Quantidade</th>
-                                <th>Validade</th>
-                                <th>Aviso de Vencimento</th>
+                                <th> Quantidade </th>
+                                <th> Validade </th>
+                                <th> Guardado em </th>
+                                <th> Aviso de Vencimento </th>
                                 
                             </tr>
                         </thead>";
@@ -57,9 +62,7 @@ include("../../db/connect.php");
                             $html .= "<td>".$row->insumos_nome."</td>";
                             $html .= "<td>".$row->deposito_qtd."</td>";
                             $html .= "<td>".$row->validadedeposito."</td>";
-                            // $html .= "<td>"."Faltam ".$row->diasvencimento. " para vencer</td>";
-                           // $html .= "<td>".$row->deposito_insumos_id."</td>";
-                            
+                            $html .= "<td>".$row->estoques_nome."</td>";
                             $dias = ['30','45'];
 
                             $mensagem_aviso = '';
@@ -85,7 +88,6 @@ include("../../db/connect.php");
                         }
                         $html .= "</table>";
                         $html .= "<br><br>";
-                        // $html .= "Relatorio gerado em $agora";
     
                     }else{
                         $html = "<DOCTYPE html>";

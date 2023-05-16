@@ -183,20 +183,6 @@ create table movimentacoes (
     movimentacoes_data_operacao datetime not null default current_timestamp()
 );
 
-create table compras (
-	compras_id int primary key auto_increment,
-    compras_num_nf varchar(100) not null,
-    compras_nome varchar(100) not null,
-    compras_caminho varchar (100) not null,
-    compras_data_upload datetime not null default current_timestamp(),
-    compras_tipos_movimentacoes_id int,
-    foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
-    compras_insumos_id int,
-    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null,
-    compras_fornecedor_id int,
-    foreign key (compras_fornecedor_id) references fornecedores(fornecedores_id) on delete set null
-);
-
 create table fornecedores (
 	fornecedores_id int primary key auto_increment,
     fornecedores_razao_social varchar(100) not null,
@@ -235,6 +221,19 @@ create table solicitacoes (
     foreign key (solicitacoes_status_slc_id) references status_slc(status_slc_id) on delete set null
 );
 
+create table compras (
+	compras_id int primary key auto_increment,
+    compras_num_nf varchar(100) not null,
+    compras_nome varchar(100) not null,
+    compras_caminho varchar (100) not null,
+    compras_data_upload datetime not null default current_timestamp(),
+    compras_tipos_movimentacoes_id int,
+    foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
+    compras_insumos_id int,
+    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null,
+    compras_fornecedor_id int,
+    foreign key (compras_fornecedor_id) references fornecedores(fornecedores_id) on delete set null
+);
 
 ######################################################
 
