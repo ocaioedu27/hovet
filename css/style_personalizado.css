@@ -617,7 +617,7 @@ select.form-control-sm{
 }
 
 .relatorio{
-    width: 120px;
+    width: auto;
     height: auto;
     border: 1px solid black;
     border-radius: 4px;
@@ -744,6 +744,6 @@ div#permuta_dep {
 }
 
 .cards_info {
-    width: 400px;
+    width: 450px;
     height: 200px;
 }

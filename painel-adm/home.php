@@ -142,42 +142,42 @@
                     <div class="top_cards">
                         <h2>Movimentações</h2>
                     </div>
-                    <div class="cards">
-                        <div>
-                            <?php
-                                $sql = "SELECT count(*) AS quantidade_compras FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=1";
-                                $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($result);
-                            ?>
-                            <h4>Compras</h5>
-                                <h5><?=$dados['quantidade_compras']?></h5>
-                        </div>
-                        <div>
-                            <?php
-                                $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=6";
-                                $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($result);
-                            ?>
-                            <h4>Retiradas</h5>
-                                <h5><?=$dados['quantidade_retiradas']?></h5>
-                        </div>
-                        <div>
-                            <?php
-                                $sql = "SELECT count(*) AS quantidade_doacoes FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=3";
-                                $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($result);
-                            ?>
-                            <h4>Doações</h5>
-                                <h5><?=$dados['quantidade_doacoes']?></h5>
-                        </div>
-                        <div>
-                            <?php
-                                $sql = "SELECT count(*) AS quantidade_permutas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=4";
-                                $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($result);
-                            ?>
-                            <h4>Permutas</h5>
-                                <h5><?=$dados['quantidade_permutas']?></h5>
+                    <div class="cards cards_info">
+                        <div class="display-flex-row">
+                            <div>
+                                <?php
+                                    $sql = "SELECT count(*) AS quantidade_compras FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=1";
+                                    $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($result);
+                                ?>
+                                <h4>Compras</h5>
+                                    <h5><?=$dados['quantidade_compras']?></h5>
+
+                                <?php
+                                    $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=6";
+                                    $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($result);
+                                ?>
+                                <h4>Retiradas</h5>
+                                    <h5><?=$dados['quantidade_retiradas']?></h5>
+                            </div>
+                            <div>
+                                <?php
+                                    $sql = "SELECT count(*) AS quantidade_doacoes FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=3";
+                                    $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($result);
+                                ?>
+                                <h4>Doações</h5>
+                                    <h5><?=$dados['quantidade_doacoes']?></h5>
+                        
+                                <?php
+                                    $sql = "SELECT count(*) AS quantidade_permutas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=4";
+                                    $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($result);
+                                ?>
+                                <h4>Permutas</h5>
+                                    <h5><?=$dados['quantidade_permutas']?></h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,44 +189,46 @@
                             <a href="index.php?menuop=solicitacoes">Solicitações</a>
                         </h2>
                     </div>
-                    <div class="cards">
-                        <div class="sub_dados">
-                            <div class="titulo">
-                                <h4>Requisições</h4>
-                                <span class="icon">
-                                    <ion-icon name="file-tray-full-outline"></ion-icon>
-                                </span>
+                    <div class="cards cards_info">
+                        <div class="display-flex-row">
+                            <div class="sub_dados">
+                                <div class="titulo">
+                                    <h4>Requisições</h4>
+                                    <span class="icon">
+                                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                                    </span>
+                                </div>
+                                <?php
+                                    $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
+                                                FROM solicitacoes s
+                                                INNER JOIN tipos_movimentacoes tp
+                                                ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($rs);
+                                ?>
+                                <h2><?=$dados['solicitacoes_qtd']?></h2>
+                                <p>Total Pendentes</p>
                             </div>
-                            <?php
-                                $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
-                                            FROM solicitacoes s
-                                            INNER JOIN tipos_movimentacoes tp
-                                            ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                            WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
-                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($rs);
-                            ?>
-                            <h2><?=$dados['solicitacoes_qtd']?></h2>
-                            <p>Total Pendentes</p>
-                        </div>
-                        <div class="sub_dados">
-                            <div class="titulo">
-                                <h4>Devolução</h4>
-                                <span class="icon">
-                                    <ion-icon name="file-tray-full-outline"></ion-icon>
-                                </span>
+                            <div class="sub_dados">
+                                <div class="titulo">
+                                    <h4>Devolução</h4>
+                                    <span class="icon">
+                                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                                    </span>
+                                </div>
+                                <?php
+                                    $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
+                                                FROM solicitacoes s
+                                                INNER JOIN tipos_movimentacoes tp
+                                                ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($rs);
+                                ?>
+                                <h2><?=$dados['solicitacoes_qtd']?></h2>
+                                <p>Total Pendentes</p>
                             </div>
-                            <?php
-                                $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
-                                            FROM solicitacoes s
-                                            INNER JOIN tipos_movimentacoes tp
-                                            ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                            WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
-                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($rs);
-                            ?>
-                            <h2><?=$dados['solicitacoes_qtd']?></h2>
-                            <p>Total Pendentes</p>
                         </div>
                     </div>
                 </div>
@@ -236,8 +238,8 @@
                     <div class="top_cards">
                         <h2>Relatórios</h2>
                     </div>
-                    <div class="cards re">
-                        <div class="relatorios">
+                    <div class="cards cards_info">
+                        <div class="display-flex-row">
                             <div class="relatorio">
                                 <a href="pdf/relatorio_validade.php" target="_blank"><strong>Depósito</strong> - Relatório de insumos prestes a expirar (mês/ano)</a>
                             </div>
