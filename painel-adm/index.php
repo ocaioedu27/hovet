@@ -105,7 +105,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=pagina_principal">Dashboard</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=compras" id="listar_notas_fiscais">Listar Compras</a>
+                                <a href="index.php?menuop=compra" id="listar_notas_fiscais">Listar Compras</a>
                             </li>
                             <li>
                                 <a href="index.php?menuop=doacoes" id="listar_doacoes">Listar Doações</a>
@@ -341,8 +341,16 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("estoques/dispensario/inserir_dispensario.php");
                     break;
 
+                case 'solicitacoes':
+                    include_once("estoques/dispensario/solicitacoes/painel_solicitacoes.php");
+                    break;
+
                 case 'solicitar_dispensario':
-                    include_once("estoques/dispensario/solicitar_dispensario.php");
+                    include_once("estoques/dispensario/solicitacoes/solicitar_dispensario.php");
+                    break;
+
+                case 'salva_solicitacao_dispensario':
+                    include_once("estoques/dispensario/solicitacoes/salva_solicitacao_dispensario.php");
                     break;
                     
                 case 'quantidade_insumos_dispensario':

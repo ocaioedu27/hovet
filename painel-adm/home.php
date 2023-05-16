@@ -1,4 +1,4 @@
-<div class="container container_home">
+<div class="container container_home" style="padding: 20px;">
     <!-- <section class="menu_lateral">
         <div class="">
             <div class="menu_op menu lateral">
@@ -178,6 +178,55 @@
                             ?>
                             <h4>Permutas</h5>
                                 <h5><?=$dados['quantidade_permutas']?></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="group_cards">
+                <div class="content_cards">
+                    <div class="top_cards">
+                        <h2>
+                            <a href="index.php?menuop=solicitacoes">Solicitações</a>
+                        </h2>
+                    </div>
+                    <div class="cards">
+                        <div class="sub_dados">
+                            <div class="titulo">
+                                <h4>Requisições</h4>
+                                <span class="icon">
+                                    <ion-icon name="file-tray-full-outline"></ion-icon>
+                                </span>
+                            </div>
+                            <?php
+                                $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
+                                            FROM solicitacoes s
+                                            INNER JOIN tipos_movimentacoes tp
+                                            ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                            WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
+                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                $dados = mysqli_fetch_assoc($rs);
+                            ?>
+                            <h2><?=$dados['solicitacoes_qtd']?></h2>
+                            <p>Total Pendentes</p>
+                        </div>
+                        <div class="sub_dados">
+                            <div class="titulo">
+                                <h4>Devolução</h4>
+                                <span class="icon">
+                                    <ion-icon name="file-tray-full-outline"></ion-icon>
+                                </span>
+                            </div>
+                            <?php
+                                $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
+                                            FROM solicitacoes s
+                                            INNER JOIN tipos_movimentacoes tp
+                                            ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                            WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
+                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                $dados = mysqli_fetch_assoc($rs);
+                            ?>
+                            <h2><?=$dados['solicitacoes_qtd']?></h2>
+                            <p>Total Pendentes</p>
                         </div>
                     </div>
                 </div>

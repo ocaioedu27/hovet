@@ -30,7 +30,7 @@ if ($qualEstoque_dep != "") {
                 </button>
             </a>
         </div>
-        <form action="#" class="form_retirar_dispensario" method="post">
+        <form action="index.php?menuop=salva_solicitacao_dispensario&<?=$qualEstoque?>" class="form_retirar_dispensario" method="post">
             
             <div class="dados_solicitante">
                 <hr>
@@ -39,37 +39,41 @@ if ($qualEstoque_dep != "") {
                 <div class="form-group valida_movimentacao">
 
                     <div class="display-flex-cl">
-                        <label for="solicitante_retira_dispensario">Solicitante</label>
-                        <select class="form-control largura_metade" name="solicitante_retira_dispensario" required>
+                        <?php
+                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+
+                        $dados = mysqli_fetch_assoc($result);
+                        ?>
+
+                        <label>Solicitante</label>
+                        <input type="text" class="form-control largura_metade" name="solicitante_insumo_dispensario" value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
+                    </div>
+                        
+                    <div class="display-flex-cl">
+                        <label>Tipo de operação</label>
+                        <select class="form-control" name="operacao_dispensario" id="" required>
                             <?php
-                            $sql = "SELECT * FROM usuarios";
+                            $sql = "SELECT tipos_movimentacoes_id,tipos_movimentacoes_movimentacao FROM tipos_movimentacoes WHERE tipos_movimentacoes_descricao LIKE 'Quando alguém solicita%' ";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
+                            <option><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
 
                             <?php
                                 }
                             ?>
                         </select>
                     </div>
-                        
-                    <div class="display-flex-cl">
-                        <label for="operacao_dispensario">Tipo de operação</label>
-                        <select class="form-control" name="operacao_dispensario">
-                            <option>1 - Requição de Material</option>
-                            <option>2 - Devolução de Material</option>
-                        </select>
-                    </div>
 
-                    </div>
+                </div>
 
-                    <div class="form-group valida_movimentacao">
+                <div class="form-group valida_movimentacao">
 
                     <div class="display-flex-cl">
-                        <label for="setor_destino_retira_dispensario">Setor Destino</label>
-                        <select class="form-control largura_metade" name="setor_destino_retira_dispensario" id="" required>
+                        <label>Setor Destino</label>
+                        <select class="form-control largura_metade" name="setor_destino_solicitacao_dispensario" id="" required>
                             <?php
                             $sql = "SELECT * FROM setores";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -86,7 +90,20 @@ if ($qualEstoque_dep != "") {
 
                     <div class="display-flex-cl">
                         <label for="data_operacao_dispensario">Data e horário da solicitação</label>
-                        <input type="datetime-local" class="form-control"  name="data_operacao_dispensario" id="" required>
+                        <input type="datetime-local" class="form-control largura_um_terco"  name="data_operacao_dispensario" id="" required>
+                    </div>
+
+                    <div class="display-flex-cl">
+                        
+                        <?php
+                        $sql = "SELECT estoques_id,estoques_nome FROM estoques WHERE estoques_nome_real='{$qualEstoque}'";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+
+                        $dados = mysqli_fetch_assoc($result);
+                        ?>
+
+                        <label>Dispensário da Solicitação</label>
+                        <input type="text" class="form-control largura_metade" name="tipo_dispensario" value="<?=$dados['estoques_id']?> - <?=$dados['estoques_nome']?>" readonly>
                     </div>
 
                 </div>
@@ -107,7 +124,7 @@ if ($qualEstoque_dep != "") {
              
                         <div class="display-flex-cl">
                             <label>Quantidade Solicitada</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_dispensario[]" min="1" required>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" min="1" required>
                         </div>
 
                         <div class="display-flex-cl">
@@ -150,7 +167,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Retirar" name="btnRetirarInsumoDispensario" class="btn_cadastrar">
+                <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar">
             </div>
         </form>
     </div> 
