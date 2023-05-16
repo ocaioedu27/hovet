@@ -86,6 +86,7 @@ if ($qualEstoque_dep != "") {
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
+                        <th>Estoque crítico</th>
                         <th>Unidade</th>
                         <th>Local Cadastrado</th>
                         <th>Validade</th>
@@ -113,7 +114,8 @@ if ($qualEstoque_dep != "") {
                                     es.estoques_nome_real,
                                     i.insumos_nome,
                                     i.insumos_unidade,
-                                    datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito
+                                    datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito,
+                                    i.insumos_qtd_critica
                                     FROM deposito d 
                                     INNER JOIN insumos i 
                                     ON d.deposito_insumos_id = i.insumos_id
@@ -149,6 +151,23 @@ if ($qualEstoque_dep != "") {
                         <td><?=$dados_para_while["deposito_id"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["deposito_qtd"]?></td>
+                        <td><?php
+                        
+                            $qtd_cadastrada = $dados_para_while["deposito_qtd"];
+                            $qtd_critica = $dados_para_while["insumos_qtd_critica"];
+                            $qtd_toleravel = $qtd_critica+($qtd_critica-10/100);
+
+                            if ($qtd_cadastrada <= $qtd_critica) {
+                                echo "Nível Crítico";
+                            } elseif ($qtd_cadastrada >= $qtd_toleravel) {
+                                echo "Nível Tolerável";
+                            } else {
+                                echo "Nível Normal";
+                            }
+                            
+                            
+                            ?>
+                        </td>
                         <td><?=$dados_para_while["insumos_unidade"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
                         <td><?=$dados_para_while["validadedeposito"]?></td>
@@ -162,7 +181,9 @@ if ($qualEstoque_dep != "") {
                                 } else if($dados_para_while["diasParaVencimentodeposito"] > $dias[1]){
                                     ?> class="verde" <?php
                                 } 
-                                ?>><?php if ($dados_para_while["diasParaVencimentodeposito"] <= 0){
+                                ?>>
+                                
+                                <?php if ($dados_para_while["diasParaVencimentodeposito"] <= 0){
                                     echo "INSUMO VENCIDO!";
                                 } else{
                                     echo $dados_para_while["diasParaVencimentodeposito"] . " dia(s) para o vencimento";

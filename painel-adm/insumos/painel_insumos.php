@@ -30,6 +30,7 @@
                         <th>Nome</th>
                         <th>Unidade</th>
                         <th>Categoria de Insumo</th>
+                        <th>Criticidade em</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>
@@ -48,7 +49,8 @@
                                 i.insumos_nome, 
                                 i.insumos_unidade, 
                                 i.insumos_descricao,
-                                t.tipos_insumos_tipo 
+                                t.tipos_insumos_tipo,
+                                i.insumos_qtd_critica
                                 FROM insumos AS i
                                 INNER JOIN tipos_insumos AS t
                                 on i.insumos_tipo_insumos_id = t.tipos_insumos_id
@@ -86,6 +88,7 @@
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["tipos_insumos_tipo"]?></td>
+                        <td><?=$dados["insumos_qtd_critica"]?></td>
                         <td><?=$dados["insumos_descricao"]?></td>
                     </tr>
                     <?php
