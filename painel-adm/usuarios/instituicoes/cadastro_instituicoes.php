@@ -12,7 +12,7 @@
         </div>
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_instituicoes" method="post">
 
-            <div id="dados_fornecedor_cad">
+            <div id="dados_instituicao_cad">
                 <hr>
                 <div class="display-flex-row">
                     <div>

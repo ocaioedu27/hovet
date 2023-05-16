@@ -93,7 +93,16 @@ $dados = mysqli_fetch_assoc($result);
             </div>
 
             <div class="form-group valida_movimentacao">
-                <a href="#">Trocar senha</a>
+                <a href="#">Trocar a Senha</a>
+            </div>
+
+            <div class="form-group valida_movimentacao">
+
+                <div class="diplay-flex-cl">
+                    <label>Insira sua senha para confirmar</label>
+                    <input type="text" class="form-control largura_um_terco" name="validaSenhaUsuario" required>
+                </div>
+                <!-- <a href="#">Trocar senha</a> -->
             </div>
 
             <div class="form-group">

@@ -72,7 +72,20 @@ if ($qualEstoque_dep != "") {
 
                     <div class="display-flex-cl">
                         <label>Institução a Permutar</label>
-                        <input type="text" class="form-control" name="instituicaoPermutaDep" required>
+                        <select class="form-control" name="instituicaoPermutaDep" id="instituicaoPermutaDep" required>
+                            <?php
+                            $sql = "SELECT * FROM instituicoes";
+                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                            
+                            while($dados = mysqli_fetch_assoc($result)){
+                            ?>
+                            <option><?=$dados["instituicoes_id"]?> - <?=$dados["instituicoes_razao_social"]?></option>
+
+                            <?php
+                                }
+                            ?>
+                        </select>
+                        <!-- <input type="text" class="form-control" name="instituicaoPermutaDep" required> -->
                     </div>
                 </div>
             </div>

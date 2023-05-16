@@ -156,7 +156,7 @@
                 <div class="content_cards">
                     <div class="top_cards">
                         <div class="titulo">
-                            <h2>Movimentações</h2>
+                            <h2 title="Informações de todas as movimentações">Movimentações</h2>
                             <span class="info">
                                 <ion-icon name="help-circle-outline"></ion-icon>
                             </span>
@@ -210,9 +210,14 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
-                        <h2>
-                            <a href="index.php?menuop=solicitacoes">Solicitações</a>
-                        </h2>
+                        <div class="titulo">
+                            <h2 title="Informações de todas as solicitações">
+                                <a href="index.php?menuop=solicitacoes">Solicitações</a>
+                            </h2>
+                            <span class="info">
+                                <ion-icon name="help-circle-outline"></ion-icon>
+                            </span>
+                        </div>
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row just-content-spc-around">
@@ -261,7 +266,12 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
-                        <h2>Relatórios</h2>
+                        <div class="titulo">
+                            <h2 title="Tipos de relatórios que podem ser gerados">Relatórios</h2>
+                            <span class="info">
+                                <ion-icon name="help-circle-outline"></ion-icon>
+                            </span>
+                        </div>
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row just-content-spc-around">

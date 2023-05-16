@@ -98,12 +98,12 @@ $tipoEstoque = $tipoEstoque;
     margin: 9.5% auto;"></span>
                         </div>
                         <div class="display-flex-cl">
-                            <label for="quantidadeInsumoDisponivelDeposito"> Disponível no Depósito</label>
+                            <label for="quantidadeInsumoDisponivelDeposito">Disponível no Depósito</label>
                             <input type="text" class="form-control largura_um_terco" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" readonly>
                         </div>
                             
                         <div class="display-flex-cl">
-                            <label>Dispário de Destino</label>
+                            <label>Dispensário de Destino</label>
                             <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" required>
                             <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 9.5% auto;"></span>
                         </div>
