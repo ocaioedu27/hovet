@@ -196,6 +196,10 @@ create table fornecedores (
     fornecedores_end_obserevacao varchar(256) null
 );
 
+create table status_slc (
+	status_slc_id int primary key auto_increment,
+    status_slc_status varchar(100) not null
+);
 
 insert into status_slc values 
 	(null,'Aprovada'),
