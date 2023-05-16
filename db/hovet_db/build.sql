@@ -213,6 +213,39 @@ insert into fornecedores (
     ("Fornecedor Teste 4","00000000000000","End. Teste 4","","","00000000","fornecedor_teste4@testmail.com","000000000","Obs Teste 4"),
     ("Fornecedor Teste 5","00000000000000","End. Teste 5","","","00000000","fornecedor_teste5@testmail.com","000000000","Obs Teste 5"),
     ("Fornecedor Teste 6","00000000000000","End. Teste 6","","","00000000","fornecedor_teste6@testmail.com","000000000","Obs Teste 6");
+    
+
+
+create table instituicoes (
+	instituicoes_id int primary key auto_increment,
+    instituicoes_razao_social varchar(100) not null,
+    instituicoes_cpf_cnpj varchar (14) null,
+    instituicoes_end_logradouro varchar(100) null,
+    instituicoes_end_num varchar(100) null,
+    instituicoes_end_bairro varchar(100) null,
+    instituicoes_end_cep varchar(100) null,
+    instituicoes_end_email varchar(100) null,
+    instituicoes_end_telefone varchar(50) null,
+    instituicoes_observacao varchar(256) null
+);
+
+insert into instituicoes (
+	instituicoes_razao_social,
+    instituicoes_cpf_cnpj,
+    instituicoes_end_logradouro,
+    instituicoes_end_num,
+    instituicoes_end_bairro,
+    instituicoes_end_cep,
+    instituicoes_end_email,
+    instituicoes_end_telefone,
+    instituicoes_observacao) 
+    values 
+    ("Instituição Teste 1","00000000000000","End. Teste 1","","","00000000","instituicao_teste1@testmail.com","000000000","Obs Teste 1"),
+    ("Instituição Teste 2","00000000000000","End. Teste 2","","","00000000","instituicao_teste2@testmail.com","000000000","Obs Teste 2"),
+    ("Instituição Teste 3","00000000000000","End. Teste 3","","","00000000","instituicao_teste3@testmail.com","000000000","Obs Teste 3"),
+    ("Instituição Teste 4","00000000000000","End. Teste 4","","","00000000","instituicao_teste4@testmail.com","000000000","Obs Teste 4"),
+    ("Instituição Teste 5","00000000000000","End. Teste 5","","","00000000","instituicao_teste5@testmail.com","000000000","Obs Teste 5"),
+    ("Instituição Teste 6","00000000000000","End. Teste 6","","","00000000","instituicao_teste6@testmail.com","000000000","Obs Teste 6");
 
 create table status_slc (
 	status_slc_id int primary key auto_increment,

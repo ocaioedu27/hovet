@@ -300,15 +300,15 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
 
                 case 'editar_instituicoes':
-                    include_once("usuarios/fornecedores/editar_fornecedores.php");
+                    include_once("usuarios/instituicoes/editar_instituicoes.php");
                     break;
     
                 case 'atualizar_instituicoes':
-                    include_once("usuarios/instituicoes/aualizar_instituicoes.php");
+                    include_once("usuarios/instituicoes/atualizar_instituicoes.php");
                     break;
 
                 case 'excluir_instituicoes':
-                    include_once("usuarios/fornecedores/excluir_fornecedores.php");
+                    include_once("usuarios/instituicoes/excluir_instituicoes.php");
                     break;
     
                 case 'insumos':

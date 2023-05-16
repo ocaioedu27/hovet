@@ -56,14 +56,14 @@
                     ?>
                     <tr>
                         <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_instituicoes&idFornecedor=<?=$dados["instituicoes_id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_instituicoes&idInstituicao=<?=$dados["instituicoes_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_instituicoes&idFornecedor=<?=$dados["instituicoes_id"]?>"
+                            <a href="index.php?menuop=excluir_instituicoes&idInstituicao=<?=$dados["instituicoes_id"]?>"
                                 class="confirmaDelete" >
                                 <button class="btn">
                                     <span class="icon">
