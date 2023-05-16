@@ -20,12 +20,12 @@
 
                             <div class="display-flex-cl">
                                 <label>Razão Social</label>
-                                <input type="text" class="form-control" name="razaoSocialFornecedor[]" placeholder="Informe a Razão Social..." required>
+                                <input type="text" class="form-control" name="razaoSocialInstituicao[]" placeholder="Informe a Razão Social..." required>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Logradouro</label>
-                                <input type="text" class="form-control" name="logradouroFornecedor[]" placeholder="Informe o Logradouro...">
+                                <input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro...">
                             </div>
 
                         </div>
@@ -34,17 +34,17 @@
 
                             <div class="display-flex-cl">
                                 <label>CNPJ ou CPF</label>
-                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor[]" placeholder="Informe somente números..." min="1" required>
+                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>E-mail</label>
-                                <input type="text" class="form-control" name="emailFornecedor[]" placeholder="Informe o E-mail...">
+                                <input type="text" class="form-control" name="emailInstituicao[]" placeholder="Informe o E-mail...">
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Fone ou FAC</label>
-                                <input type="text" class="form-control" name="foneFacFornecedor[]" placeholder="Informe o contato..." maxlength="14">
+                                <input type="text" class="form-control" name="foneFacInstituicao[]" placeholder="Informe o contato..." maxlength="14">
                             </div>
 
                         </div>
@@ -53,13 +53,13 @@
 
                             <div class="display-flex-cl">
                                 <label>Deseja inserir uma observação?</label>
-                                <textarea class="form-control " name="observacaoFornecedor[]" rows="3"></textarea>
+                                <textarea class="form-control " name="observacaoInstituicao[]" rows="3"></textarea>
                             </div>
 
                         </div>
                     </div>
                     <div>
-                        <button class="btn" type="button" onclick="adicionaCampoCad(7)" style="padding: 0;">+</button>
+                        <button class="btn" type="button" onclick="adicionaCampoCad(8)" style="padding: 0;">+</button>
                     </div>
 
 
