@@ -215,7 +215,6 @@ input.btn_cadastrar:hover{
 #tabela_listar td, #tabela_listar th {
     border: 1px solid #ddd;
     padding: 2px;
-    border-radius: 4px;
 }
   
 #tabela_listar tr:nth-child(even){
@@ -747,3 +746,7 @@ div#permuta_dep {
     width: 450px;
     height: 200px;
 }
+
+/* .dropdown-content > ul > li > a {
+    color: #213051 !important;
+} */

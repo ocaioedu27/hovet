@@ -4,13 +4,13 @@
 include("../../db/connect.php");
 
             $sql= "SELECT 
-                                    d.deposito_id, 
-                                    d.deposito_qtd,
-                                     date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-                                    i.insumos_nome,
-                                    i.insumos_unidade,
-                                    datediff(curdate(), d.deposito_validade) as diasvencimento
-            
+                        d.deposito_id, 
+                        d.deposito_qtd,
+                        date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
+                        i.insumos_nome,
+                        i.insumos_unidade,
+                        datediff(d.deposito_validade, curdate()) as diasvencimento
+
             
              FROM deposito d inner join insumos i on d.deposito_insumos_id = i.insumos_id  where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
              
@@ -26,7 +26,7 @@ include("../../db/connect.php");
                     $html .= "<meta http-equiv='X-UA-Compatible' content='IE=edge'>";
                     $html .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
                     $html .= "<link rel='stylesheet' href='http://localhost/hovet/painel-adm/pdf/css/custom.css'";
-                    $html .= "<title>Relatorio de Insumos Prestes a Expirar</title>";
+                    $html .= "<title>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias</title>";
                     $html .= " </head>";
                     $html .= "<body>";
                     $html .= "<img src='logo_hovet.jpg' >";
@@ -37,7 +37,7 @@ include("../../db/connect.php");
 
 
                     $html .= "<br><br><br>";
-                    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar <br></h3>";
+                    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
                     $html .= "<table border=1 cellspacing=3  >";
                          $html .= "<thead>
                             <tr>
@@ -45,7 +45,7 @@ include("../../db/connect.php");
                                 <th> Insumo </th>
                                 <th>Quantidade</th>
                                 <th>Validade</th>
-                                <th>Deposito Insumos</th>
+                                <th>Aviso de Vencimento</th>
                                 
                             </tr>
                         </thead>";
@@ -57,29 +57,35 @@ include("../../db/connect.php");
                             $html .= "<td>".$row->insumos_nome."</td>";
                             $html .= "<td>".$row->deposito_qtd."</td>";
                             $html .= "<td>".$row->validadedeposito."</td>";
-                            $html .= "<td>"."Faltam ".$row->diasvencimento. " para vencer</td>";
+                            // $html .= "<td>"."Faltam ".$row->diasvencimento. " para vencer</td>";
                            // $html .= "<td>".$row->deposito_insumos_id."</td>";
+                            
+                            $dias = ['30','45'];
+
+                            $mensagem_aviso = '';
+                            $class_to_add = '';
+
+                            if($row->diasvencimento <= $dias[0]){                                    
+                                $class_to_add = "vermelho";
+                            } else if($row->diasvencimento <= $dias[1]){
+                                $class_to_add = "amarelo";
+                            } else if($row->diasvencimento > $dias[1]){
+                                $class_to_add = "verde";
+                            }
+                                
+                            if ($row->diasvencimento <= 0){
+                                $mensagem_aviso = "INSUMO VENCIDO!";
+                            } else{
+                                $mensagem_aviso = $row->diasvencimento . " dia(s) para o vencimento";
+                            }
                               
-                          /* $html .="<td>".
-                                
-                                $dias = 30;
-                                if($row["diasvencimento"] <= $dias){                                    
-                                  echo $row["diasvencimento"] . " dia(s) para o vencimento. INSUMENCIDO";
-
-                                } else {                                    
-                                    echo $row["diasvencimento"] . " dia(s) para o vencimento nao vencido";
-
-                                }
-                                
-                        "</td>"; */
-
-
-
+                            $html .="<td class=". $class_to_add . ">". $mensagem_aviso;
+                            
                             $html .= "</tr>";
                         }
                         $html .= "</table>";
                         $html .= "<br><br>";
-                        $html .= "Relatorio gerado em $agora";
+                        // $html .= "Relatorio gerado em $agora";
     
                     }else{
                         $html = "<DOCTYPE html>";
@@ -89,7 +95,7 @@ include("../../db/connect.php");
                         $html .= "<meta http-equiv='X-UA-Compatible' content='IE=edge'>";
                         $html .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
                         $html .= "<link rel='stylesheet' href='http://localhost/hovet/painel-adm/pdf/css/custom.css'";
-                        $html .= "<title>Relatorio de Insumos Prestes a Expirar</title>";
+                        $html .= "<title>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias</title>";
                         $html .= " </head>";
                         $html .= "<body>";
                         $html .= "<img src='logo_hovet.jpg' >";
@@ -100,7 +106,7 @@ include("../../db/connect.php");
     
     
                         $html .= "<br><br><br>";
-                        $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar<br></h3>";
+                        $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
                         $html .="Nenhum Dado foi encontrado para este relatorio.";
                     }
         

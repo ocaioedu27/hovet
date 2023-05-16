@@ -23,8 +23,11 @@
         <div class="cards_wrapper gap_home">
             <div class="group_cards">
                 <div class="content_cards">
-                    <div class="top_cards">
-                        <h2>Depósitos</h2>
+                    <div class="titulo">
+                        <h2 title="Informações de todos os Depósitos">Depósitos</h2>
+                        <span class="info">
+                            <ion-icon name="help-circle-outline"></ion-icon>
+                        </span>
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row">
@@ -68,8 +71,11 @@
             </div>
             <div class="group_cards">
                 <div class="content_cards">
-                    <div class="top_cards">
-                        <h2>Dispensários</h2>
+                    <div class="titulo">
+                        <h2 title="Informações de todos os Dispensários">Dispensários</h2>
+                        <span class="info">
+                            <ion-icon name="help-circle-outline"></ion-icon>
+                        </span>
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row">
@@ -140,7 +146,13 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
-                        <h2>Movimentações</h2>
+                        <div class="titulo">
+                            <h2>Movimentações</h2>
+                            <span class="info">
+                                <ion-icon name="help-circle-outline"></ion-icon>
+                            </span>
+                        </div>
+                        <!-- <ion-icon name="help-circle-outline"></ion-icon> -->
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row">
