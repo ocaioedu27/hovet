@@ -132,7 +132,7 @@ create table local_dispensario (
 	local_id int primary key not null auto_increment,
     local_nome varchar (20) not null
 );
--- drop table local_dispensario;
+
 insert into local_dispensario values
 	(null, 'Armário'),
 	(null, 'Estante'),
@@ -166,7 +166,9 @@ insert into tipos_movimentacoes values
     (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
     (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições."),
     (null,"Exclusão", "Exclusão de um insumo"),
-    (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário");
+    (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário"),
+	(null, "Requisição de insumos do Dispensário", "Quando alguém solicita a retirada de insumos do Dispensário"), 
+	(null, "Devolução de insumos para o Dispensário", "Quando alguém solicita a devolução de insumos para o Dispensário");
 
 create table movimentacoes (
 	movimentacoes_id int primary key auto_increment,
@@ -206,6 +208,31 @@ create table fornecedores (
     fornecedores_end_email varchar(100) null,
     fornecedores_end_telefone varchar(50) null,
     fornecedores_end_obserevacao varchar(256) null
+);
+
+
+insert into status_slc values 
+	(null,'Aprovada'),
+    (null,'Recusada'),
+    (null,'Pendente');
+        
+create table solicitacoes (
+	solicitacoes_id int primary key auto_increment,
+    solicitacoes_solicitante int, 
+    foreign key (solicitacoes_solicitante) references usuarios(usuario_id) on delete set null,
+	solicitacoes_dips_solicitado int,
+    foreign key (solicitacoes_dips_solicitado) references estoques(estoques_id) on delete set null,
+    solicitacoes_setor_destino int,
+    foreign key (solicitacoes_setor_destino) references setores(setores_id) on delete set null,
+    solicitacoes_data datetime not null default current_timestamp(),
+    solicitacoes_justificativa varchar(256) not null,
+    solicitacoes_dispensario_id int,
+    foreign key (solicitacoes_dispensario_id) references dispensario(dispensario_id) on delete cascade,
+    solicitacoes_qtd_solicitada int not null,
+    solicitacoes_tp_movimentacoes_id int,
+    foreign key (solicitacoes_tp_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
+    solicitacoes_status_slc_id int,
+    foreign key (solicitacoes_status_slc_id) references status_slc(status_slc_id) on delete set null
 );
 
 
