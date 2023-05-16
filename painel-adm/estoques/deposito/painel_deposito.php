@@ -151,22 +151,33 @@ if ($qualEstoque_dep != "") {
                         <td><?=$dados_para_while["deposito_id"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["deposito_qtd"]?></td>
-                        <td><?php
+                        <td class="<?php
                         
-                            $qtd_cadastrada = $dados_para_while["deposito_qtd"];
-                            $qtd_critica = $dados_para_while["insumos_qtd_critica"];
-                            $qtd_toleravel = $qtd_critica+($qtd_critica-10/100);
+                        $qtd_cadastrada = $dados_para_while["deposito_qtd"];
+                        $qtd_critica = $dados_para_while["insumos_qtd_critica"];
+                        $qtd_toleravel = $qtd_critica+($qtd_critica*20/100);
 
-                            if ($qtd_cadastrada <= $qtd_critica) {
-                                echo "Nível Crítico";
-                            } elseif ($qtd_cadastrada >= $qtd_toleravel) {
-                                echo "Nível Tolerável";
-                            } else {
-                                echo "Nível Normal";
-                            }
-                            
-                            
-                            ?>
+                        $class_bg = "";
+                        $msg_alert = "";
+
+                        // echo "toleravel " . $qtd_toleravel;
+
+                        if ($qtd_cadastrada <= $qtd_critica) {
+                            $class_bg = "vermelho";
+                            $msg_alert = "Nível Crítico";
+                            echo $class_bg;
+                        } elseif ($qtd_cadastrada >= $qtd_toleravel) {
+                            $class_bg = "amarelo";
+                            $msg_alert = "Nível Tolerável";
+                            echo $class_bg;
+                        } else {
+                            $class_bg = "verde";
+                            $msg_alert = "Nível Normal";
+                            echo $class_bg;
+                        }
+
+                        ?>">
+                            <?=$msg_alert?>
                         </td>
                         <td><?=$dados_para_while["insumos_unidade"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>

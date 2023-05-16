@@ -62,6 +62,7 @@ if ($qualEstoque_disp != "") {
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
+                        <th>Estoque Crítico</th>
                         <th>Unidade</th>
                         <th>Local Cadastrado</th>
                         <th>Validade</th>
@@ -85,6 +86,7 @@ if ($qualEstoque_disp != "") {
                                         date_format(disp.dispensario_validade, '%d/%m/%Y') AS validadeDispensario,
                                         i.insumos_nome,
                                         i.insumos_unidade,
+                                        i.insumos_qtd_critica,
                                         datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
                                         lcd.local_nome,
                                         es.estoques_nome,
@@ -128,6 +130,34 @@ if ($qualEstoque_disp != "") {
                         <td><?=$dados["dispensario_id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["dispensario_qtd"]?></td>
+                        <td class="<?php
+                        
+                        $qtd_cadastrada = $dados["dispensario_qtd"];
+                        $qtd_critica = $dados["insumos_qtd_critica"];
+                        $qtd_toleravel = $qtd_critica+($qtd_critica*20/100);
+
+                        $class_bg = "";
+                        $msg_alert = "";
+
+                        // echo "toleravel " . $qtd_toleravel;
+
+                        if ($qtd_cadastrada <= $qtd_critica) {
+                            $class_bg = "vermelho";
+                            $msg_alert = "Nível Crítico";
+                            echo $class_bg;
+                        } elseif ($qtd_cadastrada >= $qtd_toleravel) {
+                            $class_bg = "amarelo";
+                            $msg_alert = "Nível Tolerável";
+                            echo $class_bg;
+                        } else {
+                            $class_bg = "verde";
+                            $msg_alert = "Nível Normal";
+                            echo $class_bg;
+                        }
+
+                        ?>">
+                            <?=$msg_alert?>
+                        </td>
                         <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
