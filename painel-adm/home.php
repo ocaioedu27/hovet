@@ -30,7 +30,7 @@
                         </span>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row just-content-spc-around ">
 
                             <div class="sub_dados">
                                 <div class="titulo">
@@ -78,7 +78,7 @@
                         </span>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row just-content-spc-around">
                             
                             <div class="sub_dados">
                                 <div class="titulo">
@@ -120,23 +120,32 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
-                        <h2>Usuários</h2>
+                        <div class="titulo">
+                            <h2 title="Informações de todos os usuários">Usuários</h2>
+                            <span class="info">
+                                <ion-icon name="help-circle-outline"></ion-icon>
+                            </span>
+                        </div>
                     </div>
                     <div class="cards cards_info">
-                        <div class="sub_dados">
-                            <div class="titulo">
-                                <h4>Cadastrados</h4>
-                                <span class="icon">
-                                    <ion-icon name="file-tray-full-outline"></ion-icon>
-                                </span>
+                        <div class="display-flex-row">
+                            <div class="sub_dados">
+                                <div class="titulo">
+                                    <h4>Cadastrados</h4>
+                                    <span class="icon">
+                                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                                    </span>
+                                </div>
+                                <div>
+                                    <?php
+                                        $sql = "SELECT COUNT(usuario_id) as usuarios_qtd FROM usuarios";
+                                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                        $dados = mysqli_fetch_assoc($rs);
+                                    ?>
+                                    <h2><?=$dados['usuarios_qtd']?></h2>
+                                    <p>Total de Funcionários</p>
+                                </div>
                             </div>
-                            <?php
-                                $sql = "SELECT COUNT(usuario_id) as usuarios_qtd FROM usuarios";
-                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                $dados = mysqli_fetch_assoc($rs);
-                            ?>
-                            <h2><?=$dados['usuarios_qtd']?></h2>
-                            <p>Total de Funcionários</p>
                         </div>
                     </div>
                 </div>
@@ -155,7 +164,7 @@
                         <!-- <ion-icon name="help-circle-outline"></ion-icon> -->
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row just-content-spc-around">
                             <div>
                                 <?php
                                     $sql = "SELECT count(*) AS quantidade_compras FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=1";
@@ -164,6 +173,7 @@
                                 ?>
                                 <h4>Compras</h5>
                                     <h5><?=$dados['quantidade_compras']?></h5>
+                                <p>Total de Compras</p>
 
                                 <?php
                                     $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=6";
@@ -172,6 +182,7 @@
                                 ?>
                                 <h4>Retiradas</h5>
                                     <h5><?=$dados['quantidade_retiradas']?></h5>
+                                <p>Total de Retiradas</p>
                             </div>
                             <div>
                                 <?php
@@ -181,6 +192,7 @@
                                 ?>
                                 <h4>Doações</h5>
                                     <h5><?=$dados['quantidade_doacoes']?></h5>
+                                <p>Total de Doações</p>
                         
                                 <?php
                                     $sql = "SELECT count(*) AS quantidade_permutas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=4";
@@ -189,6 +201,7 @@
                                 ?>
                                 <h4>Permutas</h5>
                                     <h5><?=$dados['quantidade_permutas']?></h5>
+                                <p>Total de Permutas</p>
                             </div>
                         </div>
                     </div>
@@ -202,7 +215,7 @@
                         </h2>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row just-content-spc-around">
                             <div class="sub_dados">
                                 <div class="titulo">
                                     <h4>Requisições</h4>
@@ -251,7 +264,7 @@
                         <h2>Relatórios</h2>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row just-content-spc-around">
                             <div class="relatorio">
                                 <a href="pdf/relatorio_validade.php" target="_blank"><strong>Depósito</strong> - Relatório de insumos prestes a expirar (mês/ano)</a>
                             </div>

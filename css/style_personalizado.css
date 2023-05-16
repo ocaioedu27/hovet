@@ -511,7 +511,7 @@ span.icon {
 }
 
 .content_cards > div {
-    padding-left: 20px;
+    padding: 4px;
 }
 
 .content_cards > div.top_cards {
@@ -744,9 +744,18 @@ div#permuta_dep {
 
 .cards_info {
     width: 450px;
-    height: 200px;
+    height: 220px;
 }
 
 /* .dropdown-content > ul > li > a {
     color: #213051 !important;
 } */
+
+.just-content-spc-around {
+    width: 100%;
+    justify-content: space-around;
+}
+
+.display-flex-row.just-content-spc-around > div > p {
+    margin-bottom: 0;
+}
