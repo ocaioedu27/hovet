@@ -1,8 +1,8 @@
 <div class="container cadastro_all">
     <div class="cards cadastro_fornecedor">
         <div class="voltar">
-            <h4>Cadastro de Fornecedor</h4>
-            <a href="index.php?menuop=fornecedores" class="confirmaVolta">
+            <h4>Cadastro de Instituição</h4>
+            <a href="index.php?menuop=instituicoes" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -10,7 +10,7 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_fornecedores" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_instituicoes" method="post">
 
             <div id="dados_fornecedor_cad">
                 <hr>

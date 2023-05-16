@@ -153,6 +153,9 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                             <li>
                                 <a href="index.php?menuop=fornecedores">Fornecedores</a>
                             </li>
+                            <li>
+                                <a href="index.php?menuop=instituicoes">Instituições</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -281,6 +284,30 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
 
                 case 'excluir_fornecedores':
+                    include_once("usuarios/fornecedores/excluir_fornecedores.php");
+                    break;
+
+                case 'instituicoes':
+                    include_once("usuarios/instituicoes/painel_instituicoes.php");
+                    break;
+                
+                case 'cadastro_instituicoes':
+                    include_once("usuarios/instituicoes/cadastro_instituicoes.php");
+                    break;
+
+                case 'inserir_instituicoes':
+                    include_once("usuarios/instituicoes/inserir_instituicoes.php");
+                    break;
+
+                case 'editar_instituicoes':
+                    include_once("usuarios/fornecedores/editar_fornecedores.php");
+                    break;
+    
+                case 'atualizar_instituicoes':
+                    include_once("usuarios/instituicoes/aualizar_instituicoes.php");
+                    break;
+
+                case 'excluir_instituicoes':
                     include_once("usuarios/fornecedores/excluir_fornecedores.php");
                     break;
     

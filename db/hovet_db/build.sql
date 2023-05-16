@@ -193,7 +193,7 @@ create table fornecedores (
     fornecedores_end_cep varchar(100) null,
     fornecedores_end_email varchar(100) null,
     fornecedores_end_telefone varchar(50) null,
-    fornecedores_end_obserevacao varchar(256) null
+    fornecedores_observacao varchar(256) null
 );
 
 insert into fornecedores (
