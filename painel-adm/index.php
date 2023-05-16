@@ -99,7 +99,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
             <div class="menu_op_adm">
                 <div class="dropdown">
                     <a href="#">Página principal</a>
-                    <div class="dropdown-content">
+                    <div class="dropdown-content" style="width: auto;">
                         <ul>
                             <li>
                                 <a href="index.php?menuop=pagina_principal">Dashboard</a>
@@ -115,6 +115,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                             </li>
                             <li>
                                 <a href="index.php?menuop=solicitacoes" id="listar_movimentacoes">Solicitações</a>
+                            </li>
+
+                            <li>
+                                <a href="index.php?menuop=listar_relatorios" id="listar_movimentacoes">Relatorios</a>
                             </li>
                         </ul>
                     </div>
@@ -374,6 +378,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 
                 case 'listar_movimentacoes':
                     include_once("./movimentacoes/painel_movimentacoes.php");
+                    break;
+                    
+                case 'listar_relatorios':
+                    include_once("./pdf/painel_relatorios.php");
                     break;
                 
                 case 'relatorio_insumos_deposito_prestes_expirar':
