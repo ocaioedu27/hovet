@@ -123,7 +123,28 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                         </ul>
                     </div>
                 </div>
-                <a href="index.php?menuop=estoques">Estoques</a>
+                <div class="dropdown">
+                    <a href="index.php?menuop=estoques">Estoques</a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <?php
+                                $sql = "SELECT * FROM estoques ORDER BY estoques_nome ASC";
+                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                
+                                while($dados = mysqli_fetch_assoc($rs)){
+                                    $estoqueNomeReal = $dados['estoques_nome_real'];
+                                    $tipoEstoque = substr($estoqueNomeReal, 0, -1);
+    
+                            ?>
+                            <li>
+                                <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['estoques_nome']?></a>
+                            </li>
+                            <?php
+                                }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <a href="#">Insumos</a>
                     <div class="dropdown-content">
@@ -213,6 +234,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
                 case 'deposito':
                     include_once("estoques/deposito/painel_deposito.php");
+                    break;
+
+                case 'deposito_resumo':
+                    include_once("estoques/deposito/painel_deposito_resumido.php");
                     break;
 
                 case 'cadastro_deposito':
@@ -353,6 +378,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
                 case 'dispensario':
                     include_once("estoques/dispensario/painel_dispensario.php");
+                    break;
+
+                case 'dispensario_resumo':
+                    include_once("estoques/dispensario/painel_dispensario_resumido.php");
                     break;
 
                 case 'cadastro_dispensario':

@@ -241,7 +241,7 @@ input.btn_cadastrar:hover{
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    margin: 0 15px 0 15px;
+    margin: 0 15px 0 0;
 }
   
 .tabela_listar td, .tabela_listar th {
@@ -271,7 +271,7 @@ input.btn_cadastrar:hover{
 }
 
 table.tabela_listar.qtd_total {
-    width: 15%;
+    width: 30%;
     margin-top: 10px;
 }
 

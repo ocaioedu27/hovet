@@ -35,7 +35,7 @@ if ($qualEstoque_dep != "") {
             </a>
         </div>
         
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_deposito" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_deposito&<?=$qualEstoque?>" method="post">
         <!-- <form class="form_cadastro" enctype="multipart/form-data" action="" method="post"> -->
 
             <div class="dados_fiscais">

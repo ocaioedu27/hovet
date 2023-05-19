@@ -2,9 +2,10 @@
 
 echo $qualEstoque;
 
-$qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
+// $qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
 
 // $qualEstoque_dep = $_POST['deposito'];
+$stringList = array();
 
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
@@ -13,16 +14,24 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $valor_tmp = $chave;
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
-		// $$chave = $valor;
+        array_push($stringList, $valor_est);
         // print_r($valor_est);
 	}
+
+    $estoqueNomeReal = $stringList[1];
+    $nome_insumo = $stringList[2];
+    
+    echo "<br>Nome real: $estoqueNomeReal<br>Nome do insumo: $nome_insumo";
 }
 
-$qualEstoque_disp = $valor_est;
+$qualInsumo = $nome_insumo;
+
+$qualEstoque_dep = $estoqueNomeReal;
+
+
 
 if ($qualEstoque_disp != "") {
     $qualEstoque = $qualEstoque_disp;
-    // echo "é disp: " . $qualEstoque;
 }
 
 
@@ -101,13 +110,7 @@ if ($qualEstoque_disp != "") {
                                         INNER JOIN estoques es
                                         ON disp.dispensario_estoques_id = es.estoques_id
                                     WHERE
-                                        es.estoques_nome_real = '{$qualEstoque}' AND 
-                                        (disp.dispensario_id='{$txt_pesquisa_dispensario}' or
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        i.insumos_unidade LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        disp.dispensario_qtd LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        disp.dispensario_validade LIKE '%{$txt_pesquisa_dispensario}%' or
-                                        lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%')
+                                        es.estoques_nome_real = '{$qualEstoque}' AND i.insumos_nome = '{$qualInsumo}'
                                         ORDER BY insumos_nome ASC 
                                         LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
