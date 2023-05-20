@@ -26,7 +26,7 @@ if ($qualEstoque_dep != "") {
     <div class="cards cadastro_deposito">
         <div class="voltar ">
             <h4 class="">Inserindo no Depósito <?=$qualEstoque[-1]?></h4>
-            <a href="index.php?menuop=deposito&<?=$qualEstoque?>=1" class="confirmaVolta">
+            <a href="index.php?menuop=deposito_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

@@ -62,7 +62,7 @@
                     <tr>
                         <td><?=$dados["estoques_id"]?></td>
                         <td>
-                            <a href="index.php?menuop=<?=$nome_real_estoque?>&<?=$estoques_nome?>=1" class="form-control"><?=$dados["estoques_nome"]?></a>
+                            <a href="index.php?menuop=<?=$nome_real_estoque?>_resumo&<?=$estoques_nome?>=1" class="form-control"><?=$dados["estoques_nome"]?></a>
                         </td>
                         <td><?=$dados["tipos_estoques_tipo"]?></td>
                         <td><?=$dados["estoques_descricao"]?></td>

@@ -21,12 +21,12 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     $estoqueNomeReal = $stringList[1];
     $nome_insumo = $stringList[2];
     
-    echo "<br>Nome real: $estoqueNomeReal<br>Nome do insumo: $nome_insumo";
+    // echo "<br>Nome real: $estoqueNomeReal<br>Nome do insumo: $nome_insumo";
 }
 
 $qualInsumo = $nome_insumo;
 
-$qualEstoque_dep = $estoqueNomeReal;
+$qualEstoque_disp = $estoqueNomeReal;
 
 
 
@@ -47,9 +47,6 @@ if ($qualEstoque_disp != "") {
                 </a>
                 <a href="index.php?menuop=solicitar_dispensario&<?=$qualEstoque?>">
                     <button class="btn">Solicitar insumos</button>
-                </a>
-                <a href="index.php?menuop=quantidade_insumos_dispensario">
-                    <button class="btn">Quantidade de insumos</button>
                 </a>
             </div>
             <div>
@@ -83,39 +80,56 @@ if ($qualEstoque_disp != "") {
                     <?php
                         $quantidade_registros_dispensario = 10;
 
-                        $pagina_dispensario = (isset($_GET[$qualEstoque]))?(int)$_GET[$qualEstoque]:1;
+                        // echo "<br>" . $quantidade_registros_dispensario;
+
+                        $pagina_dispensario = (isset($_GET[$qualInsumo]))?(int)$_GET[$qualInsumo]:1;
+
+                        // echo "<br>" . $pagina_dispensario;
 
                         $inicio_dispensario = ($quantidade_registros_dispensario * $pagina_dispensario) - $quantidade_registros_dispensario;
 
+                        // echo "<br>" . $inicio_dispensario;
+
                         $txt_pesquisa_dispensario = (isset($_POST["txt_pesquisa_dispensario"]))?$_POST["txt_pesquisa_dispensario"]:"";
 
+                        // echo "<br>" . $txt_pesquisa_dispensario;
+
+                        // $sql_listar = "";
+                        $insumos_cads_list = array();
+
                         $sql = "SELECT 
-                                        disp.dispensario_id,
-                                        disp.dispensario_qtd,
-                                        date_format(disp.dispensario_validade, '%d/%m/%Y') AS validadeDispensario,
-                                        i.insumos_nome,
-                                        i.insumos_unidade,
-                                        i.insumos_qtd_critica,
-                                        datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
-                                        lcd.local_nome,
-                                        es.estoques_nome,
-                                        es.estoques_nome_real
-                                        FROM dispensario disp
-                                        INNER JOIN deposito deps
-                                        ON disp.dispensario_deposito_id = deps.deposito_id
-                                        INNER JOIN insumos i
-                                        ON deps.deposito_insumos_id = i.insumos_id
-                                        INNER JOIN local_dispensario lcd 
-                                        ON disp.dispensario_local_id = lcd.local_id
-                                        INNER JOIN estoques es
-                                        ON disp.dispensario_estoques_id = es.estoques_id
+                                    disp.dispensario_id,
+                                    disp.dispensario_qtd,
+                                    date_format(disp.dispensario_validade, '%d/%m/%Y') AS validadeDispensario,
+                                    i.insumos_nome,
+                                    i.insumos_unidade,
+                                    i.insumos_qtd_critica,
+                                    datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
+                                    lcd.local_nome,
+                                    es.estoques_nome,
+                                    es.estoques_nome_real
+                                    FROM dispensario disp
+                                    INNER JOIN deposito deps
+                                    ON disp.dispensario_deposito_id = deps.deposito_id
+                                    INNER JOIN insumos i
+                                    ON disp.dispensario_insumos_id = i.insumos_id
+                                    INNER JOIN local_dispensario lcd 
+                                    ON disp.dispensario_local_id = lcd.local_id
+                                    INNER JOIN estoques es
+                                    ON disp.dispensario_estoques_id = es.estoques_id
                                     WHERE
-                                        es.estoques_nome_real = '{$qualEstoque}' AND i.insumos_nome = '{$qualInsumo}'
-                                        ORDER BY insumos_nome ASC 
-                                        LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
+                                    es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome = '{$qualInsumo}'
+                                    ORDER BY insumos_nome ASC 
+                                    LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
+
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+                        // echo "fez o select";
+
                         while($dados = mysqli_fetch_assoc($rs)){
+                            // echo "teste";
                             $qtd_linhas_tabelas++;
+                            $i = $qtd_linhas_tabelas-1;
                         
                     ?>
                     <tr>
@@ -131,7 +145,23 @@ if ($qualEstoque_disp != "") {
                             </a>
                         </td>
                         <td><?=$dados["dispensario_id"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
+                        <td>
+                            <?php
+                            
+                            $insumos_nome = $dados["insumos_nome"];
+                            // echo $insumos_nome;
+                            // echo $insumos_cads_list[0];
+
+                            $estaNaLista = in_array($insumos_nome, $insumos_cads_list);
+
+                            if (!$estaNaLista) {
+                                array_push($insumos_cads_list,$insumos_nome);   
+                            }
+
+                            echo $insumos_nome;
+                            
+                            ?>
+                        </td>
                         <td><?=$dados["dispensario_qtd"]?></td>
                         <td class="<?php
                         
@@ -190,6 +220,55 @@ if ($qualEstoque_disp != "") {
                 </tbody>
             </table>
         </div>
+        <div class="tabelas">
+            <table class="tabela_listar qtd_total">
+                <thead>
+                    <tr>
+                        <th>Insumo</th>
+                        <th>Quantidade total</th>
+                        <th>Local Cadastrado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        
+                        $i = count($insumos_cads_list)-1;
+                        // var_dump( $insumos_cads_list);
+                        while ($i >= 0) {
+                            // echo $insumos_cads_list[$i];
+                            $insumo_selecionado = $insumos_cads_list[$i];
+                            $i--;
+                            
+                            $sql_qtd = "SELECT 
+                            sum(d.dispensario_qtd) as dispensario_qtd_insumo,
+                            i.insumos_nome,
+                            es.estoques_nome
+                            FROM dispensario d 
+                            INNER JOIN insumos i
+                            ON d.dispensario_insumos_id = i.insumos_id
+                            INNER JOIN estoques es
+                            ON es.estoques_id = d.dispensario_estoques_id
+                            WHERE 
+                            es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome='{$insumo_selecionado}'";
+                        
+                            $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//dispensario/quantidade_insumos_dispensario/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
+
+                            while ($dados = mysqli_fetch_assoc($resultado_qtd)) {
+                                // var_dump($dados);
+                        
+                    ?>
+                    <tr>
+                        <td><?=$dados['insumos_nome']?></td>
+                        <td><?=$dados['dispensario_qtd_insumo']?></td>
+                        <td><?=$dados['estoques_nome']?></td>
+                    </tr>
+                    <?php
+                            }
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
         <div class="paginacao">
             <?php
                 $sqlTotaldispensario = "SELECT d.dispensario_id 
@@ -202,11 +281,11 @@ if ($qualEstoque_disp != "") {
                 $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
                 $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
                 
-                echo "<a href=\"?menuop=dispensario&" . $qualEstoque ."=1\">Início</a> ";
+                echo "<a href=\"?menuop=dispensario&" . $qualEstoque ."&" . $qualInsumo . "=1\">Início</a> ";
 
                 if ($pagina_dispensario>6) {
                     ?>
-                        <a href="?menuop=dispensario?<?=$qualEstoque?>=<?php echo $pagina_dispensario-1?>"> << </a>
+                        <a href="?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_dispensario-1?>"> << </a>
                     <?php
                 } 
 
@@ -217,18 +296,18 @@ if ($qualEstoque_disp != "") {
                         if ($i==$pagina_dispensario) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "&" . $qualInsumo . "=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_dispensario<($totalPaginasdispensario-5)) {
                     ?>
-                        <a href="?menuop=dispensario?<?=$qualEstoque?>=<?php echo $pagina_dispensario+1?>"> >> </a>
+                        <a href="?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_dispensario+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "=$totalPaginasdispensario\">Fim</a>";
+                echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "&" . $qualInsumo ."=$totalPaginasdispensario\">Fim</a>";
             ?>
         </div>
     </div>

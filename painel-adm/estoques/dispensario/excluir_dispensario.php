@@ -26,7 +26,7 @@ $estoqueNome = $dados_sql['estoques_nome'];
 if($result->num_rows >0){
     $sqlDelete=mysqli_query($conexao, "DELETE from dispensario WHERE dispensario_id=$idInsumodispensario");
     echo "<script language='javascript'>window.alert('Item excluído com sucesso!!'); </script>";
-    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario&" . $qualEstoque . "=1';</script>";
+    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
     // echo "<br/>Item excluido com sucesso";
 }
 

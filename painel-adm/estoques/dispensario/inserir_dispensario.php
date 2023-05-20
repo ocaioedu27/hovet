@@ -81,7 +81,7 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 
         if (mysqli_query($conexao, $sql_insert)) { 
             echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario&" . $qualEstoque . "=1';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
             // echo "insumo inserido com sucesso";   
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
@@ -97,7 +97,7 @@ $tipo_movimentacao = strtok($tipo_movimentacao, " ");
 
 $local_origem = "Depósito";
 
-$local_destino = "Dispenário";
+$local_destino = "Dispensário " . $qualEstoque[-1];
 
 $usuario_id = $_SESSION['usuario_id'];
 

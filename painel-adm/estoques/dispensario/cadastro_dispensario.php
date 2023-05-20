@@ -35,7 +35,7 @@ $tipoEstoque = $tipoEstoque;
     <div class="cards cadastro_dispensario">
         <div class="voltar">
             <h4>Movendo itens do Depósito para o Dispensário</h4>
-            <a href="index.php?menuop=<?=$tipoEstoque?>&<?=$qualEstoque?>=1" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

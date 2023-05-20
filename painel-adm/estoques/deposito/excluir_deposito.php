@@ -19,7 +19,7 @@ $estoqueNome = $dados_sql['estoques_nome'];
 if($result->num_rows >0){
     $sqlDelete=mysqli_query($conexao, "DELETE from deposito WHERE deposito_id=$idInsumoDeposito");
     echo "<script language='javascript'>window.alert('Item excluído com sucesso!!'); </script>";
-    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito&" . $qualEstoque . "=1';</script>";
+    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
 }
 
 $tipo_movimentacao = 5;

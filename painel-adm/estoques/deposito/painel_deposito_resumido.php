@@ -60,9 +60,6 @@ if ($qualEstoque_dep != "") {
                         </ul>
                     </div>
                 </div>
-                <a href="index.php?menuop=quantidade_insumos_deposito">
-                    <button class="btn">Quantidade de insumos</button>
-                </a>
             </div>
             <div>
                 <form action="index.php?menuop=deposito_resumo&<?=$qualEstoque?>=1" method="post" class="form_buscar">
@@ -174,9 +171,9 @@ if ($qualEstoque_dep != "") {
                     ?>
                     <tr>
                         <td class="">
-                            <a href="index.php?menuop=deposito&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Insumo</a>
+                            <a href="index.php?menuop=deposito&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
                         </td>
-                        <td><?=$dados['insumos_nome']?></td>
+                        <td><strong><?=$dados['insumos_nome']?></strong></td>
                         <td><?=$dados['deposito_qtd_insumo']?></td>
                         <td><?=$dados['estoques_nome']?></td>
                     </tr>

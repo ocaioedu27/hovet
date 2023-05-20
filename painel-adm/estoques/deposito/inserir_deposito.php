@@ -165,7 +165,7 @@
 
             if (mysqli_query($conexao, $sql)) { 
                 echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito&" . $qualEstoque . "=1';</script>";
+                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
                 // echo "insumo inserido com sucesso";   
             } else {
                 die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
@@ -177,7 +177,7 @@
                 $local_origem = "Doação";
             }
     
-            $local_destino = "Depósito";
+            $local_destino = "Depósito " . $qualEstoque[-1];
     
             $usuario_id = $quem_guardou;
     

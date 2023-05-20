@@ -79,7 +79,6 @@
                     </div>
                     <div class="cards cards_info">
                         <div class="display-flex-row just-content-spc-around">
-                            
                             <div class="sub_dados">
                                 <div class="titulo">
                                     <h4>Insumos</h4>
@@ -119,16 +118,14 @@
             </div>
             <div class="group_cards">
                 <div class="content_cards">
-                    <div class="top_cards">
-                        <div class="titulo">
-                            <h2 title="Informações de todos os usuários">Usuários</h2>
-                            <span class="info">
-                                <ion-icon name="help-circle-outline"></ion-icon>
-                            </span>
-                        </div>
+                    <div class="titulo">
+                        <h2 title="Informações de todos os usuários">Usuários</h2>
+                        <span class="info">
+                            <ion-icon name="help-circle-outline"></ion-icon>
+                        </span>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row">
+                        <div class="display-flex-row" style="margin-left: 25px;">
                             <div class="sub_dados">
                                 <div class="titulo">
                                     <h4>Cadastrados</h4>
@@ -136,15 +133,13 @@
                                         <ion-icon name="file-tray-full-outline"></ion-icon>
                                     </span>
                                 </div>
-                                <div>
-                                    <?php
-                                        $sql = "SELECT COUNT(usuario_id) as usuarios_qtd FROM usuarios";
-                                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                        $dados = mysqli_fetch_assoc($rs);
-                                    ?>
-                                    <h2><?=$dados['usuarios_qtd']?></h2>
-                                    <p>Total de Funcionários</p>
-                                </div>
+                                <?php
+                                    $sql = "SELECT COUNT(usuario_id) as usuarios_qtd FROM usuarios";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($rs);
+                                ?>
+                                <h2><?=$dados['usuarios_qtd']?></h2>
+                                <p>Total de Funcionários</p>
                             </div>
                         </div>
                     </div>

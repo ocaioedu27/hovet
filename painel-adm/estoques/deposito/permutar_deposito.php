@@ -22,7 +22,7 @@ if ($qualEstoque_dep != "") {
     <div class="cards permuta">
         <div class="voltar">
             <h3>Permutando itens do Depósito <?=$qualEstoque[-1]?></h3>
-            <a href="index.php?menuop=deposito&<?=$qualEstoque?>=1" class="confirmaVolta">
+            <a href="index.php?menuop=deposito_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

@@ -37,7 +37,7 @@
 
         if (mysqli_query($conexao, $sql)) {
             echo "<script language='javascript'>window.alert('Retirada realizada com sucesso!!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo';</script>";
 
         } else {
             die("//Dispensario/atualiza_dispensario/retirada - Erro ao executar a inserção no dispensário. " . mysqli_error($conexao));   
@@ -54,7 +54,7 @@
 
         if (mysqli_query($conexao, $sql)) {
             echo "<script language='javascript'>window.alert('Devolução realizada com sucesso!!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo';</script>";
 
         } else {
             die("//Dispensario/atualiza_dispensario/devolução - Erro ao executar a atualização no dispensário. " . mysqli_error($conexao));   

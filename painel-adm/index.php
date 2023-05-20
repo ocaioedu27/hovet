@@ -259,10 +259,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 case 'atualizar_deposito':
                     include_once("estoques/deposito/atualizar_deposito.php");
                     break;
-    
-                case 'quantidade_insumos_deposito':
-                    include_once("estoques/deposito/quantidade_insumos_deposito.php");
-                    break;
                 
                 case 'usuarios':
                     include_once("usuarios/funcionarios/painel_users.php");
@@ -414,10 +410,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
                 case 'salva_solicitacao_dispensario':
                     include_once("estoques/dispensario/solicitacoes/salva_solicitacao_dispensario.php");
-                    break;
-                    
-                case 'quantidade_insumos_dispensario':
-                    include_once("estoques/dispensario/quantidade_insumos_dispensario.php");
                     break;
                     
                 case 'painel_armario':
