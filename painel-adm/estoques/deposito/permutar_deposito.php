@@ -49,12 +49,12 @@ if ($qualEstoque_dep != "") {
                             $dados_mov = mysqli_fetch_assoc($resultado_mov);
                             
                         ?>
-                        <label for="mov_dep_to_disp">Tipo de operação</label>
-                        <input type="text" class="form-control largura_um_terco" name="mov_dep_to_disp" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
+                        <label>Tipo de operação</label>
+                        <input type="text" class="form-control largura_um_terco" name="movimentacao_permuta_deposito" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
                     </div>
                     
                     <div class="display-flex-cl">
-                        <label for="solicitante_retira_dispensario">Quem está realizando</label>
+                        <label>Quem está realizando</label>
                             <?php
                             $sql = "SELECT * FROM usuarios WHERE usuario_id={$_SESSION['usuario_id']}";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -85,7 +85,6 @@ if ($qualEstoque_dep != "") {
                                 }
                             ?>
                         </select>
-                        <!-- <input type="text" class="form-control" name="instituicaoPermutaDep" required> -->
                     </div>
                 </div>
             </div>
@@ -116,31 +115,36 @@ if ($qualEstoque_dep != "") {
                             </div>
                             
                             <div class="display-flex-cl">
-                                <label> Disponível no Depósito</label>
-                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito" id="quantidade_atual_deposto_permuta1" readonly>
+                                <label>Disponível no Depósito</label>
+                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito[]" id="quantidade_atual_deposto_permuta1" readonly>
                             </div>
                         </div>
 
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Descrição do insumo</label>
-                                <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDepositoPermuta1" readonly></textarea>
+                                <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_um_terco" id="descricaoInsumoDepositoPermuta1" readonly></textarea>
+                            </div>
+                            
+                            <div class="display-flex-cl">
+                                <label>Depósito De Retirada</label>
+                                <input type="text" class="form-control largura_um_terco" name="depositoRetiradaPermuta[]" id="deposito_retirada_permuta" readonly>
                             </div>
                         </div>
                     </div>
 
                     <div id="permuta_dep">
-                        <h4>Item a ser atualizado do Depósito</h4>
+                        <h4>Item a ser cadastrado do Depósito</h4>
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
-                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1, null)" placeholder="informe o nome do insumo..." required>
+                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoCadPermuta[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1, null)" placeholder="informe o nome do insumo..." required>
                                 <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.5% auto;"></span>
                             </div>
 
                             <div class="display-flex-cl">
-                                <label for="validadeInsumoDeposito">Validade</label>
-                                <input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="" required>
+                                <label>Validade</label>
+                                <input type="date" class="form-control largura_um_terco" name="validadeInsumoCadPermuta[]" id="" required>
                             </div>
                         </div>
 
@@ -148,7 +152,7 @@ if ($qualEstoque_dep != "") {
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Inserida</label>
-                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" required>
+                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoCadPermuta[]" min="1" required>
                             </div>
                             
                             <div class="display-flex-cl">
@@ -181,7 +185,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Permutar" name="btnAdicionarInsumoDispensario" class="btn_cadastrar">
+                <input type="submit" value="Permutar" name="btnPermutaInsumoDeposito" class="btn_cadastrar">
             </div>
         </form>
     </div>

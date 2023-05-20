@@ -290,6 +290,27 @@ create table compras (
     foreign key (compras_fornecedor_id) references fornecedores(fornecedores_id) on delete set null
 );
 
+create table permutas (
+	permutas_id int primary key auto_increment,
+    permutas_operador int,
+    foreign key (permutas_operador) references usuarios(usuario_id) on delete set null,
+    permutas_deposito_insumos_id int,
+    foreign key (permutas_deposito_insumos_id) references deposito(deposito_insumos_id) on delete set null,
+    permutas_qtd_retirado int,
+    permutas_instituicao_id int,
+    foreign key (permutas_instituicao_id) references instituicoes(instituicoes_id) on delete set null,
+    permutas_validade_retirado date,
+    permutas_estoques_id_retirado int,
+    foreign key (permutas_estoques_id_retirado) references estoques(estoques_id) on delete set null,
+    permutas_insumos_id_cadastrado int,
+    foreign key (permutas_insumos_id_cadastrado) references insumos(insumos_id) on delete set null,
+    permutas_insumos_validade_cadastrado date not null,
+    permutas_insumos_qtd_cadastrado int not null,
+    permutas_estoques_id_cadastrado int,
+    foreign key (permutas_estoques_id_cadastrado) references estoques(estoques_id) on delete set null,
+    permutas_data datetime not null default current_timestamp()
+);
+
 ######################################################
 
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
