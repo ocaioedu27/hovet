@@ -10,10 +10,14 @@
                                         d.deposito_validade,
                                         d.deposito_insumos_id,
                                         i.insumos_descricao,
-                                        i.insumos_nome
+                                        i.insumos_nome,
+                                        es.estoques_nome,
+                                        es.estoques_id
                                         FROM deposito d 
                                         INNER JOIN insumos i
                                         ON d.deposito_insumos_id = i.insumos_id
+                                        INNER JOIN estoques es
+                                        ON d.deposito_estoque_id = es.estoques_id
                                         WHERE i.insumos_nome LIKE '%{$cad_disp_insumos_nome}%' LIMIT 10";
         $resultado_insumoDeposito = mysqli_query($conn, $resultado_insumoDeposito) or die("//dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
 
@@ -30,7 +34,9 @@
                     'nomeInsumoDeposito' => $row_insumoDeposito['insumos_nome'],
                     'quantidadeInsumoDeposito' => $row_insumoDeposito['deposito_qtd'],
                     'validadeInsumoDeposito' => $row_insumoDeposito['deposito_validade'],
-                    'descricaoInsumoDeposito' => $row_insumoDeposito['insumos_descricao']
+                    'descricaoInsumoDeposito' => $row_insumoDeposito['insumos_descricao'],
+                    'depositoOrigemId' => $row_insumoDeposito['estoques_id'],
+                    'depositoOrigemNome' => $row_insumoDeposito['estoques_nome']
                 ];
         
             }

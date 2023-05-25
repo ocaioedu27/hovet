@@ -113,7 +113,7 @@ $tipoEstoque = $tipoEstoque;
 
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDispensario">Quantidade Transferida</label>
-                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" required>
+                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" required>
                         </div>
 
                         <div class="display-flex-cl">

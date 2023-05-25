@@ -294,8 +294,8 @@ create table permutas (
 	permutas_id int primary key auto_increment,
     permutas_operador int,
     foreign key (permutas_operador) references usuarios(usuario_id) on delete set null,
-    permutas_deposito_insumos_id int,
-    foreign key (permutas_deposito_insumos_id) references deposito(deposito_insumos_id) on delete set null,
+    permutas_deposito_id int,
+    foreign key (permutas_deposito_id) references deposito(deposito_id) on delete set null,
     permutas_qtd_retirado int,
     permutas_instituicao_id int,
     foreign key (permutas_instituicao_id) references instituicoes(instituicoes_id) on delete set null,
@@ -309,6 +309,20 @@ create table permutas (
     permutas_estoques_id_cadastrado int,
     foreign key (permutas_estoques_id_cadastrado) references estoques(estoques_id) on delete set null,
     permutas_data datetime not null default current_timestamp()
+);
+
+create table doacoes (
+	doacoes_id int primary key auto_increment,
+    doacoes_data_operacao datetime not null default current_timestamp(),
+    doacoes_qtd_doada int not null,
+    doacoes_tipos_movimentacoes_id int,
+    foreign key (doacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
+    doacoes_insumos_id int,
+    foreign key(doacoes_insumos_id) references insumos(insumos_id) on delete set null,
+    doacoes_fornecedor_id int,
+    foreign key (doacoes_fornecedor_id) references fornecedores(fornecedores_id) on delete set null,
+    doacoes_estoque_id int,
+    foreign key (doacoes_estoque_id) references estoques(estoques_id) on delete set null
 );
 
 ######################################################

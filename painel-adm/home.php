@@ -24,7 +24,10 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="titulo">
-                        <h2 title="Informações de todos os Depósitos">Depósitos</h2>
+                        <!-- <h2 title="Informações de todos os Depósitos">Depósitos</h2> -->
+                        <h2 title="Informações de todos os Depósitos">
+                            <a href="index.php?menuop=estoques">Depósitos</a>
+                        </h2>
                         <span class="info">
                             <ion-icon name="help-circle-outline"></ion-icon>
                         </span>
@@ -72,7 +75,10 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="titulo">
-                        <h2 title="Informações de todos os Dispensários">Dispensários</h2>
+                        <!-- <h2 title="Informações de todos os Dispensários">Dispensários</h2> -->
+                        <h2 title="Informações de todos os Dispensários">
+                            <a href="index.php?menuop=estoques">Dispensários</a>
+                        </h2>
                         <span class="info">
                             <ion-icon name="help-circle-outline"></ion-icon>
                         </span>
@@ -119,7 +125,9 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="titulo">
-                        <h2 title="Informações de todos os usuários">Usuários</h2>
+                        <h2 title="Informações de todos os usuários">
+                            <a href="index.php?menuop=usuarios">Usuários</a>
+                        </h2>
                         <span class="info">
                             <ion-icon name="help-circle-outline"></ion-icon>
                         </span>
@@ -151,7 +159,9 @@
                 <div class="content_cards">
                     <div class="top_cards">
                         <div class="titulo">
-                            <h2 title="Informações de todas as movimentações">Movimentações</h2>
+                            <h2 title="Informações de todas as solicitações">
+                                <a href="index.php?menuop=listar_movimentacoes">Movimentações</a>
+                            </h2>
                             <span class="info">
                                 <ion-icon name="help-circle-outline"></ion-icon>
                             </span>

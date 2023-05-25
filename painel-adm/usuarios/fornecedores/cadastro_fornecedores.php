@@ -19,7 +19,7 @@
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
-                                <label>Razão Social</label>
+                                <label>Nome ou Razão Social</label>
                                 <input type="text" class="form-control" name="razaoSocialFornecedor[]" placeholder="Informe a Razão Social..." required>
                             </div>
 

@@ -50,7 +50,7 @@
                                 m.movimentacoes_destino,
                                 tm.tipos_movimentacoes_movimentacao,
                                 m.movimentacoes_usuario_id,
-                                date_format(m.data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
+                                date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
                                 u.usuario_nome_completo
                                 FROM movimentacoes m
                                 INNER JOIN insumos i
@@ -63,7 +63,7 @@
                                     i.insumos_nome LIKE '%{$txt_pesquisa_mov}%' or
                                     u.usuario_nome_completo LIKE '%{$txt_pesquisa_mov}%' or
                                     i.insumos_descricao LIKE '%{$txt_pesquisa_mov}%'
-                                    ORDER BY insumos_nome ASC 
+                                    ORDER BY movimentacoes_data_operacao DESC 
                                     LIMIT $inicio_movimentacoes,$quantidade_registros_movimentacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){

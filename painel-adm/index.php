@@ -108,7 +108,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=compra" id="listar_notas_fiscais">Compras</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=doacoes" id="listar_doacoes">Doações</a>
+                                <a href="index.php?menuop=doacao" id="listar_doacoes">Doações</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=permuta" id="listar_doacoes">Permutas</a>
                             </li>
                             <li>
                                 <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Movimentações</a>
@@ -441,7 +444,15 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     break;
 
                 case 'compra':
-                    include_once("estoques/deposito/relatorios_deposito/listar_compras.php");
+                    include_once("movimentacoes/listar_compras.php");
+                    break;
+
+                case 'doacao':
+                    include_once("movimentacoes/listar_doacoes.php");
+                    break;
+
+                case 'permuta':
+                    include_once("movimentacoes/permuta/listar_permutas.php");
                     break;
 
                 case 'permutar_deposito':

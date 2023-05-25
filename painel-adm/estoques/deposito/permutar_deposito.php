@@ -128,7 +128,7 @@ if ($qualEstoque_dep != "") {
                             
                             <div class="display-flex-cl">
                                 <label>Depósito De Retirada</label>
-                                <input type="text" class="form-control largura_um_terco" name="depositoRetiradaPermuta[]" id="deposito_retirada_permuta" readonly>
+                                <input type="text" class="form-control largura_um_terco" name="depositoRetiradaPermuta[]" id="deposito_origem_insumo_retirado1" readonly>
                             </div>
                         </div>
                     </div>

@@ -60,10 +60,6 @@
 
             if ((isset($_FILES['nota_fiscal_deposito'])) && ($tem_nota_fiscal['size'] != 0)) {
                 $nota_fiscal_deposito = $_FILES['nota_fiscal_deposito'];
-                // echo "<br/>";
-                // var_dump($nota_fiscal_deposito);
-    
-                // echo "<br/>pegou a nota fiscal";
     
                 if ($nota_fiscal_deposito['error']) {
                     $erro_cad_nota_fiscal = $nota_fiscal_deposito['error'];
@@ -71,29 +67,17 @@
                     die("Falha ao enviar nota fiscal");
                 }
     
-                // echo "<br/>passou da verificacao de erro";
-    
                 if ($nota_fiscal_deposito['size'] > 16000000) {
                     die("Arquivo muito grande!! Max: 16MB.");
                 }
     
-                // echo "<br/>passou da verificacao de tamanho";
-    
                 $pasta_notas_fiscais_deposito = "./estoques/deposito/notas_fiscais/";
-    
-                // echo "<br/>achou a pasta: $pasta_notas_fiscais_deposito";
     
                 $nome_nota_fiscal_deposito = $nota_fiscal_deposito['name'];
     
-                // echo "<br/>Achou o nome: $nome_nota_fiscal_deposito";
-    
                 $novo_nome_nota_fiscal_deposito = uniqid();
-                
-                // echo "<br/>gerou o novo nome: $novo_nome_nota_fiscal_deposito";
     
                 $extensao_nota_fiscal = strtolower(pathinfo($nome_nota_fiscal_deposito, PATHINFO_EXTENSION));
-                
-                // echo "<br/>coletou a extensao: $extensao_nota_fiscal";
     
                 if ($extensao_nota_fiscal != "jpg" && $extensao_nota_fiscal != "png" && $extensao_nota_fiscal != "pdf") {
                     die("Tipo de arquivo não aceito");
@@ -101,17 +85,9 @@
     
                 $path_nota_fiscal = $pasta_notas_fiscais_deposito . $novo_nome_nota_fiscal_deposito . "." . $extensao_nota_fiscal;
 
-                // echo "<br/>coletou path: $path_nota_fiscal";
-
                 $tmp_name_nf = $nota_fiscal_deposito['tmp_name'];
-                // echo "<br/>Fez o upload? $tmp_name_nf";
-
-                // echo "diretorio executado" . $_SERVER['PHP_SELF'] . "<br />";
-
 
                 $upload_feito = move_uploaded_file($nota_fiscal_deposito['tmp_name'], $path_nota_fiscal);
-
-                // echo "<br/>Fez o upload? $upload_feito";
     
                 if ($upload_feito) {
 
@@ -145,7 +121,29 @@
                 }
     
             } else{
-                echo "<br/>Nota fiscal não adicionada";
+                echo "<br/>é doação";
+                $sql_doacao = "INSERT INTO doacoes (
+                    doacoes_qtd_doada,
+                    doacoes_tipos_movimentacoes_id,
+                    doacoes_insumos_id,
+                    doacoes_fornecedor_id,
+                    doacoes_estoque_id
+                )
+                VALUES (
+                    {$quantidadeInsumodeposito},
+                    {$tipo_movimentacao},
+                    {$insumoID_Insumodeposito},
+                    {$fornecedorCadInsumoDep},
+                    {$depositoDestinoInsumodeposito}
+                )";
+
+
+                if (mysqli_query($conexao, $sql_doacao)) { 
+                    echo "<script language='javascript'>window.alert('Doação registrada com sucesso!!'); </script>";
+                    // echo "insumo inserido com sucesso";   
+                } else {
+                    die("//deposito/registra_doacao - Erro ao executar a inserção na tablea de doações. " . mysqli_error($conexao));   
+                }
             }
 
             $sql = "INSERT INTO deposito (
@@ -160,8 +158,6 @@
                     {$insumoID_Insumodeposito},
                     {$depositoDestinoInsumodeposito}
                 )";
-
-            
 
             if (mysqli_query($conexao, $sql)) { 
                 echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";

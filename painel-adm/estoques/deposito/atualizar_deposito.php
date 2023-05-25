@@ -62,6 +62,10 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_permuta_dep];
         echo "<br/> Quantidade atual no deposito: " . $validadeInsumoDeposito;
 
+        $depositoRetiradaPermuta = $dados_enviados_array['depositoRetiradaPermuta'][$chave_permuta_dep];
+        $depositoRetiradaPermuta = strtok($depositoRetiradaPermuta, " ");
+        echo "<br/> Depósito de origem: " . $depositoRetiradaPermuta;
+
         $nova_qtd_to_dep = $quantidadeInsumoDisponivelDeposito-$quantidadeInsumoDepositoPermuta;
         echo "<br/> Quantidade nova para o insumo retirado do deposito: " . $nova_qtd_to_dep;
 
@@ -80,39 +84,83 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
         $depositoDestinoInsumoPermuta = $dados_enviados_array['depositoDestinoInsumoPermuta'][$chave_permuta_dep];
         $depositoDestinoInsumoPermuta = strtok($depositoDestinoInsumoPermuta, " ");
         echo "<br/>Depósito de destino: " . $depositoDestinoInsumoPermuta;
+
+        $sql_insert_permuta = "INSERT INTO permutas (
+            permutas_operador,
+            permutas_deposito_id,
+            permutas_qtd_retirado,
+            permutas_instituicao_id,
+            permutas_validade_retirado,
+            permutas_estoques_id_retirado,
+            permutas_insumos_id_cadastrado,
+            permutas_insumos_validade_cadastrado,
+            permutas_insumos_qtd_cadastrado,
+            permutas_estoques_id_cadastrado
+            )
+            VALUES(
+                {$quemRealizouPermutaDep},
+                {$insumoID_InsumoPermuta},
+                {$quantidadeInsumoDepositoPermuta},
+                {$instituicaoPermutaDep},
+                '{$validadeInsumoDeposito}',
+                {$depositoRetiradaPermuta},
+                {$insumoID_InsumoCadPermuta},
+                '{$validadeInsumoCadPermuta}',
+                {$quantidadeInsumoCadPermuta},
+                {$depositoDestinoInsumoPermuta}
+            )";
+
+        if (mysqli_query($conexao, $sql_insert_permuta)) { 
+            echo "<script language='javascript'>window.alert('Permuta registrada com sucesso!!'); </script>";  
+        } else {
+            die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
+        }
+
+        $sql_update_dep = "UPDATE 
+                            deposito 
+                            SET 
+                            deposito_qtd = {$nova_qtd_to_dep}
+                            WHERE 
+                            deposito_id = {$insumoID_InsumoPermuta}";
+
+        if (mysqli_query($conexao, $sql_update_dep)) { 
+            echo "<script language='javascript'>window.alert('Insumo Cadastrado no Depósito com sucesso!!'); </script>";
+        } else {
+            die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+        }
+
+        $sql_insert_dep = "INSERT INTO deposito (
+            deposito_qtd,
+            deposito_validade,
+            deposito_insumos_id,
+            deposito_estoque_id
+            )
+            VALUES(
+                {$quantidadeInsumoCadPermuta},
+                '{$validadeInsumoCadPermuta}',
+                {$insumoID_InsumoCadPermuta},
+                {$depositoDestinoInsumoPermuta}
+            )";
+
+        if (mysqli_query($conexao, $sql_insert_dep)) { 
+            echo "<script language='javascript'>window.alert('Insumo Cadastrado no Depósito com sucesso!!'); </script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
+            // echo "insumo inserido com sucesso";   
+        } else {
+            die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+        }
+
+        $tipo_movimentacao = $movimentacao_permuta_deposito;
+
+        $local_origem = "Depósito";
+
+        $local_destino = "Depósito " . $qualEstoque[-1];
+
+        $usuario_id = $quemRealizouPermutaDep;
+
+        $insumo_id = $insumoID_InsumoPermuta;
         
-        // echo '<br/>id do insumo: ' . $insumo_id['deposito_insumos_id'];
-        // echo "<br/>Chave para o insumo: $chave_permuta_dep";
-        // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
-        // echo "<br/>Id do insumo: $insumo_id";
-        // echo "<br/>Quantidade: $quantidadeInsumoDispensario";
-        // echo "<br/>Validade: $validadeInsumoDeposito";
-        // echo "<br/>Local: $localInsumodispensario";
-        // echo "<hr>";
-
-        // $sql_insert = "INSERT INTO dispensario (
-        //     dispensario_qtd,
-        //     dispensario_validade,
-        //     dispensario_deposito_id,
-        //     dispensario_local_id,
-        //     dispensario_insumos_id,
-        //     dispensario_estoques_id)
-        //     VALUES(
-        //         {$quantidadeInsumoDispensario},
-        //         '{$validadeInsumoDeposito}',
-        //         {$depositoID_Insumodispensario},
-        //         {$localInsumodispensario},
-        //         {$insumo_id},
-        //         {$depositoDestinoInsumodeposito}
-        //     )";
-
-        // if (mysqli_query($conexao, $sql_insert)) { 
-        //     echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
-        //     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
-        //     // echo "insumo inserido com sucesso";   
-        // } else {
-        //     die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
-        // }
+        atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
     }
 } else {
     echo "error";
