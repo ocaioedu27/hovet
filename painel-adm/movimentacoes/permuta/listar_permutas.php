@@ -19,14 +19,16 @@
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
+                        <th>Operações</th>
                         <th>ID</th>
                         <th>Insumo Retirado</th>
                         <th>Quantidade Retirada</th>
                         <th>Estoque de Retirada</th>
                         <th>Quem Realizou</th>
                         <th>Insumo Cadastrado</th>
-                        <th>Estoque de Destino</th>
                         <th>Quantidade Inserirda</th>
+                        <th>Estoque de Destino</th>
+                        <th>Instituição que Permutou</th>
                         <th>Data e Horário</th>
                     </tr>
                 </thead>
@@ -47,23 +49,33 @@
                                     u.usuario_primeiro_nome,
                                     e.estoques_nome as nome_estoque_retirado,
                                     es.estoques_nome as nome_estoque_cadastrado,
-                                    d.deposito_insumos_id as nome_insumo_retirado,
                                     ins.insumos_nome as nome_insumo_cadastrado,
-                                    i.insumos_nome as nome_insumo_retirado
+                                    i.insumos_nome as nome_insumo_retirado,
+                                    inst.instituicoes_razao_social
 
-                                    FROM permutas p
+                                FROM permutas p
+                                
                                     INNER JOIN usuarios u
                                     ON p.permutas_operador = u.usuario_id
+                                
                                     INNER JOIN deposito d 
                                     ON p.permutas_deposito_id = d.deposito_id
+                                
                                     INNER JOIN insumos ins
                                     ON p.permutas_insumos_id_cadastrado = ins.insumos_id
+                                
                                     INNER JOIN insumos i
                                     ON d.deposito_insumos_id = i.insumos_id
+                                
                                     INNER JOIN estoques e
                                     ON p.permutas_estoques_id_retirado = e.estoques_id
+                                
                                     INNER JOIN estoques es
                                     ON p.permutas_estoques_id_cadastrado = es.estoques_id
+
+                                    INNER JOIN instituicoes inst
+                                    ON p.permutas_instituicao_id = inst.instituicoes_id
+                                    
                                     WHERE
                                         p.permutas_id='{$txt_pesquisa_permutas}' or
                                         p.permutas_data LIKE '%{$txt_pesquisa_permutas}%' or
@@ -75,15 +87,26 @@
                         
                     ?>
                     <tr class="tabela_dados">
+                        <td class="operacoes" id="">
+                            <a href="index.php?menuop=detalhar_permuta&permutaId=<?=$dados["permutas_id"]?>"
+                                class="confirmaOperacao">
+                                <button class="btn" style="color: green;">Ver Detalhes</button>
+                            </a>
+                        </td>
                         <td><?=$dados["permutas_id"]?></td>
                         <td><?=$dados["nome_insumo_retirado"]?></td>
                         <td><?=$dados["permutas_qtd_retirado"]?></td>
                         <td><?=$dados["nome_estoque_retirado"]?></td>
                         <td><?=$dados["usuario_primeiro_nome"]?></td>
                         <td><?=$dados["nome_insumo_cadastrado"]?></td>
-                        <td><?=$dados["nome_estoque_cadastrado"]?></td>
                         <td><?=$dados["permutas_insumos_qtd_cadastrado"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['permutas_data']));?></td>
+                        <td><?=$dados["nome_estoque_cadastrado"]?></td>
+                        <td><?=$dados["instituicoes_razao_social"]?></td>
+                        <td>
+                            <?php 
+                                echo date("d/m/Y H:i", strtotime($dados['permutas_data']));
+                            ?>
+                        </td>
                     </tr>
                     <?php
                         }

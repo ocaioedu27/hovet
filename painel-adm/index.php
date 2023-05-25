@@ -49,6 +49,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 // echo '';
 
 // // }
+echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
 
 ?>
 
@@ -127,9 +128,12 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a href="index.php?menuop=estoques">Estoques</a>
+                    <a href="#">Estoques</a>
                     <div class="dropdown-content">
                         <ul>
+                            <li>
+                                <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
+                            </li>
                             <?php
                                 $sql = "SELECT * FROM estoques ORDER BY estoques_nome ASC";
                                 $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -458,6 +462,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                 case 'permutar_deposito':
                     include_once("estoques/deposito/permutar_deposito.php");
                     break;    
+
+                case 'detalhar_permuta':
+                    include_once("movimentacoes/permuta/detalhes_permuta.php");
+                    break;   
 
                 default:
                 include_once("home.php");

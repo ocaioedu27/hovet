@@ -850,9 +850,6 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
 
     let foi_removido = list_permuta_deposito_insumo_id_removed.includes(permuta_deposito_insumo_id_to_complete);
 
-    // console.log("//getInsumoId/Deposito/Permuta - foi removido? "+foi_removido);
-    // console.log("//getInsumoId/Deposito/Permuta - permuta_deposito_insumo_id_"+id_campo_digitado+"");
-
     if (foi_removido || permuta_deposito_insumo_id_to_complete == null) {
 
       console.log('//getInsumoId/dep/permuta - input removido');
