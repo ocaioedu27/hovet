@@ -49,7 +49,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 // echo '';
 
 // // }
-echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
+// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
 
 ?>
 
@@ -281,6 +281,10 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITAC
 
                 case 'editar_usuario':
                     include_once("usuarios/funcionarios/editar_usuario.php");
+                    break;
+
+                case 'trocar_senha_usuario':
+                    include_once("usuarios/funcionarios/trocar_senha_usuario.php");
                     break;
     
                 case 'atualizar_usuario':

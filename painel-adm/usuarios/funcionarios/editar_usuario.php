@@ -93,7 +93,7 @@ $dados = mysqli_fetch_assoc($result);
             </div>
 
             <div class="form-group valida_movimentacao">
-                <a href="#">Trocar a Senha</a>
+                <a href="index.php?menuop=trocar_senha_usuario&idUsuario=<?=$dados['usuario_id']?>">Trocar a Senha</a>
             </div>
 
             <div class="form-group valida_movimentacao">
@@ -102,7 +102,6 @@ $dados = mysqli_fetch_assoc($result);
                     <label>Insira sua senha para confirmar</label>
                     <input type="text" class="form-control largura_um_terco" name="validaSenhaUsuario" required>
                 </div>
-                <!-- <a href="#">Trocar senha</a> -->
             </div>
 
             <div class="form-group">
