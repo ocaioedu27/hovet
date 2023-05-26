@@ -168,7 +168,10 @@ insert into tipos_movimentacoes values
     (null,"Exclusão", "Exclusão de um insumo"),
     (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário"),
 	(null, "Requisição de insumos do Dispensário", "Quando alguém solicita a retirada de insumos do Dispensário"), 
-	(null, "Devolução de insumos para o Dispensário", "Quando alguém solicita a devolução de insumos para o Dispensário");
+	(null, "Devolução de insumos para o Dispensário", "Quando alguém solicita a devolução de insumos para o Dispensário"),
+	(null, "Aprovação de solicitação de insumo no Dispensário", "Quando alguém aprova uma solicitação do Dispensário"),
+	(null, "Negação de solicitação de insumo no Dispensário", "Quando alguém nega uma solicitação do Dispensário"),
+	(null, "Solicitação de insumo no Dispensário", "Quando há o envio de uma solicitação de algum insumo do Dispensário");
 
 create table movimentacoes (
 	movimentacoes_id int primary key auto_increment,
@@ -338,6 +341,23 @@ CREATE TRIGGER after_deposito_from_dispensario
 		UPDATE deposito as deps set
 		deposito_qtd = deposito_qtd - NEW.dispensario_qtd
 		WHERE deposito_id = NEW.dispensario_deposito_id;
+END$$
+
+DELIMITER ;
+
+######################################################
+
+# Atualiza Dispensario depois de aprovar uma requisicao
+DELIMITER $$
+
+CREATE PROCEDURE updateDispensarioQtd(IN novaQuantidade int, IN id_dispensario int)
+BEGIN
+	UPDATE
+		dispensario
+	SET
+		dispensario_qtd = novaQuantidade
+	WHERE dispensario_id = id_dispensario;
+
 END$$
 
 DELIMITER ;

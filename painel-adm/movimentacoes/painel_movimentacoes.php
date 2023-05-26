@@ -107,9 +107,9 @@
                     
                     echo "<a href=\"?menuop=listar_movimentacoes&pagina_movimentacoes=1\">Início</a> ";
 
-                    if ($pagina_movimentacoes>6) {
+                    if ($pagina_movimentacoes>1) {
                         ?>
-                            <a href="?menuop=listar_movimentacoes?pagina_movimentacoes=<?php echo $pagina_movimentacoes-1?>"> << </a>
+                            <a href="?menuop=listar_movimentacoes&pagina_movimentacoes=<?php echo $pagina_movimentacoes-1?>"> << </a>
                         <?php
                     } 
 
@@ -125,9 +125,9 @@
                         }          
                     }
 
-                    if ($pagina_movimentacoes<($totalPaginasMovimentacoes-5)) {
+                    if ($pagina_movimentacoes<($totalPaginasMovimentacoes-1)) {
                         ?>
-                            <a href="?menuop=listar_movimentacoes?pagina_movimentacoes=<?php echo $pagina_movimentacoes+1?>"> >> </a>
+                            <a href="?menuop=listar_movimentacoes&pagina_movimentacoes=<?php echo $pagina_movimentacoes+1?>"> >> </a>
                         <?php
                     }
                     

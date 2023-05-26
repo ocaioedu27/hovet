@@ -121,7 +121,7 @@ if ($qualEstoque_dep != "") {
                         <div class="display-flex-cl">
                             <label>Nome</label>
                             <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Informe o nome do insumo..." required/>
-                            <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 8% auto;"></span>
+                            <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.2% auto;"></span>
                         </div>
 
                         <div class="display-flex-cl">

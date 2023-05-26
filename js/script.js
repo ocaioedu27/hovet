@@ -1,72 +1,3 @@
-// para adicionar campos automaticamente
-const list_campos_to_complete_removed = [];
-const list_campos_to_complete_result = ['resultado_cad_deposito_insumos1'];
-
-const list_inputs_to_complete_removed = [];
-const list_inputs_to_complete_result = ['insumoID_Insumodeposito1'];
-
-const list_resultado_cad_deposito_estoque_removed = [];
-const list_resultado_cad_deposito_estoque_result = ['resultado_cad_deposito_estoque1'];
-
-const list_depositoDestinoInsumodeposito_removed = [];
-const list_depositoDestinoInsumodeposito_result = ['depositoDestinoInsumodeposito1'];
-
-const list_textarea_to_complete_removed = [];
-const list_textarea_to_complete_result = ['descricaoInsumoCadDep1'];
-
-const list_qtd_critica_to_complete_removed = [];
-const list_qtd_critica_to_complete_result = ['qtdCriticaInsumoCadDep1'];
-
-
-// para dispensario
-const list_resultado_cad_disp_insumos_removed = [];
-const list_resultado_cad_disp_insumos_result = ['resultado_cad_disp_insumos1'];
-
-const list_insumoID_Insumodispensario_removed = [];
-const list_insumoID_Insumodispensario_result = ['insumoID_Insumodispensario1'];
-
-const list_validadeInsumoDeposito_removed = [];
-const list_validadeInsumoDeposito_result = ['validadeInsumoDeposito1'];
-
-const list_quantidadeInsumoDisponivelDeposito_removed = [];
-const list_quantidadeInsumoDisponivelDeposito_result = ['quantidadeInsumoDisponivelDeposito1'];
-
-const list_descricaoInsumoDeposito_removed = [];
-const list_descricaoInsumoDeposito_result = ['descricaoInsumoDeposito1'];
-
-// PARA SOLICITA DISPENSARIO
-const list_resultado_slc_disp_insumos_removed = [];
-const list_resultado_slc_disp_insumos_result = ['resultado_slc_disp_insumos1'];
-
-const list_insumo_dispensario_id_removed = [];
-const list_insumo_dispensario_id_result = ['insumo_dispensario_id1'];
-
-const list_quantidade_atual_dispensario_remove = [];
-const list_quantidade_atual_dispensario_result = ['quantidade_atual_dispensario1'];
-
-const list_validade_insumo_dispensario_remove = [];
-const list_validade_insumo_dispensario_result = ['validade_insumo_dispensario1'];
-
-const list_descricaoInsumoSclDisp_removed = [];
-const list_descricaoInsumoSclDisp_result = ['descricaoInsumoSclDisp1'];
-
-// PARA PERMUTA DEPOSITO
-const list_resultado_permuta_insumos_removed = [];
-const list_resultado_permuta_insumos_result = ['resultado_permuta_insumos1'];
-
-const list_permuta_deposito_insumo_id_removed = [];
-const list_permuta_deposito_insumo_id_result = ['permuta_deposito_insumo_id_1'];
-
-const list_quantidade_atual_deposito_permuta_remove = [];
-const list_quantidade_atual_deposito_permuta_result = ['quantidade_atual_deposito_permuta1'];
-
-const list_validadeInsumoDepositoPermuta_remove = [];
-const list_validadeInsumoDepositoPermuta_result = ['validadeInsumoDepositoPermuta1'];
-
-const list_descricaoInsumoDepositoPermuta_removed = [];
-const list_descricaoInsumoDepositoPermuta_result = ['descricaoInsumoDepositoPermuta1'];
-
-
 
 var controle_campo_cad_deposito = 1;
 
@@ -76,18 +7,12 @@ function adicionaCampoCad(ondeCadastrou) {
 
   if (ondeCadastrou == 1) {
     
-
-    list_campos_to_complete_result.push('resultado_cad_deposito_insumos'+controle_campo_cad_deposito+'');
-    
-    list_resultado_cad_deposito_estoque_result.push('resultado_cad_deposito_insumos'+controle_campo_cad_deposito+'');
-
     let dados_insumo_dep = document.getElementById('dados_insumo_dep');
     dados_insumo_dep.insertAdjacentHTML('beforeend', '<div id="campoCadDeposito'+controle_campo_cad_deposito+'"><div class="form-group valida_movimentacao"> <div class="display-flex-cl"><label>Nome</label><input class="form-control" type"text" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 1, false)" placeholder="Informe o nome do insumo..." required/><span class="ajuste_span" id="resultado_cad_deposito_insumos'+controle_campo_cad_deposito+'" style="margin: 8% auto;"></span></div><div class="display-flex-cl"><label>Validade</label><input type="date" class="form-control" name="validadeInsumodeposito[]" required></div><div class="display-flex-cl"><label>Quantidade Crítica</label><input type="text" class="form-control" id="qtdCriticaInsumoCadDep'+controle_campo_cad_deposito+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Quantidade guardada</label><input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" required></div><div class="display-flex-cl"><label>Depósito de Destino</label><input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 5)" required><span class="ajuste_span" id="resultado_cad_deposito_estoque'+controle_campo_cad_deposito+'" style="margin: 8% auto;"></span></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição</label><textarea type="text" class="form-control largura_metade" id="descricaoInsumoCadDep'+controle_campo_cad_deposito+'" readonly></textarea></div><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 1)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(1)" style="padding: 0;">+</button></div></div>');
 
   } else if (ondeCadastrou == 2) {
   
     //PARA CADASTRAR INSUMO NO DISPENSARIO
-    list_resultado_cad_disp_insumos_result.push('resultado_cad_disp_insumos'+controle_campo_cad_deposito+'');
 
     let dados_insumo_disp = document.getElementById('dados_insumo_disp');
     dados_insumo_disp.insertAdjacentHTML('beforeend', '<div id="campoCadDispensario'+controle_campo_cad_deposito+'"><hr><div class="form-group valida_movimentacao"> <div class="display-flex-cl"><label>Insumo</label><input class="form-control largura_um_terco" type"text" name="insumoID_Insumodispensario[]" id="insumoID_Insumodispensario'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 2)" placeholder="Informe o nome do insumo..." required/><span class="ajuste_span" id="resultado_cad_disp_insumos'+controle_campo_cad_deposito+'" style="margin: 9.5% auto;"></span></div><div class="display-flex-cl"><label for="quantidadeInsumoDisponivelDeposito"> Disponível no Depósito</label><input type="text" class="form-control largura_um_terco" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito'+controle_campo_cad_deposito+'" onchange="verificaValorMaximoExcedido(\'quantidadeMovidaParaDispensario'+controle_campo_cad_deposito+'\',\'quantidadeInsumoDisponivelDeposito'+controle_campo_cad_deposito+'\',\'alerta_valor_acima_max'+controle_campo_cad_deposito+'\',\'btn_mv_insumo_dep_to_disp\')" readonly></div><div class="display-flex-cl"><label>Dispensário de Destino</label><input type="text" class="form-control" name="estoqueDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 5)" required><span class="ajuste_span" id="resultado_cad_deposito_estoque'+controle_campo_cad_deposito+'" style="margin: 9.5% auto;"></span></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Quantidade Transferida</label><input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario'+controle_campo_cad_deposito+'" onkeyup="verificaValorMaximoExcedido(\'quantidadeMovidaParaDispensario'+controle_campo_cad_deposito+'\',\'quantidadeInsumoDisponivelDeposito'+controle_campo_cad_deposito+'\',\'alerta_valor_acima_max'+controle_campo_cad_deposito+'\',\'btn_mv_insumo_dep_to_disp\')" required><span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max'+controle_campo_cad_deposito+'"><label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label></span></div><div class="display-flex-cl"><label>Validade</label><input type="date" class="form-control" name="validadeInsumoDeposito[]"  id="validadeInsumoDeposito'+controle_campo_cad_deposito+'" readonly></div><div class="display-flex-cl"><label>Local</label><select class="form-control" name="localInsumodispensario[]" id="localInsumodispensario'+controle_campo_cad_deposito+'" required><option>1 - Armário</option><option>2 - Estante</option><option>3 - Gaveteiro</option></select></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição</label><textarea type="text" class="form-control largura_metade" id="descricaoInsumoDeposito'+controle_campo_cad_deposito+'" readonly></textarea></div><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 2)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(2)" style="padding: 0;">+</button></div></div>');
@@ -100,18 +25,11 @@ function adicionaCampoCad(ondeCadastrou) {
   } else if (ondeCadastrou == 4){
     // PARA RETIRADA DO INSUMO DO DISPENSARIO
 
-    list_resultado_slc_disp_insumos_result.push('resultado_slc_disp_insumos'+controle_campo_cad_deposito+'');
-
     let dados_insumo_disp = document.getElementById('dados_insumo_disp');
     dados_insumo_disp.insertAdjacentHTML('beforeend', '<div id="campoRetiraInsumoDisp'+controle_campo_cad_deposito+'"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl" style="margin-right: 30px;"><label>Insumo Solicitado</label><input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 3)" placeholder="Informe o insumo..." required><span class="ajuste_span" id="resultado_slc_disp_insumos'+controle_campo_cad_deposito+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Quantidade Solicitada</label><input type="number" class="form-control largura_um_terco" name="quantidade_insumo_dispensario[]" id="qtd_solicitada_dispensario'+controle_campo_cad_deposito+'" min="1" onkeyup="verificaValorMaximoExcedido(\'qtd_solicitada_dispensario'+controle_campo_cad_deposito+'\',\'quantidade_atual_dispensario'+controle_campo_cad_deposito+'\',\'alerta_valor_acima_max'+controle_campo_cad_deposito+'\',\'btn_slc_insumo_disp\')" required><span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max'+controle_campo_cad_deposito+'"><label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label></span></div><div class="display-flex-cl"><label>Validade do Insumo</label><input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario'+controle_campo_cad_deposito+'" readonly></div><div class="display-flex-cl"><label>Disponível no Dispensário</label><input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario'+controle_campo_cad_deposito+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição</label><textarea class="form-control largura_metade" name="descricaoInsumo[]" id="descricaoInsumoSclDisp'+controle_campo_cad_deposito+'" rows="3" readonly></textarea></div><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 4)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(4)" style="padding: 0;">+</button></div></div>');
 
   } else if (ondeCadastrou == 5){
     // PARA PERMUTA DE INSUMO DO DEPÓSITO
-
-    list_permuta_deposito_insumo_id_result.push('resultado_permuta_insumos'+controle_campo_cad_deposito+'');
-
-    list_inputs_to_complete_result.push('list_inputs_to_complete_result'+controle_campo_cad_deposito+'')
-    list_campos_to_complete_result.push('resultado_cad_deposito_insumos'+controle_campo_cad_deposito+'');
 
     let dados_insumo_permuta_dep = document.getElementById('dados_insumo_permuta_dep');
     dados_insumo_permuta_dep.insertAdjacentHTML('beforeend', '<div id="insumo_permuta_dep'+controle_campo_cad_deposito+'"><hr><div class="display-flex-row"><div id="permuta_dep"><h4>Item a ser retirado do Depósito</h4><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Insumo</label><input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_'+controle_campo_cad_deposito+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_cad_deposito+', 4)" placeholder="informe o nome do insumo..." required><span class="ajuste_span" id="resultado_permuta_insumos'+controle_campo_cad_deposito+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Validade</label><input type="date" class="form-control largura_um_terco" name="validadeInsumoDeposito[]" id="validadeInsumoDepositoPermuta'+controle_campo_cad_deposito+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Quantidade Permutada</label><input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" id="quantidade_solicitada_permuta'+controle_campo_cad_deposito+'" onkeyup="verificaValorMaximoExcedido(\'quantidade_solicitada_permuta'+controle_campo_cad_deposito+'\',\'quantidade_atual_deposito_permuta'+controle_campo_cad_deposito+'\',\'alerta_valor_acima_max'+controle_campo_cad_deposito
@@ -171,42 +89,11 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
     // para_operacao.remove();
   }else{
     if (cadType == 1) {
-      
-      let campo_to_complete_removed = 'resultado_cad_deposito_insumos'+idCampoCad+'';
-      list_campos_to_complete_removed.push(campo_to_complete_removed);
-
-      let input_to_complete_removed = 'insumoID_Insumodeposito'+idCampoCad+'';
-      list_inputs_to_complete_removed.push(input_to_complete_removed);
-
-      list_resultado_cad_deposito_estoque_removed.push('resultado_cad_deposito_insumos'+idCampoCad+'');
-
-      list_descricaoInsumoDepositoPermuta_removed.push('depositoDestinoInsumodeposito'+idCampoCad+'');
-
-      let textarea_to_complete_removed = 'descricaoInsumoCadDep'+idCampoCad+'';
-      list_textarea_to_complete_removed.push(textarea_to_complete_removed);
-
-      let qtdCritica_to_complete_removed = 'qtdCriticaInsumoCadDep'+idCampoCad+'';
-      list_qtd_critica_to_complete_removed.push(qtdCritica_to_complete_removed);
 
       let para_remover_campo_adicional = document.getElementById('campoCadDeposito'+idCampoCad)
       para_remover_campo_adicional.remove();
       
     } else if(cadType == 2){
-
-      let resultado_cad_disp_insumos_removed = 'resultado_cad_disp_insumos'+idCampoCad+'';
-      list_resultado_cad_disp_insumos_removed.push(resultado_cad_disp_insumos_removed);
-
-      let insumoID_Insumodispensario_removed = 'insumoID_Insumodispensario'+idCampoCad+'';
-      list_insumoID_Insumodispensario_removed.push(insumoID_Insumodispensario_removed);
-
-      let quantidadeInsumoDisponivelDeposito_removed = 'quantidadeInsumoDisponivelDeposito'+idCampoCad+'';
-      list_quantidadeInsumoDisponivelDeposito_removed.push(quantidadeInsumoDisponivelDeposito_removed);
-
-      let validadeInsumoDeposito_removed = 'validadeInsumoDeposito'+idCampoCad+'';
-      list_validadeInsumoDeposito_removed.push(validadeInsumoDeposito_removed);
-
-      let descricaoInsumoDeposito_removed = 'descricaoInsumoDeposito'+idCampoCad+'';
-      list_descricaoInsumoDeposito_removed.push(descricaoInsumoDeposito_removed);
 
       let para_remover_campo_adicional = document.getElementById('campoCadDispensario'+idCampoCad)
       para_remover_campo_adicional.remove();
@@ -219,12 +106,6 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
 
     } else if (cadType == 4) {
 
-      let resultado_slc_disp_insumos_removed = 'resultado_slc_disp_insumos'+idCampoCad+'';
-      list_resultado_slc_disp_insumos_removed.push(resultado_slc_disp_insumos_removed);
-
-      let insumo_dispensario_id_removed = 'insumo_dispensario_id'+idCampoCad+'';
-      list_insumo_dispensario_id_removed.push(insumo_dispensario_id_removed);
-
       // PARA CAMPOS DE SOLICITAÇÃO DE INSUMO DO DISPENSARIO
       let para_remover_campo_adicional = document.getElementById('campoRetiraInsumoDisp'+idCampoCad)
       para_remover_campo_adicional.remove();
@@ -232,18 +113,6 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
     } else if (cadType == 5) {
 
       // PARA CAMPOS DE PERMUTA DEPOSITO
-      
-      let campo_to_complete_removed = 'resultado_cad_deposito_insumos'+idCampoCad+'';
-      list_campos_to_complete_removed.push(campo_to_complete_removed);
-
-      let input_to_complete_removed = 'insumoID_Insumodeposito'+idCampoCad+'';
-      list_inputs_to_complete_removed.push(input_to_complete_removed);
-
-      let resultado_permuta_insumos_removed = 'resultado_permuta_insumos'+idCampoCad+'';
-      list_resultado_permuta_insumos_removed.push(resultado_permuta_insumos_removed);
-
-      let permuta_deposito_insumo_id = 'permuta_deposito_insumo_id_'+idCampoCad+'';
-      list_permuta_deposito_insumo_id_removed.push(permuta_deposito_insumo_id);
 
       let para_remover_campo_adicional = document.getElementById('insumo_permuta_dep'+idCampoCad)
       para_remover_campo_adicional.remove();
@@ -318,29 +187,9 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
         html_listados += '</ul>';
 
-        console.log("//cadDep - montou a sugestao");
+        // console.log("//cadDep - montou a sugestao");
 
         resultado_cad_deposito_insumos = document.getElementById('resultado_cad_deposito_insumos'+id_campo_digitado+'');
-        console.log("//cadDep - encontrou o campo para resultado na "+resultado_cad_deposito_insumos);
-
-        let campoFoiDeletado = list_campos_to_complete_removed.includes(resultado_cad_deposito_insumos);
-
-        if (campoFoiDeletado || resultado_cad_deposito_insumos==null) {
-          console.log('//searchInput_cadDeposito/verifica_delected - o campo foi deletado')
-          novo_campo_resultado_cad_deposito_insumos = list_campos_to_complete_result[0];
-          resultado_cad_deposito_insumos = document.getElementById(novo_campo_resultado_cad_deposito_insumos);
-        } else {
-
-          if (ehPermuta) {
-            console.log("//searchInput_cadDeposito/verifica-deleted - é permuta");
-          } else {
-            console.log("//searchInput_cadDeposito/verifica-deleted - não é permuta");
-            let campo_digitado = list_campos_to_complete_result[id_campo_digitado-1];
-            console.log("//searchInput_cadDeposito/verifica-deleted - campo digitado é: "+campo_digitado)
-            resultado_cad_deposito_insumos = document.getElementById(campo_digitado);
-            console.log('//searchInput_cadDeposito/verifica-deleted - o campo existe e é: ' + resultado_cad_deposito_insumos);
-          }
-        }
 
         resultado_cad_deposito_insumos.innerHTML = html_listados;
 
@@ -408,20 +257,6 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
         let resultado_cad_deposito_insumos = document.getElementById('resultado_cad_disp_insumos'+id_campo_digitado+'');
 
-        let campoFoiDeletado = list_resultado_cad_disp_insumos_removed.includes(resultado_cad_deposito_insumos);
-
-        if (campoFoiDeletado || resultado_cad_deposito_insumos==null) {
-          console.log('//searchInput_cadDeposito/verifica_delected - o campo foi deletado')
-
-          novo_campo_resultado_cad_deposito_insumos = list_resultado_cad_disp_insumos_result[0];
-          resultado_cad_deposito_insumos = document.getElementById(novo_campo_resultado_cad_deposito_insumos);
-        } else {
-
-          let campo_digitado = list_resultado_cad_disp_insumos_result[id_campo_digitado-1];
-          resultado_cad_deposito_insumos = document.getElementById(campo_digitado);
-          console.log('//searchInput_cadDeposito/dispensario/verifica-deleted - o campo existe e é: ' + resultado_cad_deposito_insumos);
-        }
-
         resultado_cad_deposito_insumos.innerHTML = html_listados;
 
       } else {
@@ -487,20 +322,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
         html_listados += '</ul>';
 
-        let resultado_slc_disp_insumos = document.getElementById('resultado_slc_disp_insumos'+controle_campo_cad_deposito+'');
-
-        let campoFoiDeletado = list_resultado_slc_disp_insumos_removed.includes(resultado_slc_disp_insumos);
-
-        if (campoFoiDeletado || resultado_slc_disp_insumos==null) {
-
-          novo_campo_resultado_slc_disp_insumos = list_resultado_slc_disp_insumos_result[0];
-          resultado_slc_disp_insumos = document.getElementById(novo_campo_resultado_slc_disp_insumos);
-        } else {
-          // console.log('//solicita_dispensario/campo_existe - num do campo digitado: '+id_campo_digitado)
-          let campo_digitado = list_resultado_slc_disp_insumos_result[id_campo_digitado-1];
-          // console.log('//solicita_dispensario/campo_existe - campo digitado: '+campo_digitado)
-          resultado_slc_disp_insumos = document.getElementById(campo_digitado);
-        }
+        let resultado_slc_disp_insumos = document.getElementById('resultado_slc_disp_insumos'+id_campo_digitado+'');
 
         resultado_slc_disp_insumos.innerHTML = html_listados;
 
@@ -573,20 +395,6 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
         let resultado_permuta_insumos = document.getElementById('resultado_permuta_insumos'+id_campo_digitado+'');
 
-        let campoFoiDeletado = list_resultado_permuta_insumos_removed.includes(resultado_permuta_insumos);
-
-        if (campoFoiDeletado || resultado_permuta_insumos==null) {
-
-          novo_campo_resultado_permuta_insumos = list_resultado_permuta_insumos_result[0];
-          resultado_permuta_insumos = document.getElementById(novo_campo_resultado_permuta_insumos);
-        } else {
-          // console.log('//solicita_dispensario/campo_existe - num do campo digitado: '+id_campo_digitado)
-          let campo_digitado = 'resultado_permuta_insumos'+id_campo_digitado+'';
-          // console.log('//solicita_dispensario/campo_existe - campo digitado: '+campo_digitado)
-          resultado_permuta_insumos = document.getElementById(campo_digitado);
-        }
-
-        // console.log('//solicita_dispensario/campo foi setado - campo digitado: '+resultado_permuta_insumos)
         resultado_permuta_insumos.innerHTML = html_listados;
 
       } else {
@@ -632,20 +440,6 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
         let resultado_cad_deposito_estoque = document.getElementById('resultado_cad_deposito_estoque'+id_campo_digitado+'');
 
-        let campoFoiDeletado = list_resultado_cad_deposito_estoque_removed.includes(resultado_cad_deposito_estoque);
-
-        if (campoFoiDeletado || resultado_cad_deposito_estoque==null) {
-
-          let novo_campo_resultado_cad_deposito_estoque = list_resultado_cad_deposito_estoque_result[0];
-          resultado_cad_deposito_estoque = document.getElementById(novo_campo_resultado_cad_deposito_estoque);
-        } else {
-          // console.log('//solicita_dispensario/campo_existe - num do campo digitado: '+id_campo_digitado)
-          let campo_digitado = 'resultado_cad_deposito_estoque'+id_campo_digitado+'';
-          // console.log('//solicita_dispensario/campo_existe - campo digitado: '+campo_digitado)
-          resultado_cad_deposito_estoque = document.getElementById(campo_digitado);
-        }
-
-        // console.log('//solicita_dispensario/campo foi setado - campo digitado: '+resultado_permuta_insumos)
         resultado_cad_deposito_estoque.innerHTML = html_listados;
 
       } else {
@@ -667,24 +461,8 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     // console.log('//getInsumoId/Deposito - insumoID_Insumodeposito'+id_campo_digitado+'')
   
     let input_to_complete = document.getElementById('insumoID_Insumodeposito'+id_campo_digitado+'');
-    let textarea_to_complet = document.getElementById('descricaoInsumoCadDep'+controle_campo_cad_deposito+'');
-    let qtdCriticaInsumo_to_complete = document.getElementById('qtdCriticaInsumoCadDep'+controle_campo_cad_deposito+'');
-
-    let foi_removido = list_inputs_to_complete_removed.includes(input_to_complete);
-    if (foi_removido || input_to_complete == null) {
-      console.log('//getInsumoId/ - input removido');
-      input_to_complete = document.getElementById(list_inputs_to_complete_result[id_campo_digitado-1]);
-      console.log('//getInumoId/ - o imput é: '+input_to_complete)
-      textarea_to_complet = document.getElementById(list_textarea_to_complete_result[id_campo_digitado-1]);
-      qtdCriticaInsumo_to_complete = document.getElementById(list_qtd_critica_to_complete_result[id_campo_digitado-1]);
-      // console.log('//getInsumoId/ a quantiade crítica é '+qtdCriticaInsumo_to_complete.innerHTML);
-    } else{
-      console.log('//getInumoId/ - editando o campo: '+id_campo_digitado);
-      input_to_complete = document.getElementById('insumoID_Insumodeposito'+id_campo_digitado+'');
-      textarea_to_complet = document.getElementById('descricaoInsumoCadDep'+id_campo_digitado+'');
-      qtdCriticaInsumo_to_complete = document.getElementById('qtdCriticaInsumoCadDep'+id_campo_digitado+'');
-      // console.log('//getInsumoId/ a quantiade critica é '+qtdCriticaInsumo_to_complete.innerHTML);
-    }
+    let textarea_to_complet = document.getElementById('descricaoInsumoCadDep'+id_campo_digitado+'');
+    let qtdCriticaInsumo_to_complete = document.getElementById('qtdCriticaInsumoCadDep'+id_campo_digitado+'');
     
     input_to_complete.value = idInsumo+' - '+nomeINsumo;
     textarea_to_complet.value = descricaoInsumo;
@@ -695,62 +473,17 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
       qtdCriticaInsumo_to_complete.value = qtdInsumo;
     }
 
-    let fechar_span = document.getElementById('insumoID_Insumodeposito'+id_campo_digitado+'');
-    if (list_inputs_to_complete_removed.includes(fechar_span) || fechar_span == null) {
-      fechar_span = document.getElementById(list_inputs_to_complete_result[id_campo_digitado-1]);
-    } else{
-      console.log('//getInumoId/ - verificando a span: '+id_campo_digitado);
-      fechar_span = document.getElementById(list_inputs_to_complete_result[id_campo_digitado]);
-    }
-
-    // const validar_click_span = fechar_span.contains(event.target);
-    let span_para_fechar = document.getElementById('resultado_cad_deposito_insumos'+controle_campo_cad_deposito+'');
-
-    if (list_campos_to_complete_removed.includes(span_para_fechar) || span_para_fechar == null) {
-
-      span_para_fechar = document.getElementById(list_campos_to_complete_result[id_campo_digitado-1]);
-      console.log('//getInsumoId/fecha_span/foi_excluida - '+span_para_fechar);
-    } else{
-      console.log('//getInsumoId/fecha_span/esta_ativa - '+id_campo_digitado);
-      span_para_fechar = document.getElementById('resultado_cad_deposito_insumos'+id_campo_digitado+'');
-    } 
-
-
-    span_para_fechar.innerHTML = '';
+    // Para fechar a span
+    fechaSpan("resultado_cad_deposito_insumos" , id_campo_digitado)
 
   } else if (cadType == 2){
     // PARA O DISPENSARIO
-    // console.log('//getInsumoId/Dispensário - adicionando resultados Dispensário!')
-    // console.log('//moveFromDepToDisp - id do campo digitad: ' + id_campo_digitado);
     
     let insumoID_Insumodispensario = document.getElementById('insumoID_Insumodispensario'+id_campo_digitado+'');
-    let quantidadeInsumoDisponivelDeposito_to_complete = document.getElementById('quantidadeInsumoDisponivelDeposito'+controle_campo_cad_deposito+'');
-    let descricaoInsumoDeposito_to_complet = document.getElementById('descricaoInsumoDeposito'+controle_campo_cad_deposito+'');
-    let validadeInsumoDeposito_to_complete = document.getElementById('validadeInsumoDeposito'+controle_campo_cad_deposito+'');
+    let quantidadeInsumoDisponivelDeposito_to_complete = document.getElementById('quantidadeInsumoDisponivelDeposito'+id_campo_digitado+'');
+    let descricaoInsumoDeposito_to_complet = document.getElementById('descricaoInsumoDeposito'+id_campo_digitado+'');
+    let validadeInsumoDeposito_to_complete = document.getElementById('validadeInsumoDeposito'+id_campo_digitado+'');
     let valor_maximo_to_mov = document.getElementById('quantidadeMovidaParaDispensario'+id_campo_digitado+'');
-    // let quantidadeInsumoDisponivelDeposito_to_complete = '';
-
-    let foi_removido = list_insumoID_Insumodispensario_removed.includes(insumoID_Insumodispensario);
-
-    if (foi_removido || insumoID_Insumodispensario == null) {
-
-      // console.log('//getInsumoId/dispensario - input removido');
-      insumoID_Insumodispensario = document.getElementById(list_insumoID_Insumodispensario_result[id_campo_digitado-1]);
-      // console.log('//getInumoId/dispensario - o imput é: '+insumoID_Insumodispensario)
-      descricaoInsumoDeposito_to_complet = document.getElementById(list_descricaoInsumoDeposito_result[id_campo_digitado-1]);
-      quantidadeInsumoDisponivelDeposito_to_complete = document.getElementById(list_quantidadeInsumoDisponivelDeposito_result[id_campo_digitado-1]);
-      validadeInsumoDeposito_to_complete = document.getElementById(list_validadeInsumoDeposito_result[id_campo_digitado-1]);
-      // console.log('//getInsumoId/dispensario/excluido_vazio a quantiade disponivel no deposito é '+quantidadeInsumoDisponivelDeposito_to_complete.innerHTML);
-
-    } else{
-
-      // console.log('//getInumoId/dispensario - editando o campo: '+id_campo_digitado);
-      insumoID_Insumodispensario = document.getElementById('insumoID_Insumodispensario'+id_campo_digitado+'');
-      descricaoInsumoDeposito_to_complet = document.getElementById('descricaoInsumoDeposito'+id_campo_digitado+'');
-      quantidadeInsumoDisponivelDeposito_to_complete = document.getElementById('quantidadeInsumoDisponivelDeposito'+id_campo_digitado+'');
-      validadeInsumoDeposito_to_complete = document.getElementById('validadeInsumoDeposito'+id_campo_digitado+'');
-      // console.log('//getInsumoId/dispensario/existe - a quantiade disponivel no deposito é '+quantidadeInsumoDisponivelDeposito_to_complete);
-    }
     
     insumoID_Insumodispensario.value = idInsumo+' - '+nomeINsumo;
     descricaoInsumoDeposito_to_complet.value = descricaoInsumo;
@@ -761,62 +494,21 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     // console.log(valor_max_tmp)
     valor_maximo_to_mov.setAttribute("max",valor_max_tmp);
 
-
     // Para fechar a span
-    let fechar_span = document.getElementById('insumoID_Insumodispensario'+id_campo_digitado+'');
-    if (list_insumoID_Insumodispensario_removed.includes(fechar_span) || fechar_span == null) {
-      fechar_span = document.getElementById(list_insumoID_Insumodispensario_result[id_campo_digitado-1]);
-    } else{
-      console.log('//getInumoId/fecha_span - verificando a span: '+id_campo_digitado);
-      fechar_span = document.getElementById(list_descricaoInsumoDeposito_result[id_campo_digitado]);
-    }
-
-    // const validar_click_span = fechar_span.contains(event.target);
-    let span_para_fechar = document.getElementById('resultado_cad_disp_insumos'+controle_campo_cad_deposito+'');
-
-    if (list_resultado_cad_disp_insumos_removed.includes(span_para_fechar) || span_para_fechar == null) {
-
-      span_para_fechar = document.getElementById(list_resultado_cad_disp_insumos_result[id_campo_digitado-1]);
-      console.log('//getInsumoId/fecha_span/foi_excluida - '+span_para_fechar);
-    } else{
-      console.log('//getInsumoId/fecha_span/esta_ativa - '+id_campo_digitado);
-      span_para_fechar = document.getElementById('resultado_cad_disp_insumos'+id_campo_digitado+'');
-    } 
-
-
-    span_para_fechar.innerHTML = '';
+    fechaSpan("resultado_cad_disp_insumos" , id_campo_digitado)
 
   } else if (cadType == 3){
     // PARA RETIRADA DO DISPENSARIO
     // console.log('//getInsumoId/Dispensário - adicionando resultados Dispensário!')
     
-    let insumo_dispensario_id_to_complete = document.getElementById('insumo_dispensario_id'+controle_campo_cad_deposito+'');
-    let descricaoInsumoSclDisp_to_complet = document.getElementById('descricaoInsumoDisp'+controle_campo_cad_deposito+'');
-    let validade_insumo_dispensario_to_complete = document.getElementById('validade_insumo_dispensario'+controle_campo_cad_deposito+'');
+    let insumo_dispensario_id_to_complete = document.getElementById('insumo_dispensario_id'+id_campo_digitado+'');
+    let descricaoInsumoSclDisp_to_complet = document.getElementById('descricaoInsumoSclDisp'+id_campo_digitado+'');
+    let validade_insumo_dispensario_to_complete = document.getElementById('validade_insumo_dispensario'+id_campo_digitado+'');
 
     let quantidade_atual_dispensario_to_complete = document.getElementById('quantidade_atual_dispensario'+id_campo_digitado+'');
 
     let valor_maximo_slc_dispensario = document.getElementById('qtd_solicitada_dispensario'+id_campo_digitado+'');
 
-    let foi_removido = list_insumo_dispensario_id_removed.includes(insumo_dispensario_id_to_complete);
-
-    if (foi_removido || insumo_dispensario_id_to_complete == null) {
-
-      // console.log('//getInsumoId/dispensario - input removido');
-      insumo_dispensario_id_to_complete = document.getElementById(list_insumo_dispensario_id_result[id_campo_digitado-1]);
-      descricaoInsumoSclDisp_to_complet = document.getElementById(list_descricaoInsumoSclDisp_result[id_campo_digitado-1]);
-      quantidade_atual_dispensario_to_complete = document.getElementById(list_quantidade_atual_dispensario_result[id_campo_digitado-1]);
-      validade_insumo_dispensario_to_complete = document.getElementById(list_validade_insumo_dispensario_result[id_campo_digitado-1]);
-
-    } else{
-
-      // console.log('//getInumoId/dispensario - editando o campo: '+id_campo_digitado);
-      insumo_dispensario_id_to_complete = document.getElementById('insumo_dispensario_id'+id_campo_digitado+'');
-      quantidade_atual_dispensario_to_complete = document.getElementById('quantidade_atual_dispensario'+id_campo_digitado+'');
-      descricaoInsumoSclDisp_to_complet = document.getElementById('descricaoInsumoSclDisp'+id_campo_digitado+'');
-      validade_insumo_dispensario_to_complete = document.getElementById('validade_insumo_dispensario'+id_campo_digitado+'');
-    }
-    
     insumo_dispensario_id_to_complete.value = idInsumo+' - '+nomeINsumo;
     descricaoInsumoSclDisp_to_complet.value = descricaoInsumo;
     quantidade_atual_dispensario_to_complete.value = qtdInsumo;
@@ -828,30 +520,7 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     console.log(valor_max_slc_tmp)
     valor_maximo_slc_dispensario.setAttribute("max",valor_max_slc_tmp);
 
-
-    // Para fechar a span
-    let fechar_span = document.getElementById('insumoID_Insumodispensario'+id_campo_digitado+'');
-    if (list_insumoID_Insumodispensario_removed.includes(fechar_span) || fechar_span == null) {
-      fechar_span = document.getElementById(list_insumoID_Insumodispensario_result[id_campo_digitado-1]);
-    } else{
-      // console.log('//getInumoId/fecha_span - verificando a span: '+id_campo_digitado);
-      fechar_span = document.getElementById(list_descricaoInsumoDeposito_result[id_campo_digitado]);
-    }
-
-    // const validar_click_span = fechar_span.contains(event.target);
-    let span_para_fechar = document.getElementById('resultado_slc_disp_insumos'+controle_campo_cad_deposito+'');
-
-    if (list_resultado_slc_disp_insumos_removed.includes(span_para_fechar) || span_para_fechar == null) {
-
-      span_para_fechar = document.getElementById(list_resultado_slc_disp_insumos_result[id_campo_digitado-1]);
-      // console.log('//getInsumoId/fecha_span/foi_excluida - '+span_para_fechar);
-    } else{
-      // console.log('//getInsumoId/fecha_span/esta_ativa - '+id_campo_digitado);
-      span_para_fechar = document.getElementById('resultado_slc_disp_insumos'+id_campo_digitado+'');
-    } 
-
-
-    span_para_fechar.innerHTML = '';
+    fechaSpan("resultado_slc_disp_insumos" , id_campo_digitado)
 
   } else if (cadType == 4){
     // PARA PERMUTA DEPOSITO
@@ -859,33 +528,13 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     // console.log('//getInsumoId/Deposito/Permuta - adicionando resultados Depósito!')
     
     let permuta_deposito_insumo_id_to_complete = document.getElementById('permuta_deposito_insumo_id_'+id_campo_digitado+'');
-    let descricaoInsumoDepositoPermuta_to_complet = document.getElementById('descricaoInsumoDepositoPermuta'+controle_campo_cad_deposito+'');
-    let validadeInsumoDepositoPermuta_to_complete = document.getElementById('validadeInsumoDepositoPermuta'+controle_campo_cad_deposito+'');
+    let descricaoInsumoDepositoPermuta_to_complet = document.getElementById('descricaoInsumoDepositoPermuta'+id_campo_digitado+'');
+    let validadeInsumoDepositoPermuta_to_complete = document.getElementById('validadeInsumoDepositoPermuta'+id_campo_digitado+'');
     let deposito_origem_insumo_retirado = document.getElementById('deposito_origem_insumo_retirado'+id_campo_digitado+'');
 
     let valor_maximo_to_mov = document.getElementById('quantidade_solicitada_permuta'+id_campo_digitado+'');
-    // let quantidadeInsumoDisponivelDeposito_to_complete = '';
+    let quantidade_atual_deposito_permuta_to_complete = 'quantidade_atual_deposito_permuta'+id_campo_digitado+'';
     // console.log("//getInsumoId/Deposito/Permuta - deposito_origem_insumo_retirado"+id_campo_digitado+"");
-
-    let foi_removido = list_permuta_deposito_insumo_id_removed.includes(permuta_deposito_insumo_id_to_complete);
-
-    if (foi_removido || permuta_deposito_insumo_id_to_complete == null) {
-
-      console.log('//getInsumoId/dep/permuta - input removido');
-      permuta_deposito_insumo_id_to_complete = document.getElementById(list_permuta_deposito_insumo_id_result[id_campo_digitado-1]);
-      descricaoInsumoDepositoPermuta_to_complet = document.getElementById(list_descricaoInsumoDepositoPermuta_result[id_campo_digitado-1]);
-      quantidade_atual_deposito_permuta_to_complete = document.getElementById(list_quantidade_atual_deposito_permuta_result[id_campo_digitado-1]);
-      validadeInsumoDepositoPermuta_to_complete = document.getElementById(list_validadeInsumoDepositoPermuta_result[id_campo_digitado-1]);
-
-    } else{
-
-      // console.log('//getInumoId/deposito/permuta - editando o campo: '+id_campo_digitado);
-      permuta_deposito_insumo_id_to_complete = document.getElementById('permuta_deposito_insumo_id_'+id_campo_digitado+'');
-      // console.log('//getInumoId/deposito/permuta - campo para id e nome: '+permuta_deposito_insumo_id_to_complete)
-      quantidade_atual_deposito_permuta_to_complete = document.getElementById('quantidade_atual_deposito_permuta'+id_campo_digitado+'');
-      descricaoInsumoDepositoPermuta_to_complet = document.getElementById('descricaoInsumoDepositoPermuta'+id_campo_digitado+'');
-      validadeInsumoDepositoPermuta_to_complete = document.getElementById('validadeInsumoDepositoPermuta'+id_campo_digitado+'');
-    }
 
     quantidade_atual_deposito_permuta_to_complete.value = qtdInsumo;
     validadeInsumoDepositoPermuta_to_complete.value = validadeInsumo;
@@ -905,89 +554,22 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
 
   } else if (cadType == 5){
     // PARA PROCURAR ESTOQUE
-
-    // console.log('//getInsumoId/Deposito/Permuta - adicionando resultados Depósito!')
     
     let depositoDestinoInsumodeposito_to_complete = document.getElementById('depositoDestinoInsumodeposito'+id_campo_digitado+'');
-
-    let foi_removido = list_depositoDestinoInsumodeposito_removed.includes(depositoDestinoInsumodeposito_to_complete);
-
-    console.log("//getInsumoId/Deposito/procura_estoque - foi removido? "+foi_removido);
-    console.log("//getInsumoId/Deposito/procura_estoque - depositoDestinoInsumodeposito"+id_campo_digitado+"");
-
-    if (foi_removido || depositoDestinoInsumodeposito_to_complete == null) {
-
-      console.log('//getInsumoId/dep/procura_estoque - input removido');
-      permuta_deposito_insumo_id_to_complete = document.getElementById(list_depositoDestinoInsumodeposito_result[id_campo_digitado-1]);
-
-    } else{
-
-      // console.log('//getInumoId/deposito/permuta - editando o campo: '+id_campo_digitado);
-      depositoDestinoInsumodeposito_to_complete = document.getElementById('depositoDestinoInsumodeposito'+id_campo_digitado+'');
-      // console.log('//getInumoId/deposito/permuta - campo para id e nome: '+permuta_deposito_insumo_id_to_complete)
-    }
 
     depositoDestinoInsumodeposito_to_complete.value = idInsumo+' - '+nomeINsumo;
 
     // span_para_fechar.innerHTML = '';
-    fechaSpan(depositoDestinoInsumodeposito_to_complete, "resultado_cad_deposito_estoque" , id_campo_digitado,5)
-
+    fechaSpan("resultado_cad_deposito_estoque" , id_campo_digitado)
 
   }
 
 }
 
 // Para fechar a span
-function fechaSpan(input_to_check, span_to_close,id_campo_digitado,ondeFechar) {
+function fechaSpan(span_to_close,id_campo_digitado) {
 
-  let input_preenchido = document.getElementById(''+input_to_check+''+id_campo_digitado+'');
   let span_para_fechar = document.getElementById(''+span_to_close+''+id_campo_digitado+'');
-
-  if (ondeFechar==4) {
-    if (list_permuta_deposito_insumo_id_removed.includes(input_preenchido) || input_preenchido == null) {
-      input_preenchido = document.getElementById(list_permuta_deposito_insumo_id_result[id_campo_digitado-1]);
-    } else{
-      console.log('//getInumoId/fecha_span/verifica_conteudo_input - verificando a span: '+id_campo_digitado);
-      input_preenchido = document.getElementById(list_descricaoInsumoDepositoPermuta_result[id_campo_digitado]);
-    }
-
-    console.log("Passou daqui")
-
-    // const validar_click_span = fechar_span.contains(event.target);
-
-    if (list_resultado_permuta_insumos_removed.includes(span_para_fechar) || span_para_fechar == null) {
-
-      span_para_fechar = document.getElementById(list_resultado_permuta_insumos_result[id_campo_digitado-1]);
-      console.log('//getInsumoId/fecha_span/foi_excluida - '+span_para_fechar);
-    } else{
-      console.log('//getInsumoId/fecha_span/esta_ativa - '+id_campo_digitado);
-      span_para_fechar = document.getElementById('resultado_permuta_insumos'+id_campo_digitado+'');
-    } 
-
-  } else if (ondeFechar==5){
-    // PARA PROCURAR ESTOQUE NO CAD DEPOSITO
-    
-    if (list_depositoDestinoInsumodeposito_removed.includes(input_preenchido) || input_preenchido == null) {
-      input_preenchido = document.getElementById(list_depositoDestinoInsumodeposito_result[id_campo_digitado-1]);
-    } else{
-      console.log('//getInumoId/fecha_span/verifica_conteudo_input - verificando a span: '+id_campo_digitado);
-      input_preenchido = document.getElementById(list_depositoDestinoInsumodeposito_result[id_campo_digitado]);
-    }
-
-    console.log("Passou daqui")
-
-    // const validar_click_span = fechar_span.contains(event.target);
-
-    if (list_resultado_cad_deposito_estoque_removed.includes(span_para_fechar) || span_para_fechar == null) {
-
-      span_para_fechar = document.getElementById(list_resultado_cad_deposito_estoque_result[id_campo_digitado-1]);
-      console.log('//getInsumoId/fecha_span/foi_excluida - '+span_para_fechar);
-    } else{
-      console.log('//getInsumoId/fecha_span/esta_ativa - '+id_campo_digitado);
-      span_para_fechar = document.getElementById('resultado_cad_deposito_estoque'+id_campo_digitado+'');
-    } 
-
-  }
 
   span_para_fechar.innerHTML = '';
   

@@ -310,7 +310,7 @@ if ($qualEstoque_dep != "") {
                 
                 echo "<a href=\"?menuop=deposito&" . $qualEstoque . "&" . $qualInsumo . "=1\">Início</a> ";
 
-                if ($pagina_deposito>6) {
+                if ($pagina_deposito>1) {
                     ?>
                         <a href="?menuop=deposito&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_deposito-1?>"> << </a>
                     <?php

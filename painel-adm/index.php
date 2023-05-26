@@ -118,7 +118,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Movimentações</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=solicitacoes" id="listar_movimentacoes">Solicitações</a>
+                                <a href="index.php?menuop=solicitacoes&Pendente" id="listar_movimentacoes">Solicitações</a>
                             </li>
 
                             <li>
@@ -423,8 +423,8 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                     include_once("estoques/dispensario/solicitacoes/salva_solicitacao_dispensario.php");
                     break;
 
-                case 'status_solicitacao':
-                    include_once("estoques/dispensario/solicitacoes/sit_solicitacoes.php");
+                case 'atualiza_solicitacao':
+                    include_once("estoques/dispensario/solicitacoes/atualiza_solicitacoes.php");
                     break;
 
                 case 'detalhes_solicitacao':
