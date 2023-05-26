@@ -56,9 +56,7 @@ if ($qualEstoque_dep != "") {
                         <th>Dispensário de Origem</th>
                         <th>Quantidade Solicitada</th>
                         <th>Data e Horário</th>
-                        <th>Setor de Destino</th>
                         <th>Tipo de Solicitação</th>
-                        <th>Justificativa</th>
                         <th>Status</th>
                         <th id="">Operações</th>
                     </tr>
@@ -116,15 +114,24 @@ if ($qualEstoque_dep != "") {
                         
                     ?>
                     <tr>
-                        <td><?=$dados_para_while["solicitacoes_id"]?></td>
+                        <td>
+                            <?php
+                                $solicitacao_id = $dados_para_while["solicitacoes_id"];
+                                echo $solicitacao_id;    
+                            ?>
+                        </td>
                         <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
                         <td><?=$dados_para_while["solicitacoes_qtd_solicitada"]?></td>
                         <td><?=$dados_para_while["solicitacoes_data"]?></td>
-                        <td><?=$dados_para_while["setores_setor"]?></td>
-                        <td><?=$dados_para_while["tipos_movimentacoes_movimentacao"]?></td>
-                        <td><?=$dados_para_while["solicitacoes_justificativa"]?></td>
+                        <td>
+                            <?php
+                                $movimentacao_tmp = $dados_para_while["tipos_movimentacoes_movimentacao"];
+                                $tipo_slc = strtok($movimentacao_tmp, " ");
+                                echo $tipo_slc;
+                            ?>
+                        </td>
                         <td style="color: 
                         <?php
                             $status_slc = $dados_para_while["status_slc_status"];
@@ -135,17 +142,17 @@ if ($qualEstoque_dep != "") {
                             }
                         ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
-                            <a href="#"
+                            <a href="index.php?menuop=status_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar"
                                 class="confirmaOperacao">
                                 <button class="btn" style="color: green;">Aprovar</button>
                             </a>
-                            <a href="#"
+                            <a href="index.php?menuop=status_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar"
                                 class="confirmaOperacao">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="#"
+                            <a href="index.php?menuop=detalhes_solicitacao&idSolicitacao=<?=$solicitacao_id?>"
                                 class="confirmaOperacao">
-                                <button class="btn" style="color: blue;">Vizualizar</button>
+                                <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>
                         </td>
                     </tr>

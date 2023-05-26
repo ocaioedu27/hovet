@@ -45,6 +45,7 @@ $tipoEstoque = $tipoEstoque;
         </div>
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario&<?=$qualEstoque?>" method="post">
             <div class="dados_solicitacao">
+                <hr>
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <?php
@@ -99,7 +100,7 @@ $tipoEstoque = $tipoEstoque;
                         </div>
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDisponivelDeposito">Disponível no Depósito</label>
-                            <input type="text" class="form-control largura_um_terco" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" readonly>
+                            <input type="text" class="form-control largura_um_terco" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" onchange="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp')" readonly>
                         </div>
                             
                         <div class="display-flex-cl">
@@ -113,7 +114,10 @@ $tipoEstoque = $tipoEstoque;
 
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDispensario">Quantidade Transferida</label>
-                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" required>
+                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" onkeyup="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp')" required>
+                            <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
+                                <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                            </span>
                         </div>
 
                         <div class="display-flex-cl">
@@ -148,7 +152,7 @@ $tipoEstoque = $tipoEstoque;
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDispensario" class="btn_cadastrar">
+                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDispensario" class="btn_cadastrar" id="btn_mv_insumo_dep_to_disp">
             </div>
         </form>
     </div>

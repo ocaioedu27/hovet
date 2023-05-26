@@ -111,12 +111,15 @@ if ($qualEstoque_dep != "") {
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Permutada</label>
-                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" required>
+                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" id="quantidade_solicitada_permuta1" onkeyup="verificaValorMaximoExcedido('quantidade_solicitada_permuta1','quantidade_atual_deposito_permuta1','alerta_valor_acima_max1','btn_permuta_insumo_dep')" required>
+                                <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
+                                    <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                                </span>
                             </div>
                             
                             <div class="display-flex-cl">
                                 <label>Disponível no Depósito</label>
-                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito[]" id="quantidade_atual_deposto_permuta1" readonly>
+                                <input type="text" class="form-control largura_metade" name="quantidadeInsumoDisponivelDeposito[]" id="quantidade_atual_deposito_permuta1" onchange="verificaValorMaximoExcedido('quantidade_solicitada_permuta1','quantidade_atual_deposito_permuta1','alerta_valor_acima_max1','btn_permuta_insumo_dep')" readonly>
                             </div>
                         </div>
 
@@ -185,7 +188,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Permutar" name="btnPermutaInsumoDeposito" class="btn_cadastrar">
+                <input type="submit" value="Permutar" name="btnPermutaInsumoDeposito" id="btn_permuta_insumo_dep" class="btn_cadastrar">
             </div>
         </form>
     </div>

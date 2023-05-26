@@ -22,7 +22,7 @@ if ($qualEstoque_dep != "") {
     <div class="cards retirar_dispensario">
         <div class="voltar form_retirada">
             <h4>Solicitando itens do Dispensário</h4>
-            <a href="index.php?menuop=dispensario&<?=$qualEstoque?>=1" class="confirmaVolta">
+            <a href="index.php?menuop=dispensario_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -52,7 +52,7 @@ if ($qualEstoque_dep != "") {
                         
                     <div class="display-flex-cl">
                         <label>Tipo de operação</label>
-                        <select class="form-control" name="operacao_dispensario" id="" required>
+                        <select class="form-control" name="operacao_dispensario" id="qualSolicitacaoDisp" onclick="verificaSolicitacao()" required>
                             <?php
                             $sql = "SELECT tipos_movimentacoes_id,tipos_movimentacoes_movimentacao FROM tipos_movimentacoes WHERE tipos_movimentacoes_descricao LIKE 'Quando alguém solicita%' ";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -72,7 +72,7 @@ if ($qualEstoque_dep != "") {
                 <div class="form-group valida_movimentacao">
 
                     <div class="display-flex-cl">
-                        <label>Setor Destino</label>
+                        <label id="vaiOuVem">Setor</label>
                         <select class="form-control largura_metade" name="setor_destino_solicitacao_dispensario" id="" required>
                             <?php
                             $sql = "SELECT * FROM setores";
@@ -124,7 +124,10 @@ if ($qualEstoque_dep != "") {
              
                         <div class="display-flex-cl">
                             <label>Quantidade Solicitada</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" min="1" required>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp')" required>
+                            <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
+                                <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                            </span>
                         </div>
 
                         <div class="display-flex-cl">
@@ -134,7 +137,7 @@ if ($qualEstoque_dep != "") {
 
                         <div class="display-flex-cl">
                             <label for="quantidade_atual_dispensario">Disponível no Dispensário</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario1" readonly>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario1" onchange="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp')" readonly>
                         </div>
                     </div>
 
@@ -167,7 +170,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar">
+                <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar" id="btn_slc_insumo_disp">
             </div>
         </form>
     </div> 
