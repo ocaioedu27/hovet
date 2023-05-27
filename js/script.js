@@ -517,7 +517,7 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     // valor_maximo_slc_dispensario.setAttribute = ;
     
     let valor_max_slc_tmp = quantidade_atual_dispensario_to_complete.value;
-    console.log(valor_max_slc_tmp)
+    // console.log(valor_max_slc_tmp)
     valor_maximo_slc_dispensario.setAttribute("max",valor_max_slc_tmp);
 
     fechaSpan("resultado_slc_disp_insumos" , id_campo_digitado)

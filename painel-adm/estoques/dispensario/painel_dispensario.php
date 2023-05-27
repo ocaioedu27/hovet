@@ -1,6 +1,6 @@
 <?php 
 
-echo $qualEstoque;
+// echo $qualEstoque;
 
 // $qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
 

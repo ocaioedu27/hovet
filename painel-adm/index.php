@@ -195,9 +195,20 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                             <?php echo $_SESSION['usuario_primeiro_nome'];?>
                         </span>
                         <div class="dropdown-content sair">
-                            <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
-                            <a href="index.php?menuop=editar_usuario&idUsuario=<?=$_SESSION['usuario_id']?>">Meus dados</a>
-                            <a href="../db/logout.php">Sair</a>
+                            <ul>
+                                <li>
+                                    <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=editar_usuario&idUsuario=<?=$_SESSION['usuario_id']?>">Meus dados</a>
+                                </li>
+                                <li>
+                                    <a href="../db/logout.php">Sair</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -413,6 +424,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
                 case 'solicitacoes':
                     include_once("estoques/dispensario/solicitacoes/painel_solicitacoes.php");
+                    break;
+
+                case 'minhas_solicitacoes':
+                    include_once("estoques/dispensario/solicitacoes/painel_minhas_solicitacoes.php");
                     break;
 
                 case 'solicitar_dispensario':
