@@ -641,6 +641,7 @@ function returnUserSession(sessionUserType){
   let operacao_slc_aprova = null;
   let operacao_slc_reprova = null;
   let confirma_dados_slc = null;
+  let menu_listar = null;
 
   try {
 
@@ -697,6 +698,11 @@ function returnUserSession(sessionUserType){
         }
         if (operacao_slc_reprova) {
           operacao_slc_reprova.remove();
+        }
+
+        menu_listar = document.getElementById('listar');
+        if (menu_listar) {
+          menu_listar.remove();
         }
         qtd_colunas_tabelas--;
       }

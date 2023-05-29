@@ -38,6 +38,15 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
 }
 
+
+if ($sessionUserType!=5 && $sessionUserType!=3) {
+    // echo "minhas_solicitacoes";
+    $painel_slc = "minhas_solicitacoes";
+    $complemento_slc = "Minhas ";
+}else{
+    $painel_slc = "solicitacoes";
+    $complemento_slc = "";
+}
 // // function gerar_pdf(){
 
 // use Dompdf\Dompdf;
@@ -106,23 +115,27 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                 <a href="index.php?menuop=pagina_principal">Dashboard</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=compra" id="listar_notas_fiscais">Compras</a>
+                                <a href="index.php?menuop=compra" id="listar">Compras</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=doacao" id="listar_doacoes">Doações</a>
+                                <a href="index.php?menuop=doacao" id="listar">Doações</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=permuta" id="listar_doacoes">Permutas</a>
+                                <a href="index.php?menuop=permuta" id="listar">Permutas</a>
                             </li>
                             <li>
-                                <a href="index.php?menuop=listar_movimentacoes" id="listar_movimentacoes">Movimentações</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=solicitacoes&Pendente" id="listar_movimentacoes">Solicitações</a>
+                                <a href="index.php?menuop=listar_movimentacoes" id="listar">Movimentações</a>
                             </li>
 
                             <li>
-                                <a href="index.php?menuop=listar_relatorios" id="listar_movimentacoes">Relatorios</a>
+                                <a href="index.php?menuop=listar_relatorios" id="listar">Relatorios</a>
+                            </li>
+
+                            <li>
+                                <input type="hidden" id="sessionUserType" value="<?=$qtd_linhas_tabelas=6?>">
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
                             </li>
                         </ul>
                     </div>
@@ -171,7 +184,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                         </ul>
                     </div>
                 </div>
-                <div class="dropdown">
+                <div class="dropdown" id="listar">
                     <a href="#">Usuários</a>
                     <div class="dropdown-content">
                         <ul>
