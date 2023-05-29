@@ -4,7 +4,7 @@
 
 ### Para o banco de dados
 
-- Entrar na pasta:
+- Após importar o código, entrar na pasta:
 
 hovet/db/hovet_db/
 
@@ -16,10 +16,10 @@ build.sql
 
 - O usuário é o email:
 
-diretor_a@ufrahovet.com.br
+adm@ufrahovet.com.br
 
 - A senha padrão é:
 
-1234
+Hovet@2023
 
 
