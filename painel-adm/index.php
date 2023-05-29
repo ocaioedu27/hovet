@@ -108,11 +108,14 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
             </div>
             <div class="menu_op_adm">
                 <div class="dropdown">
-                    <a href="#">Página principal</a>
+                    <a href="#">Opções do Sistema</a>
                     <div class="dropdown-content" style="width: auto;">
                         <ul>
                             <li>
-                                <a href="index.php?menuop=pagina_principal">Dashboard</a>
+                                <a href="index.php?menuop=pagina_principal">Página Principal</a>
+                            </li>
+                            <li>
+                                <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
                             </li>
                             <li>
                                 <a href="index.php?menuop=compra" id="listar">Compras</a>
@@ -132,7 +135,7 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
                             </li>
 
                             <li>
-                                <input type="hidden" id="sessionUserType" value="<?=$qtd_linhas_tabelas=6?>">
+                                <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=7?>">
                             </li>
                             <li>
                                 <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
@@ -249,6 +252,11 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
                 case 'pagina_principal':
                     include_once("home.php");
                     break;
+
+                case 'dashboard':
+                    include_once("dashboard.php");
+                    break;
+
 
                 case 'estoques':
                     include_once('estoques/painel_estoques.php');
@@ -856,7 +864,14 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
                     break;
             }
         ?>
-        <?php echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';?>
+        <?php 
+        
+        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
+        
+        echo '<input type="hidden" id="sessionUserType" value="'. $sessionUserType . '">';
+
+        ?>
+
     </main>
     
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

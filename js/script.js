@@ -630,8 +630,9 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
 
 
 //para restringir perfis
-var sessionUserType = document.querySelector('#sessionUserType').value;
-function returnUserSession(sessionUserType){
+function returnUserSession(userType){
+  console.log(document.getElementById(userType))
+  const sessionUserType = document.getElementById(userType).value;
 
   let operacao_cadastrar_id = null;
   let operacao_retirar = null;
@@ -664,7 +665,7 @@ function returnUserSession(sessionUserType){
   let i = 0;
 
   if(sessionUserType!=5 && sessionUserType!=3){
-    // console.log("usuario não terá opcoes de cadastro "+ sessionUserType);
+    console.log("usuario não terá opcoes de cadastro "+ sessionUserType);
 
     if(operacao_cadastrar_id){
       operacao_cadastrar_id.remove();
@@ -713,4 +714,4 @@ function returnUserSession(sessionUserType){
    
 }
 
-returnUserSession(sessionUserType)
+returnUserSession("sessionUserType");
