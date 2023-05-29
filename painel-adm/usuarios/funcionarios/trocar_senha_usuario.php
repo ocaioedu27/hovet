@@ -2,7 +2,7 @@
 
 $painel = "";
 
-if ($sessionUserType != 5 && $sessionUserType != 3) {
+if ($sessionUserType != 2 && $sessionUserType != 3) {
     $painel = "pagina_principal";
 } else {
     $painel = "usuarios";
@@ -31,7 +31,7 @@ $dados = mysqli_fetch_assoc($result);
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=atualizar_usuario" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_usuario&alterar_senha" method="post">
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="idUsuario">ID</label>
@@ -68,7 +68,7 @@ $dados = mysqli_fetch_assoc($result);
 
                     <div class="diplay-flex-cl">
                         <label>Insira sua senha antiga para confirmar</label>
-                        <input type="text" class="form-control" name="validaSenhaUsuario" required>
+                        <input type="password" class="form-control" name="validaSenhaUsuario" required>
                     </div>
                 </div>
                 <input type="submit" value="Atualizar" name="btnAtualizarUsuario" class="btn_cadastrar" id="btn_cad_user">

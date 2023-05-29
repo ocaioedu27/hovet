@@ -664,7 +664,7 @@ function returnUserSession(userType){
 
   let i = 0;
 
-  if(sessionUserType!=5 && sessionUserType!=3){
+  if(sessionUserType!=2 && sessionUserType!=3){
     console.log("usuario não terá opcoes de cadastro "+ sessionUserType);
 
     if(operacao_cadastrar_id){

@@ -49,7 +49,7 @@
                     <select class="form-control largura_metade" name="tipoUsuario" required>
                         <?php
                         
-                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5 and tipo_usuario_id!=2";
+                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=2";
                         $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                         
                         while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){

@@ -101,7 +101,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 </button>
             </a>
         </div>
-        <form action="" class="form_retirar_dispensario" method="post">
+        <div class="form_retirar_dispensario">
             
             <div class="dados_solicitante">
                 <hr>
@@ -190,22 +190,16 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 </div>
             </div>
 
-            
-            <div class="form-group valida_movimentacao" id="confirma_dados_slc">
-                <label>Confirmo que os dados estão validados</label>
-                <input type="checkbox" class="form-control-sm" name="movimentacao_dispensasrio_to_setor" required>
-            </div>
-
             <div class="display-flex-row" style="justify-content: center;">
                 
-                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar" class="confirmaOperacao" id="operacao_slc_aprova">
+                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacoesId?>&aprovar" class="confirmaOperacao" id="operacao_slc_aprova">
                     <button class="btn" style="color: green;">Aprovar</button>
                 </a>
-                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar" class="confirmaOperacao" id="operacao_slc_reprova">
+                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacoesId?>&recusar" class="confirmaOperacao" id="operacao_slc_reprova">
                     <button class="btn" style="color: red;">Recusar</button>
                 </a>
             </div>
-        </form>
+        </div>
     </div> 
 </div>
     

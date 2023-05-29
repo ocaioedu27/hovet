@@ -3,7 +3,7 @@
 
 $painel = "";
 
-if ($sessionUserType != 5 && $sessionUserType != 3) {
+if ($sessionUserType != 2 && $sessionUserType != 3) {
     $painel = "pagina_principal";
 } else {
     $painel = "usuarios";
@@ -59,7 +59,7 @@ $dados = mysqli_fetch_assoc($result);
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=atualizar_usuario" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_usuario&atualizar_dados_usuario" method="post">
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="idUsuario">ID</label>
@@ -91,7 +91,7 @@ $dados = mysqli_fetch_assoc($result);
                     <select class="form-control largura_um_terco" name="tipoUsuario">
                         <?php
                         
-                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=5";
+                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=2";
                         $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                         
                         while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){

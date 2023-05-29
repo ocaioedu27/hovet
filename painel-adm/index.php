@@ -37,7 +37,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 }
 
 
-if ($sessionUserType!=5 && $sessionUserType!=3) {
+if ($sessionUserType!=2 && $sessionUserType!=3) {
     // echo "minhas_solicitacoes";
     $painel_slc = "minhas_solicitacoes";
     $complemento_slc = "Minhas ";
@@ -46,7 +46,7 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
     $complemento_slc = "";
 }
 
-echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!'); </script>";
+// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!'); </script>";
 
 ?>
 
@@ -251,7 +251,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
                     
                 case 'cadastro_estoque':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -263,7 +263,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'inserir_estoque':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -283,7 +283,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
 
                 case 'cadastro_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -295,7 +295,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'inserir_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -307,7 +307,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'editar_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -319,7 +319,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'excluir_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -331,7 +331,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
     
                 case 'atualizar_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -343,7 +343,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'usuarios':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -354,7 +354,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'cadastro_usuario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -367,7 +367,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'inserir_usuario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -391,7 +391,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
 
                 case 'excluir_usuario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -403,7 +403,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -415,7 +415,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'cadastro_fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -427,7 +427,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'inserir_fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -439,7 +439,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'editar_fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -451,7 +451,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
     
                 case 'atualizar_fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -463,7 +463,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'excluir_fornecedores':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -475,7 +475,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -487,7 +487,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'cadastro_instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -499,7 +499,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'inserir_instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -511,7 +511,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'editar_instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -523,7 +523,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
     
                 case 'atualizar_instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -535,7 +535,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'excluir_instituicoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -563,7 +563,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;        
                 
                 case 'cadastro_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -575,7 +575,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                     
                 case 'cadastro_categoria_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -587,7 +587,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                 
                 case 'inserir_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -599,7 +599,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                     
                 case 'editar_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -611,7 +611,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'atualizar_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -623,7 +623,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'excluir_insumo':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -644,7 +644,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
 
                 case 'cadastro_dispensario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -656,7 +656,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'editar_dispensario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -668,7 +668,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'excluir_dispensario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -680,7 +680,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'atualizar_dispensario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -692,7 +692,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'inserir_dispensario':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -704,7 +704,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'solicitacoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -728,7 +728,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
 
                 case 'atualiza_solicitacao':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -756,7 +756,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
                 
                 case 'listar_movimentacoes':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -768,7 +768,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
                     
                 case 'listar_relatorios':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -788,7 +788,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     break;
 
                 case 'compra':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -800,7 +800,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'doacao':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -812,7 +812,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'permuta':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -824,7 +824,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }
 
                 case 'permutar_deposito':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -836,7 +836,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE 
                     }   
 
                 case 'detalhar_permuta':
-                    if ($sessionUserType!=5 && $sessionUserType!=3) {
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";

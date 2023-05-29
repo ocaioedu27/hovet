@@ -484,7 +484,7 @@ span.icon {
 }
 
 .cards.cadastro_deposito{
-    width: 55%;
+    width: auto;
     height: auto;
     overflow-y: auto;
 }
@@ -636,7 +636,7 @@ select.form-control-sm{
     background-color: #04AA6D;
 }
 
-form.form_retirar_dispensario {
+.form_retirar_dispensario {
     display: flex;
     flex-direction: column;
     width: 100%;

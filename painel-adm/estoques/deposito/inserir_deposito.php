@@ -121,7 +121,7 @@
                 }
     
             } else{
-                echo "<br/>é doação";
+                // echo "<br/>é doação";
                 $sql_doacao = "INSERT INTO doacoes (
                     doacoes_qtd_doada,
                     doacoes_tipos_movimentacoes_id,

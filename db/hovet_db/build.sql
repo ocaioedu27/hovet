@@ -15,7 +15,7 @@ create table tipo_usuario (
 
 insert into tipo_usuario values
 	(null, 'Médico(a) Veterinário(a)'),
-    (null, 'Responsável pelas compras'),
+    (null, 'Administrador(a) do Sistema'),
     (null, 'Responsável pelo estoque'),
     (null, 'Professor(a)'),
     (null, 'Diretor(a) do HOVET');
@@ -34,9 +34,11 @@ create table usuarios(
     usuario_senha varchar(256) not null
 );
 
+
+# Usar a senha: Hovet@2023
+# Trocar após o primeiro login
 insert into usuarios value
-(null, "Diretor(a) do HOVET", "Diretor(a)", "do Hovet", "diretor_a@ufrahovet.com.br", 5, "000000000000000000000", "$2y$10$Q.86fPmUob06/fo2Jtloeu9VJf5iJqZ7upg1PP2TAQMY2Iq8OJHCC");
-#usar essa senha 1234 para trocar após o primeiro login
+(null, "Administrador", "ADM", "do Sistema", "adm@ufrahovet.com.br", 2, "12345678", "$2y$10$jf95bNw23hp4bpXb3490h.a3IGYbCdmfd.M6OjLE0VAUOnOJXr8Zu");
 
 ######################################################
 
