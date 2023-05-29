@@ -2,9 +2,9 @@
 
 use Sabberworm\CSS\Value\Value;
 
-echo $qualEstoque;
+// echo $qualEstoque;
 
-$qualEstoque_dep = (isset($_POST["deposito"]))?$_POST["deposito"]:"";
+// $qualEstoque_dep = (isset($_POST["deposito"]))?$_POST["deposito"]:"";
 
 $stringList = array();
 
@@ -300,12 +300,15 @@ if ($qualEstoque_dep != "") {
             <?php
                 $sqlTotaldeposito = "SELECT d.deposito_id 
                                         FROM deposito d
+                                        INNER JOIN insumos i
+                                        ON i.insumos_id = d.deposito_insumos_id
                                         INNER JOIN estoques e
                                         ON e.estoques_id = d.deposito_estoque_id
-                                        WHERE e.estoques_nome_real='{$qualEstoque}'";
+                                        WHERE e.estoques_nome_real='{$qualEstoque}' and i.insumos_nome='{$qualInsumo}'";
                 $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
 
                 $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+                // echo $numTotaldeposito;
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                 
                 echo "<a href=\"?menuop=deposito&" . $qualEstoque . "&" . $qualInsumo . "=1\">Início</a> ";

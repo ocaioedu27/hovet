@@ -152,30 +152,30 @@ $qualStatus = $valor_est;
                         <?php
                             $status_slc = $dados_para_while["status_slc_status"];
                             if($status_slc == "Pendente"){
-                                echo "red";
+                                echo "goldenrod";
                             } elseif ($status_slc == "Aprovada"){
                                 echo "green";
+                            } elseif ($status_slc == "Recusada"){
+                                echo "red";
                             }
                         ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
                             <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar"
-                                class="confirmaOperacao">
+                                class="confirmaOperacao" id="operacao_slc_aprova">
                                 <button class="btn" style="color: green;">Aprovar</button>
                             </a>
                             <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar"
-                                class="confirmaOperacao">
+                                class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_solicitacao&idSolicitacao=<?=$solicitacao_id?>"
-                                class="confirmaOperacao">
+                            <a href="index.php?menuop=detalhes_solicitacao&geral&idSolicitacao=<?=$solicitacao_id?>"
+                                class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>
                         </td>
                     </tr>
                     <?php
                         }
-                        // array_push($dados_form_buscar,$valor_form);
-                        // print_r($dados_form_buscar);
                         echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>

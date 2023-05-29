@@ -638,6 +638,9 @@ function returnUserSession(sessionUserType){
   let listar_notas_fiscais = null;
   let th_operacoes_editar_deletar_id = null;
   let qtd_colunas_tabelas = 0;
+  let operacao_slc_aprova = null;
+  let operacao_slc_reprova = null;
+  let confirma_dados_slc = null;
 
   try {
 
@@ -649,6 +652,8 @@ function returnUserSession(sessionUserType){
     listar_notas_fiscais = document.getElementById('listar_notas_fiscais');
 
     th_operacoes_editar_deletar_id = document.getElementById('th_operacoes_editar_deletar');
+
+    confirma_dados_slc = document.getElementById('confirma_dados_slc');
 
     qtd_colunas_tabelas = document.querySelector('#quantidade_linhas_tabelas').value;
   } catch (error) {
@@ -672,12 +677,28 @@ function returnUserSession(sessionUserType){
     if (listar_notas_fiscais) {
       listar_notas_fiscais.remove();
     }
+    if (confirma_dados_slc) {
+      confirma_dados_slc.remove();
+    }
 
+    // console.log(qtd_colunas_tabelas,i);
     if (qtd_colunas_tabelas != 0) {
       while(i < qtd_colunas_tabelas){
-        qtd_colunas_tabelas--;
         let td_operacoes_editar_deletar = document.getElementById('td_operacoes_editar_deletar');
-        td_operacoes_editar_deletar.remove();
+        if (td_operacoes_editar_deletar) {
+          td_operacoes_editar_deletar.remove();
+        }
+
+        operacao_slc_aprova = document.getElementById('operacao_slc_aprova');
+        operacao_slc_reprova = document.getElementById('operacao_slc_reprova');
+
+        if (operacao_slc_aprova) {
+          operacao_slc_aprova.remove();
+        }
+        if (operacao_slc_reprova) {
+          operacao_slc_reprova.remove();
+        }
+        qtd_colunas_tabelas--;
       }
     } else {
       console.log('nada será feito');

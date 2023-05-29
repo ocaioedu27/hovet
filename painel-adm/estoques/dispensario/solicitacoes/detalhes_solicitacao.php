@@ -1,7 +1,35 @@
 <?php
 
+$stringList = array();
+
+if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+    // $contador = 0;
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+
+	}
+
+    $qualPainel = $stringList[1];
+    $idSolicitacao = $stringList[2];
+
+    // echo "slc geral ou pessoal? $qualPainel<br/>Id da slc $_GET[$idSolicitacao]";
+
+}
+
+$painel = $qualPainel;
+
+if ($painel == "geral") {
+    $painel = "solicitacoes";
+} elseif ($painel == "pessoal") {
+    $painel = "minhas_solicitacoes";
+}
+
 $solicitacoesId = "";
-if (isset($_GET["idSolicitacao"])) {
+if (isset($_GET[$idSolicitacao])) {
     $solicitacoesId = $_GET["idSolicitacao"];
 }else {
     echo "<script language='javascript'>window.alert('//Verifica-id - O ID da solicitação não foi definido!! Retornando para a página de solicitações'); </script>";
@@ -56,13 +84,16 @@ $sql_detalhes_slc = "SELECT
 $result = mysqli_query($conexao,$sql_detalhes_slc) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 
+$qtd_linhas_tabelas = 2;
+
+echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
 ?>
 
 <div class="container cadastro_all">
     <div class="cards retirar_dispensario">
         <div class="voltar form_retirada">
             <h4>Detalhes da Solicitação</h4>
-            <a href="index.php?menuop=solicitacoes&Pendente" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$painel?>&Pendente" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -98,7 +129,7 @@ $dados = mysqli_fetch_assoc($result);
                     </div>
 
                     <div class="display-flex-cl">
-                        <label for="data_operacao_dispensario">Data e horário da solicitação</label>
+                        <label>Data e horário da solicitação</label>
                         <input type="datetime-local" class="form-control largura_um_terco"  name="data_operacao_dispensario" id="" value="<?=$dados['solicitacoes_data']?>" readonly>
                     </div>
 
@@ -129,12 +160,12 @@ $dados = mysqli_fetch_assoc($result);
                         </div>
 
                         <div class="display-flex-cl">
-                            <label for="validade_insumo_dispensario">Validade do Insumo</label>
+                            <label>Validade do Insumo</label>
                             <input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario1" value="<?=$dados['dispensario_validade']?>" readonly>
                         </div>
 
                         <div class="display-flex-cl">
-                            <label for="quantidade_atual_dispensario">Disponível no Dispensário</label>
+                            <label>Disponível no Dispensário</label>
                             <input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario1" value="<?=$dados['dispensario_qtd']?>" readonly>
                         </div>
                     </div>
@@ -154,24 +185,23 @@ $dados = mysqli_fetch_assoc($result);
 
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
-                    <label for="justifica_requisicao">Justificativa</label>
+                    <label>Justificativa</label>
                     <textarea name="justifica_requisicao" cols="25" rows="4" class="form-control" readonly><?=$dados['solicitacoes_justificativa']?></textarea>
                 </div>
             </div>
 
             
-            <div class="form-group valida_movimentacao">
-                <label for="movimentacao_dispensasrio_to_setor">Confirmo que os dados estão validados</label>
+            <div class="form-group valida_movimentacao" id="confirma_dados_slc">
+                <label>Confirmo que os dados estão validados</label>
                 <input type="checkbox" class="form-control-sm" name="movimentacao_dispensasrio_to_setor" required>
             </div>
 
             <div class="display-flex-row" style="justify-content: center;">
-                <!-- <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar" id="btn_slc_insumo_disp"> -->
                 
-                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar" class="confirmaOperacao">
+                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar" class="confirmaOperacao" id="operacao_slc_aprova">
                     <button class="btn" style="color: green;">Aprovar</button>
                 </a>
-                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar" class="confirmaOperacao">
+                <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar" class="confirmaOperacao" id="operacao_slc_reprova">
                     <button class="btn" style="color: red;">Recusar</button>
                 </a>
             </div>

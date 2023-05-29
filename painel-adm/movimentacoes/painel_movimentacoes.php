@@ -83,9 +83,7 @@
                         <td><?=$dados["movimentacoes_id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["movimentacoes_data_operacao"]?></td>
-                        <td>
-                            <a href="index.php?menuop=<?=retiraAcentos($dados["tipos_movimentacoes_movimentacao"])?>"><?=$dados["tipos_movimentacoes_movimentacao"]?></a>
-                        </td>
+                        <td><?=$dados["tipos_movimentacoes_movimentacao"]?></td>
                         <td><?=$dados["movimentacoes_origem"]?></td>
                         <td><?=$dados["movimentacoes_destino"]?></td>
                         <td><?=$dados["usuario_nome_completo"]?></td>

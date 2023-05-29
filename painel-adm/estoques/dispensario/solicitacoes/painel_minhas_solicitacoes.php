@@ -170,15 +170,15 @@ $usuario_id = $_SESSION['usuario_id'];
                         ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
                             <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar"
-                                class="confirmaOperacao">
+                                class="confirmaOperacao" id="operacao_slc_aprova">
                                 <button class="btn" style="color: green;">Aprovar</button>
                             </a>
                             <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar"
-                                class="confirmaOperacao">
+                                class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_solicitacao&idSolicitacao=<?=$solicitacao_id?>"
-                                class="confirmaOperacao">
+                            <a href="index.php?menuop=detalhes_solicitacao&pessoal&idSolicitacao=<?=$solicitacao_id?>"
+                                class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>
                         </td>

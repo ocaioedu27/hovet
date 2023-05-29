@@ -217,7 +217,7 @@
                     <div class="top_cards">
                         <div class="titulo">
                             <h2 title="Informações de todas as solicitações">
-                                <a href="index.php?menuop=solicitacoes">Solicitações</a>
+                                <a href="index.php?menuop=solicitacoes&Pendente">Solicitações</a>
                             </h2>
                             <span class="info">
                                 <ion-icon name="help-circle-outline"></ion-icon>
