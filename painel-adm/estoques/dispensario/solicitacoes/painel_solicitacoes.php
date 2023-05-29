@@ -2,7 +2,7 @@
 
 use Sabberworm\CSS\Value\Value;
 
-if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+if (isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
 	foreach ( $_GET as $chave => $valor ) {
         $valor_tmp = $chave;

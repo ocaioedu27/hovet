@@ -14,7 +14,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     $varIdSolicitacao = $stringList[1];
     $novo_status_slc = $stringList[2];
     
-    echo "<br>Tipo de operacao: $novo_status_slc";
+    // echo "<br>Tipo de operacao: $novo_status_slc";
 }
 
 $idSolicitacao = $_GET[$varIdSolicitacao];
@@ -135,7 +135,7 @@ if ($novo_status_slc == "aprovar") {
         if ($sql_atualizou_qtd) {
             
             echo "<script language='javascript'>window.alert('Quantidade atualizada com sucesso!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes&Pendente';</script>";
 
         } else {
 

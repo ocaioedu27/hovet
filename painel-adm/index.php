@@ -49,7 +49,7 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 // echo '';
 
 // // }
-// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
+echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!'); </script>";
 
 ?>
 
@@ -187,7 +187,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                         </ul>
                     </div>
                 </div>
-                <!-- <a href="index.php?menuop=usuarios">Usuários</a> -->
                 <div class="login_user">
                     <div class="dropdown">
                         <span class="icon">

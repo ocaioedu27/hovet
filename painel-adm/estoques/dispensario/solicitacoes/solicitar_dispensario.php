@@ -159,7 +159,7 @@ if ($qualEstoque_dep != "") {
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="justifica_requisicao">Justificativa</label>
-                    <textarea name="justifica_requisicao" cols="25" rows="4" class="form-control"></textarea required>
+                    <textarea name="justifica_requisicao" cols="25" rows="4" class="form-control" required></textarea>
                 </div>
             </div>
 
