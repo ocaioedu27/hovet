@@ -631,7 +631,7 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
 
 //para restringir perfis
 function returnUserSession(userType){
-  console.log(document.getElementById(userType))
+  // console.log(document.getElementById(userType))
   const sessionUserType = document.getElementById(userType).value;
 
   let operacao_cadastrar_id = null;

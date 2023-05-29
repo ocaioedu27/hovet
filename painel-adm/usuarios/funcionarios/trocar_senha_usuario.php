@@ -1,4 +1,13 @@
 <?php
+
+$painel = "";
+
+if ($sessionUserType != 5 && $sessionUserType != 3) {
+    $painel = "pagina_principal";
+} else {
+    $painel = "usuarios";
+}
+
 $idUsuario = $_GET["idUsuario"];
 
 $sql = "SELECT 
@@ -14,7 +23,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards edita_usuarios">
         <div class="voltar">
             <h4>Dados do Usuário</h4>
-            <a href="index.php?menuop=usuarios" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$painel?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -30,7 +39,7 @@ $dados = mysqli_fetch_assoc($result);
                 </div>
 
                 <div class="display-flex-cl">
-                    <label for="nomeCompletoUsuario">Trocando a senha de</label>
+                    <label for="nomeCompletoUsuario">Nome Completo</label>
                     <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" readonly>
                 </div>
             </div>

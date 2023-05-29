@@ -6,8 +6,6 @@ include_once("../db/protect.php");
 
 include_once("../pgs_modelo/caracteres_sem_acento.php");
 
-// include_once("../db/restringe_permissoes.php");
-
 $sessionUserID = $_SESSION['usuario_id'];
 
 $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
@@ -47,18 +45,8 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
     $painel_slc = "solicitacoes";
     $complemento_slc = "";
 }
-// // function gerar_pdf(){
 
-// use Dompdf\Dompdf;
-
-// require_once '';
-
-// $dompdf = new Dompdf();
-
-// echo '';
-
-// // }
-// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!COMPLETAR A PARTE DE PERMISSOES!!!'); </script>";
+echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!'); </script>";
 
 ?>
 
@@ -135,7 +123,7 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
                             </li>
 
                             <li>
-                                <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=7?>">
+                                <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
                             </li>
                             <li>
                                 <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
@@ -168,7 +156,7 @@ if ($sessionUserType!=5 && $sessionUserType!=3) {
                         </ul>
                     </div>
                 </div>
-                <div class="dropdown">
+                <div class="dropdown" id="listar">
                     <a href="#">Insumos</a>
                     <div class="dropdown-content">
                         <ul>

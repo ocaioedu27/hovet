@@ -9,7 +9,7 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 		$senha = $conexao->real_escape_string($_POST['senha']);
 
 		$sql_code = "SELECT * FROM usuarios WHERE usuario_mail = '$email' LIMIT 1";
-		$sql_query = $conexao->query($sql_code) or die("Falha na execução do código SQL: " . $conexao->error);
+		$sql_query = $conexao->query($sql_code) or die("//Autentica - Falha na execução do código SQL: " . $conexao->error);
 
 		$quantidade = $sql_query->num_rows;
 

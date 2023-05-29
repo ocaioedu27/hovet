@@ -1,5 +1,35 @@
 <?php
-$idUsuario = $_GET["idUsuario"];
+// $idUsuario = $_GET["idUsuario"];
+
+$painel = "";
+
+if ($sessionUserType != 5 && $sessionUserType != 3) {
+    $painel = "pagina_principal";
+} else {
+    $painel = "usuarios";
+}
+
+
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+		// $$chave = $valor;
+        // print_r($valor_est);
+	}
+
+    $usuarioId = $valor_est;
+}
+
+$idUsuario = "";
+if (isset($_GET[$usuarioId])) {
+    $idUsuario = $_GET[$usuarioId];
+}else {
+    echo "<script language='javascript'>window.alert('//Verifica-id - O ID da solicitação não foi definido!! Retornando para a página de solicitações'); </script>";
+    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes';</script>";
+}
 
 $sql = "SELECT 
             u.usuario_id,
@@ -21,7 +51,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards edita_usuarios">
         <div class="voltar">
             <h4>Dados do Usuário</h4>
-            <a href="index.php?menuop=usuarios" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$painel?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -100,7 +130,7 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="diplay-flex-cl">
                     <label>Insira sua senha para confirmar</label>
-                    <input type="text" class="form-control largura_um_terco" name="validaSenhaUsuario" required>
+                    <input type="password" class="form-control largura_um_terco" name="validaSenhaUsuario" required>
                 </div>
             </div>
 
