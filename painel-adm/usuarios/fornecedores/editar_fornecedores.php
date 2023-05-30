@@ -66,7 +66,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Observação</label>
-                                <input type="text" class="form-control " name="observacaoFornecedor" rows="3" value="<?=$dados['fornecedores_observacao']?>">
+                                <textarea class="form-control" name="observacaoFornecedor" rows="3"><?=$dados['fornecedores_observacao']?></textarea>
                             </div>
 
                         </div>

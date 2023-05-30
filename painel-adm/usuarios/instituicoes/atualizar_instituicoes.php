@@ -2,61 +2,61 @@
     <h2>Atualizar Usuário</h2>
 </header>
 <?php 
-    $idFornecedor = mysqli_real_escape_string($conexao,$_POST["idFornecedor"]);
+    $idInsituicao = mysqli_real_escape_string($conexao,$_POST["idInsituicao"]);
 
-    $razaoSocialFornecedor = mysqli_real_escape_string($conexao,$_POST["razaoSocialFornecedor"]);
+    $razaoSocialInsituicao = mysqli_real_escape_string($conexao,$_POST["razaoSocialInsituicao"]);
 
-    if ($razaoSocialFornecedor == "") {
-        $razaoSocialFornecedor = "---";
+    if ($razaoSocialInsituicao == "") {
+        $razaoSocialInsituicao = "---";
     }
 
-    $logradouroFornecedor = mysqli_real_escape_string($conexao,$_POST["logradouroFornecedor"]);
+    $logradouroInsituicao = mysqli_real_escape_string($conexao,$_POST["logradouroInsituicao"]);
 
-    if ($logradouroFornecedor == "") {
-        $logradouroFornecedor = "---";
+    if ($logradouroInsituicao == "") {
+        $logradouroInsituicao = "---";
     }
 
-    $cnpjCpfFornecedor = mysqli_real_escape_string($conexao,$_POST["cnpjCpfFornecedor"]);
+    $cnpjCpfInsituicao = mysqli_real_escape_string($conexao,$_POST["cnpjCpfInsituicao"]);
 
-    if ($cnpjCpfFornecedor == "") {
-        $cnpjCpfFornecedor = "---";
+    if ($cnpjCpfInsituicao == "") {
+        $cnpjCpfInsituicao = "---";
     }
 
-    $emailFornecedor = mysqli_real_escape_string($conexao,$_POST["emailFornecedor"]);
+    $emailInsituicao = mysqli_real_escape_string($conexao,$_POST["emailInsituicao"]);
 
-    if ($emailFornecedor == "") {
-        $emailFornecedor = "---";
+    if ($emailInsituicao == "") {
+        $emailInsituicao = "---";
     }
 
-    $foneFacFornecedor = mysqli_real_escape_string($conexao,$_POST["foneFacFornecedor"]);
+    $foneFacInsituicao = mysqli_real_escape_string($conexao,$_POST["foneFacInsituicao"]);
 
-    if ($foneFacFornecedor == "") {
-        $foneFacFornecedor = "---";
+    if ($foneFacInsituicao == "") {
+        $foneFacInsituicao = "---";
     }
 
-    $observacaoFornecedor = mysqli_real_escape_string($conexao,$_POST["observacaoFornecedor"]);
+    $observacaoInsituicao = mysqli_real_escape_string($conexao,$_POST["observacaoInsituicao"]);
 
-    if ($observacaoFornecedor == "") {
-        $observacaoFornecedor = "---";
+    if ($observacaoInsituicao == "") {
+        $observacaoInsituicao = "---";
     }
 
-    $sql = "UPDATE fornecedores SET 
-        fornecedores_razao_social = '{$razaoSocialFornecedor}',
-        fornecedores_end_logradouro = '{$logradouroFornecedor}',
-        fornecedores_cpf_cnpj = '{$cnpjCpfFornecedor}',
-        fornecedores_end_email = '{$emailFornecedor}',
-        fornecedores_end_telefone = '{$foneFacFornecedor}',
-        fornecedores_observacao = '{$observacaoFornecedor}'
-        WHERE fornecedores_id={$idFornecedor}";
+    $sql = "UPDATE insituicaoes SET 
+        insituicaoes_razao_social = '{$razaoSocialInsituicao}',
+        insituicaoes_end_logradouro = '{$logradouroInsituicao}',
+        insituicaoes_cpf_cnpj = '{$cnpjCpfInsituicao}',
+        insituicaoes_end_email = '{$emailInsituicao}',
+        insituicaoes_end_telefone = '{$foneFacInsituicao}',
+        insituicaoes_observacao = '{$observacaoInsituicao}'
+        WHERE insituicaoes_id={$idInsituicao}";
 
         if(mysqli_query($conexao, $sql)){
     
-            echo "<script language='javascript'>window.alert('Dados do fornecedor atualizado com sucesso!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=fornecedores';</script>";
+            echo "<script language='javascript'>window.alert('Dados do Insituicao atualizado com sucesso!'); </script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=Insituicaoes';</script>";
     
         } else{
-            echo "<script language='javascript'>window.alert('Erro ao atualizar dados do fornecedor!'); </script>";
-            echo " <a href=\"/hovet/painel-adm/index.php?menuop=editar_fornecedores&idFornecedor=$idFornecedor\">Voltar ao formulário de edição</a> <br/>";
+            echo "<script language='javascript'>window.alert('Erro ao atualizar dados do Insituicao!'); </script>";
+            echo " <a href=\"/hovet/painel-adm/index.php?menuop=editar_insituicaoes&idInsituicao=$idInsituicao\">Voltar ao formulário de edição</a> <br/>";
     
             die("Erro: " . mysqli_error($conexao));
         }

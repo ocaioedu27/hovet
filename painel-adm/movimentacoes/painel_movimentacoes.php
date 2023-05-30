@@ -9,7 +9,7 @@
             </div>
             <div>
                 <form action="index.php?menuop=listar_movimentacoes" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_movimentacoes" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa_mov" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

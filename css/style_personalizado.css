@@ -323,7 +323,7 @@ table.tabela_listar.qtd_total {
     justify-content: center;
 }
 
-.menu_op_adm .login_user{
+.login_user{
     width: 130px;
     height: 50px;
     background: transparent;
@@ -338,7 +338,7 @@ table.tabela_listar.qtd_total {
     transition: .5s;
 }
 
-.menu_op_adm .login_user:hover{
+.login_user:hover{
     background-color: #fff;
     color: #0B0B0B;
 }
@@ -511,7 +511,7 @@ span.icon {
 }
 
 .content_cards > div {
-    padding: 4px;
+    padding: 18px;
 }
 
 .content_cards > div.top_cards {
@@ -757,4 +757,17 @@ div#permuta_dep {
 
 .display-flex-row.just-content-spc-around > div > p {
     margin-bottom: 0;
+}
+
+/* Espaço para as media queries */
+
+@media only screen and (max-width: 1480px){
+
+    .cards_wrapper.gap_home {
+        flex-direction: column;
+    }
+
+    .menu_op_adm {
+        flex-direction: column;
+    }
 }

@@ -41,7 +41,7 @@ if ($qualEstoque_dep != "") {
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Depósito <?=$qualEstoque[-1]?></h3>
-                <div class="dropdown" id="operacao_retirar">
+                <div class="dropdown" id="operacao_cadastro">
                     <a href="#">
                         <button class="btn">Cadastrar</button>
                     </a>

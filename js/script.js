@@ -48,7 +48,7 @@ function adicionaCampoCad(ondeCadastrou) {
   } else if (ondeCadastrou == 8){
     // PARA CADASTRO DE INSTITUICAO
     let dados_fornecedor_cad = document.getElementById('dados_instituicao_cad');
-    dados_fornecedor_cad.insertAdjacentHTML('beforeend', '<div id="campoCadInstituicao'+controle_campo_cad_deposito+'" class="display-flex-row"><div class="form-group"><hr style="border-color: transparent;"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Razão Social</label><input type="text" class="form-control" name="razaoSocialInstituicao[]" placeholder="Informe a Razão Social..." required></div><div class="display-flex-cl"><label>Logradouro</label><input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro..."></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>CNPJ ou CPF</label><input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required></div><div class="display-flex-cl"><label>E-mail</label><input type="text" class="form-control" name="emailInstituicao[]" placeholder="Informe o E-mail..."></div><div class="display-flex-cl"><label>Fone ou FAC</label><input type="text" class="form-control" name="foneFacInstituicao[]" placeholder="Informe o contato..." maxlength="14"></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Deseja inserir dados a mais?</label><textarea class="form-control " name="observacaoInstituicao[]" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 6)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(7)" style="padding: 0;">+</button></div></div></div></div>');
+    dados_fornecedor_cad.insertAdjacentHTML('beforeend', '<div id="campoCadInstituicao'+controle_campo_cad_deposito+'" class="display-flex-row"><div class="form-group"><hr style="border-color: transparent;"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Razão Social</label><input type="text" class="form-control" name="razaoSocialInstituicao[]" placeholder="Informe a Razão Social..." required></div><div class="display-flex-cl"><label>Logradouro</label><input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro..."></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>CNPJ ou CPF</label><input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required></div><div class="display-flex-cl"><label>E-mail</label><input type="text" class="form-control" name="emailInstituicao[]" placeholder="Informe o E-mail..."></div><div class="display-flex-cl"><label>Fone ou FAC</label><input type="text" class="form-control" name="foneFacInstituicao[]" placeholder="Informe o contato..." maxlength="14"></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Deseja inserir dados a mais?</label><textarea class="form-control " name="observacaoInstituicao[]" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 8)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(8)" style="padding: 0;">+</button></div></div></div></div>');
 
   }
 }
@@ -131,7 +131,7 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
       let para_remover_campo_adicional = document.getElementById('campoCadFornecedor'+idCampoCad)
       para_remover_campo_adicional.remove();
 
-    } else if (cadType == 7) {
+    } else if (cadType == 8) {
 
       // PARA CAMPOS DE CADASTRO DE INSTITUICAO
 
@@ -659,26 +659,32 @@ function returnUserSession(userType){
 
     qtd_colunas_tabelas = document.querySelector('#quantidade_linhas_tabelas').value;
   } catch (error) {
+    console.log('erro ao tentar pegar a tag pelo id: '+error)
     qtd_colunas_tabelas = 0;
   }
 
   let i = 0;
 
   if(sessionUserType!=2 && sessionUserType!=3){
-    console.log("usuario não terá opcoes de cadastro "+ sessionUserType);
+    // console.log("usuario não terá opcoes de cadastro "+ sessionUserType);
 
     if(operacao_cadastrar_id){
       operacao_cadastrar_id.remove();
     }
-    if (operacao_retirar) {      
+
+    if (operacao_retirar) { 
+      // console.log('removendo a opcao de retirar: '+operacao_retirar);     
       operacao_retirar.remove();
     }
+
     if (th_operacoes_editar_deletar_id) {
       th_operacoes_editar_deletar_id.remove();
     }
+
     if (listar_notas_fiscais) {
       listar_notas_fiscais.remove();
     }
+
     if (confirma_dados_slc) {
       confirma_dados_slc.remove();
     }

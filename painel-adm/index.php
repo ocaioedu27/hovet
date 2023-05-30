@@ -41,10 +41,14 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
     // echo "minhas_solicitacoes";
     $painel_slc = "minhas_solicitacoes";
     $complemento_slc = "Minhas ";
+    $painel_tmp = "Disp";
 }else{
     $painel_slc = "solicitacoes";
     $complemento_slc = "";
+    $painel_tmp = "D";
 }
+
+$painel = $painel_tmp; 
 
 // echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!'); </script>";
 
@@ -94,101 +98,112 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
                     <img class="float-left" src="../img/logo_hovet.jpg">
                 </a>
             </div>
-            <div class="menu_op_adm">
-                <div class="dropdown">
-                    <a href="#">Opções do Sistema</a>
-                    <div class="dropdown-content" style="width: auto;">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=pagina_principal">Página Principal</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=compra" id="listar">Compras</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=doacao" id="listar">Doações</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=permuta" id="listar">Permutas</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=listar_movimentacoes" id="listar">Movimentações</a>
-                            </li>
+            <div class="display-flex-row">
+                <div class="menu_op_adm">
+                    <div class="dropdown">
+                        <a href="#">Opções do Sistema</a>
+                        <div class="dropdown-content" style="width: auto;">
+                            <ul>
+                                <li>
+                                    <a href="index.php?menuop=pagina_principal">Página Principal</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=listar_relatorios" id="listar">Relatorios</a>
+                                </li>
 
-                            <li>
-                                <a href="index.php?menuop=listar_relatorios" id="listar">Relatorios</a>
-                            </li>
-
-                            <li>
-                                <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
-                            </li>
-                        </ul>
+                                <li>
+                                    <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown">
-                    <a href="#">Estoques</a>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
-                            </li>
-                            <?php
-                                $sql = "SELECT * FROM estoques ORDER BY estoques_nome ASC";
-                                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                
-                                while($dados = mysqli_fetch_assoc($rs)){
-                                    $estoqueNomeReal = $dados['estoques_nome_real'];
-                                    $tipoEstoque = substr($estoqueNomeReal, 0, -1);
-    
-                            ?>
-                            <li>
-                                <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['estoques_nome']?></a>
-                            </li>
-                            <?php
-                                }
-                            ?>
-                        </ul>
+                    <div class="dropdown">
+                        <a href="#">Movimentações</a>
+                        <div class="dropdown-content" style="width: auto;">
+                            <ul>
+                                <li>
+                                    <a href="index.php?menuop=listar_movimentacoes" id="listar">Todas as Movimentações</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=compra" id="listar">Compras</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=doacao" id="listar">Doações</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=permuta" id="listar">Permutas</a>
+                                </li>
+                                <li>
+                                    <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown" id="listar">
-                    <a href="#">Insumos</a>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=insumos">Todos os insumos</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=insumos_procedimentos">Material de procedimento</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=insumos_medicamentos">Medicamentos</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=insumos_controlados">Medicamentos controlados</a>
-                            </li>
-                        </ul>
+                    <div class="dropdown">
+                        <a href="#">Estoques</a>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li>
+                                    <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
+                                </li>
+                                <?php
+                                    $sql = "SELECT * FROM estoques WHERE estoques_nome LIKE '{$painel}%' ORDER BY estoques_nome ASC";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    
+                                    while($dados = mysqli_fetch_assoc($rs)){
+                                        $estoqueNomeReal = $dados['estoques_nome_real'];
+                                        $tipoEstoque = substr($estoqueNomeReal, 0, -1);
+        
+                                ?>
+                                <li>
+                                    <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['estoques_nome']?></a>
+                                </li>
+                                <?php
+                                    }
+                                ?>
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown" id="listar">
-                    <a href="#">Usuários</a>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=usuarios">Todos os Usuários</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=fornecedores">Fornecedores</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=instituicoes">Instituições</a>
-                            </li>
-                        </ul>
+                    <div class="dropdown" id="listar">
+                        <a href="#">Insumos</a>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li>
+                                    <a href="index.php?menuop=insumos">Todos os insumos</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=insumos_procedimentos">Material de procedimento</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=insumos_medicamentos">Medicamentos</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=insumos_controlados">Medicamentos controlados</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="dropdown" id="listar">
+                        <a href="#">Usuários</a>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li>
+                                    <a href="index.php?menuop=usuarios">Todos os Usuários</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=fornecedores">Fornecedores</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=instituicoes">Instituições</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="login_user">

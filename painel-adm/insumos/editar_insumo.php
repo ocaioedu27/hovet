@@ -23,17 +23,17 @@ $dados = mysqli_fetch_assoc($result);
             <div class="form-group valida_movimentacao">
 
                 <div class="display-flex-cl">
-                    <label for="idInsumo">ID</label>
+                    <label>ID</label>
                     <input type="text" class="form-control" name="idInsumo" value="<?=$dados["insumos_id"]?>" readonly>
                 </div>
 
                 <div class="display-flex-cl">
-                    <label for="nomeInsumo">Nome</label>
+                    <label>Nome</label>
                     <input type="text" class="form-control" name="nomeInsumo" value="<?=$dados["insumos_nome"]?>" required>
                 </div>
 
                 <div class="display-flex-cl">
-                    <label for="qtdCriticaInsumo">Quantidade Crítica</label>
+                    <label>Quantidade Crítica</label>
                     <input type="number" class="form-control" name="qtdCriticaInsumo" value="<?=$dados["insumos_qtd_critica"]?>" required>
                 </div>
 
@@ -42,7 +42,7 @@ $dados = mysqli_fetch_assoc($result);
             <div class="form-group valida_movimentacao">
 
                 <div class="display-flex-cl">
-                    <label for="tipoInsumo">Tipo de Insumo</label>
+                    <label>Tipo de Insumo</label>
                     <select class="form-control" name="tipoInsumo" required>
                         <?php
                         
@@ -59,8 +59,8 @@ $dados = mysqli_fetch_assoc($result);
                 </div>
 
                 <div class="display-flex-cl">
-                    <label for="unidadeInsumo">Unidade</label>
-                    <select name="unidadeInsumo" class="form-control" id="">
+                    <label>Unidade</label>
+                    <select name="unidadeInsumo" class="form-control" id="" required>
                         <option>Caixa</option>
                         <option>Pacote</option>
                     </select>
@@ -68,8 +68,8 @@ $dados = mysqli_fetch_assoc($result);
             </div>
             <div class="form-group">
                 <div class="display-flex-cl">
-                    <label for="descricaoInsumo">Descrição</label>
-                    <input type="text" class="form-control" name="descricaoInsumo" value="<?=$dados["insumos_descricao"]?>" required>
+                    <label>Descrição</label>
+                    <textarea class="form-control" name="descricaoInsumo" rows="3" required><?=$dados["insumos_descricao"]?></textarea>
                 </div>
             </div>
             <div class="form-group">

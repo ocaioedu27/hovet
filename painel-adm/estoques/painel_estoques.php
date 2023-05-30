@@ -1,3 +1,5 @@
+
+
 <section class="painel_usuarios">
     <div class="container">
         <div class="menu_header">
@@ -9,7 +11,7 @@
             </div>
             <div>
                 <form action="index.php?menuop=estoques" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_estoquess" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa_estoques" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -38,15 +40,23 @@
 
                         $txt_pesquisa_estoques = (isset($_POST["txt_pesquisa_estoques"]))?$_POST["txt_pesquisa_estoques"]:"";
 
+
+                        if ($sessionUserType!=2 && $sessionUserType!=3) {
+                            $painel_tmp = "Disp";
+                        }else {
+                            $painel_tmp = $txt_pesquisa_estoques;
+                        }
+
+                        $painel = $painel_tmp; 
+                        // echo $painel;
+
                         $sql = "SELECT 
                                     *
                                 FROM estoques e
                                 INNER JOIN tipos_estoques tp
                                 ON e.estoques_tipos_estoques_id = tp.tipos_estoques_id
                                 WHERE
-                                    e.estoques_id='{$txt_pesquisa_estoques}' or
-                                    e.estoques_nome LIKE '%{$txt_pesquisa_estoques}%' or
-                                    e.estoques_descricao LIKE '%{$txt_pesquisa_estoques}%'
+                                    e.estoques_id = '{$txt_pesquisa_estoques}' or e.estoques_nome LIKE '{$painel}%' or e.estoques_descricao LIKE '{$txt_pesquisa_estoques}'
                                     ORDER BY estoques_nome ASC 
                                     LIMIT $inicio_estoques,$quantidade_registros_estoques";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
