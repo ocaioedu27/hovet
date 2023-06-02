@@ -66,15 +66,15 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
         $insumo_id_tmp = $dados['dispensario_insumos_id'];
         
 
-        $sql_insert = "INSERT INTO solicitacoes (
-            solicitacoes_solicitante,
-            solicitacoes_dips_solicitado,
-            solicitacoes_setor_destino,
-            solicitacoes_justificativa,
-            solicitacoes_dispensario_id,
-            solicitacoes_qtd_solicitada,
-            solicitacoes_tp_movimentacoes_id,
-            solicitacoes_status_slc_id)
+        $sql_insert = "INSERT INTO pre_solicitacoes (
+            pre_slc_solicitante,
+            pre_slc_dips_solicitado,
+            pre_slc_setor_destino,
+            pre_slc_justificativa,
+            pre_slc_dispensario_id,
+            pre_slc_qtd_solicitada,
+            pre_slc_tp_movimentacoes_id,
+            pre_slc_status_slc_id)
             VALUES(
                 {$solicitante_insumo_dispensario},
                 {$tipo_dispensario},
@@ -89,37 +89,16 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
         if (mysqli_query($conexao, $sql_insert)) { 
             echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!!'); </script>";
             echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
-            // echo "insumo inserido com sucesso";   
-
-            $tipo_movimentacao = 11;
-            
-            $local_origem = "Dispensário " . $qualEstoque[-1];
-
-            $local_destino = $setor_destino_nome;
-
-            $usuario_id = $solicitante_insumo_dispensario;
-
-            $insumo_id = $insumo_id_tmp;
-
-            atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
             
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
         }
     }
 
-    // echo "<br/>Justificativa: " . $justifica_requisicao;
 
 } else {
     echo "error";
 }
-
-// $procura_id_insumo_dep = mysqli_query($conexao, "SELECT estoques_id FROM estoques WHERE estoques_nome_real='{$qualEstoques}'") or die('//dispensario/solicita_disp/select_id_estoque - erro ao realizar consulta: ' . mysqli_error($conexao));
-// $dados = mysqli_fetch_assoc($procura_id_insumo_dep);
-// $estoque_id = $dados['estoques_id'];
-        
-        // echo '<br/>id do insumo no dispensario: ' . $insumo_id['deposito_insumos_id'];
-// $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
 
 
 ?>

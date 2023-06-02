@@ -43,7 +43,7 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
     $complemento_slc = "Minhas ";
     $painel_tmp = "Disp";
 }else{
-    $painel_slc = "solicitacoes";
+    $painel_slc = "pre_solicitacoes";
     $complemento_slc = "";
     $painel_tmp = "D";
 }
@@ -123,7 +123,7 @@ $painel = $painel_tmp;
                             </ul>
                         </div>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" id="listar">
                         <a href="#">Movimentações</a>
                         <div class="dropdown-content" style="width: auto;">
                             <ul>
@@ -290,12 +290,28 @@ $painel = $painel_tmp;
                     }
 
                 case 'deposito':
-                    include_once("estoques/deposito/painel_deposito.php");
-                    break;
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("estoques/deposito/painel_deposito.php");
+                        break;
+                    }
 
                 case 'deposito_resumo':
-                    include_once("estoques/deposito/painel_deposito_resumido.php");
-                    break;
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+                        
+                        include_once("estoques/deposito/painel_deposito_resumido.php");
+                        break;
+                    }
 
                 case 'cadastro_deposito':
                     if ($sessionUserType!=2 && $sessionUserType!=3) {
@@ -727,6 +743,18 @@ $painel = $painel_tmp;
                     } else {
 
                         include_once("estoques/dispensario/solicitacoes/painel_solicitacoes.php");
+                        break;
+                    }
+                    
+                case 'pre_solicitacoes':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("estoques/dispensario/solicitacoes/pre_slc/painel_pre_solicitacoes.php");
                         break;
                     }
 

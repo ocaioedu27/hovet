@@ -2,7 +2,7 @@
 
 use Sabberworm\CSS\Value\Value;
 
-if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+if (isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
 	foreach ( $_GET as $chave => $valor ) {
         $valor_tmp = $chave;
@@ -14,12 +14,6 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 }
 
 $qualStatus = $valor_est;
-
-// $qualUsuario = $_GET[$id_usuario];
-
-$usuario_id = $_SESSION['usuario_id'];
-
-// print_r("O status é: " . $qualStatus . ". E o ID do usuário é: " . $qualUsuario);
 
 ?>
 <section class="painel_usuarios">
@@ -36,7 +30,7 @@ $usuario_id = $_SESSION['usuario_id'];
                     
                     ?>
                     
-                    <a href="index.php?menuop=minhas_solicitacoes&<?=$tipo_status_slc['status_slc_status']?>">
+                    <a href="index.php?menuop=pre_solicitacoes&<?=$tipo_status_slc['status_slc_status']?>">
                         <button class="btn"><?=$tipo_status_slc['status_slc_status']?>s</button>
                     </a>
 
@@ -45,7 +39,7 @@ $usuario_id = $_SESSION['usuario_id'];
                 ?>
             </div>
             <div>
-                <form action="index.php?menuop=minhas_solicitacoes&<?=$qualStatus?>" method="post" class="form_buscar">
+                <form action="index.php?menuop=pre_solicitacoes&<?=$qualStatus?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_solicitacoes" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -75,17 +69,15 @@ $usuario_id = $_SESSION['usuario_id'];
                
                         $quantidade_registros_solicitacoes = 10;
 
-                        $pagina_solicitacoes = $_GET[$qualStatus];
-
-                        if (isset($pagina_solicitacoes) && $pagina_solicitacoes != null) {
-                            echo "";
-                        } else{
+                        $pagina_solicitacoes = 0;
+                        
+                        if(isset($_GET[$qualStatus])){
                             $pagina_solicitacoes = 1;
                         }
 
-                        // print_r($_GET);
-
                         $inicio_solicitacoes = ($quantidade_registros_solicitacoes * $pagina_solicitacoes) - $quantidade_registros_solicitacoes;
+
+                        // print_r($inicio_solicitacoes);
 
                         $txt_pesquisa_solicitacoes = (isset($_POST["txt_pesquisa_solicitacoes"]))?$_POST["txt_pesquisa_solicitacoes"]:"";
 
@@ -125,9 +117,10 @@ $usuario_id = $_SESSION['usuario_id'];
                                     ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
                                 
                                 WHERE
-                                    stt.status_slc_status = '{$qualStatus}' AND u.usuario_id = {$usuario_id} AND
+                                    stt.status_slc_status = '{$qualStatus}' AND
                                     (s.pre_slc_id='{$txt_pesquisa_solicitacoes}' or
                                     i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
+                                    u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
                                     tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%')
                                     
                                 ORDER BY insumos_nome ASC 
@@ -163,9 +156,11 @@ $usuario_id = $_SESSION['usuario_id'];
                         <?php
                             $status_slc = $dados_para_while["status_slc_status"];
                             if($status_slc == "Pendente"){
-                                echo "red";
+                                echo "goldenrod";
                             } elseif ($status_slc == "Aprovada"){
                                 echo "green";
+                            } elseif ($status_slc == "Recusada"){
+                                echo "red";
                             }
                         ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
@@ -177,7 +172,7 @@ $usuario_id = $_SESSION['usuario_id'];
                                 class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_solicitacao&pessoal&idSolicitacao=<?=$solicitacao_id?>"
+                            <a href="index.php?menuop=detalhes_solicitacao&geral&idSolicitacao=<?=$solicitacao_id?>"
                                 class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>
@@ -185,8 +180,6 @@ $usuario_id = $_SESSION['usuario_id'];
                     </tr>
                     <?php
                         }
-                        // array_push($dados_form_buscar,$valor_form);
-                        // print_r($dados_form_buscar);
                         echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
@@ -194,43 +187,48 @@ $usuario_id = $_SESSION['usuario_id'];
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotalSlc = "SELECT pre_slc_id FROM pre_solicitacoes WHERE pre_slc_solicitante = {$usuario_id}";
-                $queryTotaldeposito = mysqli_query($conexao,$sqlTotalSlc) or die(mysqli_error($conexao));
+                $sqlTotalSlc = "SELECT pre_slc_id FROM pre_solicitacoes";
+                $queryTotalSlc = mysqli_query($conexao,$sqlTotalSlc) or die(mysqli_error($conexao));
 
-                $numTotalSlc = mysqli_num_rows($queryTotaldeposito);
+                $numTotalSlc = mysqli_num_rows($queryTotalSlc);
+                // print_r($numTotalSlc);
+                if ($numTotalSlc == 0) {
+                    $numTotalSlc = 1;
+                }
                 $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
 
-                if ($totalPaginasSlc == 0) {
-                    $totalPaginasSlc = 1;
+                if ($numTotalSlc == 0) {
+                    $numTotalSlc = 1;
                 }
                 
-                echo "<a href=\"?menuop=minhas_solicitacoes&" . $qualStatus . "=1\">Início</a> ";
+                echo "<a href=\"?menuop=pre_solicitacoes&" . $qualStatus . "=1\">Início</a> ";
 
                 if ($pagina_solicitacoes>6) {
                     ?>
-                        <a href="?menuop=minhas_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes-1?>"> << </a>
+                        <a href="?menuop=pre_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes-1?>"> << </a>
                     <?php
                 } 
 
                 for($i=1;$i<=$totalPaginasSlc;$i++){
+                    // print_r($i);
 
                     if ($i >= ($pagina_solicitacoes) && $i <= ($pagina_solicitacoes+5)) {
                         
                         if ($i==$pagina_solicitacoes) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=minhas_solicitacoes&" . $qualStatus . "=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=pre_solicitacoes&" . $qualStatus . "=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_solicitacoes<($totalPaginasSlc-4)) {
                     ?>
-                        <a href="?menuop=minhas_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes+1?>"> >> </a>
+                        <a href="?menuop=pre_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=minhas_solicitacoes&$qualStatus=$totalPaginasSlc\">Fim</a>";
+                echo " <a href=\"?menuop=pre_solicitacoes&$qualStatus=$totalPaginasSlc\">Fim</a>";
             ?>
         </div>
     </div>

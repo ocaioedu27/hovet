@@ -65,20 +65,14 @@ $tipoEstoque = $tipoEstoque;
                     </div>
                     
                     <div class="display-flex-cl">
+                        <?php
+                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
+                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+                        
+                        $dados_user = mysqli_fetch_assoc($result)
+                        ?>
                         <label for="solicitante_retira_dispensario">Solicitante</label>
-                        <select class="form-control largura_um_terco" name="solicitante_retira_dispensario" required>
-                            <?php
-                            $sql = "SELECT * FROM usuarios";
-                            $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                            
-                            while($dados = mysqli_fetch_assoc($result)){
-                            ?>
-                            <option><?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?></option>
-
-                            <?php
-                                }
-                            ?>
-                        </select>
+                        <input type="text" class="form-control largura_um_terco" name="solicitante_retira_dispensario" value="<?=$dados_user['usuario_id']?> - <?=$dados_user['usuario_primeiro_nome']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">

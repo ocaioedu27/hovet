@@ -51,6 +51,7 @@
                                 tm.tipos_movimentacoes_movimentacao,
                                 m.movimentacoes_usuario_id,
                                 date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
+                                -- m.movimentacoes_data_operacao,
                                 u.usuario_nome_completo
                                 FROM movimentacoes m
                                 INNER JOIN insumos i
