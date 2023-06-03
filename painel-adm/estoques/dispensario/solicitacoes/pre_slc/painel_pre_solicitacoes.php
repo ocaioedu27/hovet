@@ -20,7 +20,7 @@ $qualStatus = $valor_est;
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Solicitações</h3>
+                <h3>Pré-Solicitações</h3>
                 <?php
                     
                     $sqlStatusTipo = "SELECT * FROM status_slc";
@@ -172,7 +172,7 @@ $qualStatus = $valor_est;
                                 class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_solicitacao&geral&idSolicitacao=<?=$solicitacao_id?>"
+                            <a href="index.php?menuop=detalhes_pre_solicitacao&geral&idSolicitacao=<?=$solicitacao_id?>"
                                 class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>

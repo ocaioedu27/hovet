@@ -50,6 +50,11 @@ function adicionaCampoCad(ondeCadastrou) {
     let dados_fornecedor_cad = document.getElementById('dados_instituicao_cad');
     dados_fornecedor_cad.insertAdjacentHTML('beforeend', '<div id="campoCadInstituicao'+controle_campo_cad_deposito+'" class="display-flex-row"><div class="form-group"><hr style="border-color: transparent;"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Razão Social</label><input type="text" class="form-control" name="razaoSocialInstituicao[]" placeholder="Informe a Razão Social..." required></div><div class="display-flex-cl"><label>Logradouro</label><input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro..."></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>CNPJ ou CPF</label><input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required></div><div class="display-flex-cl"><label>E-mail</label><input type="text" class="form-control" name="emailInstituicao[]" placeholder="Informe o E-mail..."></div><div class="display-flex-cl"><label>Fone ou FAC</label><input type="text" class="form-control" name="foneFacInstituicao[]" placeholder="Informe o contato..." maxlength="14"></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Deseja inserir dados a mais?</label><textarea class="form-control " name="observacaoInstituicao[]" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 8)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(8)" style="padding: 0;">+</button></div></div></div></div>');
 
+  } else if (ondeCadastrou == 9){
+    // PARA CADASTRO DE ESTOQUE
+    let dados_categoria_insumos_cad = document.getElementById('dados_categoria_insumos_cad');
+    dados_categoria_insumos_cad.insertAdjacentHTML('beforeend', '<div id="campoCadCategoriaInsumo'+controle_campo_cad_deposito+'" class="display-flex-row"><div class="form-group"><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome da Nova Categoria</label><input type="text" class="form-control" name="nomeNovaCategoriaInsumo[]" required></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição da Categoria</label><textarea name="descNovaCategoriaInsumo[]" class="form-control" rows="3"></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="removerCampoCadDeposito('+ controle_campo_cad_deposito +', false, 9)" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_cad_deposito+'" onclick="adicionaCampoCad(9)" style="padding: 0;">+</button></div></div></div></div>');
+
   }
 }
 
@@ -136,6 +141,13 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
       // PARA CAMPOS DE CADASTRO DE INSTITUICAO
 
       let para_remover_campo_adicional = document.getElementById('campoCadInstituicao'+idCampoCad)
+      para_remover_campo_adicional.remove();
+
+    } else if (cadType == 9) {
+
+      // PARA CAMPOS DE CADASTRO DE NOVA CATEGORIA DE INSUMO
+
+      let para_remover_campo_adicional = document.getElementById('campoCadCategoriaInsumo'+idCampoCad)
       para_remover_campo_adicional.remove();
     }
   }
@@ -616,15 +628,26 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
   let spanAlert = document.getElementById(idSpanAlerta);
   let button = document.getElementById(idButton);
 
-  let comparacao = parseInt(valorInserido) >= parseInt(valorMaximo);
-  console.log('inserido é maio que o maximo? ' + comparacao);
+  let comparacao = parseInt(valorInserido) > parseInt(valorMaximo);
+  console.log('inseido é maio que o maximo? ' + comparacao);
 
   if (comparacao) {
     spanAlert.style.display = 'block';
-    button.type = 'button';
+
+    if (idButton == "operacao_slc_aprova") {
+      button.style.display = 'none';
+    } else {
+      button.type = 'button';
+    }
+
   } else {
     spanAlert.style.display = 'none';
-    button.type = 'submit';
+
+    if (idButton == "operacao_slc_aprova") {
+      button.style.display = 'block';
+    } else {
+      button.type = 'submit';
+    }
   }
 }
 

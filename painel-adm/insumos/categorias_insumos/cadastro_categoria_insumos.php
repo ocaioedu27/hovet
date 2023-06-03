@@ -1,8 +1,8 @@
 <div class="container cadastro_all">
     <div class="cards cadastro_categoria_insumo">
         <div class="voltar">
-            <h4>Nova de Categoria de Insumos</h4>
-            <a href="index.php?menuop=insumos" class="confirmaVolta">
+            <h4>Cadastro de Nova Categoria</h4>
+            <a href="index.php?menuop=categorias_insumos" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -10,41 +10,44 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_insumo" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_categoria" method="post">
 
-            <div id="dados_insumos_cad">
+            <div id="dados_categoria_insumos_cad">
                 <hr>
                 <div class="display-flex-row">
                     <div class="form-group">
+
                         <div class="form-group valida_movimentacao">
+
                             <div class="display-flex-cl">
-                                <label for="nomeInsumo">Nome da Categoria</label>
-                                <input type="text" class="form-control" name="nomeInsumoCategoria[]" required>
+                                <label>Nome da Nova Categoria</label>
+                                <input type="text" class="form-control" name="nomeNovaCategoriaInsumo[]" required>
                             </div>
+
                         </div>
 
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
-                                <label>Descrição</label>
-                                <textarea class="form-control" name="descricaoInsumo[]" rows="3" required></textarea>
+                                <label>Descrição da Categoria</label>
+                                <textarea name="descNovaCategoriaInsumo[]" class="form-control" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
 
-                    <button class="btn" type="button" onclick="adicionaCampoCad(3)" style="padding: 0;">+</button>
+                    <button class="btn" type="button" onclick="adicionaCampoCad(9)" style="padding: 0;">+</button>
 
                 </div> 
 
             </div>
 
             <div class="form-group valida_movimentacao">
-                <label for="valida_dados_insercao_insumos">Confirmo que os dados estão validados</label>
-                <input type="checkbox" class="form-control-sm" name="valida_dados_insercao_insumos" required>
+                <label>Confirmo que os dados estão validados</label>
+                <input type="checkbox" class="form-control-sm" name="valida_dados_insercao_categoria" required>
             </div>
 
             
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumo" class="btn_cadastrar">
+                <input type="submit" value="Cadastrar" name="btnAdicionarCategoriaInsumo" class="btn_cadastrar">
             </div>
         </form>
     </div>

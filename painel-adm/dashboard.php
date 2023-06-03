@@ -217,7 +217,7 @@
                     <div class="top_cards">
                         <div class="titulo">
                             <h2 title="Informações de todas as solicitações">
-                                <a href="index.php?menuop=solicitacoes&Pendente">Solicitações</a>
+                                <a href="index.php?menuop=pre_solicitacoes&Pendente">Solicitações</a>
                             </h2>
                             <span class="info">
                                 <ion-icon name="help-circle-outline"></ion-icon>
@@ -234,15 +234,15 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
-                                                FROM solicitacoes s
+                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                                FROM pre_solicitacoes s
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
                                                 WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
-                                <h2><?=$dados['solicitacoes_qtd']?></h2>
+                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
                                 <p>Total Pendentes</p>
                             </div>
                             <div class="sub_dados">
@@ -253,15 +253,15 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.solicitacoes_id) as solicitacoes_qtd 
-                                                FROM solicitacoes s
+                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                                FROM pre_solicitacoes s
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.solicitacoes_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
                                                 WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
-                                <h2><?=$dados['solicitacoes_qtd']?></h2>
+                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
                                 <p>Total Pendentes</p>
                             </div>
                         </div>

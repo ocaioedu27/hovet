@@ -262,23 +262,30 @@ insert into status_slc values
     (null,'Recusada'),
     (null,'Pendente');
         
+create table pre_solicitacoes (
+	pre_slc_id int primary key auto_increment,
+    pre_slc_solicitante int, 
+    foreign key (pre_slc_solicitante) references usuarios(usuario_id) on delete set null,
+	pre_slc_dips_solicitado int,
+    foreign key (pre_slc_dips_solicitado) references estoques(estoques_id) on delete set null,
+    pre_slc_setor_destino int,
+    foreign key (pre_slc_setor_destino) references setores(setores_id) on delete set null,
+    pre_slc_data datetime not null default current_timestamp(),
+    pre_slc_justificativa varchar(256) not null,
+    pre_slc_dispensario_id int,
+    foreign key (pre_slc_dispensario_id) references dispensario(dispensario_id) on delete cascade,
+    pre_slc_qtd_solicitada int not null,
+    pre_slc_qtd_atendida int null,
+    pre_slc_tp_movimentacoes_id int,
+    foreign key (pre_slc_tp_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
+    pre_slc_status_slc_id int,
+    foreign key (pre_slc_status_slc_id) references status_slc(status_slc_id) on delete set null
+);
+
 create table solicitacoes (
-	solicitacoes_id int primary key auto_increment,
-    solicitacoes_solicitante int, 
-    foreign key (solicitacoes_solicitante) references usuarios(usuario_id) on delete set null,
-	solicitacoes_dips_solicitado int,
-    foreign key (solicitacoes_dips_solicitado) references estoques(estoques_id) on delete set null,
-    solicitacoes_setor_destino int,
-    foreign key (solicitacoes_setor_destino) references setores(setores_id) on delete set null,
-    solicitacoes_data datetime not null default current_timestamp(),
-    solicitacoes_justificativa varchar(256) not null,
-    solicitacoes_dispensario_id int,
-    foreign key (solicitacoes_dispensario_id) references dispensario(dispensario_id) on delete cascade,
-    solicitacoes_qtd_solicitada int not null,
-    solicitacoes_tp_movimentacoes_id int,
-    foreign key (solicitacoes_tp_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
-    solicitacoes_status_slc_id int,
-    foreign key (solicitacoes_status_slc_id) references status_slc(status_slc_id) on delete set null
+	slc_id int primary key auto_increment,
+    slc_pre_slc_id int,
+    foreign key (slc_pre_slc_id) references pre_solicitacoes(pre_slc_id) on delete set null
 );
 
 create table compras (

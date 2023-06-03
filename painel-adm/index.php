@@ -175,17 +175,21 @@ $painel = $painel_tmp;
                         <div class="dropdown-content">
                             <ul>
                                 <li>
-                                    <a href="index.php?menuop=insumos">Todos os insumos</a>
+                                    <a href="index.php?menuop=categorias_insumos">Todos os insumos</a>
                                 </li>
+                                <?php
+                                    $sql = "SELECT * FROM tipos_insumos ORDER BY tipos_insumos_tipo ASC";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    
+                                    while($dados = mysqli_fetch_assoc($rs)){
+        
+                                ?>
                                 <li>
-                                    <a href="index.php?menuop=insumos_procedimentos">Material de procedimento</a>
+                                    <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>"><?=$dados['tipos_insumos_tipo']?></a>
                                 </li>
-                                <li>
-                                    <a href="index.php?menuop=insumos_medicamentos">Medicamentos</a>
-                                </li>
-                                <li>
-                                    <a href="index.php?menuop=insumos_controlados">Medicamentos controlados</a>
-                                </li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -576,22 +580,43 @@ $painel = $painel_tmp;
                         include_once("usuarios/instituicoes/excluir_instituicoes.php");
                         break;
                     }
-    
+
+                case 'categorias_insumos':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("insumos/categorias_insumos/painel_categorias.php");
+                        break;
+                    }
+
                 case 'insumos':
-                    include_once("insumos/painel_insumos.php");
-                    break;
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
 
-                case 'insumos_medicamentos':
-                    include_once("insumos/insumos_medicamentos.php");
-                    break;
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                case 'insumos_procedimentos':
-                    include_once("insumos/insumos_procedimentos.php");
-                    break;
+                    } else {
 
-                case 'insumos_controlados':
-                    include_once("insumos/insumos_controlados.php");
-                    break;        
+                        include_once("insumos/painel_insumos.php");
+                        break;
+                    }
+    
+
+                // case 'insumos_medicamentos':
+                //     include_once("insumos/insumos_medicamentos.php");
+                //     break;
+
+                // case 'insumos_procedimentos':
+                //     include_once("insumos/insumos_procedimentos.php");
+                //     break;
+
+                // case 'insumos_controlados':
+                //     include_once("insumos/insumos_controlados.php");
+                //     break;        
                 
                 case 'cadastro_insumo':
                     if ($sessionUserType!=2 && $sessionUserType!=3) {
@@ -778,9 +803,13 @@ $painel = $painel_tmp;
 
                     } else {
 
-                        include_once("estoques/dispensario/solicitacoes/atualiza_solicitacoes.php");
+                        include_once("estoques/dispensario/solicitacoes/pre_slc/atualiza_pre_solicitacoes.php");
                         break;
                     }
+
+                case 'detalhes_pre_solicitacao':
+                    include_once("estoques/dispensario/solicitacoes/pre_slc/detalhes_pre_solicitacao.php");
+                    break;
 
                 case 'detalhes_solicitacao':
                     include_once("estoques/dispensario/solicitacoes/detalhes_solicitacao.php");
@@ -935,6 +964,10 @@ $painel = $painel_tmp;
 
         $('.confirmaOperacao').on('click', function(){
             return confirm('Confirme a operação, clique em OK');
+        });
+
+        $('.confirmaQtdSolicitada').on('click', function(){
+            return confirm('A quantidade solicitada será totalmente atendida?');
         });
 
     </script>

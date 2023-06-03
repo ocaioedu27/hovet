@@ -1,3 +1,27 @@
+<?php 
+
+$stringList = array();
+
+if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+    // $contador = 0;
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+
+	}
+    // var_dump($stringList);
+
+    $idCategoria = $stringList[1];
+
+    $categoriaId = $_GET[$idCategoria];
+
+}
+
+?>
+
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
@@ -45,21 +69,25 @@
                         $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
 
                         $sql = "SELECT 
-                                i.insumos_id,
-                                i.insumos_nome, 
-                                i.insumos_unidade, 
-                                i.insumos_descricao,
-                                t.tipos_insumos_tipo,
-                                i.insumos_qtd_critica
-                                FROM insumos AS i
-                                INNER JOIN tipos_insumos AS t
-                                on i.insumos_tipo_insumos_id = t.tipos_insumos_id
+                                    i.insumos_id,
+                                    i.insumos_nome, 
+                                    i.insumos_unidade, 
+                                    i.insumos_descricao,
+                                    t.tipos_insumos_tipo,
+                                    i.insumos_qtd_critica
+                                FROM 
+                                    insumos i
+                                INNER JOIN 
+                                    tipos_insumos t
+                                ON
+                                    i.insumos_tipo_insumos_id = t.tipos_insumos_id
                                 WHERE
-                                    i.insumos_id='{$txt_pesquisa_insumos}' or
+                                    i.insumos_tipo_insumos_id = {$categoriaId} AND 
+                                    (i.insumos_id='{$txt_pesquisa_insumos}' or
                                     i.insumos_nome LIKE '%{$txt_pesquisa_insumos}%' or
                                     t.tipos_insumos_tipo LIKE '%{$txt_pesquisa_insumos}%' or
                                     i.insumos_unidade LIKE '%{$txt_pesquisa_insumos}%' or
-                                    i.insumos_descricao LIKE '%{$txt_pesquisa_insumos}%'
+                                    i.insumos_descricao LIKE '%{$txt_pesquisa_insumos}%')
                                     ORDER BY insumos_nome ASC 
                                     LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -100,7 +128,7 @@
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT insumos_id FROM insumos";
+                    $sqlTotalInsumos = "SELECT insumos_id FROM insumos WHERE insumos_tipo_insumos_id = {$categoriaId}";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
