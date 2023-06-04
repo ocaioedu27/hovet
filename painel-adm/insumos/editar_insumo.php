@@ -1,5 +1,30 @@
 <?php
-$idInsumo = $_GET["idInsumo"];
+
+$stringList = array();
+
+if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+    // Cria variáveis dinamicamente
+    // $contador = 0;
+    foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+
+    }
+    var_dump($stringList);
+
+    $idCategoria = $stringList[1];
+
+    $categoriaId = $_GET[$idCategoria];
+
+    $insumo_id = $stringList[2];
+
+    $idInsumo = $_GET[$insumo_id];
+
+}
+
+// $idInsumo = $_GET["idInsumo"];
 
 $sql = "SELECT * FROM insumos WHERE insumos_id={$idInsumo}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -10,7 +35,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards edita_insumo">
         <div class="voltar">
             <h4>Edição de Insumo</h4>
-            <a href="index.php?menuop=insumos" class="confirmaVolta">
+            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -18,7 +43,7 @@ $dados = mysqli_fetch_assoc($result);
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=atualizar_insumo" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_insumo&categoriaInsumoId=<?=$categoriaId?>" method="post">
 
             <div class="form-group valida_movimentacao">
 

@@ -20,11 +20,11 @@
                 <thead>
                     <tr class="tabela_dados">
                         <th>ID</th>
-                        <th>Insumo</th>
-                        <th>Fornecedor</th>
                         <th>N° Nota Fiscal</th>
+                        <th>Fornecedor</th>
                         <th>Nota Fiscal</th>
                         <th>Data da Compra</th>
+                        <th>Visualizar Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +38,6 @@
                         $txt_pesquisa_compras = (isset($_POST["txt_pesquisa_compras"]))?$_POST["txt_pesquisa_compras"]:"";
 
                         $sql = "SELECT 
-                                    i.insumos_nome, 
                                     c.compras_nome,
                                     c.compras_num_nf,
                                     c.compras_id,
@@ -46,13 +45,10 @@
                                     c.compras_data_upload,
                                     f.fornecedores_razao_social
                                     FROM compras c
-                                    INNER JOIN insumos i
-                                    ON c.compras_insumos_id = i.insumos_id
                                     INNER JOIN fornecedores f
                                     ON f.fornecedores_id = c.compras_fornecedor_id
                                     WHERE
-                                        c.compras_insumos_id='{$txt_pesquisa_compras}' or
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_compras}%' or
+                                        c.compras_num_nf = '{$txt_pesquisa_compras}' or
                                         c.compras_nome LIKE '%{$txt_pesquisa_compras}%' or
                                         c.compras_data_upload LIKE '%{$txt_pesquisa_compras}%'
                                         ORDER BY compras_data_upload ASC 
@@ -63,11 +59,13 @@
                     ?>
                     <tr class="tabela_dados">
                         <td><?=$dados["compras_id"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><?=$dados["compras_num_nf"]?></td>
+                        <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><a target="_blank" href="<?=$dados['compras_caminho']?>"><?=$dados["compras_nome"]?></a></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['compras_data_upload']));?></td>
+                        <td>
+                            <a href="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$dados["compras_num_nf"]?>">Ver Detalhes</a>
+                        </td>
                     </tr>
                     <?php
                         }

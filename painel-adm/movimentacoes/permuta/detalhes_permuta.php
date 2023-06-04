@@ -9,6 +9,7 @@ $sql_detalhes_permuta = "SELECT p.permutas_id,
                     p.permutas_validade_retirado,
                     p.permutas_qtd_retirado,
                     p.permutas_insumos_validade_cadastrado,
+                    p.permutas_oid_operacao,
                     u.usuario_primeiro_nome,
                     e.estoques_nome as nome_estoque_retirado,
                     es.estoques_nome as nome_estoque_cadastrado,
@@ -52,7 +53,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards permuta">
         <div class="voltar">
             <h3>Detalhes da Operação de Permuta</h3>
-            <a href="index.php?menuop=permuta" class="confirmaVolta">
+            <a href="index.php?menuop=permuta_por_oid&idPermuta=<?=$dados["permutas_oid_operacao"]?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -110,7 +111,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Permutada</label>
-                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_qtd_retirado"]?>" required>
+                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_qtd_retirado"]?>" readonly>
                             </div>
                             
                             <div class="display-flex-cl">
@@ -145,7 +146,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Inserida</label>
-                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_insumos_qtd_cadastrado"]?>" required>
+                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_insumos_qtd_cadastrado"]?>" readonly>
                             </div>
                             
                             <div class="display-flex-cl">

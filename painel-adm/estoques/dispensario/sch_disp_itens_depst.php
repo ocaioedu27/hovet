@@ -119,6 +119,40 @@
         return json_encode($retorna_valores);
     }
 
+    function retorna_categoria($valor_to_search, $conn){
+        $sql_insumo = "SELECT 
+                            * 
+                        FROM 
+                            tipos_insumos
+                        WHERE  
+                            tipos_insumos_tipo LIKE '%{$valor_to_search}%' LIMIT 10";
+
+        $resultado = mysqli_query($conn, $sql_insumo) or die("//estoques/dispensario/sch_disp_itens_depst/sql_pesquisa - Erro: " . mysqli_error($conn));
+
+        // $valores_categorias = array();
+
+        $quantidade = $resultado->num_rows;
+
+        if ($quantidade != 0) {
+            while ($row_categorias = mysqli_fetch_assoc($resultado)) {
+        
+                $valores_categorias[] = [
+                    
+                    'categoriaId' => $row_categorias['tipos_insumos_id'],
+                    'categoria_nome' => $row_categorias['tipos_insumos_tipo'],
+                    'categoria_desc' => $row_categorias['tipos_insumos_descricao']
+                ];
+        
+            }
+
+            $retorna_valores = ['erro' => false, 'dados_categorias' => $valores_categorias];
+
+        } else{
+            $retorna_valores = ['erro' => true, 'msg_error_categorias' => 'Categoria não encontrada'];
+        }
+        return json_encode($retorna_valores);
+    }
+
 
     function retornInsumosDisp($insumos_nome, $conn){
 
@@ -197,5 +231,13 @@
     if(isset($cad_deposito_estoque_nome)){
 
         echo retorna_dados_estoques($cad_deposito_estoque_nome, $conexao);
+    }
+
+    // Para procurar por categorias
+    $cad_cateogia_insumo = $_GET['cad_cateogia_insumo'];
+
+    if(isset($cad_cateogia_insumo)){
+
+        echo retorna_categoria($cad_cateogia_insumo, $conexao);
     }
 ?>

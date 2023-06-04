@@ -27,7 +27,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Todos os Insumos</h3>
-                <a href="index.php?menuop=cadastro_insumo" id="operacao_cadastro">
+                <a href="index.php?menuop=cadastro_insumo&categoriaInsumoId=<?=$categoriaId?>" id="operacao_cadastro">
                     <button class="btn">Cadastrar</button>
                 </a>
                 <a href="index.php?menuop=cadastro_categoria_insumo" id="operacao_cadastro">
@@ -35,7 +35,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=insumos" method="post" class="form_buscar">
+                <form action="index.php?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_insumos" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -54,7 +54,6 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         <th>Nome</th>
                         <th>Unidade</th>
                         <th>Categoria de Insumo</th>
-                        <th>Criticidade em</th>
                         <th>Descrição</th>
                     </tr>
                 </thead>
@@ -97,14 +96,14 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     ?>
                     <tr class="tabela_dados">
                         <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_insumo&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_insumo&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -116,7 +115,6 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
                         <td><?=$dados["tipos_insumos_tipo"]?></td>
-                        <td><?=$dados["insumos_qtd_critica"]?></td>
                         <td><?=$dados["insumos_descricao"]?></td>
                     </tr>
                     <?php
@@ -134,11 +132,11 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_insumos);
                     
-                    echo "<a href=\"?menuop=insumos&pagina_insumos=1\">Início</a> ";
+                    echo "<a href=\"?menuop=insumos&categoriaInsumoId=$categoriaId&pagina_insumos=1\">Início</a> ";
 
                     if ($pagina_insumos>6) {
                         ?>
-                            <a href="?menuop=insumos?pagina_insumos=<?php echo $pagina_insumos-1?>"> << </a>
+                            <a href="?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>&pagina_insumos=<?php echo $pagina_insumos-1?>"> << </a>
                         <?php
                     } 
 
@@ -149,18 +147,18 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                             if ($i==$pagina_insumos) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=insumos&pagina_insumos=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=insumos&categoriaInsumoId=$categoriaId&pagina_insumos=$i\">$i</a> ";
                             } 
                         }          
                     }
 
                     if ($pagina_insumos<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=insumos?pagina_insumos=<?php echo $pagina_insumos+1?>"> >> </a>
+                            <a href="?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>&pagina_insumos=<?php echo $pagina_insumos+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=insumos&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=insumos&categoriaInsumoId=$categoriaId&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

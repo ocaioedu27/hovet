@@ -1,3 +1,25 @@
+<?php
+
+$stringList = array();
+
+if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+    // $contador = 0;
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+
+	}
+
+    $oid_operacao_tmp = $stringList[1];
+    $oid_operacao = $_GET[$oid_operacao_tmp];
+
+}
+
+?>
+
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
@@ -19,17 +41,13 @@
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>Operações</th>
                         <th>ID</th>
                         <th>Insumo Retirado</th>
-                        <th>Quantidade Retirada</th>
-                        <th>Estoque de Retirada</th>
-                        <th>Quem Realizou</th>
+                        <th>ID de Resgistro</th>
+                        <th>Instituição</th>
                         <th>Insumo Cadastrado</th>
-                        <th>Quantidade Inserirda</th>
-                        <th>Estoque de Destino</th>
-                        <th>Instituição que Permutou</th>
-                        <th>Data e Horário</th>
+                        <th>Data da Permuta</th>
+                        <th>Visualizar Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +62,7 @@
 
                         $sql = "SELECT p.permutas_id,
                                     p.permutas_qtd_retirado,
+                                    p.permutas_oid_operacao,
                                     p.permutas_data,
                                     p.permutas_insumos_qtd_cadastrado,
                                     u.usuario_primeiro_nome,
@@ -77,9 +96,7 @@
                                     ON p.permutas_instituicao_id = inst.instituicoes_id
                                     
                                     WHERE
-                                        p.permutas_id='{$txt_pesquisa_permutas}' or
-                                        p.permutas_data LIKE '%{$txt_pesquisa_permutas}%' or
-                                        e.estoques_nome LIKE '%{$txt_pesquisa_permutas}%'
+                                        p.permutas_oid_operacao='{$oid_operacao}'
                                         ORDER BY permutas_data DESC 
                                         LIMIT $inicio_permutas,$quantidade_registros_permutas";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -87,25 +104,21 @@
                         
                     ?>
                     <tr class="tabela_dados">
+                        <td><?=$dados["permutas_id"]?></td>
+                        <td><?=$dados["nome_insumo_retirado"]?></td>
+                        <td><?=$dados["permutas_oid_operacao"]?></td>
+                        <td><?=$dados["instituicoes_razao_social"]?></td>
+                        <td><?=$dados["nome_insumo_cadastrado"]?></td>
+                        <td>
+                            <?php 
+                                echo date("d/m/Y H:i", strtotime($dados['permutas_data']));
+                            ?>
+                        </td>
                         <td class="operacoes" id="">
                             <a href="index.php?menuop=detalhar_permuta&permutaId=<?=$dados["permutas_id"]?>"
                                 class="confirmaOperacao">
                                 <button class="btn" style="color: green;">Ver Detalhes</button>
                             </a>
-                        </td>
-                        <td><?=$dados["permutas_id"]?></td>
-                        <td><?=$dados["nome_insumo_retirado"]?></td>
-                        <td><?=$dados["permutas_qtd_retirado"]?></td>
-                        <td><?=$dados["nome_estoque_retirado"]?></td>
-                        <td><?=$dados["usuario_primeiro_nome"]?></td>
-                        <td><?=$dados["nome_insumo_cadastrado"]?></td>
-                        <td><?=$dados["permutas_insumos_qtd_cadastrado"]?></td>
-                        <td><?=$dados["nome_estoque_cadastrado"]?></td>
-                        <td><?=$dados["instituicoes_razao_social"]?></td>
-                        <td>
-                            <?php 
-                                echo date("d/m/Y H:i", strtotime($dados['permutas_data']));
-                            ?>
                         </td>
                     </tr>
                     <?php

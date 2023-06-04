@@ -5,52 +5,40 @@
 
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     
-    if (!empty($dados_enviados_array['btnAdicionarEstoque'])) {
+    if (!empty($dados_enviados_array['btnAdicionarCategoriaInsumo'])) {
 
-        foreach ($dados_enviados_array['nomeNovoEstoque'] as $chave_cad_estoque => $valor_cad_estoque) {
-            $nomeNovoEstoque = $valor_cad_estoque;
-            $tipoNovoEstoque = $dados_enviados_array['tipoNovoEstoque'][$chave_cad_estoque];
-            $tipoNovoEstoque = strtok($tipoNovoEstoque," ");
-            $descricaoNovoEstoque = $dados_enviados_array['descricaoNovoEstoque'][$chave_cad_estoque];
+        foreach ($dados_enviados_array['nomeNovaCategoriaInsumo'] as $chave_cad_categoria => $valor_cad_categoria) {
+            $nomeNovaCategoriaInsumo = $valor_cad_categoria;
+            $descNovaCategoriaInsumo = $dados_enviados_array['descNovaCategoriaInsumo'][$chave_cad_categoria];
 
-            $nome_real_estoque_bruto = $nomeNovoEstoque;
-            $nome_real_estoque_tmp = retiraAcentos($nome_real_estoque_bruto);
-            $nome_real_estoque = str_replace(' ','',$nome_real_estoque_tmp);
+            echo "<br> Chave para a categoria: " . $chave_cad_categoria;
+            echo "<br> Nome da nova categoria: " . $nomeNovaCategoriaInsumo;
+            echo "<br> Descrição: " . $descNovaCategoriaInsumo;
 
-            echo "<br> Chave para o estoque: " . $chave_cad_estoque;
-            echo "<br> Nome do novo estoque: " . $nomeNovoEstoque;
-            echo "<br> Tipo: " . $tipoNovoEstoque;
-            echo "<br> Descrição: " . $descricaoNovoEstoque;
-            echo "<br> Nome real: " . $nome_real_estoque;
-
-            $sql_verifica_se_existe = "SELECT * FROM estoques WHERE estoques_nome='{$nomeNovoEstoque}' or estoques_nome_real='{$nome_real_estoque}'";
+            $sql_verifica_se_existe = "SELECT * FROM tipos_insumos WHERE tipos_insumos_tipo='{$nomeNovaCategoriaInsumo}'";
 
             $result_check_exist = mysqli_query($conexao, $sql_verifica_se_existe);
 
             if ($result_check_exist->num_rows > 0) {
                 echo "<script language='javascript'>window.alert('Erro - Nome de Estoque JÁ CADASTRADO! Informe um nome ainda não cadastrado para prosseguir!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=cadastro_estoque';</script>";
+                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=cadastro_categoria_insumo';</script>";
             } else {
                 // echo "seguindo para o insert";
 
-                $sql = "INSERT INTO estoques (
-                    estoques_nome,
-                    estoques_nome_real,
-                    estoques_tipos_estoques_id,
-                    estoques_descricao)
+                $sql = "INSERT INTO tipos_insumos (
+                    tipos_insumos_tipo,
+                    tipos_insumos_descricao)
                     VALUES(
-                        '{$nomeNovoEstoque}',
-                        '{$nome_real_estoque}',
-                        {$tipoNovoEstoque},
-                        '{$descricaoNovoEstoque}'
+                        '{$nomeNovaCategoriaInsumo}',
+                        '{$descNovaCategoriaInsumo}'
                     )";
 
                 if(mysqli_query($conexao, $sql)){
-                    echo "<script language='javascript'>window.alert('Novo estoque cadastrado com sucesso!!'); </script>";
-                    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=estoques';</script>";
+                    echo "<script language='javascript'>window.alert('Nova categoria cadastrada com sucesso!!'); </script>";
+                    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=categorias_insumos';</script>";
 
                 } else{
-                    die("//cadastro de insumos - Erro ao cadastrar insumo: " . mysqli_error($conexao));
+                    die("//cadastro_categorias/sql_insert - Erro ao cadastrar categoria de insumos: " . mysqli_error($conexao));
                 }
 
             }
@@ -58,7 +46,7 @@
         }
 
     } else {
-        echo '//Insumos/CadInsumos - nenhum formulário enviado';
+        echo '//Insumos/cad_categoria - nenhum formulário enviado';
     }
 
 ?>

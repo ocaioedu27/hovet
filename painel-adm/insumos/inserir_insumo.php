@@ -3,6 +3,26 @@
 </header>
 <?php 
 
+    $stringList = array();
+
+    if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+        // Cria variáveis dinamicamente
+        // $contador = 0;
+        foreach ( $_GET as $chave => $valor ) {
+            $valor_tmp = $chave;
+            $position = strpos($valor_tmp, "menuop");
+            $valor_est = strstr($valor_tmp,$position);
+            array_push($stringList, $valor_est);
+
+        }
+        // var_dump($stringList);
+
+        $idCategoria = $stringList[1];
+
+        $categoriaId = $_GET[$idCategoria];
+
+    }
+
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     
     if (!empty($dados_enviados_array['btnAdicionarInsumo'])) {
@@ -31,7 +51,7 @@
 
             if(mysqli_query($conexao, $sql)){
                 echo "<script language='javascript'>window.alert('Insumo cadastrado com sucesso!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=insumos';</script>";
+                echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=insumos&categoriaInsumoId=$categoriaId';</script>";
 
             } else{
                 die("//cadastro de insumos - Erro ao cadastrar insumo: " . mysqli_error($conexao));

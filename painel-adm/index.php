@@ -50,7 +50,7 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 
 $painel = $painel_tmp; 
 
-// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!COMPLETAR A PARTE DE TROCA DE SENHA!!!'); </script>";
+echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
 
 ?>
 
@@ -175,7 +175,7 @@ $painel = $painel_tmp;
                         <div class="dropdown-content">
                             <ul>
                                 <li>
-                                    <a href="index.php?menuop=categorias_insumos">Todos os insumos</a>
+                                    <a href="index.php?menuop=categorias_insumos">Todas as Categorias de Insumos</a>
                                 </li>
                                 <?php
                                     $sql = "SELECT * FROM tipos_insumos ORDER BY tipos_insumos_tipo ASC";
@@ -593,6 +593,18 @@ $painel = $painel_tmp;
                         break;
                     }
 
+                case 'inserir_categoria':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("insumos/categorias_insumos/inserir_categoria.php");
+                        break;
+                    }
+
                 case 'insumos':
                     if ($sessionUserType!=2 && $sessionUserType!=3) {
 
@@ -867,7 +879,32 @@ $painel = $painel_tmp;
 
                     } else {
 
-                        include_once("movimentacoes/listar_compras.php");
+                        include_once("movimentacoes/compra/listar_compras_resumo.php");
+                        break;
+                    }
+
+                case 'compra_por_nf':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("movimentacoes/compra/listar_compras_by_nf.php");
+                        break;
+                    }
+    
+
+                case 'compra_detalhes':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("movimentacoes/compra/detalhes_compras.php");
                         break;
                     }
 
@@ -879,7 +916,31 @@ $painel = $painel_tmp;
 
                     } else {
 
-                        include_once("movimentacoes/listar_doacoes.php");
+                        include_once("movimentacoes/doacao/listar_doacoes_resumo.php");
+                        break;
+                    }
+
+                case 'doacao_por_oid':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("movimentacoes/doacao/listar_doacoes_by_uid.php");
+                        break;
+                    }
+
+                case 'doacao_detalhes':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+
+                        include_once("movimentacoes/doacao/detalhes_doacao.php");
                         break;
                     }
 
@@ -891,7 +952,19 @@ $painel = $painel_tmp;
 
                     } else {
                         
-                        include_once("movimentacoes/permuta/listar_permutas.php");
+                        include_once("movimentacoes/permuta/listar_permutas_resumo.php");
+                        break;
+                    }
+
+                case 'permuta_por_oid':
+                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else {
+                        
+                        include_once("movimentacoes/permuta/listar_permutas_by_oid.php");
                         break;
                     }
 

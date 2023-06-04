@@ -45,6 +45,8 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
     echo "<br/> Instituicao: " . $instituicaoPermutaDep;
 
     // echo "<br/>";
+    $oid_operacao = uniqid();
+    $origem_operacao = "Permuta";
 
     foreach ($dados_enviados_array['insumoID_InsumoPermuta'] as $chave_permuta_dep => $valor_permuta_dep) {
 
@@ -89,6 +91,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
             permutas_operador,
             permutas_deposito_id,
             permutas_qtd_retirado,
+            permutas_oid_operacao,
             permutas_instituicao_id,
             permutas_validade_retirado,
             permutas_estoques_id_retirado,
@@ -101,6 +104,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$quemRealizouPermutaDep},
                 {$insumoID_InsumoPermuta},
                 {$quantidadeInsumoDepositoPermuta},
+                '{$oid_operacao}',
                 {$instituicaoPermutaDep},
                 '{$validadeInsumoDeposito}',
                 {$depositoRetiradaPermuta},
@@ -132,12 +136,16 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
         $sql_insert_dep = "INSERT INTO deposito (
             deposito_qtd,
             deposito_validade,
+            deposito_origem_item,
+            deposito_id_origem,
             deposito_insumos_id,
             deposito_estoque_id
             )
             VALUES(
                 {$quantidadeInsumoCadPermuta},
                 '{$validadeInsumoCadPermuta}',
+                '{$origem_operacao}',
+                '{$oid_operacao}',
                 {$insumoID_InsumoCadPermuta},
                 {$depositoDestinoInsumoPermuta}
             )";
@@ -152,7 +160,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
 
         $tipo_movimentacao = $movimentacao_permuta_deposito;
 
-        $local_origem = "Depósito";
+        $local_origem = $origem_operacao;
 
         $local_destino = "Depósito " . $qualEstoque[-1];
 
@@ -167,17 +175,5 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
 }
 
 
-// $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
-// $tipo_movimentacao = strtok($tipo_movimentacao, " ");
-
-// $local_origem = "Depósito";
-
-// $local_destino = "Dispensário " . $qualEstoque[-1];
-
-// $usuario_id = $_SESSION['usuario_id'];
-
-// $insumo_id = $depositoID_Insumodispensario;
-
-// atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
 
 ?>

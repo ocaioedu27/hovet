@@ -20,11 +20,10 @@
                 <thead>
                     <tr class="tabela_dados">
                         <th>ID</th>
-                        <th>Insumo</th>
+                        <th>ID de Resgistro</th>
                         <th>Doador</th>
-                        <th>Estoque de Destino</th>
-                        <th>Quantidade Doada</th>
                         <th>Data da Doação</th>
+                        <th>Visualizar Detalhes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,36 +37,37 @@
                         $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
 
                         $sql = "SELECT 
-                                    i.insumos_nome,
-                                    dc.doacoes_id,
-                                    dc.doacoes_data_operacao,
-                                    dc.doacoes_qtd_doada,
-                                    f.fornecedores_razao_social,
-                                    e.estoques_nome
-                                    FROM doacoes dc
-                                    INNER JOIN insumos i
-                                    ON dc.doacoes_insumos_id = i.insumos_id
-                                    INNER JOIN fornecedores f
-                                    ON f.fornecedores_id = dc.doacoes_fornecedor_id
-                                    INNER JOIN estoques e
-                                    ON e.estoques_id = dc.doacoes_estoque_id
-                                    WHERE
-                                        dc.doacoes_insumos_id='{$txt_pesquisa_doacoes}' or
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_doacoes}%' or
-                                        dc.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
-                                        ORDER BY doacoes_data_operacao ASC 
-                                        LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
+                                    d.doacoes_id,
+                                    d.doacoes_oid_operacao,
+                                    d.doacoes_data_operacao,
+                                    f.fornecedores_razao_social
+
+                                FROM 
+                                    doacoes d
+                                    
+                                INNER JOIN 
+                                    fornecedores f
+                                    
+                                ON 
+                                    f.fornecedores_id = d.doacoes_fornecedor_id
+                                    
+                                WHERE
+                                    d.doacoes_oid_operacao = '{$txt_pesquisa_doacoes}' or
+                                    d.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
+                                    ORDER BY doacoes_data_operacao ASC 
+                                    LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
                     <tr class="tabela_dados">
                         <td><?=$dados["doacoes_id"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
+                        <td><?=$dados["doacoes_oid_operacao"]?></td>
                         <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><?=$dados["estoques_nome"]?></td>
-                        <td><?=$dados["doacoes_qtd_doada"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>
+                        <td>
+                            <a href="index.php?menuop=doacao_por_oid&oidDoacao=<?=$dados["doacoes_oid_operacao"]?>">Ver Detalhes</a>
+                        </td>
                     </tr>
                     <?php
                         }
@@ -87,7 +87,7 @@
 
                     if ($pagina_doacoes>6) {
                         ?>
-                            <a href="?menuop=doacao?pagina_doacoes=<?php echo $pagina_doacoes-1?>"> << </a>
+                            <a href="?menuop=doacao?&pagina_doacoes=<?php echo $pagina_doacoes-1?>"> << </a>
                         <?php
                     } 
 
@@ -105,7 +105,7 @@
 
                     if ($pagina_doacoes<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=doacao?pagina_doacoes=<?php echo $pagina_doacoes+1?>"> >> </a>
+                            <a href="?menuop=doacao&pagina_doacoes=<?php echo $pagina_doacoes+1?>"> >> </a>
                         <?php
                     }
                     

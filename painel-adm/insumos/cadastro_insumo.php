@@ -1,8 +1,32 @@
+<?php 
+
+$stringList = array();
+
+if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+	// Cria variáveis dinamicamente
+    // $contador = 0;
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+
+	}
+    // var_dump($stringList);
+
+    $idCategoria = $stringList[1];
+
+    $categoriaId = $_GET[$idCategoria];
+
+}
+
+?>
+
 <div class="container cadastro_all">
     <div class="cards cadastro_insumo">
         <div class="voltar">
             <h4>Cadastro de Insumo</h4>
-            <a href="index.php?menuop=insumos" class="confirmaVolta">
+            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -10,7 +34,7 @@
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_insumo" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_insumo&categoriaInsumoId=<?=$categoriaId?>" method="post">
 
             <div id="dados_insumos_cad">
                 <hr>
@@ -27,6 +51,10 @@
                             <input type="number" class="form-control" name="qtdCriticaInsumo[]" min="1" required>
                         </div>
 
+                    </div>
+
+                    <div class="form-group valida_movimentacao">
+
                         <div class="display-flex-cl">    
                             <label>Unidade</label>
                             <select class="form-control" name="unidadeInsumo[]" required>
@@ -37,11 +65,8 @@
 
                         <div class="display-flex-cl">
                             <label>Tipo de Insumo</label>
-                            <select class="form-control" name="tipoInsumo[]" required>
-                                <option>1 - Medicamentos</option>
-                                <option>2 - Material de procedimento</option>
-                                <option>3 - Medicamentos controlados</option>
-                            </select>
+                            <input type="text" class="form-control" name="tipoInsumo[]" id="tipos_insumo_1" onkeyup="searchInput_cadDeposito(this.value, 1,6)" placeholder="Informe o nome da categoria..." required/>
+                            <span class="ajuste_span" id="resultado_cad_categoria_insumo_1" style="margin: 9.2% auto; width: 72%;"></span>
                         </div>
 
                     </div>

@@ -51,84 +51,80 @@ if ($qualEstoque_dep != "") {
                 </form>
             </div>
         </div>
-            <hr style="border-color: transparent;">
-            <hr>
-        <div class="group_cards" style="justify-content: space-between; ">
-            <?php
-                $quantidade_registros_insumos = 10;
+        <div class="tabelas">
+            <table id="tabela_listar">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoria</th>
+                        <th>Insumos na Categoria</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $quantidade_registros_insumos = 10;
 
-                $pagina_insumos = (isset($_GET['pagina_insumos']))?(int)$_GET['pagina_insumos']:1;
+                        $pagina_insumos = (isset($_GET['pagina_insumos']))?(int)$_GET['pagina_insumos']:1;
 
-                $inicio_insumos = ($quantidade_registros_insumos * $pagina_insumos) - $quantidade_registros_insumos;
+                        $inicio_insumos = ($quantidade_registros_insumos * $pagina_insumos) - $quantidade_registros_insumos;
 
-                $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
+                        $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
 
 
-                if ($sessionUserType!=2 && $sessionUserType!=3) {
-                    $painel_tmp = "Disp";
-                }else {
-                    $painel_tmp = $txt_pesquisa_insumos;
-                }
+                        if ($sessionUserType!=2 && $sessionUserType!=3) {
+                            $painel_tmp = "Disp";
+                        }else {
+                            $painel_tmp = $txt_pesquisa_insumos;
+                        }
 
-                $painel = $painel_tmp; 
-                // echo $painel;
+                        $painel = $painel_tmp; 
+                        // echo $painel;
 
-                $sql = "SELECT 
-                            tp.tipos_insumos_id,
-                            tp.tipos_insumos_tipo
-                        FROM 
-                            tipos_insumos tp
-                        WHERE
-                            tp.tipos_insumos_id = '{$txt_pesquisa_insumos}' or tp.tipos_insumos_tipo LIKE '{$painel}%'
-                            ORDER BY tipos_insumos_tipo ASC 
-                            LIMIT $inicio_insumos,$quantidade_registros_insumos";
-                $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                while($dados = mysqli_fetch_assoc($rs)){
-                    $qtd_linhas_tabelas++;
+                        $sql = "SELECT 
+                                    tp.tipos_insumos_id,
+                                    tp.tipos_insumos_tipo,
+                                    tp.tipos_insumos_descricao
+                                FROM 
+                                    tipos_insumos tp
+                                WHERE
+                                    tp.tipos_insumos_id = '{$txt_pesquisa_insumos}' or tp.tipos_insumos_tipo LIKE '{$painel}%'
+                                    ORDER BY tipos_insumos_tipo ASC 
+                                    LIMIT $inicio_insumos,$quantidade_registros_insumos";
+                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                        while($dados = mysqli_fetch_assoc($rs)){
+                            $qtd_linhas_tabelas++;
 
-                    $tipo_de_insumo_bruto = $dados['tipos_insumos_tipo'];
-                    $tipo_de_insumo_id = $dados['tipos_insumos_id'];
-                    // echo $tipo_de_insumo_id;
+                            $tipo_de_insumo_bruto = $dados['tipos_insumos_tipo'];
+                            $tipo_de_insumo_id = $dados['tipos_insumos_id'];
+                            // echo $tipo_de_insumo_id;
 
-                    $nome_real_estoque = retiraAcentos($tipo_de_insumo_bruto);
+                            $nome_real_estoque = retiraAcentos($tipo_de_insumo_bruto);
 
-                    $sql = "SELECT 
-                                count(i.insumos_id) as qtd_insumos
-                            FROM 
-                                insumos i
-                            WHERE
-                                i.insumos_tipo_insumos_id = {$tipo_de_insumo_id}";
-                    $rs_info = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                    $dados_info = mysqli_fetch_assoc($rs_info);
-                
-            ?>
-            <div class="content_cards">
-                <div class="titulo" style="padding: 0;">
-                    <h2 title="Todos os insumos referentes a respectiva categoria">
-                        <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>"><?=$dados['tipos_insumos_tipo']?></a>
-                    </h2>
-                    <span class="info">
-                        <ion-icon name="help-circle-outline"></ion-icon>
-                    </span>
-                </div>
-                <div class="cards cards_info" style="width: 380px;height: 165px;">
-                    <div class="display-flex-row just-content-spc-around">
-                        <div class="sub_dados">
-                            <div class="titulo">
-                                <h4>Nessa categoria</h4>
-                                <span class="icon">
-                                    <ion-icon name="file-tray-full-outline"></ion-icon>
-                                </span>
-                            </div>
-                            <h3>Total de cadastrados: <?=$dados_info['qtd_insumos']?></h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php
-                }
-                echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
-            ?>
+                            $sql = "SELECT 
+                                        count(i.insumos_id) as qtd_insumos
+                                    FROM 
+                                        insumos i
+                                    WHERE
+                                        i.insumos_tipo_insumos_id = {$tipo_de_insumo_id}";
+                            $rs_info = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                            $dados_info = mysqli_fetch_assoc($rs_info);
+                        
+                    ?>
+                    <tr>
+                        <td><?=$dados["tipos_insumos_id"]?></td>
+                        <td>
+                            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>" class="form-control"><?=$dados['tipos_insumos_tipo']?></a>
+                        </td>
+                        <td><?=$dados_info["qtd_insumos"]?></td>
+                        <td><?=$dados["tipos_insumos_descricao"]?></td>
+                    </tr>
+                    <?php
+                        }
+                        echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
+                    ?>
+                </tbody>
+            </table>
         </div>
         <div class="paginacao">
             <?php

@@ -39,12 +39,21 @@
         $data_operacao = mysqli_real_escape_string($conexao,$_POST["dataCadastroInsumoDeposito"]);
         // echo "</br> Data da operação: " . $data_operacao;
         
-        $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["tipo_insercao_deposito"]);
-        $tipo_movimentacao = strtok($tipo_movimentacao, " ");
+        $tipo_movimentacao_bruto = mysqli_real_escape_string($conexao,$_POST["tipo_insercao_deposito"]);
+        $tipo_movimentacao = strtok($tipo_movimentacao_bruto, " ");
         
         $fornecedorCadInsumoDep = mysqli_real_escape_string($conexao,$_POST["fornecedorCadInsumoDep"]);
         $fornecedorCadInsumoDep = strtok($fornecedorCadInsumoDep, " ");
-        
+
+        $origem_item = "";
+
+        if ($tipo_movimentacao == 1) {
+            $origem_item = "Compra";
+            $origem_id = $num_nota_fiscal;
+        } else {
+            $origem_item = "Doação";
+            $origem_id = uniqid();
+        }
 
         foreach ($dados_enviados_array['insumoID_Insumodeposito'] as $chave_cad_deposito => $valor_cad_deposito) {
 
@@ -56,7 +65,6 @@
             $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
             
             $tem_nota_fiscal = $_FILES['nota_fiscal_deposito'];
-            // var_dump($tem_nota_fiscal);
 
             if ((isset($_FILES['nota_fiscal_deposito'])) && ($tem_nota_fiscal['size'] != 0)) {
                 $nota_fiscal_deposito = $_FILES['nota_fiscal_deposito'];
@@ -96,14 +104,16 @@
                                         (compras_nome,
                                         compras_num_nf, 
                                         compras_caminho,
-                                        compras_insumos_id,
+                                        compras_qtd_guardada,
+                                        compras_quem_guardou_id,
                                         compras_tipos_movimentacoes_id,
                                         compras_fornecedor_id)
                                         VALUE (
                                         '{$nome_nota_fiscal_deposito}',
                                         '{$num_nota_fiscal}',
                                         '{$path_nota_fiscal}',
-                                        {$insumoID_Insumodeposito},
+                                        {$quantidadeInsumodeposito},
+                                        {$quem_guardou},
                                         {$tipo_movimentacao},
                                         {$fornecedorCadInsumoDep}
                                         )";
@@ -124,14 +134,18 @@
                 // echo "<br/>é doação";
                 $sql_doacao = "INSERT INTO doacoes (
                     doacoes_qtd_doada,
+                    doacoes_oid_operacao,
                     doacoes_tipos_movimentacoes_id,
+                    doacoes_quem_guardou_id,
                     doacoes_insumos_id,
                     doacoes_fornecedor_id,
                     doacoes_estoque_id
                 )
                 VALUES (
                     {$quantidadeInsumodeposito},
+                    '{$origem_id}',
                     {$tipo_movimentacao},
+                    {$quem_guardou},
                     {$insumoID_Insumodeposito},
                     {$fornecedorCadInsumoDep},
                     {$depositoDestinoInsumodeposito}
@@ -146,15 +160,21 @@
                 }
             }
 
+            // var_dump($tem_nota_fiscal);
+
             $sql = "INSERT INTO deposito (
                 deposito_qtd,
                 deposito_validade,
+                deposito_origem_item,
+                deposito_id_origem,
                 deposito_insumos_id,
                 deposito_estoque_id
                 )
                 VALUES(
                     {$quantidadeInsumodeposito},
                     '{$validadeInsumodeposito}',
+                    '{$origem_item}',
+                    '{$origem_id}',
                     {$insumoID_Insumodeposito},
                     {$depositoDestinoInsumodeposito}
                 )";
@@ -166,6 +186,7 @@
             } else {
                 die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
             }
+
 
             if ($tipo_movimentacao == 1) {
                 $local_origem = "Compra";

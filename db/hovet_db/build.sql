@@ -45,13 +45,15 @@ insert into usuarios value
 # Criando a tabela de tipos de insumos
 create table tipos_insumos (
 	tipos_insumos_id int primary key auto_increment,
-    tipos_insumos_tipo varchar(100) not null);
+    tipos_insumos_tipo varchar(100) not null,
+    tipos_insumos_descricao varchar(100)
+    );
 
 #inserindo os tipos
 insert into tipos_insumos values
-	(null, "Medicamentos"),
-    (null, "Material de procedimento"),
-    (null, "Medicamentos controlados");
+	(null, "Medicamentos", "Medicamentos comuns"),
+    (null, "Material de procedimento", "Medicamentos para procedimentos cirurgicos"),
+    (null, "Medicamentos controlados", "Medicamentos para tratamentos constantes");
     
 # Criando a tabela de insumos
 create table insumos(
@@ -111,6 +113,8 @@ create table deposito(
 	deposito_id int primary key auto_increment,
     deposito_qtd int not null,
     deposito_validade date not null,
+    deposito_origem_item varchar(50),
+    deposito_id_origem varchar(50),
     deposito_estoque_id int,
     foreign key (deposito_estoque_id) references estoques(estoques_id) on delete set null,
     deposito_insumos_id int,
@@ -294,10 +298,11 @@ create table compras (
     compras_nome varchar(100) not null,
     compras_caminho varchar (100) not null,
     compras_data_upload datetime not null default current_timestamp(),
+    compras_qtd_guardada int,
+    compras_quem_guardou_id int,
+    foreign key (compras_quem_guardou_id) references usuarios(usuario_id) on delete set null,
     compras_tipos_movimentacoes_id int,
-    foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
-    compras_insumos_id int,
-    foreign key(compras_insumos_id) references insumos(insumos_id) on delete set null,
+    foreign key (compras_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
     compras_fornecedor_id int,
     foreign key (compras_fornecedor_id) references fornecedores(fornecedores_id) on delete set null
 );
@@ -309,6 +314,7 @@ create table permutas (
     permutas_deposito_id int,
     foreign key (permutas_deposito_id) references deposito(deposito_id) on delete set null,
     permutas_qtd_retirado int,
+    permutas_oid_operacao varchar (50),
     permutas_instituicao_id int,
     foreign key (permutas_instituicao_id) references instituicoes(instituicoes_id) on delete set null,
     permutas_validade_retirado date,
@@ -327,8 +333,11 @@ create table doacoes (
 	doacoes_id int primary key auto_increment,
     doacoes_data_operacao datetime not null default current_timestamp(),
     doacoes_qtd_doada int not null,
+    doacoes_oid_operacao varchar (50),
     doacoes_tipos_movimentacoes_id int,
-    foreign key (doacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id),
+    foreign key (doacoes_tipos_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
+    doacoes_quem_guardou_id int,
+    foreign key (doacoes_quem_guardou_id) references usuarios(usuario_id) on delete set null,
     doacoes_insumos_id int,
     foreign key(doacoes_insumos_id) references insumos(insumos_id) on delete set null,
     doacoes_fornecedor_id int,
@@ -336,7 +345,6 @@ create table doacoes (
     doacoes_estoque_id int,
     foreign key (doacoes_estoque_id) references estoques(estoques_id) on delete set null
 );
-
 ######################################################
 
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
