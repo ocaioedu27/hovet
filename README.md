@@ -1,4 +1,21 @@
-### Para o banco de dados
+# Ao importar o projeto localmente
+
+- Via GIT CLONE:
+
+    - Entre na pasta onde os projetos PHP se encontram e clone o repositório nela com o comando:
+        - git clone https://github.com/projhovet/hovet.git
+
+
+- Realize um git clone ou importe o arquivo zip que é disponibilizado no site do github do projeto:
+
+
+
+# Cuidados
+
+- Verifique se o nome da pasta que os arquivos do sistema se encontram é "hovet", caso não seja, você deve renomeá-la para apenas "hovet".
+
+
+# Para o banco de dados
 
 - Entrar na pasta:
 - Após importar o código, entrar na pasta:
