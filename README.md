@@ -17,14 +17,16 @@
 
 # Para o banco de dados
 
-- Entrar na pasta:
 - Após importar o código, entrar na pasta:
 
-hovet/db/hovet_db/
+    - hovet/db/hovet_db/
 
-# Importar o aquivo build.sql no seu cliente administrador de banco de dados
+- Importar o aquivo build.sql no seu cliente administrador de banco de dados
 
 - Execute o arquivo para que o banco de dados e suas tabelas sejam criados
+
+
+# Login inicial
 
 - O usuário é o email:
 

@@ -1,28 +1,46 @@
 ### Enviando arquivos para o git para um novo diretório
 
-git init
+# Requisitos
 
-git add .
+- ter o git instalado localmente
 
-git status
+- Entrar no diretório onde estão os arquivos do projeto.
 
-git commit -m "projeto hovet"
+- Iniciar o git dentro do diretório:
 
-git config --global user.email "mail@gmail.com"
-git config --global user.user "username"
+    - git init 
 
-git commit -m "projeto hovet"
+- Realizar um git pull para atualizar o projeto localmente:
 
-git branch -M main
+    - git pull https://github.com/projhovet/hovet.git main
 
-git remote add origin git@github.com:projhovet/projeto_hovet.git
+- Adicionar o url do projeto caso ainda não esteja, nesse caso, use para confirmar se está ou não:
 
-git push -u origin main
+    - git remote add origin https://github.com/projhovet/hovet.git
 
 
-#### Envio de arquivos para o repositório já existente
-  
-git add .
-git status
-git commit -m "edicao de arquivos do deposito"
-git push origin main
+# Passo a passo
+
+- Adicionar o arquivo desejado:
+
+    - Para adicionar todos os arquivos que foram editados: 
+        - git add .
+
+    - Para arquivo específico:
+        - git add <nome_do_arquivo_desejado>
+
+- Adicionar o commit:
+
+    - git commit -m "mensegem referente ao commit"
+
+- Se as configurações de user e email ainda não estiverem definidas, o git bash irá solicitá-las:
+
+    - git config --global user.email "seu_email@mail_dominio.com"
+    - git config --global user.name "seu_nome"
+
+    - O commit será necessário novamente, portanto, use-o novamente:
+        - git commit -m "teste de commit"
+
+- Envio das atualizações para o git:
+
+    - git push -u origin <nome_da_branch_que_ira_atualizar>
