@@ -5,7 +5,6 @@
     - Entre na pasta onde os projetos PHP se encontram e clone o repositório nela com o comando:
         - git clone https://github.com/projhovet/hovet.git
 
-
 - Realize um git clone ou importe o arquivo zip que é disponibilizado no site do github do projeto:
 
 
