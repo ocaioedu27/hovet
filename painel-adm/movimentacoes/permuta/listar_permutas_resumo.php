@@ -42,19 +42,12 @@
                                     p.permutas_data,
                                     p.permutas_oid_operacao,
                                     p.permutas_insumos_qtd_cadastrado,
-                                    u.usuario_primeiro_nome,
-                                    e.estoques_nome as nome_estoque_retirado,
-                                    es.estoques_nome as nome_estoque_cadastrado,
                                     ins.insumos_nome as nome_insumo_cadastrado,
                                     i.insumos_nome as nome_insumo_retirado,
                                     inst.instituicoes_razao_social
 
-                                FROM permutas p
-                                
-                                INNER JOIN 
-                                    usuarios u
-                                ON 
-                                    p.permutas_operador = u.usuario_id
+                                FROM 
+                                    permutas p
                                 
                                 INNER JOIN 
                                     deposito d 
@@ -70,16 +63,6 @@
                                     insumos i
                                 ON 
                                     d.deposito_insumos_id = i.insumos_id
-                                
-                                INNER JOIN 
-                                    estoques e
-                                ON 
-                                    p.permutas_estoques_id_retirado = e.estoques_id
-                                
-                                INNER JOIN 
-                                    estoques es
-                                ON 
-                                    p.permutas_estoques_id_cadastrado = es.estoques_id
 
                                 INNER JOIN 
                                     instituicoes inst

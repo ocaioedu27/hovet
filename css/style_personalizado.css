@@ -168,6 +168,10 @@ input.btn_cadastrar:hover{
     font-weight: 500;
 }
 
+.dropdown-content li{
+    list-style: none;
+}
+
 .dropdown-content a::after{
     content: '';
     position: absolute;

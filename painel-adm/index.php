@@ -50,7 +50,7 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 
 $painel = $painel_tmp; 
 
-echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
+// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
 
 ?>
 
@@ -171,7 +171,7 @@ echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITAC
                         </div>
                     </div>
                     <div class="dropdown" id="listar">
-                        <a href="#">Insumos</a>
+                        <a href="#">Tipos de Insumos</a>
                         <div class="dropdown-content">
                             <ul>
                                 <li>

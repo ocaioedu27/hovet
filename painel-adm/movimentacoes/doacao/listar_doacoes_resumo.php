@@ -19,7 +19,6 @@
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>ID</th>
                         <th>ID de Resgistro</th>
                         <th>Doador</th>
                         <th>Data da Doação</th>
@@ -37,8 +36,7 @@
                         $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
 
                         $sql = "SELECT 
-                                    d.doacoes_id,
-                                    d.doacoes_oid_operacao,
+                                    DISTINCT d.doacoes_oid_operacao,
                                     d.doacoes_data_operacao,
                                     f.fornecedores_razao_social
 
@@ -54,14 +52,13 @@
                                 WHERE
                                     d.doacoes_oid_operacao = '{$txt_pesquisa_doacoes}' or
                                     d.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
-                                    ORDER BY doacoes_data_operacao ASC 
+                                    ORDER BY doacoes_data_operacao ASC
                                     LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["doacoes_id"]?></td>
                         <td><?=$dados["doacoes_oid_operacao"]?></td>
                         <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>

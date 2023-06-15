@@ -49,6 +49,8 @@ if ($qualEstoque_dep != "") {
                         <ul>
                             <li>
                                 <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>">Cadstrar Novo Insumo</a>
+                            </li>
+                            <li>
                                 <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
                             </li>
                         </ul>
@@ -62,6 +64,8 @@ if ($qualEstoque_dep != "") {
                         <ul>
                             <li>
                                 <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">Mover para o dispensário</a>
+                            </li>
+                            <li>
                                 <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
                             </li>
                         </ul>

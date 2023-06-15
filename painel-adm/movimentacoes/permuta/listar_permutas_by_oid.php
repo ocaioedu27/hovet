@@ -27,7 +27,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 <h3>Todas as Permutas</h3>
             </div>
             <div>
-                <form action="index.php?menuop=permuta" method="post" class="form_buscar">
+                <form action="index.php?menuop=permuta_por_oid&oidPermuta=<?=$oid_operacao?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_permutas" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -129,17 +129,25 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT doacoes_id FROM doacoes";
+
+                    // echo $oid_operacao;
+
+                    $sqlTotalInsumos = "SELECT 
+                                            permutas_id 
+                                        FROM 
+                                            permutas
+                                        WHERE 
+                                            permutas_oid_operacao = '{$oid_operacao}'";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_permutas);
                     
-                    echo "<a href=\"?menuop=permuta&pagina_permutas=1\">Início</a> ";
+                    echo "<a href=\"?menuop=permuta_por_oid&oidPermuta=$oid_operacao&pagina_permutas=1\">Início</a> ";
 
                     if ($pagina_permutas>6) {
                         ?>
-                            <a href="?menuop=permuta?pagina_permutas=<?php echo $pagina_permutas-1?>"> << </a>
+                            <a href="?menuop=permuta_por_oid&oidPermuta=<?=$oid_operacao?>&pagina_permutas=<?php echo $pagina_permutas-1?>"> << </a>
                         <?php
                     } 
 
@@ -150,18 +158,18 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                             if ($i==$pagina_permutas) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=permuta&pagina_permutas=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=permuta_por_oid&oidPermuta=$oid_operacao&pagina_permutas=$i\">$i</a> ";
                             } 
                         }          
                     }
 
                     if ($pagina_permutas<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=permuta?pagina_permutas=<?php echo $pagina_permutas+1?>"> >> </a>
+                            <a href="?menuop=permuta_por_oid&oidPermuta=<?=$oid_operacao?>&pagina_permutas=<?php echo $pagina_permutas+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=permuta&pagina_permutas=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=permuta_por_oid&oidPermuta=$oid_operacao&pagina_permutas=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

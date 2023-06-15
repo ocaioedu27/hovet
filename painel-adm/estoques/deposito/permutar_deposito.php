@@ -126,7 +126,7 @@ if ($qualEstoque_dep != "") {
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Descrição do insumo</label>
-                                <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_um_terco" id="descricaoInsumoDepositoPermuta1" readonly></textarea>
+                                <textarea name="descricaoInsumoDeposito[]" cols="10" rows="2" class="form-control largura_um_terco" id="descricaoInsumoDepositoPermuta1" readonly></textarea>
                             </div>
                             
                             <div class="display-flex-cl">
@@ -166,7 +166,7 @@ if ($qualEstoque_dep != "") {
                         </div>
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
-                                <label for="descricaoInsumoDeposito">Descrição do insumo</label>
+                                <label>Descrição do insumo</label>
                                 <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoCadDep1" readonly></textarea>
                             </div>
                         </div>

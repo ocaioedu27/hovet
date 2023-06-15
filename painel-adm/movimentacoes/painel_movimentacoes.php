@@ -50,8 +50,7 @@
                                 m.movimentacoes_destino,
                                 tm.tipos_movimentacoes_movimentacao,
                                 m.movimentacoes_usuario_id,
-                                date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
-                                -- m.movimentacoes_data_operacao,
+                                m.movimentacoes_data_operacao,
                                 u.usuario_nome_completo
                                 FROM movimentacoes m
                                 INNER JOIN insumos i
@@ -83,7 +82,7 @@
                         </td>
                         <td><?=$dados["movimentacoes_id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
-                        <td><?=$dados["movimentacoes_data_operacao"]?></td>
+                        <td><?php echo date("d/m/Y H:i:s", strtotime($dados['movimentacoes_data_operacao']));?></td>
                         <td><?=$dados["tipos_movimentacoes_movimentacao"]?></td>
                         <td><?=$dados["movimentacoes_origem"]?></td>
                         <td><?=$dados["movimentacoes_destino"]?></td>
