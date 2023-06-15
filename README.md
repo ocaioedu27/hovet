@@ -9,7 +9,6 @@
 - Realize um git clone ou importe o arquivo zip que é disponibilizado no site do github do projeto:
 
 
-
 # Cuidados
 
 - Verifique se o nome da pasta que os arquivos do sistema se encontram é "hovet", caso não seja, você deve renomeá-la para apenas "hovet".
