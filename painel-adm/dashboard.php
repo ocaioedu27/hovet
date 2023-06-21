@@ -75,7 +75,6 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="titulo">
-                        <!-- <h2 title="Informações de todos os Dispensários">Dispensários</h2> -->
                         <h2 title="Informações de todos os Dispensários">
                             <a href="index.php?menuop=estoques">Dispensários</a>
                         </h2>
@@ -133,7 +132,7 @@
                         </span>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row" style="margin-left: 25px;">
+                        <div class="display-flex-row just-content-spc-around" style="justify-content: initial;">
                             <div class="sub_dados">
                                 <div class="titulo">
                                     <h4>Cadastrados</h4>
@@ -155,6 +154,62 @@
             </div>
         </div>
         <div class="cards_wrapper gap_home">
+            <div class="group_cards">
+                <div class="content_cards">
+                    <div class="top_cards">
+                        <div class="titulo">
+                            <h2 title="Informações de todas as solicitações">
+                                <a href="index.php?menuop=pre_solicitacoes&Pendente">Solicitações</a>
+                            </h2>
+                            <span class="info">
+                                <ion-icon name="help-circle-outline"></ion-icon>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="cards cards_info">
+                        <div class="display-flex-row just-content-spc-around">
+                            <div class="sub_dados">
+                                <div class="titulo">
+                                    <h4>Requisição</h4>
+                                    <span class="icon">
+                                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                                    </span>
+                                </div>
+                                <?php
+                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                                FROM pre_solicitacoes s
+                                                INNER JOIN tipos_movimentacoes tp
+                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($rs);
+                                ?>
+                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
+                                <p>Total Pendentes</p>
+                            </div>
+                            <div class="sub_dados">
+                                <div class="titulo">
+                                    <h4>Devolução</h4>
+                                    <span class="icon">
+                                        <ion-icon name="file-tray-full-outline"></ion-icon>
+                                    </span>
+                                </div>
+                                <?php
+                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                                FROM pre_solicitacoes s
+                                                INNER JOIN tipos_movimentacoes tp
+                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    $dados = mysqli_fetch_assoc($rs);
+                                ?>
+                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
+                                <p>Total Pendentes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="top_cards">
@@ -207,62 +262,6 @@
                                 <h4>Permutas</h5>
                                     <h5><?=$dados['quantidade_permutas']?></h5>
                                 <p>Total de Permutas</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="group_cards">
-                <div class="content_cards">
-                    <div class="top_cards">
-                        <div class="titulo">
-                            <h2 title="Informações de todas as solicitações">
-                                <a href="index.php?menuop=pre_solicitacoes&Pendente">Solicitações</a>
-                            </h2>
-                            <span class="info">
-                                <ion-icon name="help-circle-outline"></ion-icon>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="cards cards_info">
-                        <div class="display-flex-row just-content-spc-around">
-                            <div class="sub_dados">
-                                <div class="titulo">
-                                    <h4>Requisições</h4>
-                                    <span class="icon">
-                                        <ion-icon name="file-tray-full-outline"></ion-icon>
-                                    </span>
-                                </div>
-                                <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
-                                                FROM pre_solicitacoes s
-                                                INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
-                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                    $dados = mysqli_fetch_assoc($rs);
-                                ?>
-                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
-                                <p>Total Pendentes</p>
-                            </div>
-                            <div class="sub_dados">
-                                <div class="titulo">
-                                    <h4>Devolução</h4>
-                                    <span class="icon">
-                                        <ion-icon name="file-tray-full-outline"></ion-icon>
-                                    </span>
-                                </div>
-                                <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
-                                                FROM pre_solicitacoes s
-                                                INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
-                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                    $dados = mysqli_fetch_assoc($rs);
-                                ?>
-                                <h2><?=$dados['pre_solicitacoes_qtd']?></h2>
-                                <p>Total Pendentes</p>
                             </div>
                         </div>
                     </div>

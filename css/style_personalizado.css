@@ -203,7 +203,7 @@ input.btn_cadastrar:hover{
 }
 
 .dropdown-content.sair {
-    width: 150px;
+    width: auto;
 }
 
 .dropdown-content.sair a:hover {
@@ -747,7 +747,7 @@ div#permuta_dep {
 
 .cards_info {
     width: 450px;
-    height: 220px;
+    height: auto;
 }
 
 /* .dropdown-content > ul > li > a {
@@ -761,6 +761,10 @@ div#permuta_dep {
 
 .display-flex-row.just-content-spc-around > div > p {
     margin-bottom: 0;
+}
+
+.no-margin {
+    margin: 0 auto !important;
 }
 
 /* Espaço para as media queries */

@@ -38,31 +38,12 @@
 
                         $sql = "SELECT 
                                     p.permutas_id,
-                                    p.permutas_qtd_retirado,
                                     p.permutas_data,
                                     p.permutas_oid_operacao,
-                                    p.permutas_insumos_qtd_cadastrado,
-                                    ins.insumos_nome as nome_insumo_cadastrado,
-                                    i.insumos_nome as nome_insumo_retirado,
                                     inst.instituicoes_razao_social
 
                                 FROM 
                                     permutas p
-                                
-                                INNER JOIN 
-                                    deposito d 
-                                ON 
-                                    p.permutas_deposito_id = d.deposito_id
-                                
-                                INNER JOIN 
-                                    insumos ins 
-                                ON 
-                                    p.permutas_insumos_id_cadastrado = ins.insumos_id
-                                
-                                INNER JOIN
-                                    insumos i
-                                ON 
-                                    d.deposito_insumos_id = i.insumos_id
 
                                 INNER JOIN 
                                     instituicoes inst
@@ -70,10 +51,9 @@
                                     p.permutas_instituicao_id = inst.instituicoes_id
                                     
                                 WHERE
-                                    p.permutas_oid_operacao = '{$txt_pesquisa_permuta}' or
-                                    p.permutas_data LIKE '%{$txt_pesquisa_permuta}%' or
-                                    inst.instituicoes_razao_social LIKE '%{$txt_pesquisa_permuta}%'
+                                    p.permutas_oid_operacao LIKE '%{$txt_pesquisa_permuta}%' 
 
+                                GROUP BY permutas_oid_operacao 
                                 ORDER BY permutas_data ASC 
 
                                 LIMIT $inicio_permuta,$quantidade_registros_permuta";

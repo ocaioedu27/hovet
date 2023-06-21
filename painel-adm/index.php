@@ -216,7 +216,7 @@ $painel = $painel_tmp;
                             <ion-icon name="person-outline"></ion-icon>
                             <?php echo $_SESSION['usuario_primeiro_nome'];?>
                         </span>
-                        <div class="dropdown-content sair">
+                        <div class="dropdown-content sair no-margin">
                             <ul>
                                 <li>
                                     <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
