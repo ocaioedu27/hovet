@@ -85,7 +85,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                 INNER JOIN 
                                     insumos i
                                 ON 
-                                    dep.deposito_insumos_id = i.insumos_id
+                                    d.doacoes_insumos_id = i.insumos_id
 
                                 INNER JOIN 
                                     estoques e
@@ -95,6 +95,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                 WHERE
                                     d.doacoes_oid_operacao = '{$oid_operacao}' and
                                     d.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
+                                    GROUP BY insumos_nome 
                                     ORDER BY doacoes_data_operacao ASC 
                                     LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -120,7 +121,12 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT doacoes_id FROM doacoes";
+                    $sqlTotalInsumos = "SELECT 
+                                            doacoes_id 
+                                        FROM 
+                                            doacoes
+                                        WHERE 
+                                            doacoes_oid_operacao = '{$oid_operacao}'";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
