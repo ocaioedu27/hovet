@@ -24,7 +24,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Todas as Permutas</h3>
+                <h3>Permutas com registro "<?=$oid_operacao?>"</h3>
             </div>
             <div>
                 <form action="index.php?menuop=permuta_por_oid&oidPermuta=<?=$oid_operacao?>" method="post" class="form_buscar">
@@ -116,7 +116,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         </td>
                         <td class="operacoes" id="">
                             <a href="index.php?menuop=detalhar_permuta&permutaId=<?=$dados["permutas_id"]?>"
-                                class="confirmaOperacao">
+                                class="">
                                 <button class="btn" style="color: green;">Ver Detalhes</button>
                             </a>
                         </td>

@@ -24,7 +24,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Todas as Doações</h3>
+                <h3>Doações com registro "<?=$oid_operacao?>"</h3>
             </div>
             <div>
                 <form action="index.php?menuop=doacao_por_oid&oidDoacao=<?=$oid_operacao?>" method="post" class="form_buscar">

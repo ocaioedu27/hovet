@@ -53,7 +53,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards permuta">
         <div class="voltar">
             <h3>Detalhes da Operação de Permuta</h3>
-            <a href="index.php?menuop=permuta_por_oid&idPermuta=<?=$dados["permutas_oid_operacao"]?>" class="confirmaVolta">
+            <a href="index.php?menuop=permuta_por_oid&idPermuta=<?=$dados["permutas_oid_operacao"]?>" class="">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

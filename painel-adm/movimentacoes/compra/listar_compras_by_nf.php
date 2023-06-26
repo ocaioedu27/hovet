@@ -24,7 +24,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Todas as Compras</h3>
+                <h3>Compra com Número de NF <?=$num_nf?></h3>
             </div>
             <div>
                 <form action="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>" method="post" class="form_buscar">

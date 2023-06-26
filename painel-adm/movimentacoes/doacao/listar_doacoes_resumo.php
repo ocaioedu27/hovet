@@ -2,7 +2,7 @@
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Todas as Doações</h3>
+                <h3>Resumo de Doações</h3>
             </div>
             <div>
                 <form action="index.php?menuop=doacao" method="post" class="form_buscar">
