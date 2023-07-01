@@ -118,7 +118,7 @@ $painel = $painel_tmp;
                                     <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
                                 </li>
                                 <li>
-                                    <a href="index.php?menuop=<?=$painel_slc?>&Pendente" id=""><?=$complemento_slc?>Solicitações</a>
+                                    <a href="index.php?menuop=solicitacoes_resumo&Pendente" id="">Resumo de <?=$complemento_slc?> Solicitações</a>
                                 </li>
                             </ul>
                         </div>
@@ -771,7 +771,7 @@ $painel = $painel_tmp;
                         break;
                     }
 
-                case 'solicitacoes':
+                case 'solicitacoes_resumo':
                     if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
@@ -779,7 +779,7 @@ $painel = $painel_tmp;
 
                     } else {
 
-                        include_once("estoques/dispensario/solicitacoes/painel_solicitacoes.php");
+                        include_once("estoques/dispensario/solicitacoes/solicitacoes_resumo.php");
                         break;
                     }
                     
@@ -807,7 +807,7 @@ $painel = $painel_tmp;
                     include_once("estoques/dispensario/solicitacoes/salva_solicitacao_dispensario.php");
                     break;
 
-                case 'atualiza_solicitacao':
+                case 'atualiza_pre_solicitacao':
                     if ($sessionUserType!=2 && $sessionUserType!=3) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";

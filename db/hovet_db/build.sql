@@ -283,7 +283,8 @@ create table pre_solicitacoes (
     pre_slc_tp_movimentacoes_id int,
     foreign key (pre_slc_tp_movimentacoes_id) references tipos_movimentacoes(tipos_movimentacoes_id) on delete set null,
     pre_slc_status_slc_id int,
-    foreign key (pre_slc_status_slc_id) references status_slc(status_slc_id) on delete set null
+    foreign key (pre_slc_status_slc_id) references status_slc(status_slc_id) on delete set null,
+    pre_slc_oid_solicitacao varchar (100)
 );
 
 create table solicitacoes (

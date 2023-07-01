@@ -30,7 +30,7 @@ if ($qualEstoque_dep != "") {
                 </button>
             </a>
         </div>
-        <form action="index.php?menuop=salva_solicitacao_dispensario&<?=$qualEstoque?>" class="form_retirar_dispensario" method="post">
+        <form action="index.php?menuop=salva_solicitacao_dispensario&<?=$qualEstoque?>" enctype="multipart/form-data" class="form_retirar_dispensario" method="post">
             
             <div class="dados_solicitante">
                 <hr>

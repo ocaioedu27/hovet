@@ -42,19 +42,20 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 
         $depositoID_Insumodispensario = $valor_cad_dispensario;
         $depositoID_Insumodispensario = strtok($depositoID_Insumodispensario, " ");
+        // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
         $quantidadeInsumoDispensario = $dados_enviados_array['quantidadeInsumoDispensario'][$chave_cad_dispensario];
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
         $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
         $localInsumodispensario = strtok($localInsumodispensario, " ");
         $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_dispensario];
         $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
-        echo "<br>" . $depositoDestinoInsumodeposito;
+        // echo "<br> Dispensario de destino" . $depositoDestinoInsumodeposito;
 
         $procura_id_insumo_dep = mysqli_query($conexao, "SELECT deposito_insumos_id FROM deposito WHERE deposito_id={$depositoID_Insumodispensario}") or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
         $array_insumo_id = mysqli_fetch_assoc($procura_id_insumo_dep);
         $insumo_id = $array_insumo_id['deposito_insumos_id'];
         
-        // echo '<br/>id do insumo: ' . $insumo_id['deposito_insumos_id'];
+        // echo '<br/>id do insumo: ' . $insumo_id;
         // echo "<br/>Chave para o insumo: $chave_cad_dispensario";
         // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
         // echo "<br/>Id do insumo: $insumo_id";

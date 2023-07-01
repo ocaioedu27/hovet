@@ -1,19 +1,27 @@
 <?php
 
 use Sabberworm\CSS\Value\Value;
+$stringList = array();
+var_dump($_GET);
 
-if (isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
 	foreach ( $_GET as $chave => $valor ) {
         $valor_tmp = $chave;
         $position = strpos($valor_tmp, "menuop");
         $valor_est = strstr($valor_tmp,$position);
-		// $$chave = $valor;
+        array_push($stringList, $valor_est);
         // print_r($valor_est);
 	}
-}
 
-$qualStatus = $valor_est;
+    $oid_solicitacao_tmp = $stringList[1];
+    $oid_solicitacao = $_GET[$oid_solicitacao_tmp];
+    echo "<br>Oid: $oid_solicitacao";
+
+    $pagina_slc_tmp = $stringList[2];
+    $pagina_slc = $_GET[$pagina_slc_tmp];
+    // echo "<br>Tipo de operacao: $qualStatus_tmp";
+}
 
 ?>
 <section class="painel_usuarios">
@@ -39,7 +47,7 @@ $qualStatus = $valor_est;
                 ?>
             </div>
             <div>
-                <form action="index.php?menuop=pre_solicitacoes&<?=$qualStatus?>" method="post" class="form_buscar">
+                <form action="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_solicitacoes" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -69,11 +77,7 @@ $qualStatus = $valor_est;
                
                         $quantidade_registros_solicitacoes = 10;
 
-                        $pagina_solicitacoes = 0;
-                        
-                        if(isset($_GET[$qualStatus])){
-                            $pagina_solicitacoes = 1;
-                        }
+                        $pagina_solicitacoes = (isset($_GET['pagina_solicitacoes']))?(int)$_GET['pagina_solicitacoes']:1;;
 
                         $inicio_solicitacoes = ($quantidade_registros_solicitacoes * $pagina_solicitacoes) - $quantidade_registros_solicitacoes;
 
@@ -86,7 +90,8 @@ $qualStatus = $valor_est;
                                     u.usuario_primeiro_nome,
                                     i.insumos_nome,
                                     s.pre_slc_qtd_solicitada,
-                                    date_format(s.pre_slc_data, '%d/%m/%Y %H:%i:%s') AS pre_slc_data,
+                                    s.pre_slc_oid_solicitacao,
+                                    s.pre_slc_data,
                                     st.setores_setor,
                                     s.pre_slc_justificativa,
                                     stt.status_slc_status,
@@ -117,13 +122,13 @@ $qualStatus = $valor_est;
                                     ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
                                 
                                 WHERE
-                                    stt.status_slc_status = '{$qualStatus}' AND
+                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND
                                     (s.pre_slc_id='{$txt_pesquisa_solicitacoes}' or
                                     i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
                                     u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
                                     tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%')
                                     
-                                ORDER BY insumos_nome ASC 
+                                ORDER BY pre_slc_data DESC 
                                     
                                 LIMIT $inicio_solicitacoes,$quantidade_registros_solicitacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -131,20 +136,18 @@ $qualStatus = $valor_est;
                         while($dados_para_while = mysqli_fetch_assoc($rs)){
                             // $valor_form = $dados_para_while['estoques_nome_real'];
                             $qtd_linhas_tabelas++;
+
+                            $pre_slc_id = $dados_para_while['pre_slc_id'];
+                            // echo $pre_slc_id;
                         
                     ?>
                     <tr>
-                        <td>
-                            <?php
-                                $solicitacao_id = $dados_para_while["pre_slc_id"];
-                                echo $solicitacao_id;    
-                            ?>
-                        </td>
+                        <td><?=$oid_solicitacao?></td>
                         <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
                         <td><?=$dados_para_while["pre_slc_qtd_solicitada"]?></td>
-                        <td><?=$dados_para_while["pre_slc_data"]?></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($dados_para_while['pre_slc_data']));?></td>
                         <td>
                             <?php
                                 $movimentacao_tmp = $dados_para_while["tipos_movimentacoes_movimentacao"];
@@ -164,15 +167,15 @@ $qualStatus = $valor_est;
                             }
                         ?>"><?=$status_slc?></td>
                         <td class="operacoes" id="">
-                            <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&aprovar"
+                            <a href="index.php?menuop=atualiza_pre_solicitacao&idSolicitacao=<?=$pre_slc_id?>&aprovar"
                                 class="confirmaOperacao" id="operacao_slc_aprova">
                                 <button class="btn" style="color: green;">Aprovar</button>
                             </a>
-                            <a href="index.php?menuop=atualiza_solicitacao&idSolicitacao=<?=$solicitacao_id?>&recusar"
+                            <a href="index.php?menuop=atualiza_pre_solicitacao&idSolicitacao=<?=$pre_slc_id?>&recusar"
                                 class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_pre_solicitacao&geral&idSolicitacao=<?=$solicitacao_id?>"
+                            <a href="index.php?menuop=detalhes_pre_solicitacao&geral&idSolicitacao=<?=$pre_slc_id?>"
                                 class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>
@@ -187,25 +190,39 @@ $qualStatus = $valor_est;
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotalSlc = "SELECT pre_slc_id FROM pre_solicitacoes";
+                // $sqlTotalSlc = "SELECT 
+                //                     ps.pre_slc_id 
+                //                 FROM 
+                //                     pre_solicitacoes ps
+                //                 INNER JOIN 
+                //                     status_slc st
+                //                 ON 
+                //                     st.status_slc_id = ps.pre_slc_status_slc_id 
+                //                 WHERE 
+                //                     st.status_slc_status = '{$qualStatus}'";
+                $sqlTotalSlc = "SELECT 
+                                    pre_slc_id 
+                                FROM 
+                                    pre_solicitacoes
+                                WHERE 
+                                    pre_slc_oid_solicitacao = '{$oid_solicitacao}'";
+
                 $queryTotalSlc = mysqli_query($conexao,$sqlTotalSlc) or die(mysqli_error($conexao));
 
                 $numTotalSlc = mysqli_num_rows($queryTotalSlc);
+
+
                 // print_r($numTotalSlc);
-                if ($numTotalSlc == 0) {
-                    $numTotalSlc = 1;
-                }
+                // if ($numTotalSlc == 0) {
+                //     $numTotalSlc = 1;
+                // }
                 $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
 
-                if ($numTotalSlc == 0) {
-                    $numTotalSlc = 1;
-                }
-                
-                echo "<a href=\"?menuop=pre_solicitacoes&" . $qualStatus . "=1\">Início</a> ";
+                echo "<a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=1\">Início</a> ";
 
                 if ($pagina_solicitacoes>6) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes-1?>"> << </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes-1?>"> << </a>
                     <?php
                 } 
 
@@ -217,18 +234,18 @@ $qualStatus = $valor_est;
                         if ($i==$pagina_solicitacoes) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=pre_solicitacoes&" . $qualStatus . "=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_solicitacoes<($totalPaginasSlc-4)) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&<?=$qualStatus?>=<?php echo $pagina_solicitacoes+1?>"> >> </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=pre_solicitacoes&$qualStatus=$totalPaginasSlc\">Fim</a>";
+                echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=$totalPaginasSlc\">Fim</a>";
             ?>
         </div>
     </div>

@@ -12,26 +12,33 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	}
 
     $varIdSolicitacao = $stringList[1];
+
     $novo_status_slc = $stringList[2];
     
-    // echo "<br>Tipo de operacao: $novo_status_slc";
+    echo "<br>Tipo de operacao: $novo_status_slc";
 }
 
+
+var_dump($_GET);
+
 $idSolicitacao = $_GET[$varIdSolicitacao];
+$dados_enviados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+var_dump($dados_enviados);
 
 // var_dump($stringList);
 
 $sql = "SELECT 
-            s.solicitacoes_id,
+            s.pre_slc_id,
             u.usuario_primeiro_nome,
             u.usuario_id,
             i.insumos_nome,
-            s.solicitacoes_qtd_solicitada,
-            date_format(s.solicitacoes_data, '%d/%m/%Y %H:%i:%s') AS solicitacoes_data,
+            s.pre_slc_qtd_solicitada,
+            s.pre_slc_qtd_atendida,
+            date_format(s.pre_slc_data, '%d/%m/%Y %H:%i:%s') AS pre_slc_data,
             st.setores_setor,
-            s.solicitacoes_justificativa,
-            s.solicitacoes_status_slc_id,
-            s.solicitacoes_dispensario_id,
+            s.pre_slc_justificativa,
+            s.pre_slc_status_slc_id,
+            s.pre_slc_dispensario_id,
             stt.status_slc_status,
             es.estoques_nome,
             tp.tipos_movimentacoes_movimentacao,
@@ -41,47 +48,57 @@ $sql = "SELECT
             d.dispensario_qtd,
             d.dispensario_insumos_id
 
-            FROM solicitacoes s
+            FROM pre_solicitacoes s
             
             INNER JOIN usuarios u
-            ON s.solicitacoes_solicitante = u.usuario_id
+            ON s.pre_slc_solicitante = u.usuario_id
             
             INNER JOIN dispensario d
-            ON s.solicitacoes_dispensario_id = d.dispensario_id
+            ON s.pre_slc_dispensario_id = d.dispensario_id
             
             INNER JOIN insumos i
             ON d.dispensario_insumos_id = i.insumos_id 
             
             INNER JOIN setores st
-            ON s.solicitacoes_setor_destino = st.setores_id
+            ON s.pre_slc_setor_destino = st.setores_id
             
             INNER JOIN status_slc stt
-            ON s.solicitacoes_status_slc_id = stt.status_slc_id
+            ON s.pre_slc_status_slc_id = stt.status_slc_id
             
             INNER JOIN estoques es
-            ON s.solicitacoes_dips_solicitado = es.estoques_id
+            ON s.pre_slc_dips_solicitado = es.estoques_id
             
             INNER JOIN tipos_movimentacoes tp
-            ON tp.tipos_movimentacoes_id = s.solicitacoes_tp_movimentacoes_id
+            ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
         
-            WHERE solicitacoes_id={$idSolicitacao}";
+            WHERE pre_slc_id={$idSolicitacao}";
 
 $result = mysqli_query($conexao, $sql) or die("//Solicitacoes/atualizar_status_solicitacao/ - Erro ao realizar a consulta. " . mysqli_error($conexao));
 
 $dados_sql = mysqli_fetch_assoc($result);
+
 $dispensario_id = $dados_sql['dispensario_id'];
+
+// echo "<br/>//Coleta-valores/ dispensario id - " . $dispensario_id;
 
 $quem_solicitou = $dados_sql['usuario_id'];
 
+// echo "<br/>//Coleta-valores/ quem solicitou - " . $quem_solicitou;
+
 $qualEstoque = $dados_sql['dispensario_estoques_id'];
 
+// echo "<br/>//Coleta-valores/ estoque id - " . $qualEstoque;
+
 $estoqueNome = $dados_sql['estoques_nome'];
+
+// echo "<br/>//Coleta-valores/ Nome do estoque - " . $estoqueNome;
 
 $tipos_movimentacoes_id = $dados_sql['tipos_movimentacoes_id'];
 
 $setores_setor = $dados_sql['setores_setor'];
 
-$solicitacoes_status_slc_id = $dados_sql['solicitacoes_status_slc_id'];
+$solicitacoes_status_slc_id = $dados_sql['pre_slc_status_slc_id'];
+
 $status_solicitacao = $dados_sql['status_slc_status'];
 
 $insumos_nome = $dados_sql['insumos_nome'];
@@ -90,16 +107,57 @@ $dispensario_insumos_id = $dados_sql['dispensario_insumos_id'];
 
 $quantidade_atual_dispensario = $dados_sql['dispensario_qtd'];
 
-$solicitacoes_qtd_solicitada = $dados_sql['solicitacoes_qtd_solicitada'];
+// echo "<br/>//Coleta-valores/ Quantidade atual no dispensario - " . $quantidade_atual_dispensario;
+
+$pre_slc_qtd_solicitada = $dados_sql['pre_slc_qtd_solicitada'];
+
+// echo "<br/>//Coleta-valores/ Quantidade solicitada - " . $pre_slc_qtd_solicitada;
+
+$pre_slc_qtd_atendida = $dados_sql['pre_slc_qtd_atendida'];
+
+// echo "<br/>//Coleta-valores/ Quantidade atendida - " . $pre_slc_qtd_atendida;
 
 
-if ($novo_status_slc == "aprovar") {
+
+// verificacao de dados enviados
+
+// if (!empty($dados_enviados["btnAprovaSlc"])) {
+//     echo "<br/> Dados para aprovação.";
+// } else {
+//     echo "<br/> Solicitação reprovada.";
+// }
+
+
+
+if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
 
     if ($result->num_rows > 0) {
 
-        // echo "<br/>//aprovar - Novo status: " . $novo_status_slc;
+        // $quantidade_atendida = mysqli_real_escape_string($conexao, $_POST['quantidade_atendida_insumo_solic_dispensario']);
+        $quantidade_atendida = "";
 
-        $sql_altera_status = "UPDATE solicitacoes SET solicitacoes_status_slc_id=1 WHERE solicitacoes_id={$idSolicitacao}";
+        if (isset($_POST['quantidade_atendida_insumo_solic_dispensario'])) {
+            // echo "<br/> Foi definida a quantidade atendida via método post.";
+            $quantidade_atendida =  mysqli_real_escape_string($conexao, $_POST['quantidade_atendida_insumo_solic_dispensario']);
+
+        } else {
+            // echo "<br/> Foi definida a quantidade atendida via método get.";
+            $quantidade_atendida = $pre_slc_qtd_solicitada;
+            // echo "<br/> qtd será totalmente atendida " . $quantidade_atendida;
+        
+        }
+        
+
+        // echo "<br/>//aprovar - quantidade atendida: " . $quantidade_atendida;
+
+        $sql_altera_status = "UPDATE 
+                                    pre_solicitacoes
+                                SET    
+                                    pre_slc_status_slc_id=1,
+                                    pre_slc_qtd_atendida={$quantidade_atendida}
+                                
+                                WHERE 
+                                    pre_slc_id={$idSolicitacao}";
 
         $deuCerto_altera_status = mysqli_query($conexao, $sql_altera_status);
 
@@ -115,14 +173,18 @@ if ($novo_status_slc == "aprovar") {
         }
         
         if ($tipos_movimentacoes_id == 7) {
-            $nova_quantidade = $quantidade_atual_dispensario - $solicitacoes_qtd_solicitada;
+            $nova_quantidade = $quantidade_atual_dispensario - $quantidade_atendida;
+
+            // echo "<br/>//subtrai-qtds/ quantidade nova - " . $nova_quantidade;
 
             $local_origem_tmp = $estoqueNome;
             $local_destino_tmp = $setores_setor;
             
 
         } elseif ($tipos_movimentacoes_id == 8){
-            $nova_quantidade = $quantidade_atual_dispensario + $solicitacoes_qtd_solicitada;
+            $nova_quantidade = $quantidade_atual_dispensario + $quantidade_atendida;
+
+            // echo "<br/>//Coleta-valores/ Quantidade somada - " . $nova_quantidade;
 
             $local_origem_tmp = $setores_setor;
             $local_destino_tmp = $estoqueNome;
@@ -135,7 +197,7 @@ if ($novo_status_slc == "aprovar") {
         if ($sql_atualizou_qtd) {
             
             echo "<script language='javascript'>window.alert('Quantidade atualizada com sucesso!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes&Pendente';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes_resumo&Pendente';</script>";
 
         } else {
 
@@ -149,9 +211,9 @@ if ($novo_status_slc == "aprovar") {
 
     if ($result->num_rows > 0) {
     
-        // echo "<br/>//recusar - Novo status: " . $novo_status_slc;
+        echo "<br/>//recusar - Novo status: " . $novo_status_slc;
 
-        $sql_altera_status = "UPDATE solicitacoes SET solicitacoes_status_slc_id=2 WHERE solicitacoes_id={$idSolicitacao}";
+        $sql_altera_status = "UPDATE pre_solicitacoes SET pre_slc_status_slc_id=2 WHERE pre_slc_id={$idSolicitacao}";
 
         $deuCerto = mysqli_query($conexao, $sql_altera_status);
 
@@ -159,7 +221,7 @@ if ($novo_status_slc == "aprovar") {
             
             $tipos_movimentacoes_id_tmp = 10;
             echo "<script language='javascript'>window.alert('Status atualizado Com sucesso!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes';</script>";
+            echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=solicitacoes_resumo';</script>";
 
         } else {
 
@@ -168,14 +230,14 @@ if ($novo_status_slc == "aprovar") {
         }
         
         if ($tipos_movimentacoes_id == 7) {
-            $nova_quantidade = $quantidade_atual_dispensario - $solicitacoes_qtd_solicitada;
+            $nova_quantidade = $quantidade_atual_dispensario - $quantidade_atendida;
 
             $local_origem_tmp = $estoqueNome;
             $local_destino_tmp = $setores_setor;
             
 
         } elseif ($tipos_movimentacoes_id == 8){
-            $nova_quantidade = $quantidade_atual_dispensario + $solicitacoes_qtd_solicitada;
+            $nova_quantidade = $quantidade_atual_dispensario + $quantidade_atendida;
 
             $local_origem_tmp = $setores_setor;
             $local_destino_tmp = $estoqueNome;
@@ -191,7 +253,7 @@ $local_origem = $local_origem_tmp;
 
 $local_destino = $local_destino_tmp;
 
-$usuario_id = $quem_solicitou;
+$usuario_id = $sessionUserID;
 
 $insumo_id = $dispensario_insumos_id;
 
