@@ -173,7 +173,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                 class="confirmaOperacao" id="operacao_slc_reprova">
                                 <button class="btn" style="color: red;">Recusar</button>
                             </a>
-                            <a href="index.php?menuop=detalhes_pre_solicitacao&geral&idSolicitacao=<?=$pre_slc_id?>"
+                            <a href="index.php?menuop=detalhes_pre_solicitacao&solicitacao=<?=$oid_solicitacao?>&geral&idSolicitacao=<?=$pre_slc_id?>"
                                 class="confirmaOperacao" id="detalhes_slc">
                                 <button class="btn" style="color: blue;">Ver detalhes</button>
                             </a>

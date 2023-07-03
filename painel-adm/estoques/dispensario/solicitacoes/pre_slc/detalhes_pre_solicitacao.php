@@ -13,8 +13,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
 	}
 
-    $qualPainel = $stringList[1];
-    $idSolicitacao = $stringList[2];
+    $solicitacaoOid_tmp = $stringList[1];
+    $solicitacaoOid = $_GET[$solicitacaoOid_tmp];
+    $qualPainel = $stringList[2];
+    $idSolicitacao = $stringList[3];
 
     // echo "slc geral ou pessoal? $qualPainel<br/>Id da slc $_GET[$idSolicitacao]";
 
@@ -93,7 +95,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
     <div class="cards retirar_dispensario">
         <div class="voltar form_retirada">
             <h4>Detalhes da Solicitação</h4>
-            <a href="index.php?menuop=<?=$painel?>&Pendente" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$painel?>&idSolicitacao=<?=$solicitacaoOid?>&Pendente" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

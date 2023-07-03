@@ -57,8 +57,10 @@ $painel = $painel_tmp;
 
 $array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","");
 
-$array_permissoes_opcoes_sistema = [5,9,10,11,12,19,20,21,22,23,24  ];
+$array_permissoes_opcoes_sistema = [9,10,11,12,19,20,21,22,23,24  ];
+
 $array_permissoes_solicitacoes = [6,24];
+$array_permissoes_visualizar_solicitacoes_gerais = [5];
 
 $array_permissoes_estoques = [13];
 $array_permissoes_depositos = [7];
@@ -67,6 +69,7 @@ $array_permissoes_dispensarios = [14];
 //opcoes de crud
 $array_permissoes_cadastrar = [1];
 $array_permissoes_editar = [2];
+$array_permissoes_editar_proprios_dados = [3];
 $array_permissoes_excluir = [4];
 $array_permissoes_aprovar_solicitacao = [25];
 
@@ -165,7 +168,7 @@ if ($sessionUserType == 2) {
                                     <a href="index.php?menuop=minhas_solicitacoes&Pendente" id="">Minhas Solicitações</a>
                                 </li>
                                 <li>
-                                    <a href="index.php?menuop=solicitacoes_resumo&Pendente" id="">Solicitações</a>
+                                    <a href="index.php?menuop=solicitacoes_resumo&Pendente" id="listar">Solicitações</a>
                                 </li>
                             </ul>
                         </div>
@@ -272,7 +275,7 @@ if ($sessionUserType == 2) {
                                     <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
                                 </li>
                                 <li>
-                                    <a href="index.php?menuop=editar_usuario&idUsuario=<?=$_SESSION['usuario_id']?>">Meus dados</a>
+                                    <a href="index.php?menuop=meus_dados_usuario">Meus dados</a>
                                 </li>
                                 <li>
                                     <a href="../db/logout.php">Sair</a>
@@ -499,6 +502,19 @@ if ($sessionUserType == 2) {
                     } else{
 
                         include_once("usuarios/funcionarios/inserir_usuario.php");
+                        break;
+                    }
+                    
+                case 'meus_dados_usuario':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/funcionarios/editar_meus_dados_usuario.php");
                         break;
                     }
                     
@@ -920,7 +936,7 @@ if ($sessionUserType == 2) {
 
                 case 'solicitacoes_resumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_permissoes_visualizar_solicitacoes_gerais)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -933,7 +949,7 @@ if ($sessionUserType == 2) {
                     
                 case 'pre_solicitacoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
