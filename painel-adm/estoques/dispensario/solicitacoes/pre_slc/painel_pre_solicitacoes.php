@@ -2,7 +2,7 @@
 
 use Sabberworm\CSS\Value\Value;
 $stringList = array();
-var_dump($_GET);
+// var_dump($_GET);
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
@@ -16,11 +16,11 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
     $oid_solicitacao_tmp = $stringList[1];
     $oid_solicitacao = $_GET[$oid_solicitacao_tmp];
-    echo "<br>Oid: $oid_solicitacao";
+    // echo "<br>Oid: $oid_solicitacao";
 
-    $pagina_slc_tmp = $stringList[2];
-    $pagina_slc = $_GET[$pagina_slc_tmp];
-    // echo "<br>Tipo de operacao: $qualStatus_tmp";
+    $qualStatus_tmp = $stringList[2];
+    $qualStatus = $qualStatus_tmp;
+    // echo "<br>Tipo de operacao: $qualStatus";
 }
 
 ?>
@@ -28,7 +28,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Pré-Solicitações</h3>
+                <h3>Solicitação: <?=$oid_solicitacao?></h3>
                 <?php
                     
                     $sqlStatusTipo = "SELECT * FROM status_slc";
@@ -38,7 +38,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     
                     ?>
                     
-                    <a href="index.php?menuop=pre_solicitacoes&<?=$tipo_status_slc['status_slc_status']?>">
+                    <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$tipo_status_slc['status_slc_status']?>">
                         <button class="btn"><?=$tipo_status_slc['status_slc_status']?>s</button>
                     </a>
 
@@ -47,7 +47,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 ?>
             </div>
             <div>
-                <form action="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>" method="post" class="form_buscar">
+                <form action="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_solicitacoes" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -122,9 +122,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                     ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
                                 
                                 WHERE
-                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND
-                                    (s.pre_slc_id='{$txt_pesquisa_solicitacoes}' or
-                                    i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
+                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND stt.status_slc_status = '{$qualStatus}' AND (i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
                                     u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
                                     tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%')
                                     
@@ -218,11 +216,11 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 // }
                 $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
 
-                echo "<a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=1\">Início</a> ";
+                echo "<a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=1\">Início</a> ";
 
                 if ($pagina_solicitacoes>6) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes-1?>"> << </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes-1?>"> << </a>
                     <?php
                 } 
 
@@ -234,18 +232,18 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         if ($i==$pagina_solicitacoes) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina_solicitacoes<($totalPaginasSlc-4)) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes+1?>"> >> </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&pagina_solicitacoes=$totalPaginasSlc\">Fim</a>";
+                echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=$totalPaginasSlc\">Fim</a>";
             ?>
         </div>
     </div>

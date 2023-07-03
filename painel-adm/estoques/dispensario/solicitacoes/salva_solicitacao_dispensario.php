@@ -103,7 +103,7 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
             )";
 
         if (mysqli_query($conexao, $sql_insert)) { 
-            // echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!!'); </script>";
+            echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!!'); </script>";
             echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
             echo "<br/>Chave loop: " . $chave_solic_dispensario;
             

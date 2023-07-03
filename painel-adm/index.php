@@ -6,6 +6,8 @@ include_once("../db/protect.php");
 
 include_once("../pgs_modelo/caracteres_sem_acento.php");
 
+include_once("../pgs_modelo/permissoes_usuarios.php");
+
 $sessionUserID = $_SESSION['usuario_id'];
 
 $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
@@ -50,7 +52,42 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 
 $painel = $painel_tmp; 
 
-// echo "<script language='javascript'>window.alert('COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!COMPLETAR A PARTE DE SOLICITACOES!!!'); </script>";
+
+// ARRAYS DE PERMISSOES
+
+$array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","");
+
+$array_permissoes_opcoes_sistema = [5,9,10,11,12,19,20,21,22,23];
+
+$array_permissoes_estoques = [7,13,14];
+
+//opcoes de crud
+$array_permissoes_cadastrar = [1];
+$array_permissoes_editar = [2];
+$array_permissoes_excluir = [4];
+
+$array_permissao_acessar_sistema_geral = [8];
+
+if ($sessionUserType == 2) {
+    
+    $array_permissoes_user = $array_permissoes_gerais;
+
+} else {
+    
+    $array_permissoes_user = retornaDadosGeral($conexao, "uhp_permissoes_id", "usuarios_has_permissoes", true, $sessionUserID, "uhp_usuario_id");
+
+}
+
+
+// if (has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+//     echo "<br>Pode acessar o painel";
+
+// } else{
+
+//     echo "<br>Não pode acessar o painel";
+
+// }
 
 ?>
 
@@ -108,6 +145,9 @@ $painel = $painel_tmp;
                                     <a href="index.php?menuop=pagina_principal">Página Principal</a>
                                 </li>
                                 <li>
+                                    <a href="index.php?menuop=permissoes" id="listar">Gerênciar Permissões</a>
+                                </li>
+                                <li>
                                     <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
                                 </li>
                                 <li>
@@ -118,7 +158,10 @@ $painel = $painel_tmp;
                                     <input type="hidden" id="" value="<?=$qtd_linhas_tabelas=8?>">
                                 </li>
                                 <li>
-                                    <a href="index.php?menuop=solicitacoes_resumo&Pendente" id="">Resumo de <?=$complemento_slc?> Solicitações</a>
+                                    <a href="index.php?menuop=minhas_solicitacoes&Pendente" id="">Minhas Solicitações</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=solicitacoes_resumo&Pendente" id="">Solicitações</a>
                                 </li>
                             </ul>
                         </div>
@@ -257,422 +300,498 @@ $painel = $painel_tmp;
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"pagina_principal";
             switch ($menuop) {
                 case 'pagina_principal':
-                    include_once("home.php");
-                    break;
+                    if (!has_permission($array_permissoes_user, $array_permissao_acessar_sistema_geral)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar o Sistema!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/sem_acesso_ao_sistema.php'</script>";
+                        # code...
+                    } else{
+
+                        include_once("home.php");
+                        break;
+                    }
 
                 case 'dashboard':
-                    include_once("dashboard.php");
-                    break;
 
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+                        # code...
+                    } else{
+
+                        include_once("dashboard.php");
+                        break;
+                    }
 
                 case 'estoques':
-                    include_once('estoques/painel_estoques.php');
-                    break;
-                    
-                case 'cadastro_estoque':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
-                        include_once('estoques/cadastro_estoque.php');
+                    } else{
+
+                        include_once("estoques/painel_estoques.php");
+                        break;
+                    }
+
+
+                case 'acesso_bloqueado':
+                    include_once('./sem_acesso_ao_sistema.php');
+                    break;
+                    
+                case 'cadastro_estoque':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("estoques/cadastro_estoque.php");
                         break;
                     }
                 
                 case 'inserir_estoque':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
-                        include_once('estoques/inserir_estoque.php');
+                    } else{
+
+                        include_once("estoques/inserir_estoque.php");
                         break;
                     }
 
                 case 'deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("estoques/deposito/painel_deposito.php");
                         break;
                     }
 
                 case 'deposito_resumo':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("estoques/deposito/painel_deposito_resumido.php");
                         break;
                     }
 
                 case 'cadastro_deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("estoques/deposito/cadastro_deposito.php");
                         break;
                     }
 
                 case 'inserir_deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("estoques/deposito/inserir_deposito.php");
                         break;
                     }
 
                 case 'editar_deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("estoques/deposito/editar_deposito.php");
                         break;
                     }
 
                 case 'excluir_deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("estoques/deposito/excluir_deposito.php");
                         break;
                     }
     
                 case 'atualizar_deposito':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("estoques/deposito/atualizar_deposito.php");
                         break;
                     }
                 
                 case 'usuarios':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
+
                         include_once("usuarios/funcionarios/painel_users.php");
                         break;
                     }
                 
                 case 'cadastro_usuario':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/funcionarios/cadastro_usuario.php");
                         break;
-    
                     }
 
                 case 'inserir_usuario':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/funcionarios/inserir_usuario.php");
                         break;
                     }
                     
                 case 'editar_usuario':
-                    include_once("usuarios/funcionarios/editar_usuario.php");
-                    break;
 
-                case 'trocar_senha_usuario':
-                    include_once("usuarios/funcionarios/trocar_senha_usuario.php");
-                    break;
-    
-                case 'atualizar_usuario':
-                    include_once("usuarios/funcionarios/atualizar_usuario.php");
-                    break;
-
-                case 'excluir_usuario':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
+                        include_once("usuarios/funcionarios/editar_usuario.php");
+                        break;
+                    }
+
+                case 'trocar_senha_usuario':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/funcionarios/trocar_senha_usuario.php");
+                        break;
+                    }
+    
+                case 'atualizar_usuario':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/funcionarios/atualizar_usuario.php");
+                        break;
+                    }
+
+                case 'excluir_usuario':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
                         include_once("usuarios/funcionarios/excluir_usuario.php");
                         break;
                     }
 
                 case 'fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/fornecedores/painel_fornecedores.php");
                         break;
                     }
                 
                 case 'cadastro_fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/fornecedores/cadastro_fornecedores.php");
                         break;
                     }
 
                 case 'inserir_fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/fornecedores/inserir_fornecedores.php");
                         break;
                     }
 
                 case 'editar_fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/fornecedores/editar_fornecedores.php");
                         break;
                     }
     
                 case 'atualizar_fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/fornecedores/atualizar_fornecedores.php");
                         break;
                     }
 
                 case 'excluir_fornecedores':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/fornecedores/excluir_fornecedores.php");
                         break;
                     }
 
                 case 'instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/instituicoes/painel_instituicoes.php");
                         break;
                     }
                 
                 case 'cadastro_instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/instituicoes/cadastro_instituicoes.php");
                         break;
                     }
 
                 case 'inserir_instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/instituicoes/inserir_instituicoes.php");
                         break;
                     }
 
                 case 'editar_instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/instituicoes/editar_instituicoes.php");
                         break;
                     }
     
                 case 'atualizar_instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("usuarios/instituicoes/atualizar_instituicoes.php");
                         break;
                     }
 
                 case 'excluir_instituicoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("usuarios/instituicoes/excluir_instituicoes.php");
                         break;
                     }
 
                 case 'categorias_insumos':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("insumos/categorias_insumos/painel_categorias.php");
                         break;
                     }
 
                 case 'inserir_categoria':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("insumos/categorias_insumos/inserir_categoria.php");
                         break;
                     }
 
                 case 'insumos':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("insumos/painel_insumos.php");
                         break;
-                    }
-    
-
-                // case 'insumos_medicamentos':
-                //     include_once("insumos/insumos_medicamentos.php");
-                //     break;
-
-                // case 'insumos_procedimentos':
-                //     include_once("insumos/insumos_procedimentos.php");
-                //     break;
-
-                // case 'insumos_controlados':
-                //     include_once("insumos/insumos_controlados.php");
-                //     break;        
+                    }   
                 
                 case 'cadastro_insumo':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("insumos/cadastro_insumo.php");
                         break;
-                    }
+                    }  
                     
                 case 'cadastro_categoria_insumo':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("insumos/categorias_insumos/cadastro_categoria_insumos.php");
                         break;
                     }
                 
                 case 'inserir_insumo':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
-                        
+                    } else{
+
                         include_once("insumos/inserir_insumo.php");
                         break;
                     }
                     
                 case 'editar_insumo':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                    } else {
+                    } else{
 
                         include_once("insumos/editar_insumo.php");
                         break;
@@ -784,7 +903,17 @@ $painel = $painel_tmp;
                     }
                     
                 case 'pre_solicitacoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+                    // if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    //     echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                    //     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    // } else {
+
+                    //     include_once("estoques/dispensario/solicitacoes/pre_slc/painel_pre_solicitacoes.php");
+                    //     break;
+                    // }
+                    if (!$tem_permissao) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -840,7 +969,17 @@ $painel = $painel_tmp;
                     break;
                 
                 case 'listar_movimentacoes':
-                    if ($sessionUserType!=2 && $sessionUserType!=3) {
+                    // if ($sessionUserType!=2 && $sessionUserType!=3) {
+
+                    //     echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                    //     echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    // } else {
+
+                    //     include_once("./movimentacoes/painel_movimentacoes.php");
+                    //     break;
+                    // }
+                    if (!$tem_permissao) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";

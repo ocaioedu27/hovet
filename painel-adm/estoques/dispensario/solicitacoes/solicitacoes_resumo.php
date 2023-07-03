@@ -27,7 +27,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Resumo de Solicitações</h3>
+                <h3>Solicitações</h3>
                 <?php
                     
                     $sqlStatusTipo = "SELECT * FROM status_slc";
@@ -151,7 +151,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         <td><?=$dados_para_while["estoques_nome"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados_para_while['pre_slc_data']));?></td>
                         <td>
-                            <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$dados_para_while["pre_slc_oid_solicitacao"]?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$dados_para_while["pre_slc_oid_solicitacao"]?>&<?=$dados_para_while['status_slc_status']?>">Ver Detalhes</a>
                         </td>
                     </tr>
                     <?php
@@ -218,3 +218,14 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         </div>
     </div>
 </section>
+<?php 
+// var_dump (retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "",""));
+// echo "teste";
+// echo testeEcho("teste de mensagem");
+
+// $array_teste = array();
+
+// $array_teste = retornaDadosGeral($conexao,"permissoes_id", "permissoes_usuario", false, "","");
+
+// echo $array_teste;
+?>
