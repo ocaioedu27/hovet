@@ -347,7 +347,87 @@ create table doacoes (
     foreign key (doacoes_estoque_id) references estoques(estoques_id) on delete set null
 );
 ######################################################
+-- Criando a table de permissoes
 
+create table permissoes_usuario (
+	permissoes_id int primary key auto_increment,
+    permissoes_nome varchar (100),
+    permissoes_desc varchar (100)
+);
+
+-- Criando permissoes
+insert into permissoes_usuario (
+	permissoes_nome,
+	permissoes_desc)
+     values
+	("Cadastrar","Permissão de cadastro"),
+	("Editar dados gerais","Editar dados gerais"),
+	("Editar próprios dados","Editar dados do usuario"),
+	("Excluir","Excluir dados gerais"),
+	("Visualizar Solicitações Gerais","Visualizar solicitações gerais"),
+	("Visualizar Minhas Solicitações","Visualizar Minhas Solicitações"),
+	("Acesso ao Depósito","Acesso ao painel de Depósito"),
+	("index","Acesso à página princípal do sistema"),
+	("Dashboard","Acesso às informações gerais do sistema"),
+	("Painel de relatórios","Acesso ao painel de relatórios"),
+	("Relatórios","Acesso ao painel de relatórios"),
+	("Personalizar relatório","Permissão para personalizar o relatório"),
+	("Estoques","Permissão para visualizar todos os estoques"),
+	("Acesso ao Dispensário","Acesso aos painéis do dispensário"),
+	("Movimentações Gerais","Acesso aos painéis de movimentações"),
+	("Painéis de Compras","Acesso ao painel de compras"),
+	("Painéis de Permuta","Acesso ao painel de Permuta"),
+	("Painéis de Doações","Acesso ao painel de Doações"),
+	("Painéis de base de dados de insumos","Acesso ao painel de insumos cadastrados na base de dados"),
+	("Painéis de todos os usuários","Acesso ao painel de usuários gerais cadastrados na base de dados"),
+	("Painéis de base de dados de Instituições","Acesso ao painel de instituições cadastradas na base de dados"),
+	("Painéis de base de dados de Fornecedores","Acesso ao painel de Fornecedores cadastrados na base de dados"),
+	("Painel de Gerenciamento de Permissões","Acesso ao Painel de Gerenciamento de Permissões"),
+	("Envio de Solicitações","Permissão para envio de solicitações de itens do dispensário"),
+	("Aprovar Solicitações","Permissão para aprovar solicitações");
+    
+    
+create table usuarios_has_permissoes (
+	uhp_id int primary key auto_increment,
+    uhp_usuario_id int,
+	uhp_permissoes_id int,
+    unique (uhp_usuario_id, uhp_permissoes_id),
+    foreign key (uhp_usuario_id) references usuarios(usuario_id),
+    foreign key (uhp_permissoes_id) references permissoes_usuario(permissoes_id),
+    uhp_data_concedido datetime not null default current_timestamp()
+);
+
+insert into usuarios_has_permissoes (
+	uhp_usuario_id,
+	uhp_permissoes_id
+	) VALUES
+    (1,1),
+    (1,2),
+    (1,3),
+    (1,4),
+    (1,5),
+    (1,6),
+    (1,7),
+    (1,8),
+    (1,9),
+    (1,10),
+    (1,11),
+    (1,12),
+    (1,13),
+    (1,14),
+    (1,15),
+    (1,16),
+    (1,17),
+    (1,18),
+    (1,19),
+    (1,20),
+    (1,21),
+    (1,22),
+    (1,23),
+    (1,24),
+    (1,25);
+
+######################################################
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario
 DELIMITER $$
 
