@@ -7,8 +7,8 @@ function has_permission($per_user, $per_sistem){
     $cont_per_user = count($per_user);
     $i = 0;
     while ($i < $cont_per_user) {
-        echo "<br> per user" . $per_user[$i];
-        echo " per sistema" . $per_sistem[$i];
+        // echo "<br> per user" . $per_user[$i];
+        // echo " per sistema" . $per_sistem[$i];
 
 
         if (in_array($per_user[$i], $per_sistem)){

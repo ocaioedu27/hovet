@@ -3,7 +3,7 @@
 
 $painel = "";
 
-if ($sessionUserType != 2 && $sessionUserType != 3) {
+if (!has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema)) {
     $painel = "pagina_principal";
 } else {
     $painel = "usuarios";

@@ -180,7 +180,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                                 <label>Descrição</label>
                                 <textarea type="text" class="form-control" id="descricaoInsumoSclDisp1" readonly><?=$dados['insumos_descricao']?></textarea>
                             </div>
-                            <div class="display-flex-cl">
+                            <div class="display-flex-cl" id="operacao_slc_aprova">
                                 <label>Quantidade atendida</label>
                                 <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario1" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario1','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')">
                                 <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
@@ -215,8 +215,5 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
         </div>
     </div> 
 </div>
-    
-
-
 
 

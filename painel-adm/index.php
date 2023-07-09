@@ -1233,18 +1233,96 @@ if ($sessionUserType == 2) {
                         break;
                     }
 
+                case 'permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/gerenciar_permissoes.php");
+                        break;
+                    }
+
+                case 'cadastrar_permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/cadastro_permissao.php");
+                        break;
+                    }
+
+                case 'inserir_permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/inserir_permissao.php");
+                        break;
+                    }
+
+                case 'editar_permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/editar_permissao.php");
+                        break;
+                    }
+
+                case 'atualizar_permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/atualizar_permissao.php");
+                        break;
+                    }
+
+                case 'excluir_permissoes':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/excluir_permissao.php");
+                        break;
+                    }
+
                 default:
 
-                if (!has_permission($array_permissoes_user, $array_permissao_acessar_sistema_geral)) {
+                    if (!has_permission($array_permissoes_user, $array_permissao_acessar_sistema_geral)) {
 
-                    echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                    echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
 
-                } else{
+                    } else{
 
-                    include_once("home.php");
-                    break;
-                }
+                        include_once("home.php");
+                        break;
+                    }
             }
         ?>
         <?php 
@@ -1252,6 +1330,27 @@ if ($sessionUserType == 2) {
         echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
         
         echo '<input type="hidden" id="sessionUserType" value="'. $sessionUserType . '">';
+
+
+        // $qtd_linhas_tabelas = count($array_permissoes_gerais);
+        // $tem_permissoes = "teste";
+        // echo has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema);
+
+        if (!has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema)) {
+            // $painel = "pagina_principal";
+            $tem_permissoes = "false";
+            // echo "Não tem permissões" . $tem_permissoes;
+
+        } else {
+
+            $tem_permissoes = "true";
+            // echo "TESTE" . $tem_permissoes;
+        }
+
+        $tamanho_lista_permissoes_gerais = count($array_permissoes_opcoes_sistema);
+
+        echo '<input type="hidden" id="tem_permissoes" value="'. $tem_permissoes .', ' . $tamanho_lista_permissoes_gerais . '">';
+
 
         ?>
 
@@ -1265,6 +1364,7 @@ if ($sessionUserType == 2) {
     <script src="../js/autocomplete.js"></script>
     
     <script type="text/javascript" src="../js/script.js"></script>
+    <script type="text/javascript" src="../js/hasPermissions.js"></script>
 
 
     <!-- <script src="../js/jquery-3.6.4.min.js"></script> -->
