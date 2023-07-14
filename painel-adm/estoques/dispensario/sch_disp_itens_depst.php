@@ -195,6 +195,99 @@
         return json_encode($retorna_valores_disp);
     }
 
+    function retorna_permissoes($valor_to_search,$userId, $conn){
+        
+
+        // echo "<br>" . $valor_to_search;
+        // echo "<br>" . $userId;
+        $retorna_valores = array();
+        
+        $sql = "SELECT
+                    p.permissoes_id
+                FROM 
+                    usuarios_has_permissoes uhp
+                INNER JOIN
+                    usuarios u
+                ON 
+                    u.usuario_id = uhp.uhp_usuario_id
+
+                INNER JOIN
+                    permissoes_usuario p
+                ON
+                    p.permissoes_id = uhp.uhp_permissoes_id 
+                
+                WHERE
+                    u.usuario_id  = {$userId}";
+
+        $result_user_perm = mysqli_query($conn, $sql) or die("//estoques/dispensario/sch_disp_itens_depst/sql_pesquisa_permissoes_user - Erro: " . mysqli_error($conn));
+
+        // $list_permissoes_user = array();
+
+        $quantidade = $result_user_perm->num_rows;
+
+        if ($quantidade != 0) {
+            $string_filter = "";
+
+            while ($dados_tmp = mysqli_fetch_assoc($result_user_perm)) {
+
+                $permissao_user = $dados_tmp['permissoes_id'];
+                // array_push($list_permissoes_user, $permissao_user);
+                $string_filter .= " permissoes_id != $permissao_user and";
+        
+            }
+
+            $string_filter = substr($string_filter, 0, -4);
+
+            // echo "<br>Filtro: " . $string_filter;
+        
+            //Pesquisa pelas permissoes que o usuário não possui
+            $sql_permissoes_gerais = "SELECT 
+                                        permissoes_id,
+                                        permissoes_nome,
+                                        permissoes_desc
+                                        
+                                    FROM 
+                                        permissoes_usuario
+
+                                    WHERE 
+                                        $string_filter and permissoes_nome LIKE '%{$valor_to_search}%'
+
+                                    LIMIT 10";
+
+            $restult_no_permissions_user = mysqli_query($conn, $sql_permissoes_gerais) or die("//estoques/dispensario/sch_disp_itens_depst/Pesquisa_Permissoes_que_user_nao_tem - Erro: " . mysqli_error($conn));
+
+            // echo "teste";
+
+
+
+            $quantidade_permissoes_que_nao_possui = $restult_no_permissions_user->num_rows;
+
+            if ($quantidade_permissoes_que_nao_possui != 0) {
+
+                while ($row_permissoes = mysqli_fetch_assoc($restult_no_permissions_user)) {
+            
+                    $valores_permissoes[] = [
+                        
+                        'permissoesId' => $row_permissoes['permissoes_id'],
+                        'permissoesNome' => $row_permissoes['permissoes_nome'],
+                        'permissoesDesc' => $row_permissoes['permissoes_desc']
+                    ];
+            
+                }
+
+                $retorna_valores = ['erro' => false, 'dados_permissoes' => $valores_permissoes];
+
+            } else{
+
+                $retorna_valores = ['erro' => true, 'msg_error_permissoes' => 'Permissão não encontrada! Ou já concedida'];
+            }
+            
+        }
+        // var_dump($retorna_valores);
+
+        return json_encode($retorna_valores);
+    }
+
     function findKeyWord($texto,$palavra){
 
         if(preg_match("%\b{$palavra}\b%",$texto)){
@@ -239,5 +332,30 @@
     if(isset($cad_cateogia_insumo)){
 
         echo retorna_categoria($cad_cateogia_insumo, $conexao);
+    }
+
+    // Para procurar por permissoes
+    $stringList = array();
+
+    if ( isset( $_GET['dados_permissoes'] ) && ! empty( $_GET['dados_permissoes'] )) {
+        // Cria variáveis dinamicamente
+        // $contador = 0;
+        foreach ( $_GET as $chave => $valor ) {
+            $valor_tmp = $chave;
+            $position = strpos($valor_tmp, "menuop");
+            $valor_est = strstr($valor_tmp,$position);
+            array_push($stringList, $valor_est);
+
+        }
+        // var_dump($stringList);
+
+        $valor_permissao_tmp = $stringList[0];
+        $valor_permissao = $_GET[$valor_permissao_tmp];
+
+        $usuarioID_tmp = $stringList[1];
+        $usuarioID = $_GET[$usuarioID_tmp];
+
+        echo retorna_permissoes($valor_permissao, $usuarioID, $conexao);
+
     }
 ?>

@@ -45,7 +45,7 @@ function hasPermissionsJs(has_permissions){
   
     let i = 0;
   
-    if(permissionsUser != "true"){
+    if(permissionsUser === "false"){
       console.log("usuario não tem permissões "+ permissionsUser);
   
       if(operacao_cadastrar_id){
@@ -70,7 +70,7 @@ function hasPermissionsJs(has_permissions){
       }
   
       // console.log(qtd_colunas_tabelas,i);
-      if (permissionsUser != "true") {
+      if (permissionsUser === "false") {
         while(i < tamSystemPermissions){
           console.log("//hasPermissions/whileNoMenus - usuário sem permissão")
           let td_operacoes_editar_deletar = document.getElementById('td_operacoes_editar_deletar');

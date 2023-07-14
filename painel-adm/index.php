@@ -248,7 +248,7 @@ if ($sessionUserType == 2) {
                         <div class="dropdown-content">
                             <ul>
                                 <li>
-                                    <a href="index.php?menuop=usuarios">Todos os Usuários</a>
+                                    <a href="index.php?menuop=usuarios">Funcionários</a>
                                 </li>
                                 <li>
                                     <a href="index.php?menuop=fornecedores">Fornecedores</a>
@@ -533,7 +533,7 @@ if ($sessionUserType == 2) {
 
                 case 'trocar_senha_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -546,7 +546,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
@@ -1242,7 +1242,7 @@ if ($sessionUserType == 2) {
 
                     } else{
 
-                        include_once("usuarios/permissoes/gerenciar_permissoes.php");
+                        include_once("usuarios/permissoes/painel_permissoes.php");
                         break;
                     }
 
@@ -1308,6 +1308,58 @@ if ($sessionUserType == 2) {
                     } else{
 
                         include_once("usuarios/permissoes/excluir_permissao.php");
+                        break;
+                    }
+
+                case 'gerenciar_permissoes_usuario':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/gerenciar_permissoes_usuario.php");
+                        break;
+                    }
+
+                case 'remover_permissao':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/controle/remove_permissao.php");
+                        break;
+                    }
+
+                case 'conceder_permissao':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/controle/conceder_permissao.php");
+                        break;
+                    }
+
+                case 'inserir_acesso':
+
+                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/painel-adm/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/permissoes/controle/inserir_acesso.php");
                         break;
                     }
 
@@ -1379,6 +1431,10 @@ if ($sessionUserType == 2) {
 
         $('.confirmaDelete').on('click', function(){
             return confirm('O item será excluído, deseja confirmar?');
+        });
+
+        $('.confirmaPermissions').on('click', function(){
+            return confirm('Gerênciar permissões do usuário, deseja continuar?');
         });
 
         $('.confirmaVolta').on('click', function(){

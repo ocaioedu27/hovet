@@ -73,6 +73,10 @@
                                     </span>
                                 </button>
                             </a>
+                            <a href="index.php?menuop=gerenciar_permissoes_usuario&idUsuario=<?=$dados["usuario_id"]?>"
+                                class="confirmaPermissions" >
+                                <button class="btn">Permissões</button>
+                            </a>
                         </td>
                         <td><?=$dados["usuario_id"]?></td>
                         <td><?=$dados["usuario_primeiro_nome"]?></td>
