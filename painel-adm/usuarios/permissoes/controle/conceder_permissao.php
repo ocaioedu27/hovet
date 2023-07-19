@@ -61,7 +61,7 @@ $dados_user = mysqli_fetch_assoc($r);
 
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
-                                <label>Descrição da Permissão</label>
+                                <label>Categoria da Permissão</label>
                                 <textarea name="descAcessoUsuario[]" class="form-control" rows="3" id="descAcessoUsuario1" readonly></textarea>
                             </div>
                         </div>

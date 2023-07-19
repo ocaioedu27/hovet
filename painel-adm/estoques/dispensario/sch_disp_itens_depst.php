@@ -225,6 +225,8 @@
 
         $quantidade = $result_user_perm->num_rows;
 
+        // echo "<br> qtd linhas " . $quantidade;
+
         if ($quantidade != 0) {
             $string_filter = "";
 
@@ -242,12 +244,16 @@
         
             //Pesquisa pelas permissoes que o usuário não possui
             $sql_permissoes_gerais = "SELECT 
-                                        permissoes_id,
-                                        permissoes_nome,
-                                        permissoes_desc
-                                        
+                                        p.permissoes_id,
+                                        p.permissoes_nome,
+                                        cp.cp_nome 
                                     FROM 
-                                        permissoes_usuario
+                                        permissoes_usuario p
+                                    
+                                    INNER JOIN
+                                        categorias_permissoes cp
+                                    ON
+                                        p.permissoes_ctg_perm_id = cp.cp_id 
 
                                     WHERE 
                                         $string_filter and permissoes_nome LIKE '%{$valor_to_search}%'
@@ -270,7 +276,7 @@
                         
                         'permissoesId' => $row_permissoes['permissoes_id'],
                         'permissoesNome' => $row_permissoes['permissoes_nome'],
-                        'permissoesDesc' => $row_permissoes['permissoes_desc']
+                        'nomeCategoriaPermissao' => $row_permissoes['cp_nome']
                     ];
             
                 }

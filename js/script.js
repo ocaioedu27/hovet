@@ -64,7 +64,7 @@ function adicionaCampoCad(ondeCadastrou) {
     // PARA CONCEDER PERMISSOES AO USUÁRIO
     let dados_acesso_usuario = document.getElementById('dados_acesso_usuario');
     let id_user_to_add_permission = document.getElementById('id_user_to_add_permission').value;
-    dados_acesso_usuario.insertAdjacentHTML('beforeend', '<div id="campoCedePermissao'+controle_campo_geral+'" class="display-flex-row"><div class="form-group"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome da Permissão</label><input type="text" class="form-control" name="nomeAcessoUsuario[]" id="nomeAcessoUsuario'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 7, '+ id_user_to_add_permission +')" required><span class="ajuste_span" id="resultado_ceder_permissao'+controle_campo_geral+'" style="margin: 18% auto;"></span></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição da Permissão</label><textarea name="descAcessoUsuario[]" class="form-control" rows="3" id="descAcessoUsuario'+controle_campo_geral+'" readonly></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campoCedePermissao\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(11)" style="padding: 0;">+</button></div></div></div></div>');
+    dados_acesso_usuario.insertAdjacentHTML('beforeend', '<div id="campoCedePermissao'+controle_campo_geral+'" class="display-flex-row"><div class="form-group"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome da Permissão</label><input type="text" class="form-control" name="nomeAcessoUsuario[]" id="nomeAcessoUsuario'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 7, '+ id_user_to_add_permission +')" required><span class="ajuste_span" id="resultado_ceder_permissao'+controle_campo_geral+'" style="margin: 18% auto;"></span></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Categoria da Permissão</label><textarea name="descAcessoUsuario[]" class="form-control" rows="3" id="descAcessoUsuario'+controle_campo_geral+'" readonly></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campoCedePermissao\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(11)" style="padding: 0;">+</button></div></div></div></div>');
   }
 }
 
@@ -495,11 +495,11 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
 
             html_listados += '<div class="display-flex-row">'
             
-            html_listados += '<li onclick=\'getInsumoId('+ resposta_dados['dados_permissoes'][i].permissoesId+','+ JSON.stringify(resposta_dados['dados_permissoes'][i].permissoesDesc)+','+ JSON.stringify(resposta_dados['dados_permissoes'][i].permissoesNome)+', '+id_campo_digitado+',"",7,"")\'>'+resposta_dados['dados_permissoes'][i].permissoesNome +'</li>';
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_dados['dados_permissoes'][i].permissoesId+','+ JSON.stringify(resposta_dados['dados_permissoes'][i].nomeCategoriaPermissao)+','+ JSON.stringify(resposta_dados['dados_permissoes'][i].permissoesNome)+', '+id_campo_digitado+',"",7,"")\'>'+resposta_dados['dados_permissoes'][i].permissoesNome +'</li>';
             
             html_listados += '<li>|</li>';
 
-            html_listados += '<li> '+resposta_dados['dados_permissoes'][i].permissoesDesc +'</li>';
+            html_listados += '<li> '+resposta_dados['dados_permissoes'][i].nomeCategoriaPermissao +'</li>';
 
             html_listados += '</div>';
             

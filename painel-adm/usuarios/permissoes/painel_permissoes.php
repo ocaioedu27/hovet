@@ -55,7 +55,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         <th id="">Operações</th>
                         <th>ID</th>
                         <th>Permissão</th>
-                        <th>Descrição</th>
+                        <th>Categoria</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,11 +78,22 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         }
 
                         $sql = "SELECT 
-                                    * 
+                                    p.permissoes_id,
+                                    p.permissoes_nome,
+                                    cp.cp_nome
+
                                 FROM 
-                                    permissoes_usuario
+                                    permissoes_usuario p
+                                
+                                INNER JOIN
+                                    categorias_permissoes cp
+                                ON
+                                    p.permissoes_ctg_perm_id = cp.cp_id
+
                                 WHERE
-                                    permissoes_id = '{$txt_pesquisa_permissoes}' or permissoes_nome LIKE '%{$txt_pesquisa_permissoes}%'
+                                    p.permissoes_id = '{$txt_pesquisa_permissoes}' or p.permissoes_nome LIKE '%{$txt_pesquisa_permissoes}%'
+
+                                ORDER BY cp.cp_nome
                                     
                                 LIMIT $inicio_permissoes,$quantidade_registros_permissoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -115,7 +126,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         </td>
                         <td><?=$dados_para_while["permissoes_id"]?></td>
                         <td><?=$dados_para_while["permissoes_nome"]?></td>
-                        <td><?=$dados_para_while["permissoes_desc"]?></td>
+                        <td><?=$dados_para_while["cp_nome"]?></td>
                     </tr>
                     <?php
                         }
@@ -164,7 +175,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     }          
                 }
 
-                if ($pagina_permissoes<($totalPaginasSlc-6)) {
+                if ($pagina_permissoes < $totalPaginasSlc) {
                     ?>
                         <a href="?menuop=permissoes&idpermissoes=<?=$oid_permissoes?>&<?=$qualStatus?>&pagina_permissoes=<?php echo $pagina_permissoes+1?>"> > </a>
                     <?php

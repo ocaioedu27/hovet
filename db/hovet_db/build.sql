@@ -347,44 +347,94 @@ create table doacoes (
     foreign key (doacoes_estoque_id) references estoques(estoques_id) on delete set null
 );
 ######################################################
+-- Criando table de categorias de permissoes
+create table categorias_permissoes (
+	cp_id int primary key auto_increment,
+    cp_nome varchar(256),
+    cp_desc varchar(256)
+);
+
+-- Categorias permissoes
+insert into categorias_permissoes (
+	cp_nome,
+	cp_desc)
+     values
+	("Administradores Controller","Refere-se aos painéis de administradores"),
+	("Solicitações Controller","Refere-se aos painéis e ações de solicitações."),
+	("Permissões Controller","Refere-se aos painéis e ações de permissões."),
+	("Usuários Controller","Refere-se aos painéis e usuários gerais como Funcionários, Instituições e Fornecedores."),
+	("Movimentações Controller","Refere-se aos painéis de movimentações gerais como compra, doação, permuta e internas."),
+	("Insumos Controller","Refere-se aos painéis insumos gerais como categorias e seus devidos tipos."),
+	("Estoques Controller","Refere-se aos painéis de estoques como Depósito e Dispensário."),
+	("Relatórios Controller","Refere-se aos painéis de relatório."),
+	("Sistema Controller","Refere-se a acessar o sitema."),
+    ("Próprios_Dados Controller","Refere-se às permissões para usuários editarem e atualizarem seus prórios dados."); 
+
 -- Criando a table de permissoes
 
 create table permissoes_usuario (
 	permissoes_id int primary key auto_increment,
     permissoes_nome varchar (100),
-    permissoes_desc varchar (100)
+    permissoes_ctg_perm_id int, 
+    foreign key (permissoes_ctg_perm_id) references categorias_permissoes(cp_id) on delete set null
 );
-
 -- Criando permissoes
 insert into permissoes_usuario (
 	permissoes_nome,
-	permissoes_desc)
+    permissoes_ctg_perm_id)
      values
-	("Cadastrar","Permissão de cadastro"),
-	("Editar dados gerais","Editar dados gerais"),
-	("Editar próprios dados","Editar dados do usuario"),
-	("Excluir","Excluir dados gerais"),
-	("Visualizar Solicitações Gerais","Visualizar solicitações gerais"),
-	("Visualizar Minhas Solicitações","Visualizar Minhas Solicitações"),
-	("Acesso ao Depósito","Acesso ao painel de Depósito"),
-	("index","Acesso à página princípal do sistema"),
-	("Dashboard","Acesso às informações gerais do sistema"),
-	("Painel de relatórios","Acesso ao painel de relatórios"),
-	("Relatórios","Acesso ao painel de relatórios"),
-	("Personalizar relatório","Permissão para personalizar o relatório"),
-	("Estoques","Permissão para visualizar todos os estoques"),
-	("Acesso ao Dispensário","Acesso aos painéis do dispensário"),
-	("Movimentações Gerais","Acesso aos painéis de movimentações"),
-	("Painéis de Compras","Acesso ao painel de compras"),
-	("Painéis de Permuta","Acesso ao painel de Permuta"),
-	("Painéis de Doações","Acesso ao painel de Doações"),
-	("Painéis de base de dados de insumos","Acesso ao painel de insumos cadastrados na base de dados"),
-	("Painéis de todos os usuários","Acesso ao painel de usuários gerais cadastrados na base de dados"),
-	("Painéis de base de dados de Instituições","Acesso ao painel de instituições cadastradas na base de dados"),
-	("Painéis de base de dados de Fornecedores","Acesso ao painel de Fornecedores cadastrados na base de dados"),
-	("Painel de Gerenciamento de Permissões","Acesso ao Painel de Gerenciamento de Permissões"),
-	("Envio de Solicitações","Permissão para envio de solicitações de itens do dispensário"),
-	("Aprovar Solicitações","Permissão para aprovar solicitações");
+    ("Cadastrar", 1),
+    ("Editar", 1),
+    ("Excluir", 1),
+    ("Atualizar", 1),
+    ("Visualizar", 1),
+    
+    ("Enviar", 2),
+    ("Excluir", 2),
+    ("Atualizar", 2),
+    ("Visualizar", 2),
+    
+    ("Cadastrar", 3),
+    ("Editar", 3),
+    ("Excluir", 3),
+    ("Atualizar", 3),
+    ("Visualizar", 3),
+    
+    ("Cadastrar", 4),
+    ("Editar", 4),
+    ("Excluir", 4),
+    ("Atualizar", 4),
+    ("Visualizar", 4),
+    
+    ("Excluir", 5),
+    ("Visualizar", 5),
+    
+    ("Cadastrar", 6),
+    ("Editar", 6),
+    ("Excluir", 6),
+    ("Atualizar", 6),
+    ("Visualizar", 6),
+    
+    ("Cadastrar", 7),
+    ("Editar", 7),
+    ("Excluir", 7),
+    ("Atualizar", 7),
+    ("Visualizar", 7),
+    ("Visualizar Comum", 7),
+    
+    ("Gerar", 8),
+    ("Editar", 8),
+    ("Visualizar", 8),
+    
+    ("Cadastrar", 9),
+    ("Editar", 9),
+    ("Excluir", 9),
+    ("Atualizar", 9),
+    ("Visualizar", 9),
+    
+    ("Editar", 10),
+    ("Atualizar", 10),
+    ("Visualizar", 10); 
     
     
 create table usuarios_has_permissoes (
@@ -425,7 +475,25 @@ insert into usuarios_has_permissoes (
     (1,22),
     (1,23),
     (1,24),
-    (1,25);
+    (1,25),
+    (1,26),
+    (1,27),
+    (1,28),
+    (1,29),
+    (1,30),
+    (1,31),
+    (1,32),
+    (1,33),
+    (1,34),
+    (1,35),
+    (1,36),
+    (1,37),
+    (1,38),
+    (1,39),
+    (1,40),
+    (1,41),
+    (1,42),
+    (1,43);
 
 ######################################################
 # Trigger que atualiza a quantidade do insumom no Deposito depois de passar para o dispensario

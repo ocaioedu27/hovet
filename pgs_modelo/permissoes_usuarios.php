@@ -7,24 +7,15 @@ function has_permission($per_user, $per_sistem){
     $cont_per_user = count($per_user);
     $i = 0;
     while ($i < $cont_per_user) {
-        // echo "<br> per user" . $per_user[$i];
-        // echo " per sistema" . $per_sistem[$i];
-
 
         if (in_array($per_user[$i], $per_sistem)){
-
-            // echo $per_user[$i];
 
             return true;
             break;
         
         }else{
         
-            // echo $per_user[$i];
-            // echo "<br> per sistema" . $per_sistem[$i];
             $i++;
-            // echo $per_user[$i];
-        
         }
 
     }
@@ -33,12 +24,25 @@ function has_permission($per_user, $per_sistem){
 
 }
 
-function retornaDadosGeral($conn, $dado_requisitado, $table_name, $hasCondition, $dado_referencia, $dado_compare) {
+function retornaDadosGeral($conn, $dado_requisitado, $table_name, $hasCondition, $dado_referencia, $dado_compare, $has_inner_join, $table_to_inner) {
     // echo "teste na function";
     $array_to_return = array();
 
     if ($hasCondition) {
-        $sql = "SELECT {$dado_requisitado} FROM {$table_name} WHERE {$dado_compare}={$dado_referencia}";
+        $sql = "SELECT {$dado_requisitado} FROM {$table_name} WHERE {$dado_compare}='{$dado_referencia}'";
+
+    }else if($has_inner_join){
+        $sql = "SELECT 
+                    {$dado_requisitado} 
+                FROM 
+                    {$table_name}
+                INNER JOIN 
+                    {$table_to_inner}
+                ON
+                    {$table_name}.
+                WHERE 
+                    {$dado_compare}='{$dado_referencia}'";
+
     }else{
         $sql = "SELECT {$dado_requisitado} FROM {$table_name}";
     }
@@ -49,6 +53,34 @@ function retornaDadosGeral($conn, $dado_requisitado, $table_name, $hasCondition,
 
         $dado_requisitado_tmp = $dados_para_while[$dado_requisitado];
         array_push($array_to_return, $dado_requisitado_tmp);
+
+    }
+
+    return $array_to_return;
+}
+
+function retornaDadosInnerJoin($conn, $data_to_return, $table_to_from, $table_to_inner,$data_to_inner_table_from ,$data_to_inner_table_inner,$value_to_compare, $atribute_to_compare) {
+    // echo "teste na function";
+    $array_to_return = array();
+    
+    $sql = "SELECT 
+                {$table_to_from}.{$data_to_return} 
+            FROM 
+                {$table_to_from}
+            INNER JOIN 
+                {$table_to_inner}
+            ON
+                {$table_to_from}.{$data_to_inner_table_from} = {$table_to_inner}.{$data_to_inner_table_inner}
+
+            WHERE 
+                {$atribute_to_compare}='{$value_to_compare}'";
+
+    $result = mysqli_query($conn, $sql) or die("//retornaDadosInnerJoin - erro ao realizar a consulta: " . mysqli_error($conn));
+
+    while($dados_para_while = mysqli_fetch_assoc($result)){
+
+        $data_to_return_tmp = $dados_para_while[$data_to_return];
+        array_push($array_to_return, $data_to_return_tmp);
 
     }
 

@@ -77,7 +77,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                
                         $quantidade_registros_solicitacoes = 10;
 
-                        $pagina_solicitacoes = (isset($_GET['pagina_solicitacoes']))?(int)$_GET['pagina_solicitacoes']:1;;
+                        $pagina_solicitacoes = (isset($_GET['pagina_solicitacoes']))?(int)$_GET['pagina_solicitacoes']:1;
 
                         $inicio_solicitacoes = ($quantidade_registros_solicitacoes * $pagina_solicitacoes) - $quantidade_registros_solicitacoes;
 
