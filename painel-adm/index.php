@@ -18,7 +18,7 @@ $qualEstoque = "";
 
 // echo "<br>!!!!!!!!!! CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
-echo "<br>!!!!!!!!!! AJUSTAR INDEX !!!!!!!!!!<br><br> Editar regras de permissoes nos IFs da index<br>";
+echo "<br>!!!!!!!!!! AJUSTAR INDEX !!!!!!!!!!<br><br> Editar regras de permissoes nos IFs da index<br><br>criada a função recursiva de sql, só olhar no início da index";
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 
@@ -59,13 +59,21 @@ $painel = $painel_tmp;
 
 $array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","", false, "");
 
-$array_permissoes_sistema_teste = retornaDadosInnerJoin($conexao, 'permissoes_id', 'permissoes_usuario', 'categorias_permissoes', 'permissoes_ctg_perm_id','cp_id', 'Sistema Controller', 'cp_nome'); 
+// $array_permissoes_sistema_teste = retornaDadosInnerJoin($conexao, 'permissoes_id', 'permissoes_usuario', 'categorias_permissoes', 'permissoes_ctg_perm_id','cp_id', 'Sistema Controller', 'cp_nome');
+
+$teste_array = array(
+    "cp_nome" => "Sistema Controller",
+    "permissoes_nome" => "Cadastrar"
+);
+
+
+$array_permissoes_sistema_teste = retornaDadosInnerJoinComAnd($conexao, 'permissoes_id','permissoes_usuario','categorias_permissoes','permissoes_ctg_perm_id','cp_id',$teste_array);
 
 // var_dump($array_permissoes_sistema_teste);
 
 // for ($i=0; $i < count($array_permissoes_sistema_teste); $i++) { 
     
-//     echo "<br>Permissoes de sistema: " . $array_permissoes_sistema_teste[$i];
+//     echo "<br>Permissoes de sistema cadastrar: " . $array_permissoes_sistema_teste[$i];
 // }
 
 $array_permissoes_opcoes_sistema = [9,10,11,12,19,20,21,22,23];

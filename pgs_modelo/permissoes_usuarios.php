@@ -87,8 +87,45 @@ function retornaDadosInnerJoin($conn, $data_to_return, $table_to_from, $table_to
     return $array_to_return;
 }
 
-function testeEcho($message) {
-    return $message;
+function retornaDadosInnerJoinComAnd($conn, $data_to_return, $table_to_from, $table_to_inner,$data_to_inner_table_from ,$data_to_inner_table_inner,$array_key_value_to_compare) {
+    
+    $array_to_return = array();
+
+    //preparando o filtro
+    $string_filter = '';
+
+    $array_values = array();
+    $array_values = $array_key_value_to_compare;
+
+    foreach ($array_values as $key => $value) {
+        // echo "Chave: $key | Valor: $value";
+        $string_filter .= "$key = '$value' and ";
+    }
+
+    $string_filter = substr($string_filter, 0, -5);
+    
+    $sql = "SELECT 
+                {$table_to_from}.{$data_to_return} 
+            FROM 
+                {$table_to_from}
+            INNER JOIN 
+                {$table_to_inner}
+            ON
+                {$table_to_from}.{$data_to_inner_table_from} = {$table_to_inner}.{$data_to_inner_table_inner}
+
+            WHERE $string_filter
+                ";
+
+    $result = mysqli_query($conn, $sql) or die("//retornaDadosInnerJoin - erro ao realizar a consulta: " . mysqli_error($conn));
+
+    while($dados_para_while = mysqli_fetch_assoc($result)){
+
+        $data_to_return_tmp = $dados_para_while[$data_to_return];
+        array_push($array_to_return, $data_to_return_tmp);
+
+    }
+
+    return $array_to_return;
 }
   
 
