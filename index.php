@@ -43,14 +43,6 @@ include("db/autentica.php");
                         include_once("login.php");
                         break;
 
-                    case 'novo_cadastro_login':
-                        include_once("cadastro.php");
-                        break;
-
-                    case 'inserir_usuario':
-                        include_once("painel-adm/usuarios/inserir_usuario.php");
-                        break;
-
                     default:
                         include_once("login.php");
                         break;
