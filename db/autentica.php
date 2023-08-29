@@ -26,7 +26,7 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 				$_SESSION['usuario_primeiro_nome'] = $usuario['usuario_primeiro_nome'];
 				$_SESSION['usuario_tipo_usuario_id'] = $usuario['usuario_tipo_usuario_id'];
 
-				header("Location: /hovet/painel-adm/index.php");
+				header("Location: /hovet/sistema/index.php");
 
 			} else{
 				echo "<script language='javascript'>window.alert('Erro ao realizar o login! Email ou senha incorreto(s)!!'); </script>";

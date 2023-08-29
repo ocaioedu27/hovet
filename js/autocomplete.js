@@ -11,7 +11,7 @@ $(document).ready(function(){
         var depositoID_Insumodispensario = $(this).val()
         depositoID_Insumodispensario = depositoID_Insumodispensario.split(' ')[0];
 
-        $.getJSON('http://localhost/hovet/painel-adm/dispensario/sch_disp_itens_depst.php',{depositoID_Insumodispensario},
+        $.getJSON('http://localhost/hovet/sistema/dispensario/sch_disp_itens_depst.php',{depositoID_Insumodispensario},
     
             function(retorno){
                 console.log(depositoID_Insumodispensario);
@@ -35,7 +35,7 @@ $(document).ready(function(){
         var dispensario_id = $(this).val()
         dispensario_id = dispensario_id.split(' ')[0];
 
-        $.getJSON('http://localhost/hovet/painel-adm/dispensario/sch_disp_itens.php',{dispensario_id},
+        $.getJSON('http://localhost/hovet/sistema/dispensario/sch_disp_itens.php',{dispensario_id},
     
             function(retorno){
                 console.log(retorno);
