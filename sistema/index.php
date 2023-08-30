@@ -40,7 +40,6 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
 }
 
-
 if ($sessionUserType!=2 && $sessionUserType!=3) {
     // echo "minhas_solicitacoes";
     $painel_slc = "minhas_solicitacoes";
@@ -57,7 +56,7 @@ $painel = $painel_tmp;
 
 // ARRAYS DE PERMISSOES
 
-$array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","", false, "");
+// $array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","", false, "");
 
 // $array_permissoes_sistema_teste = retornaDadosInnerJoin($conexao, 'permissoes_id', 'permissoes_usuario', 'categorias_permissoes', 'permissoes_ctg_perm_id','cp_id', 'Sistema Controller', 'cp_nome');
 
@@ -67,53 +66,28 @@ $teste_array = array(
 );
 
 
-$array_permissoes_sistema_teste = retornaDadosInnerJoinComAnd($conexao, 'permissoes_id','permissoes_usuario','categorias_permissoes','permissoes_ctg_perm_id','cp_id',$teste_array);
-
-// var_dump($array_permissoes_sistema_teste);
-
-// for ($i=0; $i < count($array_permissoes_sistema_teste); $i++) { 
-    
-//     echo "<br>Permissoes de sistema cadastrar: " . $array_permissoes_sistema_teste[$i];
-// }
+// $array_permissoes_sistema_teste = retornaDadosInnerJoinComAnd($conexao, 'permissoes_id','permissoes_usuario','categorias_permissoes','permissoes_ctg_perm_id','cp_id',$teste_array);
 
 $array_permissoes_opcoes_sistema = [9,10,11,12,19,20,21,22,23];
+// (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor))
+// (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm))
+// (!has_permission($array_permissoes_user, $array_tipos_adm_diretor))
 
-$array_permissoes_solicitacoes = [6,24];
-$array_permissoes_visualizar_solicitacoes_gerais = [5];
-
-$array_permissoes_estoques = [13];
-$array_permissoes_depositos = [7];
-$array_permissoes_dispensarios = [14];
-
-//opcoes de crud
-$array_permissoes_cadastrar = [1];
-$array_permissoes_editar = [2];
-$array_permissoes_editar_proprios_dados = [3];
-$array_permissoes_excluir = [4];
-$array_permissoes_aprovar_solicitacao = [25];
-
-$array_permissao_acessar_sistema_geral = [8];
+$array_tipos_estoquista_adm_diretor = [2,3,5];
+$array_tipos_estoquista_adm = [2,3];
+$array_tipos_adm_diretor = [3,5];
+$array_permissoes_user = [];
 
 if ($sessionUserType == 2) {
     
-    $array_permissoes_user = $array_permissoes_gerais;
+    $array_permissoes_user = $array_tipos_estoquista_adm_diretor;
 
 } else {
     
-    $array_permissoes_user = retornaDadosGeral($conexao, "uhp_permissoes_id", "usuarios_has_permissoes", true, $sessionUserID, "uhp_usuario_id", false, "");
+    $array_permissoes_user = [$sessionUserType];
 
 }
 
-
-// if (has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
-
-//     echo "<br>Pode acessar o painel";
-
-// } else{
-
-//     echo "<br>Não pode acessar o painel";
-
-// }
 
 ?>
 
@@ -326,7 +300,7 @@ if ($sessionUserType == 2) {
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"pagina_principal";
             switch ($menuop) {
                 case 'pagina_principal':
-                    if (!has_permission($array_permissoes_user, $array_permissao_acessar_sistema_geral)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar o Sistema!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/sem_acesso_ao_sistema.php'</script>";
@@ -339,7 +313,7 @@ if ($sessionUserType == 2) {
 
                 case 'dashboard':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -352,7 +326,7 @@ if ($sessionUserType == 2) {
 
                 case 'estoques':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -370,7 +344,7 @@ if ($sessionUserType == 2) {
                     
                 case 'cadastro_estoque':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -383,7 +357,7 @@ if ($sessionUserType == 2) {
                 
                 case 'inserir_estoque':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -396,7 +370,7 @@ if ($sessionUserType == 2) {
 
                 case 'deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -409,7 +383,7 @@ if ($sessionUserType == 2) {
 
                 case 'deposito_resumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_estoques)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -422,7 +396,7 @@ if ($sessionUserType == 2) {
 
                 case 'cadastro_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -435,7 +409,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -448,7 +422,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -461,7 +435,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -474,7 +448,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -487,7 +461,7 @@ if ($sessionUserType == 2) {
                 
                 case 'usuarios':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -500,7 +474,7 @@ if ($sessionUserType == 2) {
                 
                 case 'cadastro_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if ($sessionUserType != 2) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -513,7 +487,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if ($sessionUserType != 2) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -526,7 +500,7 @@ if ($sessionUserType == 2) {
                     
                 case 'meus_dados_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -539,7 +513,7 @@ if ($sessionUserType == 2) {
                     
                 case 'editar_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if ($sessionUserType != 2) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -552,7 +526,7 @@ if ($sessionUserType == 2) {
 
                 case 'trocar_senha_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -565,7 +539,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar_proprios_dados)) {
+                    if ($sessionUserType != 2) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -578,7 +552,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if ($sessionUserType != 2) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -591,7 +565,7 @@ if ($sessionUserType == 2) {
 
                 case 'fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -604,7 +578,7 @@ if ($sessionUserType == 2) {
                 
                 case 'cadastro_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -617,7 +591,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -630,7 +604,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -643,7 +617,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -656,7 +630,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -669,7 +643,7 @@ if ($sessionUserType == 2) {
 
                 case 'instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -682,7 +656,7 @@ if ($sessionUserType == 2) {
                 
                 case 'cadastro_instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -695,7 +669,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -708,7 +682,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -721,7 +695,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -734,7 +708,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_instituicoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -747,7 +721,7 @@ if ($sessionUserType == 2) {
 
                 case 'categorias_insumos':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -760,7 +734,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_categoria':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -773,7 +747,7 @@ if ($sessionUserType == 2) {
 
                 case 'insumos':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -786,7 +760,7 @@ if ($sessionUserType == 2) {
                 
                 case 'cadastro_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -799,7 +773,7 @@ if ($sessionUserType == 2) {
                     
                 case 'cadastro_categoria_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -812,7 +786,7 @@ if ($sessionUserType == 2) {
                 
                 case 'inserir_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -825,7 +799,7 @@ if ($sessionUserType == 2) {
                     
                 case 'editar_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -838,7 +812,7 @@ if ($sessionUserType == 2) {
 
                 case 'atualizar_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -851,7 +825,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_insumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -864,7 +838,7 @@ if ($sessionUserType == 2) {
 
                 case 'dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_dispensarios)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -877,7 +851,7 @@ if ($sessionUserType == 2) {
 
                 case 'dispensario_resumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_dispensarios)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -890,7 +864,7 @@ if ($sessionUserType == 2) {
 
                 case 'cadastro_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -903,7 +877,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -916,7 +890,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -929,7 +903,7 @@ if ($sessionUserType == 2) {
 
                 case 'atualizar_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_editar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -942,7 +916,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -955,7 +929,7 @@ if ($sessionUserType == 2) {
 
                 case 'solicitacoes_resumo':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_visualizar_solicitacoes_gerais)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -968,7 +942,7 @@ if ($sessionUserType == 2) {
                     
                 case 'pre_solicitacoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -981,7 +955,7 @@ if ($sessionUserType == 2) {
 
                 case 'minhas_solicitacoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -994,7 +968,7 @@ if ($sessionUserType == 2) {
 
                 case 'solicitar_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1007,7 +981,7 @@ if ($sessionUserType == 2) {
 
                 case 'salva_solicitacao_dispensario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1020,7 +994,7 @@ if ($sessionUserType == 2) {
 
                 case 'atualiza_pre_solicitacao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_aprovar_solicitacao)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1033,7 +1007,7 @@ if ($sessionUserType == 2) {
 
                 case 'detalhes_pre_solicitacao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1046,7 +1020,7 @@ if ($sessionUserType == 2) {
 
                 case 'detalhes_solicitacao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_solicitacoes)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1056,36 +1030,10 @@ if ($sessionUserType == 2) {
                         include_once("estoques/dispensario/solicitacoes/detalhes_solicitacao.php");
                         break;
                     }
-                    
-                case 'painel_armario':
-
-                    if (!has_permission($array_permissoes_user, $array_permissoes_dispensarios)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("estoques/dispensario/armario/painel_armario.php");
-                        break;
-                    }
-
-                case 'painel_gaveteiro':
-
-                    if (!has_permission($array_permissoes_user, $array_permissoes_dispensarios)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("estoques/dispensario/estante/gaveteiro/painel_gaveteiro.php");
-                        break;
-                    }
 
                 case 'pesquisa_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_dispensarios)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1098,7 +1046,7 @@ if ($sessionUserType == 2) {
                 
                 case 'listar_movimentacoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1111,7 +1059,7 @@ if ($sessionUserType == 2) {
                     
                 case 'listar_relatorios':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1124,7 +1072,7 @@ if ($sessionUserType == 2) {
 
                 case 'compra':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1137,7 +1085,7 @@ if ($sessionUserType == 2) {
 
                 case 'compra_por_nf':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1150,7 +1098,7 @@ if ($sessionUserType == 2) {
 
                 case 'compra_detalhes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1163,7 +1111,7 @@ if ($sessionUserType == 2) {
 
                 case 'doacao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1176,7 +1124,7 @@ if ($sessionUserType == 2) {
 
                 case 'doacao_por_oid':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1189,7 +1137,7 @@ if ($sessionUserType == 2) {
 
                 case 'doacao_detalhes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1202,7 +1150,7 @@ if ($sessionUserType == 2) {
 
                 case 'permuta':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1215,7 +1163,7 @@ if ($sessionUserType == 2) {
 
                 case 'permuta_por_oid':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1228,7 +1176,7 @@ if ($sessionUserType == 2) {
 
                 case 'permutar_deposito':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_depositos)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1241,7 +1189,7 @@ if ($sessionUserType == 2) {
 
                 case 'detalhar_permuta':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1254,7 +1202,7 @@ if ($sessionUserType == 2) {
 
                 case 'permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1267,7 +1215,7 @@ if ($sessionUserType == 2) {
 
                 case 'cadastrar_permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1280,7 +1228,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1293,7 +1241,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1306,7 +1254,7 @@ if ($sessionUserType == 2) {
 
                 case 'atualizar_permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1319,7 +1267,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_permissoes':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1332,7 +1280,7 @@ if ($sessionUserType == 2) {
 
                 case 'gerenciar_permissoes_usuario':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_opcoes_sistema)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1345,7 +1293,7 @@ if ($sessionUserType == 2) {
 
                 case 'remover_permissao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_excluir)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1358,7 +1306,7 @@ if ($sessionUserType == 2) {
 
                 case 'conceder_permissao':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1371,7 +1319,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_acesso':
 
-                    if (!has_permission($array_permissoes_user, $array_permissoes_cadastrar)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1384,7 +1332,7 @@ if ($sessionUserType == 2) {
 
                 default:
 
-                    if (!has_permission($array_permissoes_user, $array_permissao_acessar_sistema_geral)) {
+                    if (!$sessionUserType) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1407,7 +1355,7 @@ if ($sessionUserType == 2) {
         // $tem_permissoes = "teste";
         // echo has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema);
 
-        if (!has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema)) {
+        if (!has_permission($array_permissoes_user,$array_tipos_estoquista_adm_diretor)) {
             // $painel = "pagina_principal";
             $tem_permissoes = "false";
             // echo "Não tem permissões" . $tem_permissoes;

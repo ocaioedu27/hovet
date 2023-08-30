@@ -22,17 +22,11 @@ include("db/autentica.php");
     <link rel="stylesheet" href="css/login.css">
 
     <!--REFERENCIA PARA O FAVICON -->
-
-    <!-- <link rel="shortcut icon" href="img/favicon/favicon.jpg" type="image/x-icon"> -->
     <link rel="shortcut icon" href="img/favicon/logo_hovet.ico" type="image/x-icon">
 
 </head>
 
 <body>
-    <?php
-        //include_once ("login.php");
-    ?>
-    
     
     <div class="logo_fundo">
         <main>
