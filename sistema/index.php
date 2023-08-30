@@ -144,9 +144,9 @@ if ($sessionUserType == 2) {
                                 <li>
                                     <a href="index.php?menuop=pagina_principal">Página Principal</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="index.php?menuop=permissoes" id="listar">Gerênciar Permissões</a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
                                 </li>
