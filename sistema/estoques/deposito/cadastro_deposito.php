@@ -128,11 +128,6 @@ if ($qualEstoque_dep != "") {
                             <label for="validadeInsumoDeposito[]">Validade</label>
                             <input type="date" class="form-control" name="validadeInsumodeposito[]" required>
                         </div>
-                    
-                        <div class="display-flex-cl">
-                            <label>Quantidade Crítica</label>
-                            <input type="text" class="form-control" id="qtdCriticaInsumoCadDep1" readonly>
-                        </div>
 
                     </div>
 
