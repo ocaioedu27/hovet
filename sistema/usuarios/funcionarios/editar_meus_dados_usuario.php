@@ -67,7 +67,7 @@ $dados = mysqli_fetch_assoc($result);
 
             <div class="form-group valida_movimentacao">
 
-                <div class="display-flex-cl">
+                <div class="display-flex-cl" id="tipo_usuario_meus_dados">
                     <label for="tipoUsuario">Tipo de usuário</label>
                     <select class="form-control largura_um_terco" name="tipoUsuario">
                         <?php

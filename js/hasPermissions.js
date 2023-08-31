@@ -23,6 +23,7 @@ function hasPermissionsJs(has_permissions){
     let operacao_slc_reprova = null;
     let confirma_dados_slc = null;
     let menu_listar = null;
+    let tipo_usuario_meus_dados = null;
   
     try {
   
@@ -38,6 +39,9 @@ function hasPermissionsJs(has_permissions){
       confirma_dados_slc = document.getElementById('confirma_dados_slc');
   
       qtd_colunas_tabelas = document.querySelector('#quantidade_linhas_tabelas').value;
+
+      tipo_usuario_meus_dados = document.getElementById('tipo_usuario_meus_dados');
+
     } catch (error) {
       console.log('erro ao tentar pegar a tag pelo id: '+error)
       qtd_colunas_tabelas = 0;
@@ -67,6 +71,10 @@ function hasPermissionsJs(has_permissions){
   
       if (confirma_dados_slc) {
         confirma_dados_slc.remove();
+      }
+  
+      if (tipo_usuario_meus_dados) {
+        tipo_usuario_meus_dados.remove();
       }
   
       // console.log(qtd_colunas_tabelas,i);

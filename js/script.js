@@ -750,5 +750,3 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
   }
 }
 
-
-
