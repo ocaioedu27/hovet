@@ -104,12 +104,6 @@
         $html .= "<br><br>";
         $html .= "Relatorio gerado em $agora";
             
-
-
-
-
-   
-    
     
  require __DIR__.'/vendor/autoload.php';  
     
@@ -134,9 +128,13 @@
     
     $dompdf->render();
     
+    //Pegar a data atual e nome do arquivo
+    $data_atual = date('Y-m-d');
+    $file_name = "" . $data_atual . "-relatorio_insumo_critico.pdf";
+    
     header('Content-type: application/pdf');
     $dompdf->stream(
-        "relatorio_insumo_critico.pdf",
+        $file_name,
         array(
             "Attachment"=>true
         )

@@ -88,7 +88,8 @@ if ($sessionUserType == 2) {
 
 }
 
-
+// $data_atual = date('Y-m-d');
+// echo "Data atual: " . $data_atual;
 ?>
 
 <!DOCTYPE html>
@@ -1069,6 +1070,19 @@ if ($sessionUserType == 2) {
                         include_once("./pdf/painel_relatorios.php");
                         break;
                     }
+                    
+                case 'personalizar_relatorios':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("./pdf/relatorios_personalizar.php");
+                        break;
+                    }
 
                 case 'compra':
 
@@ -1394,6 +1408,10 @@ if ($sessionUserType == 2) {
     <script type="text/javascript">
         $('.confirmaEdit').on('click', function(){
             return confirm('O item será editado, deseja editar?');
+        });
+
+        $('.confirmaDownload').on('click', function(){
+            return confirm('Deseja baixar o arquivo?');
         });
 
         $('.confirmaDelete').on('click', function(){
