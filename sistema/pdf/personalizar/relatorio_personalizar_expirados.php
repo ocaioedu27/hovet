@@ -19,7 +19,8 @@ echo "<br>Diretório depois: " . $dir;
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=relatorio_expirados" method="post">
+        <!-- <form class="form_cadastro" action="index.php?menuop=relatorio_expirados" method="post"> -->
+        <form class="form_cadastro" action="/hovet/sistema/pdf/relatorio_validade.php" method="post">
 
             <div id="dados_insumos_cad">
                 <hr>
@@ -27,14 +28,14 @@ echo "<br>Diretório depois: " . $dir;
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">
                             <label>Data de referência</label>
-                            <input type="date" class="form-control" name="data_referencia[]" required>
+                            <input type="date" class="form-control" name="data_referencia" required>
                         </div>
                     </div>
 
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">
                             <label>Intervalo de dias</label>
-                            <input type="number" class="form-control" name="intervalo_dias[]" required>
+                            <input type="number" class="form-control" name="intervalo_dias" required>
                         </div>
                     </div>
                 </div>

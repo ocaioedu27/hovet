@@ -4,24 +4,35 @@
 include("../../db/connect.php");
 
 $sql= "SELECT
-i.insumos_nome,
-i.insumos_descricao,
-m.movimentacoes_id,
-m.movimentacoes_origem,
-m.movimentacoes_destino,
-tm.tipos_movimentacoes_movimentacao,
-m.movimentacoes_usuario_id,
-date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
-u.usuario_nome_completo
-FROM movimentacoes m
-INNER JOIN insumos i
-on m.movimentacoes_insumos_id = i.insumos_id
-INNER JOIN usuarios u
-ON u.usuario_id = m.movimentacoes_usuario_id
-INNER JOIN tipos_movimentacoes tm
-ON m.movimentacoes_tipos_movimentacoes_id = tm.tipos_movimentacoes_id
+            i.insumos_nome,
+            i.insumos_descricao,
+            m.movimentacoes_id,
+            m.movimentacoes_origem,
+            m.movimentacoes_destino,
+            tm.tipos_movimentacoes_movimentacao,
+            m.movimentacoes_usuario_id,
+            date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
+            u.usuario_nome_completo
+        FROM
+            movimentacoes m
+        INNER JOIN
+            insumos i
+        ON
+            m.movimentacoes_insumos_id = i.insumos_id
+        INNER JOIN
+            usuarios u
+        ON
+            u.usuario_id = m.movimentacoes_usuario_id
+        INNER JOIN
+            tipos_movimentacoes tm
+        ON
+            m.movimentacoes_tipos_movimentacoes_id = tm.tipos_movimentacoes_id
+        
+        WHERE
+            m.movimentacoes_data_operacao <= curdate()
 
-    ORDER BY insumos_nome  
+        ORDER BY
+            insumos_nome  
 ";
     
 $res = $conexao->query($sql);
