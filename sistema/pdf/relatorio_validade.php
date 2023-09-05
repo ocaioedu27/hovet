@@ -1,28 +1,70 @@
-
 <?php
 //include("../../db/config.php");
 include("../../db/connect.php");
 
-$sql= "SELECT 
-        d.deposito_id, 
-        d.deposito_qtd,
-        date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-        i.insumos_nome,
-        i.insumos_unidade,
-        datediff(d.deposito_validade, curdate()) as diasvencimento,
-        es.estoques_nome
-    FROM deposito d 
-    inner join insumos i 
-    on d.deposito_insumos_id = i.insumos_id
-    inner join estoques es
-    on es.estoques_id = d.deposito_estoque_id
-    where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
+ob_start();
+
+$dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$sql = "";
+    
+if (!empty($dados_enviados_array['btn_gerar'])) {
+
+    foreach ($dados_enviados_array['data_referencia'] as $chave => $valor) {
+        $data_referencia = $valor;
+        $intervalo_dias = $dados_enviados_array['intervalo_dias'][$chave];
+
+        // echo "data de referência: " . $data_referencia;
+        // echo "Intervalo de dias: " . $intervalo_dias;
+
+        $sql= "SELECT 
+                    d.deposito_id, 
+                    d.deposito_qtd,
+                    date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
+                    i.insumos_nome,
+                    i.insumos_unidade,
+                    datediff(d.deposito_validade, curdate()) as diasvencimento,
+                    es.estoques_nome
+                FROM 
+                    deposito d 
+                INNER JOIN 
+                    insumos i 
+                ON
+                    d.deposito_insumos_id = i.insumos_id
+                INNER JOIN 
+                    estoques es
+                ON
+                    es.estoques_id = d.deposito_estoque_id
+                WHERE 
+                    deposito_validade<='{$data_referencia}' + interval {$intervalo_dias} day ORDER BY insumos_nome ASC";
+
+        // echo "sql gerado: " . $sql;
+
+    }
+
+} else {
+
+    $sql= "SELECT 
+            d.deposito_id, 
+            d.deposito_qtd,
+            date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
+            i.insumos_nome,
+            i.insumos_unidade,
+            datediff(d.deposito_validade, curdate()) as diasvencimento,
+            es.estoques_nome
+        FROM deposito d 
+        inner join insumos i 
+        on d.deposito_insumos_id = i.insumos_id
+        inner join estoques es
+        on es.estoques_id = d.deposito_estoque_id
+        where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
+}
 
 $res = $conexao->query($sql);
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('d/m/Y H:i');
 
 if($res->num_rows > 0){
+    // echo "tem resultado";
     $html = "<DOCTYPE html>";
     $html .= "<html lang='pt-BR'>";
     $html .= "<head>"; 
@@ -78,8 +120,10 @@ if($res->num_rows > 0){
                 
             if ($row->diasvencimento <= 0){
                 $mensagem_aviso = "INSUMO VENCIDO!";
+                // echo "mensagem de aviso para vencido: " . $mensagem_aviso;
             } else{
                 $mensagem_aviso = $row->diasvencimento . " dia(s) para o vencimento";
+                // echo "mensagem de aviso para dias: " . $mensagem_aviso;
             }
                 
             $html .="<td class=". $class_to_add . ">". $mensagem_aviso;
@@ -110,34 +154,50 @@ if($res->num_rows > 0){
         $html .= "<br><br><br>";
         $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
         $html .="Nenhum Dado foi encontrado para este relatorio.";
+
+        echo "Sem resultado";
     }
 
     $html .= "<br><br>";
     $html .= "Relatorio gerado em $agora";
     
+
+    $dir = __DIR__;
+    // echo "<br>diretório" . $dir;
      
- require __DIR__.'/vendor/autoload.php';  
+    require __DIR__.'/vendor/autoload.php';  
     
     use Dompdf\Dompdf;
     use Dompdf\Options;
+
+    // echo "<br>passou do dom";
     
     //instanciar Options
     $options = new Options();
     $options->setChroot(__DIR__);
+
+    // echo "<br>setou as opcoes";
     
     $options->setIsRemoteEnabled(true);
+
+    // echo "<br>passou do remote";
     
-    
-    //instanciar Dompdf
+    // instanciar Dompdf
     
     $dompdf = new Dompdf($options);
-    
-    
-    $dompdf->load_Html($html);
+    // $dompdf = new Dompdf();
+
+    // echo "<br>Instanciou as opcoes no dom";
+        
+    $dompdf->loadHtml($html);
+
+    // echo "<br>fez o load";
     
     //$dompdf->loadHtml('Olá Html');
     
     $dompdf->render();
+
+    // echo "<br>Renderizou";
 
     //Pegar a data atual e nome do arquivo
     $data_atual = date('Y-m-d');
@@ -150,12 +210,15 @@ if($res->num_rows > 0){
             "Attachment"=>true
         )
     );
-    echo $dompdf->output();
+
+    // header('Content-type: application/pdf');
+    // echo $dompdf->output();
+    // $dompdf->stream($file_name);
     
-    echo $_SERVER['PHP_SELF'] . "<br />";
+    // echo $_SERVER['PHP_SELF'] . "<br />";
     
     
-    ?>
+?>
     
 
 

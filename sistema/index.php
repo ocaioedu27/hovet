@@ -1080,7 +1080,20 @@ if ($sessionUserType == 2) {
 
                     } else{
 
-                        include_once("./pdf/relatorios_personalizar.php");
+                        include_once("./pdf/personalizar/relatorios_personalizar.php");
+                        break;
+                    }
+                    
+                case 'relatorio_expirados':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("./pdf/relatorio_validade.php");
                         break;
                     }
 
