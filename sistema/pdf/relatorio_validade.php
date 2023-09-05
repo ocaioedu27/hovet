@@ -11,16 +11,12 @@ $html .= "<head>";
 $html .= "<meta charset='UTF-8'>";
 $html .= "<meta http-equiv='X-UA-Compatible' content='IE=edge'>";
 $html .= "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
-$html .= "<link rel='stylesheet' href='http://localhost/hovet/sistema/pdf/css/custom.css'";
-$html .= "<title>Relatorio de Insumos Prestes a Expirar</title>";
+$html .= "<link rel='stylesheet' href='http://localhost/hovet/sistema/pdf/css/custom.css'>";
+$html .= "<title>Relatório de Insumos Prestes a Expirar</title>";
 $html .= "</head>";
 $html .= "<body>";
+$html .= "<div class='container'>";
 $html .= "<img src='logo_hovet.jpg'>";
-$html .= "";
-$html .= "";
-$html .= "";
-$html .= "</body>";
-$html .= "<br><br><br>";
 
 
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
@@ -33,7 +29,7 @@ if (!empty($dados)) {
     $data_referencia = mysqli_real_escape_string($conexao,$_POST["data_referencia"]);
     $intervalo_dias = mysqli_real_escape_string($conexao,$_POST["intervalo_dias"]);
 
-    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos $intervalo_dias dias<br></h3>";
+    $html .= "<h3 align='center'>Relatório de insumos prestes a expirar nos próximos $intervalo_dias dias<br></h3>";
 
     $sql= "SELECT 
                 d.deposito_id, 
@@ -82,6 +78,7 @@ $agora = date('d/m/Y H:i');
 if($res->num_rows > 0){
     $html .= "<table border=1 cellspacing=3>";
     $html .= "<thead><tr><th> ID </th><th> Insumo </th><th> Quantidade </th><th> Validade </th><th> Guardado em </th><th> Aviso de Vencimento </th></tr></thead>";
+    $html .= "<tbody>";
     
     while($row = $res->fetch_object()){
         
@@ -114,15 +111,17 @@ if($res->num_rows > 0){
         
         $html .= "</tr>";
     }
+    $html .= "</tbody>";
     $html .= "</table>";
-    $html .= "<br><br>";
+    $html .= "</div>";
+    $html .= "";
 
 }else{
-    $html .="Nenhum Dado foi encontrado para este relatorio.";
+    $html .="<p>Nenhum Dado foi encontrado para este relatorio.</p>";
     //echo "Sem resultado";
 }
-$html .= "<br><br>";
-$html .= "Relatorio gerado em " . $agora ."";
+$html .= "<p>Relatorio gerado em " . $agora ."</p>";
+$html .= "</body>";
 $html .= "</html>";
 
 
@@ -166,7 +165,5 @@ header('Content-type: application/pdf');
             "Attachment"=>true
         )
     );
-// echo $dompdf->output();
-// $dompdf->stream($file_name,array("Attachment"=>true));
 
 ?>

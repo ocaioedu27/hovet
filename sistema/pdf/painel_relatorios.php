@@ -1,7 +1,6 @@
 <?php
 
 $dir = __DIR__;
-echo "Diretório atual: " . $dir;
 
 ?>
 

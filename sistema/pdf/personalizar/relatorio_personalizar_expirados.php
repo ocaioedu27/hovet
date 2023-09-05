@@ -1,12 +1,3 @@
-<?php
-
-$dir = __DIR__;
-echo "Diretório antes: " . $dir;
-$dir = substr($dir, 0,-12);
-echo "<br>Diretório depois: " . $dir;
-
-?>
-
 <div class="container cadastro_all">
     <div class="cards cadastro_insumo">
         <div class="voltar">
