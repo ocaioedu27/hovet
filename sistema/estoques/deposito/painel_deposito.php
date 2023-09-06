@@ -92,6 +92,7 @@ if ($qualEstoque_dep != "") {
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Unidade</th>
+                        <th>Categoria</th>
                         <th>Local Cadastrado</th>
                         <th>Origem</th>
                         <th>Validade</th>
@@ -128,10 +129,14 @@ if ($qualEstoque_dep != "") {
                                     i.insumos_nome,
                                     i.insumos_unidade,
                                     datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito,
-                                    i.insumos_qtd_critica
+                                    i.insumos_qtd_critica,
+                                    tp.tipos_insumos_tipo
+
                                     FROM deposito d 
                                     INNER JOIN insumos i 
                                     ON d.deposito_insumos_id = i.insumos_id
+                                    INNER JOIN tipos_insumos tp
+                                    ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
                                     INNER JOIN estoques es
                                     ON d.deposito_estoque_id = es.estoques_id 
                                     WHERE
@@ -181,6 +186,7 @@ if ($qualEstoque_dep != "") {
                         </td>
                         <td><?=$dados_para_while["deposito_qtd"]?></td>
                         <td><?=$dados_para_while["insumos_unidade"]?></td>
+                        <td><?=$dados_para_while["tipos_insumos_tipo"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
                         <td><?=$dados_para_while["deposito_origem_item"]?></td>
                         <td><?=$dados_para_while["validadedeposito"]?></td>

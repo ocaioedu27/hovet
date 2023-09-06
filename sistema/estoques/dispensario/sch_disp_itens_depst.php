@@ -50,7 +50,6 @@
         return json_encode($retorna_valores);
     }
     
-
     // para cadastrar dados no deposito a partir de informacoes dos insumos cadastrados no sistema
     function retorna_dados_insumos($cad_deposito_insumos_nome, $conn){
         $sql_insumo = "SELECT
@@ -152,7 +151,6 @@
         }
         return json_encode($retorna_valores);
     }
-
 
     function retornInsumosDisp($insumos_nome, $conn){
 
@@ -294,6 +292,43 @@
         return json_encode($retorna_valores);
     }
 
+    function retorna_movimentacoes($value_to_compare, $conn){
+
+        $sql = "SELECT 
+                    tipos_movimentacoes_id,
+                    tipos_movimentacoes_movimentacao,
+                    tipos_movimentacoes_descricao
+                FROM
+                    tipos_movimentacoes
+                WHERE 
+                    tipos_movimentacoes_movimentacao LIKE '%{$value_to_compare}%'";
+
+        $result = mysqli_query($conn, $sql) or die("//dispensario/sch_disp_itens/ - Erro: " . mysqli_error($conn));
+
+        $valores = array();
+
+        $quantidade = $result->num_rows;
+
+        if ($quantidade != 0) {
+            while ($array_row = mysqli_fetch_assoc($result)) {
+        
+                $valores[] = [
+                    
+                    'id_mov' => $array_row['tipos_movimentacoes_id'],
+                    'nome_mov' => $array_row['tipos_movimentacoes_movimentacao'],
+                    'desc_mov' => $array_row['tipos_movimentacoes_descricao']
+                ];
+        
+            }
+
+            $values_array_return = ['erro' => false, 'dados' => $valores];
+
+        } else{
+            $values_array_return = ['erro' => true, 'msg_erro' => 'Nada foi encontrado'];
+        }
+        return json_encode($values_array_return);
+    }
+
     function findKeyWord($texto,$palavra){
 
         if(preg_match("%\b{$palavra}\b%",$texto)){
@@ -363,5 +398,13 @@
 
         echo retorna_permissoes($valor_permissao, $usuarioID, $conexao);
 
+    }
+
+    // Para procurar por tipos de movimentações
+    $valor_movimentacoes = $_GET['valor_movimentacoes'];
+
+    if(isset($valor_movimentacoes)){
+
+        echo retorna_movimentacoes($valor_movimentacoes, $conexao);
     }
 ?>

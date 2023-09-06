@@ -1,8 +1,4 @@
 <?php
-// ob_start();
-// $html = ob_get_clean();
-// echo "end";
-// exit;
 include("../../db/connect.php");
 
 $html .= "<!DOCTYPE html>";
@@ -18,9 +14,8 @@ $html .= "<body>";
 $html .= "<div class='container'>";
 $html .= "<img src='logo_hovet.jpg'>";
 
-
+//Coleta de dados caso seja personalizado
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-// var_dump($dados);
 
 $sql = "";
     
@@ -117,38 +112,33 @@ if($res->num_rows > 0){
     $html .= "";
 
 }else{
-    $html .="<p>Nenhum Dado foi encontrado para este relatorio.</p>";
+    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
+    $html .="<p>Nenhum dado foi encontrado para este relatorio.</p>";
     //echo "Sem resultado";
 }
 $html .= "<p>Relatorio gerado em " . $agora ."</p>";
 $html .= "</body>";
 $html .= "</html>";
 
-
-// echo "<br>Conteudo gerado<br><br><br><br><br><br>" . $html;
-
 require __DIR__.'/vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
-//echo "<br>passou do dom";
-
 //instanciar Options
 $options = new Options();
 $options->setChroot(__DIR__);
 
-//echo "<br>setou as opcoes";
-
 $options->setIsRemoteEnabled(true);
-
-//echo "<br>passou do remote";
 
 //instanciar Dompdf
 $dompdf = new Dompdf($options);
 //$dompdf = new Dompdf();
 
 $dompdf->loadHtml($html);
+
+//configurando o papel
+$dompdf->setPaper('A4', 'landscape');
 
 // $dompdf->loadHtml('Olá Html');
 $dompdf->render();

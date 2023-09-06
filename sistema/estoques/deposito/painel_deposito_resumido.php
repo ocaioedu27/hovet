@@ -141,6 +141,7 @@ if ($qualEstoque_dep != "") {
                     <tr>
                         <th>Visualizar</th>
                         <th>Insumo</th>
+                        <th>Categoria</th>
                         <th>Quantidade total</th>
                         <th>Local Cadastrado</th>
                     </tr>
@@ -158,10 +159,13 @@ if ($qualEstoque_dep != "") {
                             $sql_qtd = "SELECT 
                             sum(d.deposito_qtd) as deposito_qtd_insumo,
                             i.insumos_nome,
-                            es.estoques_nome
+                            es.estoques_nome,
+                            tp.tipos_insumos_tipo
                             FROM deposito d 
                             INNER JOIN insumos i
                             ON d.deposito_insumos_id = i.insumos_id
+                            INNER JOIN tipos_insumos tp
+                            ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
                             INNER JOIN estoques es
                             ON es.estoques_id = d.deposito_estoque_id
                             WHERE 
@@ -178,6 +182,7 @@ if ($qualEstoque_dep != "") {
                             <a href="index.php?menuop=deposito&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
                         </td>
                         <td><strong><?=$dados['insumos_nome']?></strong></td>
+                        <td><?=$dados['tipos_insumos_tipo']?></td>
                         <td><?=$dados['deposito_qtd_insumo']?></td>
                         <td><?=$dados['estoques_nome']?></td>
                     </tr>

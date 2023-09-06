@@ -282,21 +282,6 @@ if ($sessionUserType == 2) {
         </div>
     </nav>
     <main>
-        <!-- <section class="menu_lateral">
-            <div class="">
-                <div class="menu_op menu lateral">
-                    <div>
-                        <p>teste</p>
-                        <ul>
-                            <li>teste</li>
-                            <li>teste</li>
-                            <li>teste</li>
-                            <li>teste</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section> -->
         <?php
             $menuop = (isset($_GET["menuop"]))?$_GET["menuop"]:"pagina_principal";
             switch ($menuop) {
@@ -1080,7 +1065,7 @@ if ($sessionUserType == 2) {
 
                     } else{
 
-                        include_once("./pdf/personalizar/relatorios_personalizar.php");
+                        include_once("./pdf/personalizar/painel_personalizar.php");
                         break;
                     }
                     

@@ -26,7 +26,11 @@
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">
                             <label>Intervalo de dias</label>
-                            <input type="number" class="form-control" name="intervalo_dias" required>
+                            <input type="number" class="form-control" min="0" id="valor_dias" name="intervalo_dias" onkeyup="verifica_valor('valor_dias', 'msg_alerta', 'btn_gerar')" required>
+                            <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta">
+                                <label>Valor inválido! Por favor, altere para um valor válido!</label>
+                                <ion-icon name="alert-circle-outline"></ion-icon>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -40,7 +44,7 @@
 
             
             <div class="form-group" id="confirmaDownload">
-                <input type="submit" value="Gerar" name="btn_gerar" class="btn btn_cadastrar">
+                <input type="submit" value="Gerar" name="btn_gerar" id="btn_gerar" class="btn btn_cadastrar">
             </div>
         </form>
     </div>

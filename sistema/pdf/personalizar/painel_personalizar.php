@@ -23,7 +23,19 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $tipo_relatorio = "Insumos prestes a expirar ou expirados";
 
         echo "<header><h4>Relatório: " . $tipo_relatorio . "</h4></header>";
-        include_once($dir . '/relatorio_personalizar_expirados.php');
+        include_once($dir . '/personalizar_expirados.php');
+
+    }else if ($tipo_relatorio == "estoque_criticos") {
+        $tipo_relatorio = "Todos os insumos em estoque crítico";
+
+        echo "<header><h4>Relatório: " . $tipo_relatorio . "</h4></header>";
+        include_once($dir . '/personalizar_criticos.php');
+
+    }else if ($tipo_relatorio == "todas_movimentacoes") {
+        $tipo_relatorio = "Todas as movimentações";
+
+        echo "<header><h4>Relatório: " . $tipo_relatorio . "</h4></header>";
+        include_once($dir . '/personalizar_movimentacoes.php');
     }
 
 }

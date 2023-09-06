@@ -11,7 +11,7 @@ $dir = __DIR__;
                 <tr>
                     <th id="th_operacoes_editar_deletar">Personalizar</th>
                     <th>Nome</th>
-                    <th>Parâmetros para coleta</th>
+                    <th>Parâmetros para coleta: valores padrão</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +36,7 @@ $dir = __DIR__;
                         <a href="pdf/relatorio_validade.php" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
                     </td>
                     <td>
-                        <span>A data atual somado com 30 dias.</span>
+                        <span>Insumos prestes a vencer em 30 dias ou já vencidos.</span>
                     </td>
                 </tr>
                 <tr>
@@ -57,7 +57,7 @@ $dir = __DIR__;
                         </a>
                     </td>
                     <td>
-                        <a href="pdf/relatorio_insumo.php" target="_blank">Relatório de insumos com estoque crítico</a>
+                        <a href="pdf/relatorio_criticos.php" target="_blank">Relatório de insumos com estoque crítico</a>
                     </td>
                     <td>
                         <span>Todos os insumos que estiverem com estoque abaixo do que foi definido como estoque crítico para o insumo.</span>

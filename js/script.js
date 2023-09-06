@@ -1,7 +1,7 @@
 
 var controle_campo_geral = 1;
 
-function adicionaCampoCad(ondeCadastrou) {
+function adicionaCampoCad(ondeCadastrou, name_input_tag=null,id_tag_span=null, id_para_search=null,id_input_tag=null) {
 
   controle_campo_geral++;
 
@@ -65,6 +65,18 @@ function adicionaCampoCad(ondeCadastrou) {
     let dados_acesso_usuario = document.getElementById('dados_acesso_usuario');
     let id_user_to_add_permission = document.getElementById('id_user_to_add_permission').value;
     dados_acesso_usuario.insertAdjacentHTML('beforeend', '<div id="campoCedePermissao'+controle_campo_geral+'" class="display-flex-row"><div class="form-group"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Nome da Permissão</label><input type="text" class="form-control" name="nomeAcessoUsuario[]" id="nomeAcessoUsuario'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 7, '+ id_user_to_add_permission +')" required><span class="ajuste_span" id="resultado_ceder_permissao'+controle_campo_geral+'" style="margin: 18% auto;"></span></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Categoria da Permissão</label><textarea name="descAcessoUsuario[]" class="form-control" rows="3" id="descAcessoUsuario'+controle_campo_geral+'" readonly></textarea></div></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campoCedePermissao\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(11)" style="padding: 0;">+</button></div></div></div></div>');
+
+  } else if (ondeCadastrou == 13){
+    // PARA SELECIONAR O TIPO DE MOVIMENTAÇÃO
+    let id_do_input = id_input_tag.substring(0,id_input_tag.length - 1);
+    let id_do_span = id_tag_span.substring(0,id_tag_span.length - 1);
+    let campos_id_movimentacoes = document.getElementById('campos_id_movimentacoes');
+    campos_id_movimentacoes.insertAdjacentHTML('beforeend', '<div class="display-flex-row" id="campo_tipo_mov_'+controle_campo_geral+'" style="margin-top: 10px;"><div class="display-flex-cl"><input type="text" class="form-control" name="'+name_input_tag+'[]" id="'+id_do_input+''+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', '+id_para_search+')" placeholder="Pesquise..." required><span class="ajuste_span" id="'+ id_do_span +''+controle_campo_geral+'" style="margin: 11.1% auto;"></span></div><div class="display-flex-row"><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campo_tipo_mov_\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(13,\''+name_input_tag+'\',\''+id_do_span+''+controle_campo_geral+'\', '+id_para_search+', \''+id_do_input+''+controle_campo_geral+'\')" style="padding: 0;">+</button></div></div>');
+
+  } else if (ondeCadastrou == 12){
+    // PARA SELECIONAR O TIPO DE MOVIMENTAÇÃO - PADRÂO
+    let campos_id_movimentacoes = document.getElementById('campos_id_movimentacoes');
+    campos_id_movimentacoes.insertAdjacentHTML('beforeend', '<div class="display-flex-row" id="campo_tipo_mov_'+controle_campo_geral+'" style="margin-top: 10px;"><div class="display-flex-cl"><input type="text" class="form-control" name="tipo_movimentacao[]" id="tipo_movimentacao_'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 8)" placeholder="Informe o valor..." required><span class="ajuste_span" id="sugestao_resultado_span_'+controle_campo_geral+'" style="margin: 11.1% auto;"></span></div><div class="display-flex-row"><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campo_tipo_mov_\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(12)" style="padding: 0;">+</button></div></div>');
   }
 }
 
@@ -104,7 +116,7 @@ function removerCampoCadDeposito(idCampoCad, ehOperacao, cadType) {
     // para_operacao.remove();
   }else{
 
-    let para_remover_campo_adicional = document.getElementById(""+cadType+""+idCampoCad+"")
+    let para_remover_campo_adicional = document.getElementById(""+cadType+""+idCampoCad+"");
     para_remover_campo_adicional.remove();
 
   }
@@ -518,6 +530,55 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
         
       }
     }
+
+  } else if (cadType == 8) {
+    // PARA PROCURAR TIPOS DE MOVIMENTAÇÕES
+
+    if (valor_to_search.length >= 2) {
+      console.log("//searchInput_cadDeposito/movimentacoes - Pesquisar: " + valor_to_search);
+
+      const dados_retornados = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?valor_movimentacoes='+ valor_to_search);
+
+      if (dados_retornados) {
+        
+        const resposta_dados = await dados_retornados.json();
+
+        console.log("//searchInput_cadDeposito/movimentacoes - resposta: ", resposta_dados);
+
+        var html_listados = '<ul class="display-flex-cl">';
+
+        if (resposta_dados['erro']) {
+
+          html_listados += '<li onclick=\'fechaSpan("sugestao_resultado_span_",'+id_campo_digitado+')\'>'+resposta_dados['msg_erro']+'</li>';
+        } else {
+
+          for (let i = 0; i < resposta_dados['dados'].length; i++) {
+
+            html_listados += '<div class="display-flex-row">'
+            
+            html_listados += '<li onclick=\'getInsumoId('+ resposta_dados['dados'][i].id_mov+','+ JSON.stringify(resposta_dados['dados'][i].desc_mov)+','+ JSON.stringify(resposta_dados['dados'][i].nome_mov)+', '+id_campo_digitado+',"",8,"")\'>'+resposta_dados['dados'][i].nome_mov +'</li>';
+            
+            html_listados += '<li>|</li>';
+
+            html_listados += '<li> '+resposta_dados['dados'][i].desc_mov +'</li>';
+
+            html_listados += '</div>';
+            
+          }
+        }
+
+        html_listados += '</ul>';
+
+        let resultado_cad_deposito_estoque = document.getElementById('sugestao_resultado_span_'+id_campo_digitado+'');
+
+        resultado_cad_deposito_estoque.innerHTML = html_listados;
+
+      } else {
+
+        console.log('json vazio');
+        
+      }
+    }
   }
 }
 
@@ -655,25 +716,22 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
     let id_plus_name_tmp = ''+idInsumo+' - '+nomeINsumo+'';
     let id_plus_name = '';
 
-    // if (campo_to_verify === id_plus_name_tmp) {
-      
-    //   botao.type = 'button';
-    //   id_plus_name = '!! ATENÇÃO !! Campo já adicionado ateriormente. Tente outro valor.';
-
-    // } else {
-
-    //   botao.type = 'submit';
-    //   id_plus_name = id_plus_name_tmp;
-
-    // }
-
     nome_permissao_to_complete.value = id_plus_name_tmp;
     desc_permissao_to_complete.value = descricaoInsumo;
 
     // span_para_fechar.innerHTML = '';
     fechaSpan("resultado_ceder_permissao" , id_campo_digitado)
 
-  }
+  } else if (cadType == 8){
+    //para preencher o tipo de movimentação    
+    let tipo_movimentacao_to_complete = document.getElementById('tipo_movimentacao_'+id_campo_digitado+'');
+
+    tipo_movimentacao_to_complete.value = idInsumo+' - '+nomeINsumo;
+
+    // span_para_fechar.innerHTML = '';
+    fechaSpan("sugestao_resultado_span_" , id_campo_digitado)
+
+  } 
 
 }
 
@@ -750,3 +808,16 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
   }
 }
 
+function verifica_valor(valor, tag_msg_alert, button, value_reference) {
+  let value_input = document.getElementById(valor).value + "";
+  let span_alerta = document.getElementById(tag_msg_alert);
+  let button_to_send = document.getElementById(button);
+  
+  if (value_input < value_reference || value_input == "-0") {
+    span_alerta.style.display = 'block';
+    button_to_send.type = 'button';
+  } else {
+    span_alerta.style.display = 'none';
+    button_to_send.type = 'submit';
+  }
+}
