@@ -73,7 +73,7 @@ if ($qualEstoque_dep != "") {
 
                     <div class="display-flex-cl">
                         <label id="vaiOuVem">Setor</label>
-                        <select class="form-control largura_metade" name="setor_destino_solicitacao_dispensario" id="" required>
+                        <select class="form-control largura_um_terco" name="setor_destino_solicitacao_dispensario" id="" required>
                             <?php
                             $sql = "SELECT * FROM setores";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -103,7 +103,7 @@ if ($qualEstoque_dep != "") {
                         ?>
 
                         <label>Dispensário da Solicitação</label>
-                        <input type="text" class="form-control largura_metade" name="tipo_dispensario" value="<?=$dados['estoques_id']?> - <?=$dados['estoques_nome']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="tipo_dispensario" value="<?=$dados['estoques_id']?> - <?=$dados['estoques_nome']?>" readonly>
                     </div>
 
                 </div>
@@ -118,13 +118,13 @@ if ($qualEstoque_dep != "") {
                     
                         <div class="display-flex-cl" style="margin-right: 30px;">
                             <label>Insumo Solicitado</label>
-                            <input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id1" onkeyup="searchInput_cadDeposito(this.value, 1, 3)"  placeholder="Informe o insumo..." required>
+                            <input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id1" onkeyup="searchInput_cadDeposito(this.value, 1, 3)" placeholder="Procure pelo nome do insumo..." required>
                             <span class="ajuste_span" id="resultado_slc_disp_insumos1" style="margin: 6.5% auto;"></span>
                         </div>
              
                         <div class="display-flex-cl">
                             <label>Quantidade Solicitada</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp')" required>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp')" placeholder="Informe a quantidade..." required>
                             <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
                                 <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
                             </span>
@@ -170,7 +170,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar" id="btn_slc_insumo_disp">
+                <input type="submit" value="Enviar Solicitação" name="btnSolicitarInsumoDispensario" class="btn_cadastrar" id="btn_slc_insumo_disp" style="width: 20%;">
             </div>
         </form>
     </div> 

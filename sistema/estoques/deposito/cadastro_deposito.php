@@ -83,7 +83,11 @@ if ($qualEstoque_dep != "") {
 
                     <div class="display-flex-cl" id="num_nota_fiscal_cad_dep">
                         <label>Número da Nota fiscal</label>
-                        <input type="text" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" id="input_num_nota_fiscal_cad_dep" placeholder="Informe o número..." required>
+                        <input type="number" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" id="input_num_nota_fiscal_cad_dep" placeholder="Informe o número..." onkeyup="verifica_valor('input_num_nota_fiscal_cad_dep', 'msg_alerta', 'btn_cadastrar', '0')" required>
+                        <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta">
+                            <label>Valor inválido! Por favor, altere para um valor válido!</label>
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                        </span>
                     </div>
 
                     <div class="display-flex-cl" id="nota_fiscal_cad_dep">
@@ -106,7 +110,6 @@ if ($qualEstoque_dep != "") {
                                 }
                             ?>
                         </select>
-                        <!-- <input type="text" class="form-control" name="fornecedor_cad_insumo_dep"> -->
                     </div>
 
                 </div>
@@ -120,7 +123,7 @@ if ($qualEstoque_dep != "") {
                         
                         <div class="display-flex-cl">
                             <label>Nome</label>
-                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Informe o nome do insumo..." required/>
+                            <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Pesquise pelo nome do insumo..." required/>
                             <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.2% auto;"></span>
                         </div>
 
@@ -136,12 +139,16 @@ if ($qualEstoque_dep != "") {
                             
                         <div class="display-flex-cl">
                             <label>Quantidade guardada</label>
-                            <input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" required>
+                            <input type="number" class="form-control" name="quantidadeInsumodeposito[]" min="1" placeholder="Informe a quantidade..." onkeyup="verifica_valor('qtd_guardada_1', 'msg_alerta_qtd_guardada_1', 'btn_cadastrar', '0')" id="qtd_guardada_1" required>
+                            <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_qtd_guardada_1">
+                                <label>Valor inválido! Por favor, altere para um valor válido!</label>
+                                <ion-icon name="alert-circle-outline"></ion-icon>
+                            </span>
                         </div>
                             
                         <div class="display-flex-cl">
                             <label>Depósito de Destino</label>
-                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" required>
+                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o depósito..." required>
                             <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 8% auto;"></span>
                         </div>
                     </div>
@@ -165,7 +172,7 @@ if ($qualEstoque_dep != "") {
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDeposito" class="btn_cadastrar">
+                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDeposito" class="btn_cadastrar" id="btn_cadastrar">
             </div>
         </form>
     </div>

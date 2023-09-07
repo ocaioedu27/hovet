@@ -500,12 +500,12 @@ span.icon {
 }
 
 .cards.cadastro_dispensario{
-    width: 50%;
+    width: auto;
     height: auto;
 }
 
 .cards.retirar_dispensario{
-    width: 65%;
+    width: auto;
     height: auto;
 }
 

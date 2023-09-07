@@ -43,12 +43,16 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
                         <div class="display-flex-cl">
                             <label for="nomeInsumo">Nome</label>
-                            <input type="text" class="form-control" name="nomeInsumo[]" required>
+                            <input type="text" class="form-control" name="nomeInsumo[]" placeholder="Informe o nome..." required>
                         </div>
 
                         <div class="display-flex-cl">
                             <label>Quantidade Crítica</label>
-                            <input type="number" class="form-control" name="qtdCriticaInsumo[]" min="1" required>
+                            <input type="number" class="form-control" name="qtdCriticaInsumo[]" min="1" onkeyup="verifica_valor('valor_qtd_1', 'msg_alerta_1', 'btn_cadastrar', '1')" id="valor_qtd_1" placeholder="Informe a quantidade crítica..." required>
+                            <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_1">
+                                <label>Valor inválido! Por favor, altere para um valor válido!</label>
+                                <ion-icon name="alert-circle-outline"></ion-icon>
+                            </span>
                         </div>
 
                     </div>
@@ -93,7 +97,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
             
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumo" class="btn_cadastrar">
+                <input type="submit" value="Cadastrar" name="btnAdicionarInsumo" class="btn_cadastrar" id="btn_cadastrar">
             </div>
         </form>
     </div>
