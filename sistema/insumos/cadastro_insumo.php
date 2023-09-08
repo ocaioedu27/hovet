@@ -50,8 +50,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                             <label>Quantidade Crítica</label>
                             <input type="number" class="form-control" name="qtdCriticaInsumo[]" min="1" onkeyup="verifica_valor('valor_qtd_1', 'msg_alerta_1', 'btn_cadastrar', '1')" id="valor_qtd_1" placeholder="Informe a quantidade crítica..." required>
                             <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_1">
-                                <label>Valor inválido! Por favor, altere para um valor válido!</label>
-                                <ion-icon name="alert-circle-outline"></ion-icon>
+                                <label>
+                                        Valor inválido! Por favor, altere para um valor válido!
+                                        <ion-icon name="alert-circle-outline"></ion-icon>
+                                </label>
                             </span>
                         </div>
 

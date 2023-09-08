@@ -19,11 +19,13 @@ $sql = "SELECT
             u.usuario_primeiro_nome,
             u.usuario_mail,
             t.tipo_usuario_tipo,
-            u.usuario_siape 
-            FROM usuarios AS u 
-            INNER JOIN tipo_usuario AS t 
-            ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
-            WHERE u.usuario_id={$idUsuario}";
+            u.usuario_siape
+        FROM usuarios AS u
+            
+        INNER JOIN tipo_usuario AS t
+        ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
+            
+        WHERE u.usuario_id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>

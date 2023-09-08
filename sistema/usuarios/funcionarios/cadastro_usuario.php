@@ -32,7 +32,12 @@
 
                 <div class="display-flex-cl">
                     <label for="siapeUsuario">SIAPE</label>
-                    <input type="text" class="form-control" name="siapeUsuario" maxlength="8" required>
+                    <input type="text" class="form-control" name="siapeUsuario" maxlength="8" onkeyup="verifica_valor('valor_siape_1', 'msg_alerta_1', 'btn_cad_user', '0')" id="valor_siape_1" placeholder="Informe o SIAPE..." required>
+                    <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_1">
+                        <label>Valor inválido! Por favor, altere para um valor válido!
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                        </label>
+                    </span>
                 </div>
 
                 <div class="display-flex-cl">
