@@ -111,9 +111,9 @@ if ($qualEstoque_dep != "") {
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Permutada</label>
-                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" id="quantidade_solicitada_permuta1" onkeyup="verificaValorMaximoExcedido('quantidade_solicitada_permuta1','quantidade_atual_deposito_permuta1','alerta_valor_acima_max1','btn_permuta_insumo_dep')" required>
+                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoDepositoPermuta[]" min="1" id="quantidade_solicitada_permuta1" onkeyup="verificaValorMaximoExcedido('quantidade_solicitada_permuta1','quantidade_atual_deposito_permuta1','alerta_valor_acima_max1','btn_permuta_insumo_dep', 'label_mesage_to_insert_1')" required>
                                 <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
-                                    <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                                    <label id="label_mesage_to_insert_1">Valor inválido!!!<ion-icon name="alert-circle-outline"></ion-icon></label>
                                 </span>
                             </div>
                             
@@ -155,7 +155,13 @@ if ($qualEstoque_dep != "") {
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Inserida</label>
-                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoCadPermuta[]" min="1" required>
+                                <input type="number" class="form-control largura_metade" name="quantidadeInsumoCadPermuta[]" min="1"  onkeyup="verifica_valor('qtd_guardada_1', 'msg_alerta_qtd_guardada_1', 'btn_cadastrar', '0')" id="qtd_guardada_1" required>
+                                <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_qtd_guardada_1">
+                                    <label>
+                                            Valor inválido! Por favor, altere para um valor válido!
+                                            <ion-icon name="alert-circle-outline"></ion-icon>
+                                    </label>
+                                </span>
                             </div>
                             
                             <div class="display-flex-cl">

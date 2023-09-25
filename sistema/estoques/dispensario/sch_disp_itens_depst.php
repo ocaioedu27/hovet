@@ -45,7 +45,7 @@
             // $retorna_valores = ['erro' => true, 'msg_error_insumos' => 'Erro: nenhum insumo encontrado'];
 
         } else{
-            $retorna_valores = ['erro' => true, 'msg_error_insumos_dep' => 'Insumo não encontrado'];
+            $retorna_valores = ['erro' => true, 'msg_error_insumos' => 'Insumo não encontrado'];
         }
         return json_encode($retorna_valores);
     }

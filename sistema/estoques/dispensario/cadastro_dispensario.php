@@ -90,7 +90,7 @@ $tipoEstoque = $tipoEstoque;
                             <label>Insumo</label>
                             <input type="text" class="form-control" name="insumoID_Insumodispensario[]" id="insumoID_Insumodispensario1" onkeyup="searchInput_cadDeposito(this.value, 1, 2)" placeholder="Procure pelo nome do insumo..." required>
                             <span class="ajuste_span" id="resultado_cad_disp_insumos1" style="
-    margin: 9.5% auto;"></span>
+    margin: 6.5% auto;"></span>
                         </div>
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDisponivelDeposito">Disponível no Depósito</label>
@@ -100,7 +100,7 @@ $tipoEstoque = $tipoEstoque;
                         <div class="display-flex-cl">
                             <label>Dispensário de Destino</label>
                             <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o dispensário..." required>
-                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 9.5% auto;"></span>
+                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 6.5% auto;"></span>
                         </div>
 
                     </div>
@@ -108,9 +108,9 @@ $tipoEstoque = $tipoEstoque;
 
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDispensario">Quantidade Transferida</label>
-                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" onkeyup="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp')" placeholder="Informe a quantidade..." required>
+                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" onkeyup="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp', 'label_mesage_to_insert_1')" placeholder="Informe a quantidade..." required>
                             <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
-                                <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                                <label id="label_mesage_to_insert_1">Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
                             </span>
                         </div>
 
