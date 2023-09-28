@@ -47,7 +47,7 @@ $dados = mysqli_fetch_assoc($result);
             <div class="form-group valida_movimentacao">
 
                 <div class="display-flex-cl">
-                    <label for="senhaUsuario">Senha</label>
+                    <label for="senhaUsuario">Nova Senha</label>
                     <input type="password" class="form-control" name="senhaUsuarioAtualizada" id="password" onchange="validaPassword()" required>
                 </div>
 

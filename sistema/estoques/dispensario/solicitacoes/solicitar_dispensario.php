@@ -124,9 +124,9 @@ if ($qualEstoque_dep != "") {
              
                         <div class="display-flex-cl">
                             <label>Quantidade Solicitada</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp')" placeholder="Informe a quantidade..." required>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp', 'label_to_alert_1')" placeholder="Informe a quantidade..." required>
                             <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
-                                <label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                                <label id="label_to_alert_1">Valor inválido!! <ion-icon name="alert-circle-outline"></ion-icon></label>
                             </span>
                         </div>
 

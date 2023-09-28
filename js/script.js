@@ -26,7 +26,7 @@ function adicionaCampoCad(ondeCadastrou, name_input_tag=null,id_tag_span=null, i
     // PARA RETIRADA DO INSUMO DO DISPENSARIO
 
     let dados_insumo_disp = document.getElementById('dados_insumo_disp');
-    dados_insumo_disp.insertAdjacentHTML('beforeend', '<div id="campoRetiraInsumoDisp'+controle_campo_geral+'"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl" style="margin-right: 30px;"><label>Insumo Solicitado</label><input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 3)" placeholder="Procure pelo nome do insumo..." required><span class="ajuste_span" id="resultado_slc_disp_insumos'+controle_campo_geral+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Quantidade Solicitada</label><input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario'+controle_campo_geral+'" min="1" onkeyup="verificaValorMaximoExcedido(\'qtd_solicitada_dispensario'+controle_campo_geral+'\',\'quantidade_atual_dispensario'+controle_campo_geral+'\',\'alerta_valor_acima_max'+controle_campo_geral+'\',\'btn_slc_insumo_disp\')" required><span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max'+controle_campo_geral+'"><label>Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label></span></div><div class="display-flex-cl"><label>Validade do Insumo</label><input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario'+controle_campo_geral+'" readonly></div><div class="display-flex-cl"><label>Disponível no Dispensário</label><input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario'+controle_campo_geral+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição</label><textarea class="form-control largura_metade" id="descricaoInsumoSclDisp'+controle_campo_geral+'" rows="3" readonly></textarea></div><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campoRetiraInsumoDisp\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(4)" style="padding: 0;">+</button></div></div>');
+    dados_insumo_disp.insertAdjacentHTML('beforeend', '<div id="campoRetiraInsumoDisp'+controle_campo_geral+'"><hr><div class="form-group valida_movimentacao"><div class="display-flex-cl" style="margin-right: 30px;"><label>Insumo Solicitado</label><input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id'+controle_campo_geral+'" onkeyup="searchInput_cadDeposito(this.value, '+controle_campo_geral+', 3)" placeholder="Procure pelo nome do insumo..." required><span class="ajuste_span" id="resultado_slc_disp_insumos'+controle_campo_geral+'" style="margin: 6.5% auto;"></span></div><div class="display-flex-cl"><label>Quantidade Solicitada</label><input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario'+controle_campo_geral+'" min="1" onkeyup="verificaValorMaximoExcedido(\'qtd_solicitada_dispensario'+controle_campo_geral+'\',\'quantidade_atual_dispensario'+controle_campo_geral+'\',\'alerta_valor_acima_max'+controle_campo_geral+'\',\'btn_slc_insumo_disp\', \'label_to_alert_'+controle_campo_geral+'\')" placeholder="Informe a quantidade..." required><span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max'+controle_campo_geral+'"><label id="label_to_alert_'+controle_campo_geral+'">Valor inválido!!<ion-icon name="alert-circle-outline"></ion-icon></label></span></div><div class="display-flex-cl"><label>Validade do Insumo</label><input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario'+controle_campo_geral+'" readonly></div><div class="display-flex-cl"><label>Disponível no Dispensário</label><input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario'+controle_campo_geral+'" readonly></div></div><div class="form-group valida_movimentacao"><div class="display-flex-cl"><label>Descrição</label><textarea class="form-control largura_metade" id="descricaoInsumoSclDisp'+controle_campo_geral+'" rows="3" readonly></textarea></div><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="removerCampoCadDeposito('+ controle_campo_geral +', false, \'campoRetiraInsumoDisp\')" style="padding: 0;">-</button><button class="btn" type="button" id="'+controle_campo_geral+'" onclick="adicionaCampoCad(4)" style="padding: 0;">+</button></div></div>');
 
   } else if (ondeCadastrou == 5){
     // PARA PERMUTA DE INSUMO DO DEPÓSITO
@@ -790,39 +790,53 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
   let button = document.getElementById(idButton);
 
   let comp_maior = parseInt(valorInserido) >= parseInt(valorMaximo);
+  let comp_valor_maximo_atendido = parseInt(valorInserido) > parseInt(valorMaximo);
   let comp_zero = parseInt(valorInserido) <= 0;
+  console.log('inseido é maior que o que foi solicitado? ' + comp_valor_maximo_atendido);
   console.log('inseido é maior que o maximo? ' + comp_maior);
   console.log('inseido é menor que zero? ' + comp_zero);
+  console.log('\n');
   let msg_maior = "Valor inválido!! Insira um valor abaixo do que há disponível";
   let msg_zero = "Valor inválido!! Insira um valor maior que zero";
+  let msg_valor_acima_slc = "Valor inválido!! Insira um valor abaixo ou igual ao valor solicitado.";
   let msg_to_return = "";
 
-  if (!comp_maior && !comp_zero) {
-    spanAlert.style.display = 'none';
+  if (idButton == "operacao_slc_aprova") {
+    if (comp_valor_maximo_atendido) {
+      button.style.display = 'none';
+      spanAlert.style.display = 'block';
+      msg_to_return = msg_valor_acima_slc;
 
-    if (idButton == "operacao_slc_aprova") {
-      button.style.display = 'block';
+    } else if(comp_zero){
+      button.style.display = 'none';  
+      spanAlert.style.display = 'block';
+      msg_to_return = msg_zero;
     } else {
-      button.type = 'submit';
+      spanAlert.style.display = 'none';
+      button.style.display = 'block';  
+
     }
 
-  }else {
-    spanAlert.style.display = 'block';
+  } else {
 
-    if (idButton == "operacao_slc_aprova") {
-      button.style.display = 'none';
-    } else {
+    if (!comp_maior && !comp_zero) {
+      spanAlert.style.display = 'none';
+      button.type = 'submit';
+    }else {
+      spanAlert.style.display = 'block';
       button.type = 'button';
     }
 
-    if (comp_maior) {
-      msg_to_return = msg_maior;
-    }else{
+    if (comp_zero){
       msg_to_return = msg_zero;
+    }else if (comp_maior) {
+      msg_to_return = msg_maior;
     }
 
-    label_title.innerHTML = msg_to_return;
   }
+
+  label_title.innerHTML = msg_to_return;
+
 }
 
 function verifica_valor(valor, tag_msg_alert, button, value_reference) {

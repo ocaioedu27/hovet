@@ -180,11 +180,11 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                                 <label>Descrição</label>
                                 <textarea type="text" class="form-control" id="descricaoInsumoSclDisp1" readonly><?=$dados['insumos_descricao']?></textarea>
                             </div>
-                            <div class="display-flex-cl" id="operacao_slc_aprova">
+                            <div class="display-flex-cl" id="">
                                 <label>Quantidade atendida</label>
-                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario1" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario1','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')">
+                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario1" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario1','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova', 'id_label_to_alert')">
                                 <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
-                                    <label>Valor acima do que foi solicitado!<ion-icon name="alert-circle-outline"></ion-icon></label>
+                                    <label id="id_label_to_alert"><ion-icon name="alert-circle-outline"></ion-icon></label>
                                 </span>
                             </div>
                         </div>
@@ -204,11 +204,11 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 <div class="form-group valida_movimentacao" style="justify-content: center;">
                     <div class="" id="operacao_slc_aprova">
                         <!-- <button class="btn" style="color: green;">Aprovar</button> -->
-                        <input type="submit" value="Aprovar" name="btnAprovaSlc" class="btn btn_cadastrar confirmaOperacao" style="color: green; width: 100%;">
+                        <input type="submit" value="Aprovar" name="btnAprovaSlc" class="btn btn_cadastrar confirmaOperacao" style="background: #39bd6e; color: white; width: 100%;">
                     </div>
                     <div class="" id="operacao_slc_reprova">
                         <!-- <button class="btn" style="color: red;">Recusar</button> -->
-                        <input type="submit" value="Recusar" name="btnReprovaSlc" class="btn btn_cadastrar confirmaOperacao" style="color: red; width: 100%;">
+                        <input type="submit" value="Recusar" name="btnReprovaSlc" class="btn btn_cadastrar confirmaOperacao" style="background: red; color: white; width: 100%;">
                     </div>
                 </div>
             </form>
