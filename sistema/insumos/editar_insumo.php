@@ -12,7 +12,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         array_push($stringList, $valor_est);
 
     }
-    var_dump($stringList);
+    // var_dump($stringList);
 
     $idCategoria = $stringList[1];
 

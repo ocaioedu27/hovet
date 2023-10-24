@@ -20,13 +20,25 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
 }
 
+$sql_nome = "SELECT
+            tipos_insumos_tipo
+        FROM 
+            tipos_insumos
+        WHERE
+            tipos_insumos_id = {$categoriaId}";
+
+$resultado_nome = mysqli_query($conexao,$sql_nome) or die("Erro ao coletar o nome da categoria! " . mysqli_error($conexao));
+$categoria_nome_tmp = mysqli_fetch_assoc($resultado_nome);
+
+$categoria_nome = $categoria_nome_tmp['tipos_insumos_tipo'];
+
 ?>
 
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Todos os Insumos</h3>
+                <h3><?=$categoria_nome?></h3>
                 <a href="index.php?menuop=cadastro_insumo&categoriaInsumoId=<?=$categoriaId?>" id="operacao_cadastro">
                     <button class="btn">Cadastrar</button>
                 </a>

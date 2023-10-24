@@ -242,7 +242,7 @@ if ($sessionUserType == 2) {
                         <div class="dropdown-content">
                             <ul>
                                 <li>
-                                    <a href="index.php?menuop=usuarios">Funcionários</a>
+                                    <a href="index.php?menuop=usuarios">Usuários</a>
                                 </li>
                                 <li>
                                     <a href="index.php?menuop=fornecedores">Fornecedores</a>
