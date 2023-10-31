@@ -24,6 +24,7 @@ function hasPermissionsJs(has_permissions){
     let confirma_dados_slc = null;
     let menu_listar = null;
     let tipo_usuario_meus_dados = null;
+    let quantidade_atendida_insumo_solic_dispensario = null;
   
     try {
   
@@ -41,6 +42,8 @@ function hasPermissionsJs(has_permissions){
       qtd_colunas_tabelas = document.querySelector('#quantidade_linhas_tabelas').value;
 
       tipo_usuario_meus_dados = document.getElementById('tipo_usuario_meus_dados');
+
+      quantidade_atendida_insumo_solic_dispensario = document.getElementById('quantidade_atendida_insumo_solic_dispensario');
 
     } catch (error) {
       console.log('erro ao tentar pegar a tag pelo id: '+error)
@@ -75,6 +78,10 @@ function hasPermissionsJs(has_permissions){
   
       if (tipo_usuario_meus_dados) {
         tipo_usuario_meus_dados.remove();
+      }
+  
+      if (quantidade_atendida_insumo_solic_dispensario) {
+        quantidade_atendida_insumo_solic_dispensario.remove();
       }
   
       // console.log(qtd_colunas_tabelas,i);

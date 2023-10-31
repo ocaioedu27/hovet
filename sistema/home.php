@@ -42,7 +42,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(*) as dispensario_Qtd FROM dispensario";
+                                    $sql = "SELECT COUNT(*) as dispensario_Qtd FROM dispensario WHERE dispensario_Validade>curdate()";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -54,13 +54,15 @@
                             </div>
                             <div class="vencimentoProx">
                                 <div class="titulo">
-                                    <h4 style="color: red;">A vencer</h4>
+                                    <h4 style="color: red;">
+                                        <a href="pdf/relatorio_validade.php" target="_blank" style="color: red;">A vencer</a>
+                                    </h4>
                                     <span class="icon">
                                         <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(dispensario_id) as vencidos_proxVencimento FROM dispensario where dispensario_Validade<=curdate() or dispensario_Validade <= curdate() + interval 30 day";
+                                    $sql = "SELECT count(dispensario_id) as vencidos_proxVencimento FROM dispensario where dispensario_Validade<=curdate() or dispensario_Validade <= curdate() - interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>
@@ -112,7 +114,7 @@
                             </div>
                             <div class="sub_dados">
                                 <div class="titulo">
-                                    <h4>Devolução</h4>
+                                    <h4>Devoluções</h4>
                                     <span class="icon">
                                         <ion-icon name="file-tray-full-outline"></ion-icon>
                                     </span>
@@ -129,8 +131,8 @@
                                                 ON s.pre_slc_status_slc_id = st.status_slc_id
                                                 
                                             WHERE s.pre_slc_solicitante = {$sessionUserID} 
-                                                AND tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%' 
-                                                AND st.status_slc_status LIKE 'Devolu%'";
+                                                AND tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%' 
+                                                AND st.status_slc_status LIKE 'Pend%'";
                                                 
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);

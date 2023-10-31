@@ -160,7 +160,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 
                             <div class="display-flex-cl">
                                 <label>Quantidade Solicitada</label>
-                                <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" value="<?=$dados['pre_slc_qtd_solicitada']?>"  onchange="verificaValorMaximoExcedido('qtd_atendida_dispensario1','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')" readonly>
+                                <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" value="<?=$dados['pre_slc_qtd_solicitada']?>"  onchange="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')" readonly>
                             </div>
 
                             <div class="display-flex-cl">
@@ -180,9 +180,9 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                                 <label>Descrição</label>
                                 <textarea type="text" class="form-control" id="descricaoInsumoSclDisp1" readonly><?=$dados['insumos_descricao']?></textarea>
                             </div>
-                            <div class="display-flex-cl" id="">
+                            <div class="display-flex-cl" id="quantidade_atendida_insumo_solic_dispensario">
                                 <label>Quantidade atendida</label>
-                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario1" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario1','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova', 'id_label_to_alert')">
+                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario_pre_slc" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova', 'id_label_to_alert')">
                                 <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
                                     <label id="id_label_to_alert"><ion-icon name="alert-circle-outline"></ion-icon></label>
                                 </span>

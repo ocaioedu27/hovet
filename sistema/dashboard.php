@@ -43,7 +43,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(*) as deposito_Qtd FROM deposito";
+                                    $sql = "SELECT COUNT(*) as deposito_Qtd FROM deposito WHERE deposito_Validade>curdate()";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -55,13 +55,15 @@
                             </div>
                             <div class="vencimentoProx">
                                 <div class="titulo">
-                                    <h4 style="color: red;">A vencer</h4>
+                                    <h4 style="color: red;">
+                                        <a href="pdf/relatorio_validade.php" target="_blank" style="color: red;">A vencer</a>
+                                    </h4>
                                     <span class="icon">
                                         <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(deposito_id) as vencidos_proxVencimento FROM deposito where deposito_Validade<=curdate() or deposito_Validade <= curdate() + interval 30 day";
+                                    $sql = "SELECT count(deposito_id) as vencidos_proxVencimento FROM deposito where deposito_Validade<=curdate() or deposito_Validade <= curdate() - interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     ($vencidos = mysqli_fetch_assoc($result));
                                 ?>
@@ -271,22 +273,24 @@
                 <div class="content_cards">
                     <div class="top_cards">
                         <div class="titulo">
-                            <h2 title="Tipos de relatórios que podem ser gerados">Relatórios</h2>
+                            <h2 title="Tipos de relatórios que podem ser gerados">
+                                <a href="index.php?menuop=listar_relatorios" id="listar">Relatórios</a>
+                            </h2>
                             <span class="info">
                                 <ion-icon name="help-circle-outline"></ion-icon>
                             </span>
                         </div>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row just-content-spc-around">
+                        <div class="display-flex-row just-content-spc-around" style="display: grid;">
                             <div class="relatorio">
-                                <a href="pdf/relatorio_validade.php" target="_blank"><strong>Depósito</strong> - Relatório de insumos prestes a expirar (mês/ano)</a>
+                                <a href="pdf/relatorio_validade.php" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
                             </div>
                             <div class="relatorio">
-                                <a href="pdf/relatorio_insumo.php" target="_blank"><strong>Depósito</strong> - Relatório de insumos com estoque crítico</a>
+                                <a href="pdf/relatorio_insumo.php" target="_blank">Relatório de insumos com estoque crítico</a>
                             </div>
                             <div class="relatorio">
-                                <a href="pdf/relatorio_movimentacao.php" target="_blank"><strong>Depósito</strong> - Relatório de insercão e retiradas de certo insumo</a>
+                                <a href="pdf/relatorio_movimentacao.php" target="_blank">Relatório de movimentações</a>
                             </div>
                             <!-- <div class="relatorio">
                                 <a href="pdf/pdf.php" target="_blank"><strong>Dispensario</strong> - Relatório de insercão e retiradas de certo insumo</a>
