@@ -56,7 +56,7 @@
                                 INNER JOIN tipos_estoques tp
                                 ON e.estoques_tipos_estoques_id = tp.tipos_estoques_id
                                 WHERE
-                                    e.estoques_id = '{$txt_pesquisa_estoques}' or e.estoques_nome LIKE '{$painel}%' or e.estoques_descricao LIKE '{$txt_pesquisa_estoques}'
+                                    e.estoques_id = '{$txt_pesquisa_estoques}' or e.estoques_nome LIKE '{$painel}%' or e.estoques_descricao LIKE '{$txt_pesquisa_estoques}' or e.estoques_nome LIKE '{$txt_pesquisa_estoques}'
                                     ORDER BY estoques_nome ASC 
                                     LIMIT $inicio_estoques,$quantidade_registros_estoques";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));

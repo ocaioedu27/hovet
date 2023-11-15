@@ -102,17 +102,21 @@ if ($qualEstoque_dep != "") {
                         datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito,
                         i.insumos_qtd_critica
                         FROM deposito d 
+
                         INNER JOIN insumos i 
                         ON d.deposito_insumos_id = i.insumos_id
+
+                        INNER JOIN tipos_insumos tp
+                        ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+
                         INNER JOIN estoques es
                         ON d.deposito_estoque_id = es.estoques_id 
+
                         WHERE
                             es.estoques_nome_real = '{$qualEstoque}' and
                             (d.deposito_id='{$txt_pesquisa_deposito}' or
                             i.insumos_nome LIKE '%{$txt_pesquisa_deposito}%' or
-                            i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' or
-                            d.deposito_qtd LIKE '%{$txt_pesquisa_deposito}%' or
-                            d.deposito_validade LIKE '%{$txt_pesquisa_deposito}%')
+                            tp.tipos_insumos_tipo LIKE '%{$txt_pesquisa_deposito}%')
                             ORDER BY insumos_nome ASC 
                             LIMIT $inicio_deposito,$quantidade_registros_deposito";
 

@@ -41,9 +41,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>ID</th>
-                        <th>Insumo Retirado</th>
                         <th>ID de Resgistro</th>
+                        <th>Insumo Retirado</th>
                         <th>Instituição</th>
                         <th>Insumo Cadastrado</th>
                         <th>Data da Permuta</th>
@@ -60,7 +59,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
                         $txt_pesquisa_permutas = (isset($_POST["txt_pesquisa_permutas"]))?$_POST["txt_pesquisa_permutas"]:"";
 
-                        $sql = "SELECT p.permutas_id,
+                        $sql = "SELECT 
+                                    p.permutas_id,
                                     p.permutas_qtd_retirado,
                                     p.permutas_oid_operacao,
                                     p.permutas_data,
@@ -104,9 +104,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["permutas_id"]?></td>
-                        <td><?=$dados["nome_insumo_retirado"]?></td>
                         <td><?=$dados["permutas_oid_operacao"]?></td>
+                        <td><?=$dados["nome_insumo_retirado"]?></td>
                         <td><?=$dados["instituicoes_razao_social"]?></td>
                         <td><?=$dados["nome_insumo_cadastrado"]?></td>
                         <td>

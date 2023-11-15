@@ -41,9 +41,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>ID</th>
-                        <th>Insumo Doado</th>
                         <th>ID de Resgistro</th>
+                        <th>Insumo Doado</th>
                         <th>Doador</th>
                         <th>Data da Doação</th>
                         <th>Estoque de Destino</th>
@@ -61,7 +60,6 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
 
                         $sql = "SELECT 
-                                    d.doacoes_id,
                                     d.doacoes_oid_operacao,
                                     d.doacoes_data_operacao,
                                     f.fornecedores_razao_social,
@@ -103,9 +101,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["doacoes_id"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["doacoes_oid_operacao"]?></td>
+                        <td><?=$dados["insumos_nome"]?></td>
                         <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>
                         <td><?=$dados["estoques_nome"]?></td>

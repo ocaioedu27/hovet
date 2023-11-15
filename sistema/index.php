@@ -18,7 +18,7 @@ $qualEstoque = "";
 
 // echo "<br>!!!!!!!!!! CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
-// echo "<br>!!!!!!!!!! AJUSTAR INDEX !!!!!!!!!!<br><br> Editar regras de permissoes nos IFs da index<br><br>criada a função recursiva de sql, só olhar no início da index";
+// echo "<br>!!!!!!!!!! AJUSTAR BOTAO 'VER DETALHES' DE COMPRA, DOACAO, PERMUTA !!!!!!!!!!<br><br>";
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 
@@ -65,13 +65,7 @@ $teste_array = array(
     "permissoes_nome" => "Cadastrar"
 );
 
-
-// $array_permissoes_sistema_teste = retornaDadosInnerJoinComAnd($conexao, 'permissoes_id','permissoes_usuario','categorias_permissoes','permissoes_ctg_perm_id','cp_id',$teste_array);
-
 $array_permissoes_opcoes_sistema = [9,10,11,12,19,20,21,22,23];
-// (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor))
-// (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm))
-// (!has_permission($array_permissoes_user, $array_tipos_adm_diretor))
 
 $array_tipos_estoquista_adm_diretor = [2,3,5];
 $array_tipos_estoquista_adm = [2,3];
@@ -88,8 +82,6 @@ if ($sessionUserType == 2) {
 
 }
 
-// $data_atual = date('Y-m-d');
-// echo "Data atual: " . $data_atual;
 ?>
 
 <!DOCTYPE html>
@@ -106,12 +98,10 @@ if ($sessionUserType == 2) {
         integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 
-    <!-- <link rel="stylesheet" href="../css/painel.css"> -->
     <link rel="stylesheet" href="../css/style_personalizado.css">
 
     <!--REFERENCIA PARA O FAVICON -->
 
-    <!-- <link rel="shortcut icon" href="../img/favicon.jpg" type="image/x-icon"> -->
     <link rel="shortcut icon" href="../img/favicon/logo_hovet.ico" type="image/x-icon">
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
@@ -125,10 +115,6 @@ if ($sessionUserType == 2) {
 </head>
 
 <body>
-
-    <?php
-        //include_once "../include/header.php";
-    ?>
     <nav class="navbar">
         <div class="container navbar-header">
             <div class="logo">

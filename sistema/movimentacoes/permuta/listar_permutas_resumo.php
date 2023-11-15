@@ -19,11 +19,10 @@
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th>ID</th>
                         <th>ID de Resgistro</th>
                         <th>Instituição</th>
                         <th>Data da Permuta</th>
-                        <th>Visualizar Detalhes</th>
+                        <th>Visualizar Informações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +36,6 @@
                         $txt_pesquisa_permuta = (isset($_POST["txt_pesquisa_permuta"]))?$_POST["txt_pesquisa_permuta"]:"";
 
                         $sql = "SELECT 
-                                    p.permutas_id,
                                     p.permutas_data,
                                     p.permutas_oid_operacao,
                                     inst.instituicoes_razao_social
@@ -62,12 +60,11 @@
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["permutas_id"]?></td>
                         <td><?=$dados["permutas_oid_operacao"]?></td>
                         <td><?=$dados["instituicoes_razao_social"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['permutas_data']));?></td>
                         <td>
-                            <a href="index.php?menuop=permuta_por_oid&oidPermuta=<?=$dados["permutas_oid_operacao"]?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=permuta_por_oid&oidPermuta=<?=$dados["permutas_oid_operacao"]?>">Informações</a>
                         </td>
                     </tr>
                     <?php

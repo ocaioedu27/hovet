@@ -22,7 +22,7 @@
                         <th>ID de Resgistro</th>
                         <th>Doador</th>
                         <th>Data da Doação</th>
-                        <th>Visualizar Detalhes</th>
+                        <th>Visualizar Informações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +63,7 @@
                         <td><?=$dados["fornecedores_razao_social"]?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>
                         <td>
-                            <a href="index.php?menuop=doacao_por_oid&oidDoacao=<?=$dados["doacoes_oid_operacao"]?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=doacao_por_oid&oidDoacao=<?=$dados["doacoes_oid_operacao"]?>">Informações</a>
                         </td>
                     </tr>
                     <?php

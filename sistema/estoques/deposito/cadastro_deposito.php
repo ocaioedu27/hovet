@@ -73,7 +73,7 @@ if ($qualEstoque_dep != "") {
                     </div>
 
                     <div class="display-flex-cl">
-                        <label for="dataCadastroInsumoDeposito">Dia do cadastro</label>
+                        <label for="dataCadastroInsumoDeposito">Dia do Cadastro</label>
                         <input type="datetime-local" class="form-control" id="data_cadastro_dep" name="dataCadastroInsumoDeposito" required>
                     </div>
 
@@ -82,7 +82,7 @@ if ($qualEstoque_dep != "") {
                 <div class="form-group valida_movimentacao">
 
                     <div class="display-flex-cl" id="num_nota_fiscal_cad_dep">
-                        <label>Número da Nota fiscal</label>
+                        <label>Número da Nota Fiscal</label>
                         <input type="number" class="form-control largura_um_terco" name="num_nota_fiscal_cad_dep" id="input_num_nota_fiscal_cad_dep" placeholder="Informe o número..." onkeyup="verifica_valor('input_num_nota_fiscal_cad_dep', 'msg_alerta', 'btn_cadastrar', '0')" required>
                         <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta">
                             <label>Valor inválido! Por favor, altere para um valor válido!</label>
@@ -91,7 +91,7 @@ if ($qualEstoque_dep != "") {
                     </div>
 
                     <div class="display-flex-cl" id="nota_fiscal_cad_dep">
-                        <label for="nota_fiscal_deposito">Upload da Nota fiscal</label>
+                        <label for="nota_fiscal_deposito">Upload da Nota Fiscal</label>
                         <input type="file" class="form-control" name="nota_fiscal_deposito" id="input_nota_fiscal_cad_dep" required>
                     </div>
 

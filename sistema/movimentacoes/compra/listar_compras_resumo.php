@@ -24,7 +24,7 @@
                         <th>Fornecedor</th>
                         <th>Nota Fiscal</th>
                         <th>Data da Compra</th>
-                        <th>Visualizar Detalhes</th>
+                        <th>Visualizar Informações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                         <td><a target="_blank" href="<?=$dados['compras_caminho']?>"><?=$dados["compras_nome"]?></a></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($dados['compras_data_upload']));?></td>
                         <td>
-                            <a href="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$dados["compras_num_nf"]?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$dados["compras_num_nf"]?>">Informações
                         </td>
                     </tr>
                     <?php
