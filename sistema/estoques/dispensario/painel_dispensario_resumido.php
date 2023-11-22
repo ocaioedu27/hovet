@@ -78,17 +78,19 @@ if ($qualEstoque_dep != "") {
                         datediff(d.dispensario_validade, curdate()) as diasParaVencimento,
                         i.insumos_qtd_critica
                         FROM dispensario d 
+
                         INNER JOIN insumos i 
                         ON d.dispensario_insumos_id = i.insumos_id
+
+                        INNER JOIN tipos_insumos tp
+                        ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+
                         INNER JOIN estoques es
                         ON d.dispensario_estoques_id = es.estoques_id 
                         WHERE
                             es.estoques_nome_real = '{$qualEstoque}' and
-                            (d.dispensario_id='{$txt_pesquisa_dispensario}' or
-                            i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
-                            i.insumos_unidade LIKE '%{$txt_pesquisa_dispensario}%' or
-                            d.dispensario_qtd LIKE '%{$txt_pesquisa_dispensario}%' or
-                            d.dispensario_validade LIKE '%{$txt_pesquisa_dispensario}%')
+                            (i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
+                            tp.tipos_insumos_tipo LIKE '%{$txt_pesquisa_dispensario}%')
                             ORDER BY insumos_nome ASC 
                             LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
 
@@ -117,6 +119,7 @@ if ($qualEstoque_dep != "") {
                     <tr>
                         <th>Visualizar</th>
                         <th>Insumo</th>
+                        <th>Categoria</th>
                         <th>Quantidade total</th>
                         <th>Local Cadastrado</th>
                     </tr>
@@ -134,12 +137,19 @@ if ($qualEstoque_dep != "") {
                             $sql_qtd = "SELECT 
                             sum(d.dispensario_qtd) as dispensario_qtd_insumo,
                             i.insumos_nome,
-                            es.estoques_nome
+                            es.estoques_nome,
+                            tp.tipos_insumos_tipo
                             FROM dispensario d 
+
                             INNER JOIN insumos i
                             ON d.dispensario_insumos_id = i.insumos_id
+
+                            INNER JOIN tipos_insumos tp
+                            ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+
                             INNER JOIN estoques es
                             ON es.estoques_id = d.dispensario_estoques_id
+
                             WHERE 
                             es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome='{$insumo_selecionado}'";
                         
@@ -154,6 +164,7 @@ if ($qualEstoque_dep != "") {
                             <a href="index.php?menuop=dispensario&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
                         </td>
                         <td><strong><?=$dados['insumos_nome']?></strong></td>
+                        <td><?=$dados['tipos_insumos_tipo']?></td>
                         <td><?=$dados['dispensario_qtd_insumo']?></td>
                         <td><?=$dados['estoques_nome']?></td>
                     </tr>

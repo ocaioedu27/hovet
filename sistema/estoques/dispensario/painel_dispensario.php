@@ -50,7 +50,7 @@ if ($qualEstoque_disp != "") {
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>=1" method="post" class="form_buscar">
+                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=1" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa_dispensario" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -69,7 +69,8 @@ if ($qualEstoque_disp != "") {
                         <th>Nome</th>
                         <th>Quantidade</th>
                         <th>Unidade</th>
-                        <th>Local Cadastrado</th>
+                        <th>Categoria</th>
+                        <th>Estoque Cadastrado</th>
                         <th>Validade</th>
                         <th>Local</th>
                         <th>Dias para o vencimento</th>
@@ -106,18 +107,29 @@ if ($qualEstoque_disp != "") {
                                     datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
                                     lcd.local_nome,
                                     es.estoques_nome,
-                                    es.estoques_nome_real
+                                    es.estoques_nome_real,
+                                    tp.tipos_insumos_tipo
+
                                     FROM dispensario disp
+
                                     INNER JOIN deposito deps
                                     ON disp.dispensario_deposito_id = deps.deposito_id
+
                                     INNER JOIN insumos i
                                     ON disp.dispensario_insumos_id = i.insumos_id
+
+                                    INNER JOIN tipos_insumos tp
+                                    ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+
                                     INNER JOIN local_dispensario lcd 
                                     ON disp.dispensario_local_id = lcd.local_id
+
                                     INNER JOIN estoques es
                                     ON disp.dispensario_estoques_id = es.estoques_id
+
                                     WHERE
-                                    es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome = '{$qualInsumo}'
+                                    es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome = '{$qualInsumo}' and (lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%')
+
                                     ORDER BY insumos_nome ASC 
                                     LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
 
@@ -163,6 +175,7 @@ if ($qualEstoque_disp != "") {
                         </td>
                         <td><?=$dados["dispensario_qtd"]?></td>
                         <td><?=$dados["insumos_unidade"]?></td>
+                        <td><?=$dados["tipos_insumos_tipo"]?></td>
                         <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
                         <td><?=$dados["local_nome"]?></td>

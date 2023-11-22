@@ -46,6 +46,7 @@ $tipoEstoque = $tipoEstoque;
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario&<?=$qualEstoque?>" method="post">
             <div class="dados_solicitacao">
                 <hr>
+                <h3 class="">Dados de Auditoria</h3>
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <?php
@@ -84,6 +85,7 @@ $tipoEstoque = $tipoEstoque;
             
             <div id="dados_insumo_disp">
                 <hr>
+                <h3 class="">Dados do Insumo</h3>
                 <div>
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">

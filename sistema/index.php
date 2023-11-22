@@ -18,7 +18,7 @@ $qualEstoque = "";
 
 // echo "<br>!!!!!!!!!! CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
-// echo "<br>!!!!!!!!!! AJUSTAR BOTAO 'VER DETALHES' DE COMPRA, DOACAO, PERMUTA !!!!!!!!!!<br><br>";
+// echo "<br>!!!!!!!!!! AJUSTAR O LIMITE DE INSERÇÃO DE QUANTIDADE QUANDO FOR SOLICITAÇÃO DE DEVOLUÇÃO!!!!!!!!!!<br><br>";
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 

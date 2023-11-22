@@ -788,6 +788,8 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
   let spanAlert = document.getElementById(idSpanAlerta);
   let label_title = document.getElementById(id_label_title);
   let button = document.getElementById(idButton);
+  let tipo_slc = document.getElementById("qualSolicitacaoDisp");
+  tipo_slc = tipo_slc.value;
 
   let comp_maior = parseInt(valorInserido) >= parseInt(valorMaximo);
   let comp_valor_maximo_atendido = parseInt(valorInserido) > parseInt(valorMaximo);
@@ -819,20 +821,39 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
 
   } else {
 
-    if (!comp_maior && !comp_zero) {
-      spanAlert.style.display = 'none';
-      button.type = 'submit';
-    }else {
-      spanAlert.style.display = 'block';
-      button.type = 'button';
-    }
+    console.log("Está no envio de slc \n\n\n");
 
-    if (comp_zero){
-      msg_to_return = msg_zero;
-    }else if (comp_maior) {
-      msg_to_return = msg_maior;
-    }
+    let chave = "Devolução";
+    var listCatacteresEspeciais = ['!', '@', '#', '$', '%', '&', '*', '-', '+', '=', '_'];
 
+    if (tipo_slc.toLowerCase().includes(chave.toLowerCase())) {
+
+      if (comp_zero){
+        spanAlert.style.display = 'block';
+        button.type = 'button';
+        msg_to_return = msg_zero;
+      }else {
+        spanAlert.style.display = 'none';
+        button.type = 'submit';
+      }
+      
+    } else {
+      
+      if (!comp_maior && !comp_zero) {
+        spanAlert.style.display = 'none';
+        button.type = 'submit';
+      }else {
+        spanAlert.style.display = 'block';
+        button.type = 'button';
+      }
+
+      if (comp_zero){
+        msg_to_return = msg_zero;
+      }else if (comp_maior) {
+        msg_to_return = msg_maior;
+      }
+
+    }
   }
 
   label_title.innerHTML = msg_to_return;

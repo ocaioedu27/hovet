@@ -21,7 +21,7 @@ if ($qualEstoque_dep != "") {
 <div class="container cadastro_all">
     <div class="cards permuta">
         <div class="voltar">
-            <h3>Permutando itens do Depósito <?=$qualEstoque[-1]?></h3>
+            <h4>Permutando itens do Depósito <?=$qualEstoque[-1]?></h4>
             <a href="index.php?menuop=deposito_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
@@ -91,6 +91,7 @@ if ($qualEstoque_dep != "") {
 
             <hr>
             <div class="display-flex-cl" id="dados_insumo_permuta_dep">
+                <h3>Dados dos Insumos</h3>
                 <div class="display-flex-row">
                     <div id="permuta_dep">
                         <h4>Item a ser retirado do Depósito</h4>
@@ -137,7 +138,7 @@ if ($qualEstoque_dep != "") {
                     </div>
 
                     <div id="permuta_dep">
-                        <h4>Item a ser cadastrado do Depósito</h4>
+                        <h4>Item a ser cadastrado no Depósito</h4>
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
