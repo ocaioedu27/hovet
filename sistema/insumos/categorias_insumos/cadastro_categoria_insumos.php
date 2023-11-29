@@ -21,7 +21,7 @@
 
                             <div class="display-flex-cl">
                                 <label>Nome da Nova Categoria</label>
-                                <input type="text" class="form-control" name="nomeNovaCategoriaInsumo[]" required>
+                                <input type="text" class="form-control" name="nomeNovaCategoriaInsumo[]" placeholder="Infome o nome..." required>
                             </div>
 
                         </div>
@@ -29,7 +29,7 @@
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Descrição da Categoria</label>
-                                <textarea name="descNovaCategoriaInsumo[]" class="form-control" rows="3"></textarea>
+                                <textarea name="descNovaCategoriaInsumo[]" class="form-control" rows="3" placeholder="Infome a descrição..." ></textarea>
                             </div>
                         </div>
                     </div>

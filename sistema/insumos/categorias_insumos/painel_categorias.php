@@ -39,6 +39,9 @@ if ($qualEstoque_dep != "") {
                 <a href="index.php?menuop=cadastro_categoria_insumo">
                     <button class="btn" id="operacao_cadastro">Nova categoria</button>
                 </a>
+                <a href="index.php?menuop=cadastro_insumo">
+                    <button class="btn" id="operacao_cadastro">Cadastrar Novo Insumo</button>
+                </a>
             </div>
             <div>
                 <form action="index.php?menuop=categorias_insumos" method="post" class="form_buscar">

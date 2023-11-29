@@ -15,8 +15,16 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     // var_dump($stringList);
 
     $idCategoria = $stringList[1];
-
     $categoriaId = $_GET[$idCategoria];
+
+    $str_link = "";
+
+    if (isset($categoriaId)) {
+        $str_link = "insumos&categoriaInsumoId=" . $categoriaId;
+    } else {
+        $str_link = "categorias_insumos";
+    }
+    
 
 }
 
@@ -26,7 +34,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     <div class="cards cadastro_insumo">
         <div class="voltar">
             <h4>Cadastro de Insumo</h4>
-            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$categoriaId?>" class="confirmaVolta">
+            <a href="index.php?menuop=<?=$str_link?>" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>

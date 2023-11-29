@@ -18,7 +18,7 @@ $qualEstoque = "";
 
 // echo "<br>!!!!!!!!!! CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
-// echo "<br>!!!!!!!!!! AJUSTAR O LIMITE DE INSERÇÃO DE QUANTIDADE QUANDO FOR SOLICITAÇÃO DE DEVOLUÇÃO!!!!!!!!!!<br><br>";
+// echo "<br>!!!!!!!!!! AJUSTAR O BOTÃO DE INSERÇÃO DE INSUMOS NA BASE DE DADOS |||| O BOTÃO DEVE FICAR NO PAINEL DE INSERIR NOVAS CATEGORIAS !!!!!!!!!!<br><br>";
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 
@@ -206,6 +206,9 @@ if ($sessionUserType == 2) {
                             <ul>
                                 <li>
                                     <a href="index.php?menuop=categorias_insumos">Todas as Categorias de Insumos</a>
+                                </li>
+                                <li>
+                                    <a href="index.php?menuop=insumos">Todos os Insumos</a>
                                 </li>
                                 <?php
                                     $sql = "SELECT * FROM tipos_insumos ORDER BY tipos_insumos_tipo ASC";
