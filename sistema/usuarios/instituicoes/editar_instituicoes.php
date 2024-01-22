@@ -37,8 +37,8 @@ $dados = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="display-flex-cl">
-                                <label>Logradouro</label>
-                                <input type="text" class="form-control" name="logradouroInstituicao" placeholder="Informe o Logradouro..." value="<?=$dados['instituicoes_end_logradouro']?>">
+                                <label>CNPJ ou CPF</label>
+                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao" placeholder="Informe somente números..." min="1" value="<?=$dados['instituicoes_cpf_cnpj']?>">
                             </div>
 
                         </div>
@@ -46,8 +46,27 @@ $dados = mysqli_fetch_assoc($result);
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
-                                <label>CNPJ ou CPF</label>
-                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao" placeholder="Informe somente números..." min="1" value="<?=$dados['instituicoes_cpf_cnpj']?>">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" name="logradouroInstituicao" placeholder="Informe o Logradouro..." value="<?=$dados['instituicoes_end_logradouro']?>">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" name="cepInstituicao" placeholder="Informe o CEP..." value="<?=$dados['instituicoes_end_cep']?>" maxlength="8">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" name="bairroInstituicao" placeholder="Informe o contato..." maxlength="14" value="<?=$dados['instituicoes_end_bairro']?>">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>Número do Endereço</label>
+                                <input type="text" class="form-control" name="numEnderecoInstituicao" placeholder="Informe o Logradouro..." value="<?=$dados['instituicoes_end_num']?>">
                             </div>
 
                             <div class="display-flex-cl">

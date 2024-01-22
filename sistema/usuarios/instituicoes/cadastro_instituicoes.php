@@ -24,8 +24,8 @@
                             </div>
 
                             <div class="display-flex-cl">
-                                <label>Logradouro</label>
-                                <input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro...">
+                                <label>CNPJ ou CPF</label>
+                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required>
                             </div>
 
                         </div>
@@ -33,8 +33,27 @@
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
-                                <label>CNPJ ou CPF</label>
-                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfInstituicao[]" placeholder="Informe somente números..." min="1" required>
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" name="logradouroInstituicao[]" placeholder="Informe o Logradouro...">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" name="cepInstituicao[]" placeholder="Informe o CEP..." maxlength="8">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" name="bairroInstituicao[]" placeholder="Informe o Bairro...">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>Número do Endereço</label>
+                                <input type="text" class="form-control" name="numEnderecoInstituicao[]" placeholder="Informe o número...">
                             </div>
 
                             <div class="display-flex-cl">

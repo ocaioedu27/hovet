@@ -11,17 +11,11 @@
             $razaoSocialFornecedor = $valor_cad_fornecedor;
             $logradouroFornecedor = $dados_enviados_array['logradouroFornecedor'][$chave_cad_fornecedor];
             $cnpjCpfFornecedor = $dados_enviados_array['cnpjCpfFornecedor'][$chave_cad_fornecedor];
-            $emailFornecedor = $dados_enviados_array['emailFornecedor'][$chave_cad_fornecedor];
+            $emailFornecedor = $dados_enviados_array['emailFornecedor'][$chave_cad_fornecedor];            $cepFornecedor = $dados_enviados_array['cepFornecedor'][$chave_cad_fornecedor];
+            $numEnderecoFornecedor = $dados_enviados_array['numEnderecoFornecedor'][$chave_cad_fornecedor];
+            $bairroFornecedor = $dados_enviados_array['bairroFornecedor'][$chave_cad_fornecedor];
             $foneFacFornecedor = $dados_enviados_array['foneFacFornecedor'][$chave_cad_fornecedor];
             $observacaoFornecedor = $dados_enviados_array['observacaoFornecedor'][$chave_cad_fornecedor];
-
-            // echo '<br> Chave para o fornecedor: ' . $chave_cad_fornecedor;
-            // echo '<br> Razão Social: ' . $razaoSocialFornecedor;
-            // echo '<br> Logradouro: ' . $logradouroFornecedor;
-            // echo '<br> CNPJ ou CPF: ' . $cnpjCpfFornecedor;
-            // echo '<br> E-mail: ' . $emailFornecedor;
-            // echo '<br> Fone ou FAC: ' . $foneFacFornecedor;
-            // echo '<br> Observações: ' . $observacaoFornecedor;
 
             $sql = "INSERT INTO fornecedores (
                 fornecedores_razao_social,
@@ -37,9 +31,9 @@
                     '{$razaoSocialFornecedor}',
                     '{$cnpjCpfFornecedor}',
                     '{$logradouroFornecedor}',
-                    '',
-                    '',
-                    '',
+                    '{$numEnderecoFornecedor}',
+                    '{$bairroFornecedor}',
+                    '{$cepFornecedor}',
                     '{$emailFornecedor}',
                     '{$foneFacFornecedor}',
                     '{$observacaoFornecedor}'

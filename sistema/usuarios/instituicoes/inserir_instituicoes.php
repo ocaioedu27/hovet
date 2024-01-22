@@ -1,62 +1,57 @@
 <header>
-    <h2>Inserir Fornecedor</h2>
+    <h2>Inserir Instituições</h2>
 </header>
 <?php 
 
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
     
-    if (!empty($dados_enviados_array['btnAdicionarFornecedor'])) {
+    if (!empty($dados_enviados_array['btnAdicionarInstituicoes'])) {
 
-        foreach ($dados_enviados_array['razaoSocialFornecedor'] as $chave_cad_fornecedor => $valor_cad_fornecedor) {
-            $razaoSocialFornecedor = $valor_cad_fornecedor;
-            $logradouroFornecedor = $dados_enviados_array['logradouroFornecedor'][$chave_cad_fornecedor];
-            $cnpjCpfFornecedor = $dados_enviados_array['cnpjCpfFornecedor'][$chave_cad_fornecedor];
-            $emailFornecedor = $dados_enviados_array['emailFornecedor'][$chave_cad_fornecedor];
-            $foneFacFornecedor = $dados_enviados_array['foneFacFornecedor'][$chave_cad_fornecedor];
-            $observacaoFornecedor = $dados_enviados_array['observacaoFornecedor'][$chave_cad_fornecedor];
+        foreach ($dados_enviados_array['razaoSocialInstituicoes'] as $chave_cad_Instituicoes => $valor_cad_Instituicoes) {
+            $razaoSocialInstituicoes = $valor_cad_Instituicoes;
+            $logradouroInstituicoes = $dados_enviados_array['logradouroInstituicoes'][$chave_cad_Instituicoes];
+            $cnpjCpfInstituicoes = $dados_enviados_array['cnpjCpfInstituicoes'][$chave_cad_Instituicoes];
+            $emailInstituicoes = $dados_enviados_array['emailInstituicoes'][$chave_cad_Instituicoes];
+            $foneFacInstituicoes = $dados_enviados_array['foneFacInstituicoes'][$chave_cad_Instituicoes];
+            $bairroInstituicoes = $dados_enviados_array['bairroInstituicoes'][$chave_cad_Instituicoes];
+            $cepInstituicoes = $dados_enviados_array['cepInstituicoes'][$chave_cad_Instituicoes];
+            $numEnderecoInstituicoes = $dados_enviados_array['numEnderecoInstituicoes'][$chave_cad_Instituicoes];
+            $observacaoInstituicoes = $dados_enviados_array['observacaoInstituicoes'][$chave_cad_Instituicoes];
 
-            // echo '<br> Chave para o fornecedor: ' . $chave_cad_fornecedor;
-            // echo '<br> Razão Social: ' . $razaoSocialFornecedor;
-            // echo '<br> Logradouro: ' . $logradouroFornecedor;
-            // echo '<br> CNPJ ou CPF: ' . $cnpjCpfFornecedor;
-            // echo '<br> E-mail: ' . $emailFornecedor;
-            // echo '<br> Fone ou FAC: ' . $foneFacFornecedor;
-            // echo '<br> Observações: ' . $observacaoFornecedor;
-
-            $sql = "INSERT INTO fornecedores (
-                fornecedores_razao_social,
-                fornecedores_cpf_cnpj,
-                fornecedores_end_logradouro,
-                fornecedores_end_num,
-                fornecedores_end_bairro,
-                fornecedores_end_cep,
-                fornecedores_end_email,
-                fornecedores_end_telefone,
-                fornecedores_observacao)
+            $sql = "INSERT INTO instituicoes (
+                instituicoes_razao_social,
+                instituicoes_cpf_cnpj,
+                instituicoes_end_logradouro,
+                instituicoes_end_num,
+                instituicoes_end_bairro,
+                instituicoes_end_cep,
+                instituicoes_end_email,
+                instituicoes_end_telefone,
+                instituicoes_observacao)
                 VALUES(
-                    '{$razaoSocialFornecedor}',
-                    '{$cnpjCpfFornecedor}',
-                    '{$logradouroFornecedor}',
-                    '',
-                    '',
-                    '',
-                    '{$emailFornecedor}',
-                    '{$foneFacFornecedor}',
-                    '{$observacaoFornecedor}'
+                    '{$razaoSocialInstituicoes}',
+                    '{$cnpjCpfInstituicoes}',
+                    '{$logradouroInstituicoes}',
+                    '{$numEnderecoInstituicoes}',
+                    '{$bairroInstituicoes}',
+                    '{$cepInstituicoes}',
+                    '{$emailInstituicoes}',
+                    '{$foneFacInstituicoes}',
+                    '{$observacaoInstituicoes}'
                 )";
 
             if(mysqli_query($conexao, $sql)){
-                echo "<script language='javascript'>window.alert('Fornecedor cadastrado com sucesso!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=fornecedores';</script>";
+                echo "<script language='javascript'>window.alert('Instituição " . $razaoSocialInstituicoes . " cadastrado(a) com sucesso!'); </script>";
+                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=instituicoes';</script>";
 
             } else{
-                die("//cadastro de fornecedores - Erro ao cadastrar fornecedor(es): " . mysqli_error($conexao));
+                die("//cadastro de Instituicoeses - Erro ao cadastrar Instituicoes(es): " . mysqli_error($conexao));
             }
 
         }
 
     } else {
-        echo '//Cad_fornecedor/ - nenhum formulário enviado';
+        echo '//Cad_Instituicoes/ - nenhum formulário enviado';
     }
 
 ?>

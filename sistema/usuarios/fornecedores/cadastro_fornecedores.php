@@ -13,9 +13,9 @@
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_fornecedores" method="post">
 
             <div id="dados_fornecedor_cad">
-                <hr>
                 <div class="display-flex-row">
                     <div>
+                        <hr>
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
@@ -24,8 +24,8 @@
                             </div>
 
                             <div class="display-flex-cl">
-                                <label>Logradouro</label>
-                                <input type="text" class="form-control" name="logradouroFornecedor[]" placeholder="Informe o Logradouro...">
+                                <label>CNPJ ou CPF</label>
+                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor[]" placeholder="Informe somente números..." min="1" required>
                             </div>
 
                         </div>
@@ -33,8 +33,27 @@
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
-                                <label>CNPJ ou CPF</label>
-                                <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor[]" placeholder="Informe somente números..." min="1" required>
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" name="logradouroFornecedor[]" placeholder="Informe o Logradouro...">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>CEP</label>
+                                <input type="text" class="form-control" name="cepFornecedor[]" placeholder="Informe o CEP..." maxlength="8">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" name="bairroFornecedor[]" placeholder="Informe o Bairro...">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
+
+                            <div class="display-flex-cl">
+                                <label>Número do Endereço</label>
+                                <input type="text" class="form-control" name="numEnderecoFornecedor[]" placeholder="Informe o Número...">
                             </div>
 
                             <div class="display-flex-cl">

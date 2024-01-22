@@ -16,6 +16,24 @@
         $logradouroFornecedor = "---";
     }
 
+    $cepFornecedor = mysqli_real_escape_string($conexao,$_POST["cepFornecedor"]);
+
+    if ($cepFornecedor == "") {
+        $cepFornecedor = "---";
+    }
+
+    $bairroFornecedor = mysqli_real_escape_string($conexao,$_POST["bairroFornecedor"]);
+
+    if ($bairroFornecedor == "") {
+        $bairroFornecedor = "---";
+    }
+
+    $numEnderecoFornecedor = mysqli_real_escape_string($conexao,$_POST["numEnderecoFornecedor"]);
+
+    if ($numEnderecoFornecedor == "") {
+        $numEnderecoFornecedor = "---";
+    }
+
     $cnpjCpfFornecedor = mysqli_real_escape_string($conexao,$_POST["cnpjCpfFornecedor"]);
 
     if ($cnpjCpfFornecedor == "") {
@@ -43,6 +61,9 @@
     $sql = "UPDATE fornecedores SET 
         fornecedores_razao_social = '{$razaoSocialFornecedor}',
         fornecedores_end_logradouro = '{$logradouroFornecedor}',
+        fornecedores_end_num = '{$numEnderecoFornecedor}',
+        fornecedores_end_bairro = '{$bairroFornecedor}',
+        fornecedores_end_cep = '{$cepFornecedor}',
         fornecedores_cpf_cnpj = '{$cnpjCpfFornecedor}',
         fornecedores_end_email = '{$emailFornecedor}',
         fornecedores_end_telefone = '{$foneFacFornecedor}',

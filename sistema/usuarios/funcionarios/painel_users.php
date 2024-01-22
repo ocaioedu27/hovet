@@ -26,7 +26,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>E-mail</th>
-                        <th>Tipo de usuario</th>
+                        <th>Tipo de Usuário</th>
                         <th>SIAPE</th>
                     </tr>
                 </thead>

@@ -16,6 +16,24 @@
         $logradouroInstituicao = "---";
     }
 
+    $cepInstituicao = mysqli_real_escape_string($conexao,$_POST["cepInstituicao"]);
+
+    if ($cepInstituicao == "") {
+        $cepInstituicao = "---";
+    }
+
+    $numEnderecoInstituicao = mysqli_real_escape_string($conexao,$_POST["numEnderecoInstituicao"]);
+
+    if ($numEnderecoInstituicao == "") {
+        $numEnderecoInstituicao = "---";
+    }
+
+    $bairroInstituicao = mysqli_real_escape_string($conexao,$_POST["bairroInstituicao"]);
+
+    if ($bairroInstituicao == "") {
+        $bairroInstituicao = "---";
+    }
+
     $cnpjCpfInstituicao = mysqli_real_escape_string($conexao,$_POST["cnpjCpfInstituicao"]);
 
     if ($cnpjCpfInstituicao == "") {
@@ -43,6 +61,9 @@
     $sql = "UPDATE instituicoes SET 
         instituicoes_razao_social = '{$razaoSocialInstituicao}',
         instituicoes_end_logradouro = '{$logradouroInstituicao}',
+        instituicoes_end_num = '{$numEnderecoInstituicao}',
+        instituicoes_end_bairro = '{$bairroInstituicao}',
+        instituicoes_end_cep = '{$cepInstituicao}',
         instituicoes_cpf_cnpj = '{$cnpjCpfInstituicao}',
         instituicoes_end_email = '{$emailInstituicao}',
         instituicoes_end_telefone = '{$foneFacInstituicao}',
@@ -51,11 +72,11 @@
 
     if(mysqli_query($conexao, $sql)){
 
-        echo "<script language='javascript'>window.alert('Dados do Insituicao atualizado com sucesso!'); </script>";
+        echo "<script language='javascript'>window.alert('Dados de " . $razaoSocialInstituicao . " atualizados com sucesso!'); </script>";
         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=instituicoes';</script>";
 
     } else{
-        echo "<script language='javascript'>window.alert('Erro ao atualizar dados do Insituicao!'); </script>";
+        echo "<script language='javascript'>window.alert('Erro ao atualizar dados de " . $razaoSocialInstituicao . "!'); </script>";
         echo " <a href=\"/hovet/sistema/index.php?menuop=editar_instituicoes&idInstituicao=$idInstituicao\">Voltar ao formulário de edição</a> <br/>";
 
         die("Erro: " . mysqli_error($conexao));
