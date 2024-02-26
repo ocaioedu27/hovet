@@ -192,6 +192,17 @@ create table movimentacoes (
     movimentacoes_data_operacao datetime not null default current_timestamp()
 );
 
+create table categorias_fornecedores (
+	cf_id int primary key auto_increment,
+    cf_categoria varchar(100) not null,
+	cf_descricao varchar(100));
+    
+
+insert into categorias_fornecedores values
+	(null, "Fornecedores", "Empresasa do ramo de medicamentos."),
+    (null, "Instituições", "instituicoes que realizam permuta com o hospital veterinário."),
+    (null, "Doadores", "Doadores de insumos.");
+
 create table fornecedores (
 	fornecedores_id int primary key auto_increment,
     fornecedores_razao_social varchar(100) not null,

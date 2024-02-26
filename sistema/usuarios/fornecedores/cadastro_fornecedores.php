@@ -28,6 +28,12 @@
                                 <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor[]" placeholder="Informe somente números..." min="1" required>
                             </div>
 
+                            <div class="display-flex-cl">
+                                <label>Categoria</label>
+                                <input type="text" class="form-control" name="categoriaFornecedor[]" id="tipos_fornecedor_1" onkeyup="searchInput_cadDeposito(this.value, 1,9)" placeholder="Busque a categoria..." required/>
+                                <span class="ajuste_span" id="resultado_cad_categoria_fornecedor_1" style="margin: 6.7% auto; width: auto;"></span>
+                            </div>
+
                         </div>
 
                         <div class="form-group valida_movimentacao">

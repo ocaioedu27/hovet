@@ -20,7 +20,7 @@
             $result_check_exist = mysqli_query($conexao, $sql_verifica_se_existe);
 
             if ($result_check_exist->num_rows > 0) {
-                echo "<script language='javascript'>window.alert('Erro - Nome de Estoque JÁ CADASTRADO! Informe um nome ainda não cadastrado para prosseguir!'); </script>";
+                echo "<script language='javascript'>window.alert('Erro - Categoria JÁ CADASTRADA! Informe um nome ainda não cadastrado para prosseguir!'); </script>";
                 echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=cadastro_categoria_insumo';</script>";
             } else {
                 // echo "seguindo para o insert";

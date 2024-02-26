@@ -58,6 +58,7 @@ if ($qualEstoque_dep != "") {
             <table id="tabela_listar">
                 <thead>
                     <tr>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Categoria</th>
                         <th>Insumos na Categoria</th>
@@ -115,6 +116,23 @@ if ($qualEstoque_dep != "") {
                         
                     ?>
                     <tr>
+                    <tr class="tabela_dados">
+                        <td class="operacoes" id="td_operacoes_editar_deletar">
+                            <a href="index.php?menuop=editar_categoria_insumos&id=<?=$dados["tipos_insumos_id"]?>" class="confirmaEdit">
+                                <button class="btn">
+                                    <span class="icon">
+                                        <ion-icon name="create-outline"></ion-icon>
+                                    </span>
+                                </button>
+                            </a>
+                            <a href="index.php?menuop=excluir_categoria_insumos&id=<?=$dados["tipos_insumos_id"]?>" class="confirmaDelete">
+                                <button class="btn">
+                                    <span class="icon">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </span>
+                                </button>
+                            </a>
+                        </td>
                         <td><?=$dados["tipos_insumos_id"]?></td>
                         <td>
                             <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>" class="form-control"><?=$dados['tipos_insumos_tipo']?></a>

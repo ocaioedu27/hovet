@@ -329,6 +329,40 @@
         return json_encode($values_array_return);
     }
 
+    function retorna_categoria_fornecedor($valor_to_search, $conn){
+        $sql = "SELECT 
+                            * 
+                        FROM 
+                            categorias_fornecedores
+                        WHERE  
+                            cf_categoria LIKE '%{$valor_to_search}%' LIMIT 10";
+
+        $resultado = mysqli_query($conn, $sql) or die("//estoques/dispensario/sch_disp_itens_depst/sql_pesquisa - Erro: " . mysqli_error($conn));
+
+        // $valores_categorias = array();
+
+        $quantidade = $resultado->num_rows;
+
+        if ($quantidade != 0) {
+            while ($row_categorias = mysqli_fetch_assoc($resultado)) {
+        
+                $valores_categorias[] = [
+                    
+                    'categoriaId' => $row_categorias['cf_id'],
+                    'categoria_nome' => $row_categorias['cf_categoria'],
+                    'categoria_desc' => $row_categorias['cf_descricao']
+                ];
+        
+            }
+
+            $retorna_valores = ['erro' => false, 'dados_categorias' => $valores_categorias];
+
+        } else{
+            $retorna_valores = ['erro' => true, 'msg_error_categorias' => 'Categoria não encontrada'];
+        }
+        return json_encode($retorna_valores);
+    }
+
     function findKeyWord($texto,$palavra){
 
         if(preg_match("%\b{$palavra}\b%",$texto)){
@@ -406,5 +440,13 @@
     if(isset($valor_movimentacoes)){
 
         echo retorna_movimentacoes($valor_movimentacoes, $conexao);
+    }
+
+    // Para procurar por categorias
+    $cad_cateogia_fornecedor = $_GET['cad_cateogia_fornecedor'];
+
+    if(isset($cad_cateogia_fornecedor)){
+
+        echo retorna_categoria_fornecedor($cad_cateogia_fornecedor, $conexao);
     }
 ?>

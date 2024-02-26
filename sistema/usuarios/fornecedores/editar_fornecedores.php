@@ -1,9 +1,30 @@
 <?php
-$idFornecedor = $_GET["idFornecedor"];
+$idFornecedor = $_GET["id"];
 
-$sql = "SELECT * 
-            FROM fornecedores
-            WHERE fornecedores_id={$idFornecedor}";
+$sql = "SELECT 
+            f.fornecedores_id,
+            f.fornecedores_razao_social,
+            f.fornecedores_cpf_cnpj,
+            f.fornecedores_ctg_fornecedores_id,
+            f.fornecedores_end_logradouro,
+            f.fornecedores_end_cep,
+            f.fornecedores_end_num,
+            f.fornecedores_end_bairro,
+            f.fornecedores_end_email,
+            f.fornecedores_end_telefone,
+            f.fornecedores_observacao,
+            c.cf_categoria
+
+        FROM
+            fornecedores f
+        INNER JOIN
+            categorias_fornecedores c
+        ON
+            c.cf_id = f.fornecedores_ctg_fornecedores_id
+            
+        WHERE
+            f.fornecedores_id={$idFornecedor}";
+
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
@@ -20,16 +41,18 @@ $dados = mysqli_fetch_assoc($result);
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" action="index.php?menuop=atualizar_fornecedores" method="post">
+        <form class="form_cadastro" action="index.php?menuop=atualizar_fornecedor" method="post">
                 <div class="display-flex-row">
                     <div>
-
                         <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
                                 <label>ID do Fornecedor</label>
-                                <input type="text" class="form-control largura_metade" name="idFornecedor" value="<?=$dados['fornecedores_id']?>" readonly>
+                                <input type="text" class="form-control largura_um_quarto" name="idFornecedor" value="<?=$dados['fornecedores_id']?>" readonly>
                             </div>
+                        </div>
+
+                        <div class="form-group valida_movimentacao">
 
                             <div class="display-flex-cl">
                                 <label>Razão Social</label>
@@ -39,6 +62,12 @@ $dados = mysqli_fetch_assoc($result);
                             <div class="display-flex-cl">
                                 <label>CNPJ ou CPF</label>
                                 <input type="text" class="form-control" maxlength="14" name="cnpjCpfFornecedor" placeholder="Informe somente números..." min="1" value="<?=$dados['fornecedores_cpf_cnpj']?>">
+                            </div>
+
+                            <div class="display-flex-cl">
+                                <label>Categoria</label>
+                                <input type="text" class="form-control" name="categoriaFornecedor" id="tipos_fornecedor_1" onkeyup="searchInput_cadDeposito(this.value, 1,9)" placeholder="Informe a categoria..."  value="<?=$dados['fornecedores_ctg_fornecedores_id']?> - <?=$dados['cf_categoria']?>">
+                                <span class="ajuste_span" id="resultado_cad_categoria_fornecedor_1" style="margin: 6.7% auto; width: auto;"></span>
                             </div>
 
                         </div>

@@ -10,6 +10,12 @@
         $razaoSocialFornecedor = "---";
     }
 
+    $categoriaFornecedor = mysqli_real_escape_string($conexao,$_POST["categoriaFornecedor"]);
+
+    if ($categoriaFornecedor == "") {
+        $categoriaFornecedor = "---";
+    }
+
     $logradouroFornecedor = mysqli_real_escape_string($conexao,$_POST["logradouroFornecedor"]);
 
     if ($logradouroFornecedor == "") {

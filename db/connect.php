@@ -1,4 +1,5 @@
 <?php
+
 include("config.php");
 
 $conexao = new mysqli(SERVIDOR, USUARIO, SENHA, BANCO);

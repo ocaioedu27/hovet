@@ -1,5 +1,7 @@
 <?php
 
+// echo __DIR__;
+
 include_once("../db/connect.php");
 
 include_once("../db/protect.php");
@@ -226,19 +228,32 @@ if ($sessionUserType == 2) {
                             </ul>
                         </div>
                     </div>
+                    <div id="listar">
+                        <a href="index.php?menuop=usuarios">Usuários</a>
+                    </div>
                     <div class="dropdown" id="listar">
-                        <a href="#">Usuários</a>
+                        <a href="#">Todos os Fornecedores</a>
                         <div class="dropdown-content">
                             <ul>
                                 <li>
-                                    <a href="index.php?menuop=usuarios">Usuários</a>
+                                    <a href="index.php?menuop=categorias_fornecedores">Todas as Categorias de Fornecedores</a>
                                 </li>
                                 <li>
-                                    <a href="index.php?menuop=fornecedores">Fornecedores</a>
+                                    <a href="index.php?menuop=fornecedores">Todos os Fornecedores</a>
                                 </li>
+                                <?php
+                                    $sql = "SELECT * FROM categorias_fornecedores ORDER BY cf_categoria ASC";
+                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                    
+                                    while($dados = mysqli_fetch_assoc($rs)){
+        
+                                ?>
                                 <li>
-                                    <a href="index.php?menuop=instituicoes">Instituições</a>
+                                    <a href="index.php?menuop=fornecedores&fornecedores_ctg_id=<?=$dados['cf_id']?>"><?=$dados['cf_categoria']?></a>
                                 </li>
+                                <?php
+                                    }
+                                ?>
                             </ul>
                         </div>
                     </div>
@@ -577,7 +592,7 @@ if ($sessionUserType == 2) {
                         break;
                     }
 
-                case 'editar_fornecedores':
+                case 'editar_fornecedor':
 
                     if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
@@ -590,7 +605,7 @@ if ($sessionUserType == 2) {
                         break;
                     }
     
-                case 'atualizar_fornecedores':
+                case 'atualizar_fornecedor':
 
                     if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
@@ -603,7 +618,7 @@ if ($sessionUserType == 2) {
                         break;
                     }
 
-                case 'excluir_fornecedores':
+                case 'excluir_fornecedor':
 
                     if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
 
@@ -704,6 +719,45 @@ if ($sessionUserType == 2) {
                     } else{
 
                         include_once("insumos/categorias_insumos/painel_categorias.php");
+                        break;
+                    }
+
+                case 'editar_categoria_insumos':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("insumos/categorias_insumos/editarCategoriaInsumos.php");
+                        break;
+                    }
+
+                case 'excluir_categoria_insumos':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("insumos/categorias_insumos/excluirCategoriaInsumos.php");
+                        break;
+                    }
+
+                case 'atualizar_categoria_insumos':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("insumos/categorias_insumos/atualizarCategoriaInsumos.php");
                         break;
                     }
 
@@ -1331,6 +1385,84 @@ if ($sessionUserType == 2) {
                         break;
                     }
 
+                case 'categorias_fornecedores':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/painelCategorias.php");
+                        break;
+                    }
+
+                case 'cadastroCategoriaFornecedor':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/cadastroCategoriaFornecedor.php");
+                        break;
+                    }
+
+                case 'inserir_categoria_fornecedor':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/inserirCategoria.php");
+                        break;
+                    }
+
+                case 'editar_categoria_fornecedores':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/editarCategoria.php");
+                        break;
+                    }
+
+                case 'atualizar_categoria_fornecedor':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/atualizarCategorias.php");
+                        break;
+                    }
+
+                case 'excluir_categoria_fornecedor':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/fornecedores/categoria_fornecedores/excluirCategoria.php");
+                        break;
+                    }
+
                 default:
 
                     if (!$sessionUserType) {
@@ -1385,6 +1517,8 @@ if ($sessionUserType == 2) {
     
     <script type="text/javascript" src="../js/script.js"></script>
     <script type="text/javascript" src="../js/hasPermissions.js"></script>
+    <script type="text/javascript" src="../js/adicaoRemocaoCampos.js"></script>
+    <script type="text/javascript" src="../js/searchInputs.js"></script>
 
 
     <!-- <script src="../js/jquery-3.6.4.min.js"></script> -->

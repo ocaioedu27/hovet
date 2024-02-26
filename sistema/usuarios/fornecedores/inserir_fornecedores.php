@@ -9,9 +9,14 @@
 
         foreach ($dados_enviados_array['razaoSocialFornecedor'] as $chave_cad_fornecedor => $valor_cad_fornecedor) {
             $razaoSocialFornecedor = $valor_cad_fornecedor;
+
+            $categoriaFornecedor = $dados_enviados_array['categoriaFornecedor'][$chave_cad_fornecedor];
+            $categoriaFornecedor = strtok($categoriaFornecedor, " ");
+
             $logradouroFornecedor = $dados_enviados_array['logradouroFornecedor'][$chave_cad_fornecedor];
             $cnpjCpfFornecedor = $dados_enviados_array['cnpjCpfFornecedor'][$chave_cad_fornecedor];
-            $emailFornecedor = $dados_enviados_array['emailFornecedor'][$chave_cad_fornecedor];            $cepFornecedor = $dados_enviados_array['cepFornecedor'][$chave_cad_fornecedor];
+            $emailFornecedor = $dados_enviados_array['emailFornecedor'][$chave_cad_fornecedor];            
+            $cepFornecedor = $dados_enviados_array['cepFornecedor'][$chave_cad_fornecedor];
             $numEnderecoFornecedor = $dados_enviados_array['numEnderecoFornecedor'][$chave_cad_fornecedor];
             $bairroFornecedor = $dados_enviados_array['bairroFornecedor'][$chave_cad_fornecedor];
             $foneFacFornecedor = $dados_enviados_array['foneFacFornecedor'][$chave_cad_fornecedor];
@@ -19,6 +24,7 @@
 
             $sql = "INSERT INTO fornecedores (
                 fornecedores_razao_social,
+                fornecedores_ctg_fornecedores_id,
                 fornecedores_cpf_cnpj,
                 fornecedores_end_logradouro,
                 fornecedores_end_num,
@@ -29,6 +35,7 @@
                 fornecedores_observacao)
                 VALUES(
                     '{$razaoSocialFornecedor}',
+                    {$categoriaFornecedor},
                     '{$cnpjCpfFornecedor}',
                     '{$logradouroFornecedor}',
                     '{$numEnderecoFornecedor}',
