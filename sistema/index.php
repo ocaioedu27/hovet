@@ -18,9 +18,9 @@ $qtd_linhas_tabelas = 0;
 
 $qualEstoque = "";
 
-// echo "<br>!!!!!!!!!! CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
+// echo "<br>!!!!!!!!!! \CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
-// echo "<br>!!!!!!!!!! AJUSTAR O BOTÃO DE INSERÇÃO DE INSUMOS NA BASE DE DADOS |||| O BOTÃO DEVE FICAR NO PAINEL DE INSERIR NOVAS CATEGORIAS !!!!!!!!!!<br><br>";
+// echo "<br>!!!!!!!!!! AJUSTAR O BUILD SQL DO SISTEMA !!!!!!!!!!<br><br>";
 
 function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
 
@@ -54,13 +54,6 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 }
 
 $painel = $painel_tmp; 
-
-
-// ARRAYS DE PERMISSOES
-
-// $array_permissoes_gerais = retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "","", false, "");
-
-// $array_permissoes_sistema_teste = retornaDadosInnerJoin($conexao, 'permissoes_id', 'permissoes_usuario', 'categorias_permissoes', 'permissoes_ctg_perm_id','cp_id', 'Sistema Controller', 'cp_nome');
 
 $teste_array = array(
     "cp_nome" => "Sistema Controller",
@@ -232,7 +225,7 @@ if ($sessionUserType == 2) {
                         <a href="index.php?menuop=usuarios">Usuários</a>
                     </div>
                     <div class="dropdown" id="listar">
-                        <a href="#">Todos os Fornecedores</a>
+                        <a href="#">Tipos de Fornecedores</a>
                         <div class="dropdown-content">
                             <ul>
                                 <li>

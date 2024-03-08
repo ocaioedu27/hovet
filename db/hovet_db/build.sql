@@ -62,8 +62,8 @@ create table insumos(
     insumos_unidade varchar(150) not null,
     insumos_descricao varchar(256) not null,
     insumos_qtd_critica int not null,
-    insumos_tipo_insumos_id int not null,
-    foreign key(insumos_tipo_insumos_id) references tipos_insumos(tipos_insumos_id)
+    insumos_tipo_insumos_id int,
+    foreign key(insumos_tipo_insumos_id) references tipos_insumos(tipos_insumos_id) on delete cascade
 );
 
 # Inserção de conteúdo insumos
@@ -203,9 +203,12 @@ insert into categorias_fornecedores values
     (null, "Instituições", "instituicoes que realizam permuta com o hospital veterinário."),
     (null, "Doadores", "Doadores de insumos.");
 
+
 create table fornecedores (
 	fornecedores_id int primary key auto_increment,
     fornecedores_razao_social varchar(100) not null,
+    fornecedores_ctg_fornecedores_id int,
+    foreign key (fornecedores_ctg_fornecedores_id) references categorias_fornecedores(cf_id) on delete cascade,
     fornecedores_cpf_cnpj varchar (14) null,
     fornecedores_end_logradouro varchar(100) null,
     fornecedores_end_num varchar(100) null,
@@ -216,56 +219,18 @@ create table fornecedores (
     fornecedores_observacao varchar(256) null
 );
 
-insert into fornecedores (
-	fornecedores_razao_social,
-    fornecedores_cpf_cnpj,
-    fornecedores_end_logradouro,
-    fornecedores_end_num,
-    fornecedores_end_bairro,
-    fornecedores_end_cep,
-    fornecedores_end_email,
-    fornecedores_end_telefone,
-    fornecedores_observacao) 
-    values 
-    ("Fornecedor Teste 1","00000000000000","End. Teste 1","","","00000000","fornecedor_teste1@testmail.com","000000000","Obs Teste 1"),
-    ("Fornecedor Teste 2","00000000000000","End. Teste 2","","","00000000","fornecedor_teste2@testmail.com","000000000","Obs Teste 2"),
-    ("Fornecedor Teste 3","00000000000000","End. Teste 3","","","00000000","fornecedor_teste3@testmail.com","000000000","Obs Teste 3"),
-    ("Fornecedor Teste 4","00000000000000","End. Teste 4","","","00000000","fornecedor_teste4@testmail.com","000000000","Obs Teste 4"),
-    ("Fornecedor Teste 5","00000000000000","End. Teste 5","","","00000000","fornecedor_teste5@testmail.com","000000000","Obs Teste 5"),
-    ("Fornecedor Teste 6","00000000000000","End. Teste 6","","","00000000","fornecedor_teste6@testmail.com","000000000","Obs Teste 6");
+
+INSERT INTO `fornecedores` (`fornecedores_id`, `fornecedores_razao_social`, `fornecedores_cpf_cnpj`, `fornecedores_end_logradouro`, `fornecedores_end_num`, `fornecedores_end_bairro`, `fornecedores_end_cep`, `fornecedores_end_email`, `fornecedores_end_telefone`, `fornecedores_observacao`, `fornecedores_ctg_fornecedores_id`) VALUES
+(1, 'IClinic', '49234203239953', 'R. Castelo Branco', '1403', '---', '00000000', 'iclinic@mail.com', '000000000', 'Obs Teste 1', 1),
+(2, 'homeobel', '94329562349693', 'Travessa dos Apinagés', '502', 'Batista Campos', '00000000', 'homeobel@mail.com', '000000000', 'Obs Teste 2', 1),
+(3, 'MEM Cirúrgica', '39249239495453', 'R. Angustura', '49', '---', '00000000', 'memcirurgia@mail.com', '000000000', 'Obs Teste 3', 1),
+(4, 'Sterilex', '13912343923402', 'Av. Augusto Monte Negro', '904', '---', '00000000', 'sterilex@mail.com', '40052304', 'Obs Teste 4', 1),
+(5, 'VetBR Saúde Animal', '12391210213990', 'Rua Castelo Branco', '1011', '---', '00000000', 'vetbr.saude.animal@mail.com', '20320435', 'Entrar em contato para compra de medicamentos controlados', 1),
+(6, 'PetLand', '91231823198239', 'Rua Ramiro Barcelos', '213', '---', '00000000', 'petland@mail.com', '34050560', 'Fornecedor de medicamentos de procedimentos', 1),
+(8, 'HV-UFPA', '59201323912300', 'R. Augusto Corrêa', '01', '---', '00000000', 'hv-ufpa@mail.com', '000000000', 'Contato para permuta', 2),
+(9, 'HV-UEPA', '93459203021303', 'Tv. Perebebuí', '2623', 'Guamá', '00000000', 'hv-uepa@mail.com', '000000000', 'contato para permuta', 2),
+(10, 'Beatriz Andrade', '01223443276', 'Travessa Dos Apinagés', '380', 'Batista Campos', '66025002', 'bea.andrade@mail.com', '91985420199', 'Realiza doações a cada 3 meses.', 3);
     
-
-
-create table instituicoes (
-	instituicoes_id int primary key auto_increment,
-    instituicoes_razao_social varchar(100) not null,
-    instituicoes_cpf_cnpj varchar (14) null,
-    instituicoes_end_logradouro varchar(100) null,
-    instituicoes_end_num varchar(100) null,
-    instituicoes_end_bairro varchar(100) null,
-    instituicoes_end_cep varchar(100) null,
-    instituicoes_end_email varchar(100) null,
-    instituicoes_end_telefone varchar(50) null,
-    instituicoes_observacao varchar(256) null
-);
-
-insert into instituicoes (
-	instituicoes_razao_social,
-    instituicoes_cpf_cnpj,
-    instituicoes_end_logradouro,
-    instituicoes_end_num,
-    instituicoes_end_bairro,
-    instituicoes_end_cep,
-    instituicoes_end_email,
-    instituicoes_end_telefone,
-    instituicoes_observacao) 
-    values 
-    ("Instituição Teste 1","00000000000000","End. Teste 1","","","00000000","instituicao_teste1@testmail.com","000000000","Obs Teste 1"),
-    ("Instituição Teste 2","00000000000000","End. Teste 2","","","00000000","instituicao_teste2@testmail.com","000000000","Obs Teste 2"),
-    ("Instituição Teste 3","00000000000000","End. Teste 3","","","00000000","instituicao_teste3@testmail.com","000000000","Obs Teste 3"),
-    ("Instituição Teste 4","00000000000000","End. Teste 4","","","00000000","instituicao_teste4@testmail.com","000000000","Obs Teste 4"),
-    ("Instituição Teste 5","00000000000000","End. Teste 5","","","00000000","instituicao_teste5@testmail.com","000000000","Obs Teste 5"),
-    ("Instituição Teste 6","00000000000000","End. Teste 6","","","00000000","instituicao_teste6@testmail.com","000000000","Obs Teste 6");
 
 create table status_slc (
 	status_slc_id int primary key auto_increment,

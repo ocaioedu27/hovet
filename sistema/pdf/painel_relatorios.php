@@ -1,9 +1,3 @@
-<?php
-
-$dir = __DIR__;
-
-?>
-
 <div class="">
     <div class="tabelas">
         <table id="tabela_listar">

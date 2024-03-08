@@ -1,3 +1,63 @@
+
+<?php
+    $qtd_limit = 10;
+
+    $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
+
+    $inicio_permuta = ($qtd_limit * $pagina) - $qtd_limit;
+
+    $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
+
+    $sql = "SELECT 
+                p.permutas_data,
+                p.permutas_oid_operacao,
+                f.fornecedores_razao_social
+
+            FROM 
+                permutas p
+
+            INNER JOIN 
+                fornecedores f
+            ON 
+                p.permutas_fornecedor_id = f.fornecedores_id
+                
+            WHERE
+                p.permutas_oid_operacao LIKE '%{$txt_pesquisa}%' 
+
+            GROUP BY permutas_oid_operacao 
+            ORDER BY permutas_data ASC 
+
+            LIMIT $inicio_permuta,$qtd_limit";
+    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+    $resultados = '';
+    if ($rs->num_rows > 0){
+        while($dados = mysqli_fetch_assoc($rs)){
+            
+            $permutas_oid_operacao = $dados["permutas_oid_operacao"];
+            $fornecedores_razao_social = $dados["fornecedores_razao_social"];
+            $permutas_data = date("d/m/Y H:i", strtotime($dados["permutas_data"]));
+
+            $resultados .= '
+                <tr class="tabela_dados">
+                    <td>'. $permutas_oid_operacao .'</td>
+                    <td>'. $fornecedores_razao_social .'</td>
+                    <td>'. $permutas_data .'</td>
+                    <td>
+                        <a href="index.php?menuop=permuta_por_oid&ooidPermuta='. $permutas_oid_operacao . '">Informações</a>
+                    </td>
+                </tr>';
+        }
+    } else{
+        $resultados = '
+            <tr class="tabela_dados">
+                <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+            </tr>';
+
+    }
+?>
+
+
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
@@ -6,7 +66,7 @@
             </div>
             <div>
                 <form action="index.php?menuop=permuta" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_permuta" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -26,50 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $quantidade_registros_permuta = 10;
-
-                        $pagina_permuta = (isset($_GET['pagina_permuta']))?(int)$_GET['pagina_permuta']:1;
-
-                        $inicio_permuta = ($quantidade_registros_permuta * $pagina_permuta) - $quantidade_registros_permuta;
-
-                        $txt_pesquisa_permuta = (isset($_POST["txt_pesquisa_permuta"]))?$_POST["txt_pesquisa_permuta"]:"";
-
-                        $sql = "SELECT 
-                                    p.permutas_data,
-                                    p.permutas_oid_operacao,
-                                    inst.instituicoes_razao_social
-
-                                FROM 
-                                    permutas p
-
-                                INNER JOIN 
-                                    instituicoes inst
-                                ON 
-                                    p.permutas_instituicao_id = inst.instituicoes_id
-                                    
-                                WHERE
-                                    p.permutas_oid_operacao LIKE '%{$txt_pesquisa_permuta}%' 
-
-                                GROUP BY permutas_oid_operacao 
-                                ORDER BY permutas_data ASC 
-
-                                LIMIT $inicio_permuta,$quantidade_registros_permuta";
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                        while($dados = mysqli_fetch_assoc($rs)){
-                        
-                    ?>
-                    <tr class="tabela_dados">
-                        <td><?=$dados["permutas_oid_operacao"]?></td>
-                        <td><?=$dados["instituicoes_razao_social"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['permutas_data']));?></td>
-                        <td>
-                            <a href="index.php?menuop=permuta_por_oid&oidPermuta=<?=$dados["permutas_oid_operacao"]?>">Informações</a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
-                    ?>
+                    <?=$resultados?>
                 </tbody>
             </table>
         </div>
@@ -79,35 +96,35 @@
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
-                    $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_permuta);
+                    $totalPaginasInsumos = ceil($numTotalInsumos/$qtd_limit);
                     
-                    echo "<a href=\"?menuop=permuta&pagina_permuta=1\">Início</a> ";
+                    echo "<a href=\"?menuop=permuta&pagina=1\">Início</a> ";
 
-                    if ($pagina_permuta>6) {
+                    if ($pagina>6) {
                         ?>
-                            <a href="?menuop=permuta&pagina_permuta=<?php echo $pagina_permuta-1?>"> << </a>
+                            <a href="?menuop=permuta&pagina=<?php echo $pagina-1?>"> << </a>
                         <?php
                     } 
 
                     for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_permuta) && $i <= ($pagina_permuta+5)) {
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
                             
-                            if ($i==$pagina_permuta) {
+                            if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=permuta&pagina_permuta=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=permuta&pagina=$i\">$i</a> ";
                             } 
                         }          
                     }
 
-                    if ($pagina_permuta<($totalPaginasInsumos-5)) {
+                    if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=permuta&pagina_permuta=<?php echo $pagina_permuta+1?>"> >> </a>
+                            <a href="?menuop=permuta&pagina=<?php echo $pagina+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=permuta&pagina_permuta=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=permuta&pagina=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

@@ -1,6 +1,3 @@
-<header>
-    <h2>Atualizando Itens do Depósito - Permuta</h2>
-</header>
 <?php 
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
@@ -30,19 +27,19 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
 
     $movimentacao_permuta_deposito = mysqli_real_escape_string($conexao,$_POST["movimentacao_permuta_deposito"]);
     $movimentacao_permuta_deposito = strtok($movimentacao_permuta_deposito, " ");
-    echo "<br/> tipo de movimentação: " . $movimentacao_permuta_deposito;
+    // echo "<br/> tipo de movimentação: " . $movimentacao_permuta_deposito;
 
     $quemRealizouPermutaDep = mysqli_real_escape_string($conexao,$_POST["quemRealizouPermutaDep"]);
     $quemRealizouPermutaDep = strtok($quemRealizouPermutaDep, " ");
-    echo "<br/> quem realizou: " . $quemRealizouPermutaDep;
+    // echo "<br/> quem realizou: " . $quemRealizouPermutaDep;
 
     $dataTransferPermutaDep = mysqli_real_escape_string($conexao,$_POST["dataTransferPermutaDep"]);
-    echo "<br/> Data da transferência: " . $dataTransferPermutaDep;
+    // echo "<br/> Data da transferência: " . $dataTransferPermutaDep;
     // echo "<br/>";
 
     $instituicaoPermutaDep = mysqli_real_escape_string($conexao,$_POST["instituicaoPermutaDep"]);
     $instituicaoPermutaDep = strtok($instituicaoPermutaDep, " ");
-    echo "<br/> Instituicao: " . $instituicaoPermutaDep;
+    // echo "<br/> Instituicao: " . $instituicaoPermutaDep;
 
     // echo "<br/>";
     $oid_operacao = uniqid();
@@ -53,46 +50,46 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
         //para o insumo que será permutado - sairá do depósito
         $insumoID_InsumoPermuta = $valor_permuta_dep;
         $insumoID_InsumoPermuta = strtok($insumoID_InsumoPermuta, " ");
-        echo "<br/> Insumo do deposito: " . $insumoID_InsumoPermuta;
+        // echo "<br/> Insumo do deposito: " . $insumoID_InsumoPermuta;
 
         $quantidadeInsumoDepositoPermuta = $dados_enviados_array['quantidadeInsumoDepositoPermuta'][$chave_permuta_dep];
-        echo "<br/> Quantidade permutadas: " . $quantidadeInsumoDepositoPermuta;
+        // echo "<br/> Quantidade permutadas: " . $quantidadeInsumoDepositoPermuta;
 
         $quantidadeInsumoDisponivelDeposito = $dados_enviados_array['quantidadeInsumoDisponivelDeposito'][$chave_permuta_dep];
-        echo "<br/> Quantidade atual no deposito: " . $quantidadeInsumoDisponivelDeposito;
+        // echo "<br/> Quantidade atual no deposito: " . $quantidadeInsumoDisponivelDeposito;
 
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_permuta_dep];
-        echo "<br/> Quantidade atual no deposito: " . $validadeInsumoDeposito;
+        // echo "<br/> Quantidade atual no deposito: " . $validadeInsumoDeposito;
 
         $depositoRetiradaPermuta = $dados_enviados_array['depositoRetiradaPermuta'][$chave_permuta_dep];
         $depositoRetiradaPermuta = strtok($depositoRetiradaPermuta, " ");
-        echo "<br/> Depósito de origem: " . $depositoRetiradaPermuta;
+        // echo "<br/> Depósito de origem: " . $depositoRetiradaPermuta;
 
         $nova_qtd_to_dep = $quantidadeInsumoDisponivelDeposito-$quantidadeInsumoDepositoPermuta;
-        echo "<br/> Quantidade nova para o insumo retirado do deposito: " . $nova_qtd_to_dep;
+        // echo "<br/> Quantidade nova para o insumo retirado do deposito: " . $nova_qtd_to_dep;
 
 
         //para o insumo que será cadastrado
         $insumoID_InsumoCadPermuta = $dados_enviados_array['insumoID_InsumoCadPermuta'][$chave_permuta_dep];
         $insumoID_InsumoCadPermuta = strtok($insumoID_InsumoCadPermuta, " ");
-        echo "<br/>ID do Insumo a ser cadastrado no deposito: " . $insumoID_InsumoCadPermuta;
+        // echo "<br/>ID do Insumo a ser cadastrado no deposito: " . $insumoID_InsumoCadPermuta;
 
         $validadeInsumoCadPermuta = $dados_enviados_array['validadeInsumoCadPermuta'][$chave_permuta_dep];
-        echo "<br/>Validade do insumo a ser cadastrado no deposito: " . $validadeInsumoCadPermuta;
+        // echo "<br/>Validade do insumo a ser cadastrado no deposito: " . $validadeInsumoCadPermuta;
 
         $quantidadeInsumoCadPermuta = $dados_enviados_array['quantidadeInsumoCadPermuta'][$chave_permuta_dep];
-        echo "<br/>Quantidade do insumo a ser cadastrado no deposito: " . $quantidadeInsumoCadPermuta;
+        // echo "<br/>Quantidade do insumo a ser cadastrado no deposito: " . $quantidadeInsumoCadPermuta;
 
         $depositoDestinoInsumoPermuta = $dados_enviados_array['depositoDestinoInsumoPermuta'][$chave_permuta_dep];
         $depositoDestinoInsumoPermuta = strtok($depositoDestinoInsumoPermuta, " ");
-        echo "<br/>Depósito de destino: " . $depositoDestinoInsumoPermuta;
+        // echo "<br/>Depósito de destino: " . $depositoDestinoInsumoPermuta;
 
         $sql_insert_permuta = "INSERT INTO permutas (
             permutas_operador,
             permutas_deposito_id,
             permutas_qtd_retirado,
             permutas_oid_operacao,
-            permutas_instituicao_id,
+            permutas_fornecedor_id,
             permutas_validade_retirado,
             permutas_estoques_id_retirado,
             permutas_insumos_id_cadastrado,
@@ -114,10 +111,16 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$depositoDestinoInsumoPermuta}
             )";
 
-        if (mysqli_query($conexao, $sql_insert_permuta)) { 
-            echo "<script language='javascript'>window.alert('Permuta registrada com sucesso!!'); </script>";  
-        } else {
-            die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
+        // echo "<br>" . $sql_insert_permuta;
+        
+        try {
+            $inserir = mysqli_query($conexao, $sql_insert_permuta);
+            echo "<script language='javascript'>window.alert('Permuta registrada com sucesso!!'); </script>"; 
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+            echo "<br> $th";
+            die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao)); 
         }
 
         $sql_update_dep = "UPDATE 

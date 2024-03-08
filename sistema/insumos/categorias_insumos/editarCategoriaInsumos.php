@@ -42,7 +42,7 @@ $dados = mysqli_fetch_assoc($result);
                             </div>
 
                             <div class="display-flex-cl">
-                                <label>Nome da Nova Categoria</label>
+                                <label>Nome da Categoria</label>
                                 <input type="text" class="form-control" name="nomeCategoriaInsumo" value="<?=$dados['tipos_insumos_tipo']?>"  placeholder="Infome o nome..." required>
                             </div>
 

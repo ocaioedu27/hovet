@@ -17,7 +17,7 @@ $sql_detalhes_permuta = "SELECT p.permutas_id,
                     ins.insumos_descricao as descricao_insumo_cadastrado,
                     i.insumos_nome as nome_insumo_retirado,
                     i.insumos_descricao as descricao_insumo_retirado,
-                    inst.instituicoes_razao_social
+                    f.fornecedores_razao_social
 
                 FROM permutas p
                 
@@ -39,10 +39,11 @@ $sql_detalhes_permuta = "SELECT p.permutas_id,
                     INNER JOIN estoques es
                     ON p.permutas_estoques_id_cadastrado = es.estoques_id
 
-                    INNER JOIN instituicoes inst
-                    ON p.permutas_instituicao_id = inst.instituicoes_id
+                    INNER JOIN fornecedores f
+                    ON p.permutas_fornecedor_id = f.fornecedores_id
                 
-                    WHERE permutas_id={$permutaId}";
+                    WHERE permutas_oid_operacao='{$permutaId}'";
+
 
 $result = mysqli_query($conexao,$sql_detalhes_permuta) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
@@ -85,7 +86,7 @@ $dados = mysqli_fetch_assoc($result);
 
                     <div class="display-flex-cl">
                         <label>Instituição que Permutou</label>
-                        <input class="form-control" value='<?=$dados["instituicoes_razao_social"]?>' readonly>
+                        <input class="form-control" value='<?=$dados["fornecedores_razao_social"]?>' readonly>
                     </div>
                 </div>
             </div>

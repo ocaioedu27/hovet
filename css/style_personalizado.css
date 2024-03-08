@@ -494,7 +494,7 @@ span.icon {
 }
 
 .cards.permuta{
-    width: 65%;
+    width: auto;
     height: auto;
     overflow-y: auto;
 }
