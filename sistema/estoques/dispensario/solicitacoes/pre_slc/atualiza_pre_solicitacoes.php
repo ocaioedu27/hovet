@@ -28,50 +28,55 @@ var_dump($dados_enviados);
 // var_dump($stringList);
 
 $sql = "SELECT 
-            s.pre_slc_id,
-            u.usuario_primeiro_nome,
-            u.usuario_id,
-            i.insumos_nome,
-            s.pre_slc_qtd_solicitada,
-            s.pre_slc_qtd_atendida,
-            date_format(s.pre_slc_data, '%d/%m/%Y %H:%i:%s') AS pre_slc_data,
-            st.setores_setor,
-            s.pre_slc_justificativa,
-            s.pre_slc_status_slc_id,
-            s.pre_slc_dispensario_id,
-            stt.status_slc_status,
-            es.estoques_nome,
-            tp.tipos_movimentacoes_movimentacao,
-            tp.tipos_movimentacoes_id,
-            d.dispensario_id,
-            d.dispensario_estoques_id,
-            d.dispensario_qtd,
-            d.dispensario_insumos_id
+            s.id as pre_slc_id,
+            s.qtd_solicitada,
+            s.qtd_atendida,
+            date_format(s.data, '%d/%m/%Y %H:%i:%s') AS data,
+            st.setor,
+            s.justificativa,
+            s.status_slc_id,
+            s.dispensario_id,
+            stt.status,
+            es.nome as estoques_nome,
+            es.id as estoques_id,
+            tp.movimentacao,
+            tp.id as tipos_movimentacoes_id,
+            d.id as dispensario_id,
+            d.estoques_id,
+            d.qtd as dispensario_qtd,
+            d.insumos_id,
+            u.id as usuario_id,
+            i.nome as insumos_nome,
+            i.id as insumos_id
 
-            FROM pre_solicitacoes s
-            
-            INNER JOIN usuarios u
-            ON s.pre_slc_solicitante = u.usuario_id
-            
-            INNER JOIN dispensario d
-            ON s.pre_slc_dispensario_id = d.dispensario_id
-            
-            INNER JOIN insumos i
-            ON d.dispensario_insumos_id = i.insumos_id 
-            
-            INNER JOIN setores st
-            ON s.pre_slc_setor_destino = st.setores_id
-            
-            INNER JOIN status_slc stt
-            ON s.pre_slc_status_slc_id = stt.status_slc_id
-            
-            INNER JOIN estoques es
-            ON s.pre_slc_dips_solicitado = es.estoques_id
-            
-            INNER JOIN tipos_movimentacoes tp
-            ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
+        FROM 
+            pre_solicitacoes s
+        INNER JOIN 
+            usuarios u
+        ON 
+            s.usuario_id = u.id
+        INNER JOIN 
+            dispensario d
+        ON 
+            s.dispensario_id = d.id
+        INNER JOIN 
+            insumos i
+        ON 
+            d.insumos_id = i.id 
+        INNER JOIN 
+            setores st
+        ON s.setor_destino_id = st.id
         
-            WHERE pre_slc_id={$idSolicitacao}";
+        INNER JOIN status_slc stt
+        ON s.status_slc_id = stt.id
+        
+        INNER JOIN estoques es
+        ON d.estoque_id = es.id
+        
+        INNER JOIN tipos_movimentacoes tp
+        ON s.tp_movimentacoes_id = tp.id
+    
+        WHERE s.id={$idSolicitacao}";
 
 $result = mysqli_query($conexao, $sql) or die("//Solicitacoes/atualizar_status_solicitacao/ - Erro ao realizar a consulta. " . mysqli_error($conexao));
 
@@ -85,7 +90,7 @@ $quem_solicitou = $dados_sql['usuario_id'];
 
 // echo "<br/>//Coleta-valores/ quem solicitou - " . $quem_solicitou;
 
-$qualEstoque = $dados_sql['dispensario_estoques_id'];
+$qualEstoque = $dados_sql['estoques_id'];
 
 // echo "<br/>//Coleta-valores/ estoque id - " . $qualEstoque;
 
@@ -95,25 +100,25 @@ $estoqueNome = $dados_sql['estoques_nome'];
 
 $tipos_movimentacoes_id = $dados_sql['tipos_movimentacoes_id'];
 
-$setores_setor = $dados_sql['setores_setor'];
+$setores_setor = $dados_sql['setor'];
 
-$solicitacoes_status_slc_id = $dados_sql['pre_slc_status_slc_id'];
+$solicitacoes_status_slc_id = $dados_sql['status_slc_id'];
 
-$status_solicitacao = $dados_sql['status_slc_status'];
+$status_solicitacao = $dados_sql['status'];
 
 $insumos_nome = $dados_sql['insumos_nome'];
 
-$dispensario_insumos_id = $dados_sql['dispensario_insumos_id'];
+// $dispensario_insumos_id = $dados_sql['dispensario_insumos_id'];
 
 $quantidade_atual_dispensario = $dados_sql['dispensario_qtd'];
 
 // echo "<br/>//Coleta-valores/ Quantidade atual no dispensario - " . $quantidade_atual_dispensario;
 
-$pre_slc_qtd_solicitada = $dados_sql['pre_slc_qtd_solicitada'];
+$pre_slc_qtd_solicitada = $dados_sql['qtd_solicitada'];
 
 // echo "<br/>//Coleta-valores/ Quantidade solicitada - " . $pre_slc_qtd_solicitada;
 
-$pre_slc_qtd_atendida = $dados_sql['pre_slc_qtd_atendida'];
+$pre_slc_qtd_atendida = $dados_sql['qtd_atendida'];
 
 // echo "<br/>//Coleta-valores/ Quantidade atendida - " . $pre_slc_qtd_atendida;
 
@@ -153,11 +158,11 @@ if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
         $sql_altera_status = "UPDATE 
                                     pre_solicitacoes
                                 SET    
-                                    pre_slc_status_slc_id=1,
-                                    pre_slc_qtd_atendida={$quantidade_atendida}
+                                    status_slc_id=1,
+                                    qtd_atendida={$quantidade_atendida}
                                 
                                 WHERE 
-                                    pre_slc_id={$idSolicitacao}";
+                                    id={$idSolicitacao}";
 
         $deuCerto_altera_status = mysqli_query($conexao, $sql_altera_status);
 
@@ -213,7 +218,7 @@ if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
     
         echo "<br/>//recusar - Novo status: " . $novo_status_slc;
 
-        $sql_altera_status = "UPDATE pre_solicitacoes SET pre_slc_status_slc_id=2 WHERE pre_slc_id={$idSolicitacao}";
+        $sql_altera_status = "UPDATE pre_solicitacoes SET status_slc_id=2 WHERE id={$idSolicitacao}";
 
         $deuCerto = mysqli_query($conexao, $sql_altera_status);
 
@@ -253,8 +258,6 @@ $local_origem = $local_origem_tmp;
 
 $local_destino = $local_destino_tmp;
 
-$usuario_id = $sessionUserID;
+$usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
 
-$insumo_id = $dispensario_insumos_id;
-
-atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
+atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome);

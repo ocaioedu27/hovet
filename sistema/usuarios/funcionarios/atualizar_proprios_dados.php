@@ -1,7 +1,5 @@
 
 <?php 
-
-
 $painel = "";
 
 if ($sessionUserType != 2 && $sessionUserType != 5) {
@@ -27,7 +25,6 @@ if (isset( $_GET['menuop'] ) && !empty( $_GET['menuop'] )) {
 }
 
 $idUsuarioToModify = mysqli_real_escape_string($conexao,$_POST["idUsuario"]);
-
 $senha = $conexao->real_escape_string($_POST['validaSenhaUsuario']);
 
 $sql_code = "SELECT * FROM usuarios WHERE id = {$idUsuarioToModify} LIMIT 1";
@@ -41,7 +38,7 @@ if ($quantidade == 1) {
     $execQuery = $conexao->query($sqlSenha) or die("//Autentica - Falha na execução do código SQL: " . $conexao->error);
     $usuario = $execQuery->fetch_assoc();
 
-    if (password_verify($senha, $usuario['senha'])) {
+    if (password_verify($senha, $usuario['usuario_senha'])) {
 
         if ($qualOperacao != "alterar_senha") {
 
@@ -49,8 +46,6 @@ if ($quantidade == 1) {
             $primeiroNomeUsuario = mysqli_real_escape_string($conexao,$_POST["primeiroNomeUsuario"]);
             $sobrenomeUsuario = mysqli_real_escape_string($conexao,$_POST["sobrenomeUsuario"]);
             $mailUsuario = mysqli_real_escape_string($conexao,$_POST["mailUsuario"]);
-            $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
-            $tipoUsuario = strtok($tipoUsuario, " ");
             $statusUsu = mysqli_real_escape_string($conexao, $_POST['statusUsu']);
             // $tipoUsuario = $tipoUsuario[0];
             $tipoUsuario = strtok($tipoUsuario, " ");
@@ -63,7 +58,6 @@ if ($quantidade == 1) {
                         primeiro_nome = '{$primeiroNomeUsuario}',
                         sobrenome = '{$sobrenomeUsuario}',
                         mail = '{$mailUsuario}',
-                        tipo_usuario_id = {$tipoUsuario},
                         siape = '{$siapeUsuario}',
                         status = {$statusUsu}
                     WHERE 
@@ -78,23 +72,29 @@ if ($quantidade == 1) {
             $sql = "UPDATE 
                         usuarios 
                     SET 
-                        senha = '{$senhaUsuarioAtualizada}' 
+                        senha = '{$senhaUsuarioAtualizada}'
                     WHERE 
                         id = {$idUsuarioToModify}";
 
             $msg_to_user = "Senha atualizada";
         }
 
-        if(mysqli_query($conexao, $sql)){
-    
-            echo "<script language='javascript'>window.alert('$msg_to_user com sucesso!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=$painel';</script>";
-    
-        } else{
-            echo "<script language='javascript'>window.alert('Erro ao atualizar usuário!'); </script>";
-            echo " <a href=\"/hovet/sistema/index.php?menuop=editar_usuario&idUsuario=$idUsuarioToModify\">Voltar ao formulário de edição</a> <br/>";
-    
-            die("Erro: " . mysqli_error($conexao));
+        try {
+            
+            if(mysqli_query($conexao, $sql)){
+        
+                echo "<script language='javascript'>window.alert('$msg_to_user com sucesso!'); </script>";
+                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=$painel';</script>";
+        
+            } else{
+                echo "<script language='javascript'>window.alert('Erro ao atualizar usuário!'); </script>";
+                echo " <a href=\"/hovet/sistema/index.php?menuop=editar_usuario&idUsuario=$idUsuarioToModify\">Voltar ao formulário de edição</a> <br/>";
+        
+                die("Erro: " . mysqli_error($conexao));
+            }
+
+        } catch (\Throwable $th) {
+            echo $th;
         }
 
     } else{

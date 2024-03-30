@@ -1,19 +1,4 @@
 <div class="container container_home" style="padding: 20px;">
-    <!-- <section class="menu_lateral">
-        <div class="">
-            <div class="menu_op menu lateral">
-                <div>
-                    <p>teste</p>
-                    <ul>
-                        <li>teste</li>
-                        <li>teste</li>
-                        <li>teste</li>
-                        <li>teste</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
     <section>
         <div>
@@ -43,7 +28,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(*) as deposito_Qtd FROM deposito WHERE deposito_Validade>curdate()";
+                                    $sql = "SELECT COUNT(id) as deposito_Qtd FROM deposito WHERE validade>curdate()";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -63,7 +48,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(deposito_id) as vencidos_proxVencimento FROM deposito where deposito_Validade<=curdate() or deposito_Validade <= curdate() - interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() - interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     ($vencidos = mysqli_fetch_assoc($result));
                                 ?>
@@ -94,7 +79,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(*) as dispensario_Qtd FROM dispensario";
+                                    $sql = "SELECT COUNT(id) as dispensario_Qtd FROM dispensario";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -112,7 +97,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(dispensario_id) as vencidos_proxVencimento FROM dispensario where dispensario_Validade<=curdate() or dispensario_Validade <= curdate() + interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() + interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>
@@ -143,7 +128,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(usuario_id) as usuarios_qtd FROM usuarios";
+                                    $sql = "SELECT COUNT(id) as usuarios_qtd FROM usuarios";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
@@ -178,11 +163,11 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                    $sql = "SELECT COUNT(s.id) as pre_solicitacoes_qtd 
                                                 FROM pre_solicitacoes s
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%'";
+                                                ON s.tp_movimentacoes_id = tp.id
+                                                WHERE tp.movimentacao LIKE 'Requisição%'";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
@@ -197,11 +182,11 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_solicitacoes_qtd 
+                                    $sql = "SELECT COUNT(s.id) as pre_solicitacoes_qtd 
                                                 FROM pre_solicitacoes s
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
-                                                WHERE tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%'";
+                                                ON s.tp_movimentacoes_id = tp.id
+                                                WHERE tp.movimentacao LIKE 'Devolução%'";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
@@ -229,7 +214,7 @@
                         <div class="display-flex-row just-content-spc-around">
                             <div>
                                 <?php
-                                    $sql = "SELECT count(*) AS quantidade_compras FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=1";
+                                    $sql = "SELECT count(id) AS quantidade_compras FROM historico_movimentacoes WHERE tipos_movimentacoes_id=1";
                                     $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($result);
                                 ?>
@@ -238,7 +223,7 @@
                                 <p>Total de Compras</p>
 
                                 <?php
-                                    $sql = "SELECT count(*) AS quantidade_retiradas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=6";
+                                    $sql = "SELECT count(id) AS quantidade_retiradas FROM historico_movimentacoes WHERE tipos_movimentacoes_id=6";
                                     $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($result);
                                 ?>
@@ -248,7 +233,7 @@
                             </div>
                             <div>
                                 <?php
-                                    $sql = "SELECT count(*) AS quantidade_doacoes FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=3";
+                                    $sql = "SELECT count(id) AS quantidade_doacoes FROM historico_movimentacoes WHERE tipos_movimentacoes_id=3";
                                     $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($result);
                                 ?>
@@ -257,7 +242,7 @@
                                 <p>Total de Doações</p>
                         
                                 <?php
-                                    $sql = "SELECT count(*) AS quantidade_permutas FROM movimentacoes WHERE movimentacoes_tipos_movimentacoes_id=4";
+                                    $sql = "SELECT count(id) AS quantidade_permutas FROM historico_movimentacoes WHERE tipos_movimentacoes_id=4";
                                     $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($result);
                                 ?>
@@ -292,9 +277,6 @@
                             <div class="relatorio">
                                 <a href="pdf/relatorio_movimentacao.php" target="_blank">Relatório de movimentações</a>
                             </div>
-                            <!-- <div class="relatorio">
-                                <a href="pdf/pdf.php" target="_blank"><strong>Dispensario</strong> - Relatório de insercão e retiradas de certo insumo</a>
-                            </div> -->
                         </div>
                     </div>
                 </div>

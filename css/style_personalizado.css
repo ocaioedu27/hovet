@@ -328,7 +328,7 @@ table.tabela_listar.qtd_total {
 }
 
 .login_user{
-    width: 130px;
+    width: auto;
     height: 50px;
     background: transparent;
     border: 2px solid #fff;

@@ -21,8 +21,92 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     $pagina_slc = $pagina_slc_tmp;
     // echo "<br>Tipo de operacao: $qualStatus_tmp";
 }
+               
+$qtd_registros = 10;
+
+$pagina = (isset($_GET[$qualEstoque]))?(int)$_GET[$qualEstoque]:1;
+
+// print_r($_GET);
+
+$inicio_solicitacoes = ($qtd_registros * $pagina) - $qtd_registros;
+
+$txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
+
+$sql = "SELECT
+    s.id,
+    u.primeiro_nome,
+    s.oid_solicitacao,
+    s.data,
+    stt.status,
+    es.nome as estoques_nome,
+    tp.movimentacao
+    
+FROM pre_solicitacoes s
+    
+    INNER JOIN usuarios u
+    ON s.usuario_id = u.id
+    
+    INNER JOIN status_slc stt
+    ON s.status_slc_id = stt.id
+    
+    INNER JOIN dispensario d
+    ON s.dispensario_id = d.id
+    
+    INNER JOIN estoques es
+    ON d.estoque_id = es.id
+    
+    INNER JOIN tipos_movimentacoes tp
+    ON s.tp_movimentacoes_id = tp.id
+
+WHERE
+    stt.status = '{$qualStatus}' AND
+    (s.oid_solicitacao LIKE '%{$txt_pesquisa}%' or u.primeiro_nome LIKE '%{$txt_pesquisa}%' or
+    tp.movimentacao LIKE '%{$txt_pesquisa}%')
+    
+GROUP BY oid_solicitacao 
+ORDER BY data DESC 
+    
+LIMIT $inicio_solicitacoes,$qtd_registros";
+$rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+
+$resultados = '';
+if ($rs->num_rows > 0){
+    while($dados_para_while = mysqli_fetch_assoc($rs)){
+        $oid_solicitacao = $dados_para_while["oid_solicitacao"];
+        $movimentacao_tmp = $dados_para_while["movimentacao"];
+        $movimentacao = strtok($movimentacao_tmp, " ");
+        $primeiro_nome = $dados_para_while["primeiro_nome"];
+        $estoques_nome = $dados_para_while["estoques_nome"];
+        $data = date("d/m/Y H:i", strtotime($dados_para_while["data"]));
+        $status = $dados_para_while['status'];
+
+        $resultados .= '
+            <tr class="tabela_dados">
+                <td>'. $oid_solicitacao .'</td>
+                <td>'. $movimentacao .'</td>
+                <td>'. $primeiro_nome .'</td>
+                <td>'. $estoques_nome .'</td>
+                <td>'. $data .'</td>
+                <td>
+                    <a href="index.php?menuop=pre_solicitacoes&idSolicitacao='. $oid_solicitacao . '&'. $status .'">Informações</a>
+                </td>
+            </tr>';
+
+        $qtd_linhas_tabelas++;
+
+    }
+} else{
+    $resultados = '
+        <tr class="tabela_dados">
+            <td colspan="6" class="text-center">Nenhum registro para exibir!</td>
+        </tr>';
+
+}  
+
 
 ?>
+
 <section class="painel_usuarios">
     <div class="container">
         <div class="menu_header">
@@ -37,8 +121,8 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     
                     ?>
                     
-                    <a href="index.php?menuop=solicitacoes_resumo&<?=$tipo_status_slc['status_slc_status']?>">
-                        <button class="btn"><?=$tipo_status_slc['status_slc_status']?>s</button>
+                    <a href="index.php?menuop=solicitacoes_resumo&<?=$tipo_status_slc['status']?>">
+                        <button class="btn"><?=$tipo_status_slc['status']?>s</button>
                     </a>
 
                 <?php
@@ -47,7 +131,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             </div>
             <div>
                 <form action="index.php?menuop=solicitacoes_resumo&<?=$qualStatus?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_solicitacoes" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -70,92 +154,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 </thead>
                 <tbody>
                     <?php
-               
-                        $quantidade_registros_solicitacoes = 10;
-
-                        $pagina_solicitacoes = (isset($_GET[$qualEstoque]))?(int)$_GET[$qualEstoque]:1;
-
-                        // print_r($_GET);
-
-                        $inicio_solicitacoes = ($quantidade_registros_solicitacoes * $pagina_solicitacoes) - $quantidade_registros_solicitacoes;
-
-                        $txt_pesquisa_solicitacoes = (isset($_POST["txt_pesquisa_solicitacoes"]))?$_POST["txt_pesquisa_solicitacoes"]:"";
-
-                        $sql = "SELECT
-                            s.pre_slc_id,
-                            u.usuario_primeiro_nome,
-                            i.insumos_nome,
-                            s.pre_slc_qtd_solicitada,
-                            s.pre_slc_oid_solicitacao,
-                            s.pre_slc_data,
-                            st.setores_setor,
-                            s.pre_slc_justificativa,
-                            stt.status_slc_status,
-                            es.estoques_nome,
-                            tp.tipos_movimentacoes_movimentacao
-                            
-                        FROM pre_solicitacoes s
-                            
-                            INNER JOIN usuarios u
-                            ON s.pre_slc_solicitante = u.usuario_id
-                            
-                            INNER JOIN dispensario d
-                            ON s.pre_slc_dispensario_id = d.dispensario_id
-                            
-                            INNER JOIN insumos i
-                            ON d.dispensario_insumos_id = i.insumos_id 
-                            
-                            INNER JOIN setores st
-                            ON s.pre_slc_setor_destino = st.setores_id
-                            
-                            INNER JOIN status_slc stt
-                            ON s.pre_slc_status_slc_id = stt.status_slc_id
-                            
-                            INNER JOIN estoques es
-                            ON s.pre_slc_dips_solicitado = es.estoques_id
-                            
-                            INNER JOIN tipos_movimentacoes tp
-                            ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
-                        
-                        WHERE
-                            stt.status_slc_status = '{$qualStatus}' AND
-                            (s.pre_slc_oid_solicitacao LIKE '%{$txt_pesquisa_solicitacoes}%' or u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
-                            tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%')
-                            
-                        GROUP BY pre_slc_oid_solicitacao 
-                        ORDER BY pre_slc_data DESC 
-                            
-                        LIMIT $inicio_solicitacoes,$quantidade_registros_solicitacoes";
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-
-                        while($dados_para_while = mysqli_fetch_assoc($rs)){
-                            // $valor_form = $dados_para_while['estoques_nome_real'];
-                            $qtd_linhas_tabelas++;
-                        
-                    ?>
-                    <tr>
-                        <td>
-                            <?php
-                                $solicitacao_id = $dados_para_while["pre_slc_oid_solicitacao"];
-                                echo $solicitacao_id;    
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                                $movimentacao_tmp = $dados_para_while["tipos_movimentacoes_movimentacao"];
-                                $tipo_slc = strtok($movimentacao_tmp, " ");
-                                echo $tipo_slc;
-                            ?>
-                        </td>
-                        <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
-                        <td><?=$dados_para_while["estoques_nome"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados_para_while['pre_slc_data']));?></td>
-                        <td>
-                            <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$dados_para_while["pre_slc_oid_solicitacao"]?>&<?=$dados_para_while['status_slc_status']?>">Ver Detalhes</a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
+                        echo $resultados;
                         echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
@@ -164,68 +163,52 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         <div class="paginacao">
             <?php
                 $sqlTotalSlc = "SELECT 
-                                    ps.pre_slc_id 
+                                    ps.id 
                                 FROM 
                                     pre_solicitacoes ps
                                 INNER JOIN 
                                     status_slc st
                                 ON 
-                                    st.status_slc_id = ps.pre_slc_status_slc_id 
+                                    st.id = ps.status_slc_id 
                                 WHERE 
-                                    st.status_slc_status = '{$qualStatus}'
-                                GROUP BY pre_slc_oid_solicitacao";
+                                    st.status = '{$qualStatus}'
+                                GROUP BY oid_solicitacao";
 
                 $queryTotalSlc = mysqli_query($conexao,$sqlTotalSlc) or die(mysqli_error($conexao));
 
                 $numTotalSlc = mysqli_num_rows($queryTotalSlc);
 
+                $totalPaginasSlc = ceil($numTotalSlc/$qtd_registros);
 
-                // print_r($numTotalSlc);
-                // if ($numTotalSlc == 0) {
-                //     $numTotalSlc = 1;
-                // }
-                $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
+                echo "<a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina=1\">Início</a> ";
 
-                echo "<a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina_solicitacoes=1\">Início</a> ";
-
-                if ($pagina_solicitacoes>6) {
+                if ($pagina>6) {
                     ?>
-                        <a href="?menuop=solicitacoes_resumo&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes-1?>"> << </a>
+                        <a href="?menuop=solicitacoes_resumo&<?=$qualStatus?>&pagina=<?php echo $pagina-1?>"> << </a>
                     <?php
                 } 
 
                 for($i=1;$i<=$totalPaginasSlc;$i++){
                     // print_r($i);
 
-                    if ($i >= ($pagina_solicitacoes) && $i <= ($pagina_solicitacoes+5)) {
+                    if ($i >= ($pagina) && $i <= ($pagina+5)) {
                         
-                        if ($i==$pagina_solicitacoes) {
+                        if ($i==$pagina) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina_solicitacoes=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina=$i\">$i</a> ";
                         } 
                     }          
                 }
 
-                if ($pagina_solicitacoes<($totalPaginasSlc-4)) {
+                if ($pagina<($totalPaginasSlc-4)) {
                     ?>
-                        <a href="?menuop=solicitacoes_resumo&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes+1?>"> >> </a>
+                        <a href="?menuop=solicitacoes_resumo&<?=$qualStatus?>&pagina=<?php echo $pagina+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=solicitacoes_resumo&$qualStatus&pagina_solicitacoes=$totalPaginasSlc\">Fim</a>";
+                echo " <a href=\"?menuop=solicitacoes_resumo&$qualStatus&pagina=$totalPaginasSlc\">Fim</a>";
             ?>
         </div>
     </div>
 </section>
-<?php 
-// var_dump (retornaDadosGeral($conexao, "permissoes_id", "permissoes_usuario", false, "",""));
-// echo "teste";
-// echo testeEcho("teste de mensagem");
-
-// $array_teste = array();
-
-// $array_teste = retornaDadosGeral($conexao,"permissoes_id", "permissoes_usuario", false, "","");
-
-// echo $array_teste;
-?>

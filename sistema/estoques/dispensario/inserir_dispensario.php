@@ -1,6 +1,3 @@
-<header>
-    <h2>Inserir Insumo no Dispensário</h2>
-</header>
 <?php 
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
@@ -40,9 +37,9 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 
     foreach ($dados_enviados_array['insumoID_Insumodispensario'] as $chave_cad_dispensario => $valor_cad_dispensario) {
 
-        $depositoID_Insumodispensario = $valor_cad_dispensario;
-        $depositoID_Insumodispensario = strtok($depositoID_Insumodispensario, " ");
-        // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
+        $id_insumo_dep_to_disp = $valor_cad_dispensario;
+        $id_insumo_dep_to_disp = strtok($id_insumo_dep_to_disp, " ");
+        // echo "<br/>Id do insumo no deposito: $id_insumo_dep_to_disp";
         $quantidadeInsumoDispensario = $dados_enviados_array['quantidadeInsumoDispensario'][$chave_cad_dispensario];
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
         $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
@@ -51,13 +48,22 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
         // echo "<br> Dispensario de destino" . $depositoDestinoInsumodeposito;
 
-        $procura_id_insumo_dep = mysqli_query($conexao, "SELECT deposito_insumos_id FROM deposito WHERE deposito_id={$depositoID_Insumodispensario}") or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
+        $querySearchInsumoDep = "SELECT 
+                                    d.insumos_id as dep_insumo_id,
+                                    i.nome as insumo_nome
+                                FROM 
+                                    deposito d
+                                WHERE 
+                                    d.insumos_id={$id_insumo_dep_to_disp}";
+
+        $procura_id_insumo_dep = mysqli_query($conexao, $querySearchInsumoDep) or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
         $array_insumo_id = mysqli_fetch_assoc($procura_id_insumo_dep);
-        $insumo_id = $array_insumo_id['deposito_insumos_id'];
+        $dep_insumo_id = $array_insumo_id['dep_insumo_id'];
+        $insumo_nome = $array_insumo_id['insumo_nome'];
         
         // echo '<br/>id do insumo: ' . $insumo_id;
         // echo "<br/>Chave para o insumo: $chave_cad_dispensario";
-        // echo "<br/>Id do insumo no deposito: $depositoID_Insumodispensario";
+        // echo "<br/>Id do insumo no deposito: $id_insumo_dep_to_disp";
         // echo "<br/>Id do insumo: $insumo_id";
         // echo "<br/>Quantidade: $quantidadeInsumoDispensario";
         // echo "<br/>Validade: $validadeInsumoDeposito";
@@ -65,25 +71,24 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         // echo "<hr>";
 
         $sql_insert = "INSERT INTO dispensario (
-            dispensario_qtd,
-            dispensario_validade,
-            dispensario_deposito_id,
-            dispensario_local_id,
-            dispensario_insumos_id,
-            dispensario_estoques_id)
+            qtd,
+            validade,
+            deposito_id,
+            local_id,
+            insumos_id,
+            estoques_id)
             VALUES(
                 {$quantidadeInsumoDispensario},
                 '{$validadeInsumoDeposito}',
-                {$depositoID_Insumodispensario},
+                {$id_insumo_dep_to_disp},
                 {$localInsumodispensario},
-                {$insumo_id},
+                {$dep_insumo_id},
                 {$depositoDestinoInsumodeposito}
             )";
 
         if (mysqli_query($conexao, $sql_insert)) { 
             echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
             echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
-            // echo "insumo inserido com sucesso";   
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
         }
@@ -100,10 +105,8 @@ $local_origem = "Depósito";
 
 $local_destino = "Dispensário " . $qualEstoque[-1];
 
-$usuario_id = $_SESSION['usuario_id'];
+$usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
 
-$insumo_id = $depositoID_Insumodispensario;
-
-atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
+atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome);
 
 ?>

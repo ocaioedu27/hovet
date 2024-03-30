@@ -4,47 +4,52 @@
 
     $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-    $inicio_movimentacoes = ($quantidade_registros_movimentacoes * $pagina) - $quantidade_registros_movimentacoes;
+    $inicio = ($quantidade_registros_movimentacoes * $pagina) - $quantidade_registros_movimentacoes;
 
-    $txt_pesquisa_mov = (isset($_POST["txt_pesquisa_mov"]))?$_POST["txt_pesquisa_mov"]:"";
+    $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
     $sql = "SELECT
-            i.insumos_nome,
-            i.insumos_descricao,
-            m.movimentacoes_id,
-            m.movimentacoes_origem,
-            m.movimentacoes_destino,
-            tm.tipos_movimentacoes_movimentacao,
-            m.movimentacoes_usuario_id,
-            m.movimentacoes_data_operacao,
-            u.usuario_nome_completo
-            FROM movimentacoes m
-            INNER JOIN insumos i
-            on m.movimentacoes_insumos_id = i.insumos_id
-            INNER JOIN usuarios u
-            ON u.usuario_id = m.movimentacoes_usuario_id
-            INNER JOIN tipos_movimentacoes tm
-            ON m.movimentacoes_tipos_movimentacoes_id = tm.tipos_movimentacoes_id
+                m.insumo_nome,
+                m.usuario_id_nome,
+                m.id,
+                m.origem,
+                m.destino,
+                m.data_operacao,
+                tm.movimentacao
+            FROM 
+                historico_movimentacoes m
+            INNER JOIN 
+                tipos_movimentacoes tm
+            ON 
+                m.tipos_movimentacoes_id = tm.id
             WHERE
-                i.insumos_nome LIKE '%{$txt_pesquisa_mov}%' or
-                u.usuario_nome_completo LIKE '%{$txt_pesquisa_mov}%' or
-                i.insumos_descricao LIKE '%{$txt_pesquisa_mov}%'
-                ORDER BY movimentacoes_data_operacao DESC 
-                LIMIT $inicio_movimentacoes,$quantidade_registros_movimentacoes";
-    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                m.insumo_nome LIKE '%{$txt_pesquisa}%' 
+                OR m.origem LIKE '%{$txt_pesquisa}%'
+                OR m.destino LIKE '%{$txt_pesquisa}%'
+                OR tm.movimentacao LIKE '%{$txt_pesquisa}%'
+            ORDER BY 
+                data_operacao DESC 
+            LIMIT 
+                $inicio,$quantidade_registros_movimentacoes";
+
+    try{
+        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+    }catch (\Throwable $th){
+        echo $th;
+    }
 
     $resultados = '';
 
     if ($rs->num_rows > 0){
         while($dados = mysqli_fetch_assoc($rs)){
             
-            $movimentacoes_id = $dados['movimentacoes_id'];
-            $insumos_nome = $dados["insumos_nome"];
-            $movimentacoes_data_operacao = date("d/m/Y H:i", strtotime($dados["movimentacoes_data_operacao"]));
-            $tipos_movimentacoes_movimentacao = $dados['tipos_movimentacoes_movimentacao'];
-            $movimentacoes_origem = $dados["movimentacoes_origem"];
-            $movimentacoes_destino = $dados['movimentacoes_destino'];
-            $usuario_nome_completo = $dados['usuario_nome_completo'];
+            $movimentacoes_id = $dados['id'];
+            $insumos_nome = $dados["insumo_nome"];
+            $movimentacoes_data_operacao = date("d/m/Y H:i", strtotime($dados["data_operacao"]));
+            $tipos_movimentacoes_movimentacao = $dados['movimentacao'];
+            $movimentacoes_origem = $dados["origem"];
+            $movimentacoes_destino = $dados['destino'];
+            // $usuario_nome_completo = $dados['nome_completo'];
             
 
             $resultados .= '
@@ -55,7 +60,6 @@
                     <td>'. $tipos_movimentacoes_movimentacao .'</td>
                     <td>'. $movimentacoes_origem .'</td>
                     <td>'. $movimentacoes_destino .'</td>
-                    <td>'. $usuario_nome_completo .'</td>
                     <td class="operacoes" id="td_operacoes_editar_deletar">
                         <a href="index.php?menuop=excluir_mov&movId=' . $movimentacoes_id . '" class="confirmaDelete">
                             <button class="btn">
@@ -73,7 +77,7 @@
     } else{
         $resultados = '
             <tr class="tabela_dados">
-                <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+                <td colspan="8" class="text-center">Nenhum registro para exibir!</td>
             </tr>';
     }
 
@@ -91,7 +95,7 @@
             </div>
             <div>
                 <form action="index.php?menuop=listar_movimentacoes" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_mov" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -123,53 +127,57 @@
                 <?php
                     echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
 
-                    $sqlTotalMovimentacoes = "SELECT movimentacoes_id FROM movimentacoes";
+                    $sqlTotalMovimentacoes = "SELECT id FROM historico_movimentacoes";
                     $queryTotalMovimentacoes = mysqli_query($conexao,$sqlTotalMovimentacoes) or die(mysqli_error($conexao));
 
-                    $numTotalMovimentacoes = mysqli_num_rows($queryTotalMovimentacoes);
-                    $totalPaginasMovimentacoes = ceil($numTotalMovimentacoes/$quantidade_registros_movimentacoes);
-                    
-                    echo "<a href=\"?menuop=listar_movimentacoes&pagina=1\">Início</a> ";
-                    $num_antes = "";
-                    $num_depois = "";
+                    if($queryTotalMovimentacoes->num_rows >= 1){
+                        $numTotalMovimentacoes = mysqli_num_rows($queryTotalMovimentacoes);
+                        $totalPaginasMovimentacoes = ceil($numTotalMovimentacoes/$quantidade_registros_movimentacoes);
+                        
+                        echo "<a href=\"?menuop=listar_movimentacoes&pagina=1\">Início</a> ";
+                        $num_antes = "";
+                        $num_depois = "";
 
-                    if ($pagina>1) {
-                        ?>
-                            <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina-1?>"> < </a>
-                        <?php
-                    } 
+                        if ($pagina>1) {
+                            ?>
+                                <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina-1?>"> < </a>
+                            <?php
+                        } 
 
-                    if ($pagina>2) {
-                        ?>
-                            <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina-2?>"> << </a>
-                        <?php
-                    } 
+                        if ($pagina>2) {
+                            ?>
+                                <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina-2?>"> << </a>
+                            <?php
+                        } 
 
-                    for($i=1;$i<=$totalPaginasMovimentacoes;$i++){
+                        for($i=1;$i<=$totalPaginasMovimentacoes;$i++){
 
-                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
-                            
-                            if ($i==$pagina) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=listar_movimentacoes&pagina=$i\">$i</a> ";
-                            } 
-                        }          
+                            if ($i >= ($pagina) && $i <= ($pagina+5)) {
+                                
+                                if ($i==$pagina) {
+                                    echo "<span>$i</span>";
+                                } else {
+                                    echo " <a href=\"?menuop=listar_movimentacoes&pagina=$i\">$i</a> ";
+                                } 
+                            }          
+                        }
+
+                        if ($pagina<($totalPaginasMovimentacoes-1)) {
+                            ?>
+                                <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina+1?>"> > </a>
+                            <?php
+                        }
+
+                        if ($pagina<($totalPaginasMovimentacoes-2)) {
+                            ?>
+                                <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina+2?>"> >> </a>
+                            <?php
+                        }
+                        
+                        echo " <a href=\"?menuop=listar_movimentacoes&pagina=$totalPaginasMovimentacoes\">Fim</a>";
+                    }else {
+                        echo '<a href="">Inicio</a><span>1</span><a href="">Fim</a>';
                     }
-
-                    if ($pagina<($totalPaginasMovimentacoes-1)) {
-                        ?>
-                            <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina+1?>"> > </a>
-                        <?php
-                    }
-
-                    if ($pagina<($totalPaginasMovimentacoes-2)) {
-                        ?>
-                            <a href="?menuop=listar_movimentacoes&pagina=<?php echo $pagina+2?>"> >> </a>
-                        <?php
-                    }
-                    
-                    echo " <a href=\"?menuop=listar_movimentacoes&pagina=$totalPaginasMovimentacoes\">Fim</a>";
                 ?>
             </div>
     </div>

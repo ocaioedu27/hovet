@@ -11,10 +11,13 @@ if ($sessionUserType != 2 && $sessionUserType != 3) {
 $idUsuario = $_GET["idUsuario"];
 
 $sql = "SELECT 
-            usuario_id,
-            usuario_nome_completo
-            FROM usuarios
-            WHERE usuario_id={$idUsuario}";
+            id,
+            nome_completo
+        FROM 
+            usuarios
+        WHERE 
+            id={$idUsuario}";
+
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 ?>
@@ -35,12 +38,12 @@ $dados = mysqli_fetch_assoc($result);
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="idUsuario">ID</label>
-                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["usuario_id"]?>" readonly>
+                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["id"]?>" readonly>
                 </div>
 
                 <div class="display-flex-cl">
                     <label for="nomeCompletoUsuario">Nome Completo</label>
-                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" readonly>
+                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["nome_completo"]?>" readonly>
                 </div>
             </div>
 

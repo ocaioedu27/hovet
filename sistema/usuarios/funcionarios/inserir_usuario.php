@@ -1,6 +1,3 @@
-<header>
-    <h2>Inserir contato</h2>
-</header>
 <?php 
     
     $nomeCompletoUsuario = mysqli_real_escape_string($conexao,$_POST["nomeCompletoUsuario"]);
@@ -10,34 +7,46 @@
     $tipoUsuario = mysqli_real_escape_string($conexao,$_POST["tipoUsuario"]);
     $tipoUsuario = strtok($tipoUsuario, " ");
     $siapeUsuario = mysqli_real_escape_string($conexao,$_POST["siapeUsuario"]);
+    $statusUsu = mysqli_real_escape_string($conexao,$_POST["statusUsu"]);
     $senhaUsuario = mysqli_real_escape_string($conexao,$_POST["senhaUsuario"]);
     $senhaUsuario = password_hash($senhaUsuario, PASSWORD_DEFAULT);
+
     $sql = "INSERT INTO usuarios (
-        usuario_nome_completo,
-        usuario_primeiro_nome,
-        usuario_sobrenome,
-        usuario_mail,
-        usuario_tipo_usuario_id,
-        usuario_siape,
-        usuario_senha)
+        nome_completo,
+        primeiro_nome,
+        sobrenome,
+        mail,
+        tipo_usuario_id,
+        siape,
+        senha,
+        status)
         VALUES(
             '{$nomeCompletoUsuario}',
             '{$primeiroNomeUsuario}',
             '{$sobrenomeUsuario}',
             '{$mailUsuario}',
             {$tipoUsuario},
-            '{$siapeUsuario}',
-            '{$senhaUsuario}'
+            {$siapeUsuario},
+            '{$senhaUsuario}',
+            {$statusUsu}
         )";
 
-    if(mysqli_query($conexao, $sql)){
+    // echo $sql;
 
-        echo "<script language='javascript'>window.alert('Usuário inserido com sucesso!'); </script>";
-        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=usuarios';</script>";
+    try {
+            
+        if(mysqli_query($conexao, $sql)){
 
-    } else{
-            die("//usuarios/Cadastro de novo usuário - Erro ao cadastrar novo usuário: " . mysqli_error($conexao));
-            echo " <br/><br/><a href=\"/hovet/sistema/index.php?menuop=cadastro_usuario\">Voltar ao formulário de cadastro</a> <br/>";
+            echo "<script language='javascript'>window.alert('Usuário inserido com sucesso!'); </script>";
+            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=usuarios';</script>";
 
+        } else{
+                die("//usuarios/Cadastro de novo usuário - Erro ao cadastrar novo usuário: " . mysqli_error($conexao));
+                echo " <br/><br/><a href=\"/hovet/sistema/index.php?menuop=cadastro_usuario\">Voltar ao formulário de cadastro</a> <br/>";
+
+        }
+
+    } catch (\Throwable $th) {
+        echo $th;
     }
 ?>

@@ -1,3 +1,64 @@
+<?php
+
+$quantidade_registros_doacoes = 10;
+
+$pagina_doacoes = (isset($_GET['pagina_doacoes']))?(int)$_GET['pagina_doacoes']:1;
+
+$inicio_doacoes = ($quantidade_registros_doacoes * $pagina_doacoes) - $quantidade_registros_doacoes;
+
+$txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
+
+$sql = "SELECT 
+            DISTINCT d.oid_operacao,
+            d.data_operacao,
+            f.razao_social
+
+        FROM 
+            doacoes d
+            
+        INNER JOIN 
+            fornecedores f
+            
+        ON 
+            f.id = d.fornecedor_id
+            
+        WHERE
+            d.oid_operacao = '{$txt_pesquisa_doacoes}' or
+            d.data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
+            ORDER BY data_operacao ASC
+            LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
+$rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+
+$resultados = '';
+if ($rs->num_rows > 0){
+    while($dados_para_while = mysqli_fetch_assoc($rs)){
+        $oid_operacao = $dados_para_while['oid_operacao'];
+        $razao_social = $dados_para_while["razao_social"];
+        $data_operacao = date("d/m/Y H:i", strtotime($dados_para_while["data_operacao"]));
+
+        $resultados .= '
+            <tr class="tabela_dados">
+                <td>'. $oid_operacao .'</td>
+                <td>'. $razao_social .'</td>
+                <td>'. $data_upload .'</td>
+                <td>
+                    <a href="index.php?menuop=doacao_por_oid&oidDoacao='.$oid_operacao.'">Informações</a>
+                </td>
+            </tr>';
+
+        $qtd_linhas_tabelas++;
+
+    }
+} else{
+    $resultados = '
+        <tr class="tabela_dados">
+            <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+        </tr>';
+
+} 
+?>
+
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
@@ -26,55 +87,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $quantidade_registros_doacoes = 10;
-
-                        $pagina_doacoes = (isset($_GET['pagina_doacoes']))?(int)$_GET['pagina_doacoes']:1;
-
-                        $inicio_doacoes = ($quantidade_registros_doacoes * $pagina_doacoes) - $quantidade_registros_doacoes;
-
-                        $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
-
-                        $sql = "SELECT 
-                                    DISTINCT d.doacoes_oid_operacao,
-                                    d.doacoes_data_operacao,
-                                    f.fornecedores_razao_social
-
-                                FROM 
-                                    doacoes d
-                                    
-                                INNER JOIN 
-                                    fornecedores f
-                                    
-                                ON 
-                                    f.fornecedores_id = d.doacoes_fornecedor_id
-                                    
-                                WHERE
-                                    d.doacoes_oid_operacao = '{$txt_pesquisa_doacoes}' or
-                                    d.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
-                                    ORDER BY doacoes_data_operacao ASC
-                                    LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                        while($dados = mysqli_fetch_assoc($rs)){
-                        
-                    ?>
-                    <tr class="tabela_dados">
-                        <td><?=$dados["doacoes_oid_operacao"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>
-                        <td>
-                            <a href="index.php?menuop=doacao_por_oid&oidDoacao=<?=$dados["doacoes_oid_operacao"]?>">Informações</a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
-                    ?>
+                    <?=$resultados?>
                 </tbody>
             </table>
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT doacoes_id FROM doacoes";
+                    $sqlTotalInsumos = "SELECT id FROM doacoes";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);

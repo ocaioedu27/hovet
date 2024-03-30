@@ -1,60 +1,58 @@
 
 <?php
-    $qtd_limit = 10;
+$qtd_limit = 10;
 
-    $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
+$pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-    $inicio_permuta = ($qtd_limit * $pagina) - $qtd_limit;
+$inicio_permuta = ($qtd_limit * $pagina) - $qtd_limit;
 
-    $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
+$txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
-    $sql = "SELECT 
-                p.permutas_data,
-                p.permutas_oid_operacao,
-                f.fornecedores_razao_social
-
-            FROM 
-                permutas p
-
-            INNER JOIN 
-                fornecedores f
-            ON 
-                p.permutas_fornecedor_id = f.fornecedores_id
-                
-            WHERE
-                p.permutas_oid_operacao LIKE '%{$txt_pesquisa}%' 
-
-            GROUP BY permutas_oid_operacao 
-            ORDER BY permutas_data ASC 
-
-            LIMIT $inicio_permuta,$qtd_limit";
-    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-
-    $resultados = '';
-    if ($rs->num_rows > 0){
-        while($dados = mysqli_fetch_assoc($rs)){
+$sql = "SELECT 
+            p.data,
+            p.oid_operacao,
+            f.razao_social
+        FROM 
+            permutas p
+        INNER JOIN 
+            fornecedores f
+        ON 
+            p.fornecedor_id = f.id
             
-            $permutas_oid_operacao = $dados["permutas_oid_operacao"];
-            $fornecedores_razao_social = $dados["fornecedores_razao_social"];
-            $permutas_data = date("d/m/Y H:i", strtotime($dados["permutas_data"]));
+        WHERE
+            p.oid_operacao LIKE '%{$txt_pesquisa}%' 
 
-            $resultados .= '
-                <tr class="tabela_dados">
-                    <td>'. $permutas_oid_operacao .'</td>
-                    <td>'. $fornecedores_razao_social .'</td>
-                    <td>'. $permutas_data .'</td>
-                    <td>
-                        <a href="index.php?menuop=permuta_por_oid&ooidPermuta='. $permutas_oid_operacao . '">Informações</a>
-                    </td>
-                </tr>';
-        }
-    } else{
-        $resultados = '
+        GROUP BY oid_operacao 
+        ORDER BY data ASC 
+
+        LIMIT $inicio_permuta,$qtd_limit";
+$rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+$resultados = '';
+if ($rs->num_rows > 0){
+    while($dados = mysqli_fetch_assoc($rs)){
+        
+        $permutas_oid_operacao = $dados["oid_operacao"];
+        $fornecedores_razao_social = $dados["razao_social"];
+        $permutas_data = date("d/m/Y H:i", strtotime($dados["data"]));
+
+        $resultados .= '
             <tr class="tabela_dados">
-                <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+                <td>'. $permutas_oid_operacao .'</td>
+                <td>'. $fornecedores_razao_social .'</td>
+                <td>'. $permutas_data .'</td>
+                <td>
+                    <a href="index.php?menuop=permuta_por_oid&ooidPermuta='. $permutas_oid_operacao . '">Informações</a>
+                </td>
             </tr>';
-
     }
+} else{
+    $resultados = '
+        <tr class="tabela_dados">
+            <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+        </tr>';
+
+}
 ?>
 
 
@@ -92,7 +90,7 @@
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT permutas_id FROM permutas";
+                    $sqlTotalInsumos = "SELECT id FROM permutas";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);

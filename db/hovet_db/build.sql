@@ -27,18 +27,19 @@ create table usuarios(
     usuario_nome_completo varchar(100) not null,
     usuario_primeiro_nome varchar(100) not null,
     usuario_sobrenome varchar(100) not null,
-    usuario_mail varchar(100) unique not null,
+    usuario_mail varchar(100) unique not null, 
     usuario_tipo_usuario_id int,
     foreign key(usuario_tipo_usuario_id) references tipo_usuario(tipo_usuario_id) on delete set null,
     usuario_siape varchar(50) unique not null,
-    usuario_senha varchar(256) not null
+    usuario_senha varchar(256) not null,
+    usuario_status boolean not null
 );
 
 
 # Usar a senha: Hovet@2023
 # Trocar após o primeiro login
 insert into usuarios value
-(null, "Administrador", "ADM", "do Sistema", "adm@ufrahovet.com.br", 2, "12345678", "$2y$10$jf95bNw23hp4bpXb3490h.a3IGYbCdmfd.M6OjLE0VAUOnOJXr8Zu");
+(null, "Administrador", "ADM", "do Sistema", "adm@ufrahovet.com.br", 2, "12345678", "$2y$10$jf95bNw23hp4bpXb3490h.a3IGYbCdmfd.M6OjLE0VAUOnOJXr8Zu", 1);
 
 ######################################################
 
@@ -116,7 +117,7 @@ create table deposito(
     deposito_origem_item varchar(50),
     deposito_id_origem varchar(50),
     deposito_estoque_id int,
-    foreign key (deposito_estoque_id) references estoques(estoques_id) on delete set null,
+    foreign key (deposito_estoque_id) references estoques(estoques_id) on delete cascade,
     deposito_insumos_id int,
 	foreign key(deposito_insumos_id) references insumos(insumos_id) on delete set null
 );
@@ -155,7 +156,7 @@ create table dispensario(
     dispensario_insumos_id int,
     foreign key (dispensario_insumos_id) references insumos(insumos_id) on delete set null,
     dispensario_estoques_id int,
-    foreign key (dispensario_estoques_id) references estoques(estoques_id)
+    foreign key (dispensario_estoques_id) references estoques(estoques_id) on delete cascade
 );
 
 ######################################################

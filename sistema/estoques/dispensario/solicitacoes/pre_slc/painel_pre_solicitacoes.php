@@ -22,7 +22,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     $qualStatus = $qualStatus_tmp;
     // echo "<br>Tipo de operacao: $qualStatus";
 }
-
+// echo 'passou';
 ?>
 <section class="painel_usuarios">
     <div class="container">
@@ -38,8 +38,8 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     
                     ?>
                     
-                    <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$tipo_status_slc['status_slc_status']?>">
-                        <button class="btn"><?=$tipo_status_slc['status_slc_status']?>s</button>
+                    <a href="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$tipo_status_slc['status']?>">
+                        <button class="btn"><?=$tipo_status_slc['status']?>s</button>
                     </a>
 
                 <?php
@@ -48,7 +48,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             </div>
             <div>
                 <form action="index.php?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_solicitacoes" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -77,13 +77,13 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                
                         $quantidade_registros_solicitacoes = 10;
 
-                        $pagina_solicitacoes = (isset($_GET['pagina_solicitacoes']))?(int)$_GET['pagina_solicitacoes']:1;
+                        $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-                        $inicio_solicitacoes = ($quantidade_registros_solicitacoes * $pagina_solicitacoes) - $quantidade_registros_solicitacoes;
+                        $inicio = ($quantidade_registros_solicitacoes * $pagina) - $quantidade_registros_solicitacoes;
 
-                        // print_r($inicio_solicitacoes);
+                        // print_r($inicio);
 
-                        $txt_pesquisa_solicitacoes = (isset($_POST["txt_pesquisa_solicitacoes"]))?$_POST["txt_pesquisa_solicitacoes"]:"";
+                        $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
                         $sql = "SELECT
                                     s.pre_slc_id,
@@ -122,13 +122,13 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                     ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
                                 
                                 WHERE
-                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND stt.status_slc_status = '{$qualStatus}' AND (i.insumos_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
-                                    u.usuario_primeiro_nome LIKE '%{$txt_pesquisa_solicitacoes}%' or
-                                    tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa_solicitacoes}%')
+                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND stt.status_slc_status = '{$qualStatus}' AND (i.insumos_nome LIKE '%{$txt_pesquisa}%' or
+                                    u.usuario_primeiro_nome LIKE '%{$txt_pesquisa}%' or
+                                    tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa}%')
                                     
                                 ORDER BY pre_slc_data DESC 
                                     
-                                LIMIT $inicio_solicitacoes,$quantidade_registros_solicitacoes";
+                                LIMIT $inicio,$quantidade_registros_solicitacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
                         while($dados_para_while = mysqli_fetch_assoc($rs)){
@@ -188,16 +188,6 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         </div>
         <div class="paginacao">
             <?php
-                // $sqlTotalSlc = "SELECT 
-                //                     ps.pre_slc_id 
-                //                 FROM 
-                //                     pre_solicitacoes ps
-                //                 INNER JOIN 
-                //                     status_slc st
-                //                 ON 
-                //                     st.status_slc_id = ps.pre_slc_status_slc_id 
-                //                 WHERE 
-                //                     st.status_slc_status = '{$qualStatus}'";
                 $sqlTotalSlc = "SELECT 
                                     pre_slc_id 
                                 FROM 
@@ -216,34 +206,34 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 // }
                 $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
 
-                echo "<a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=1\">Início</a> ";
+                echo "<a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina=1\">Início</a> ";
 
-                if ($pagina_solicitacoes>6) {
+                if ($pagina>6) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes-1?>"> << </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina=<?php echo $pagina-1?>"> << </a>
                     <?php
                 } 
 
                 for($i=1;$i<=$totalPaginasSlc;$i++){
                     // print_r($i);
 
-                    if ($i >= ($pagina_solicitacoes) && $i <= ($pagina_solicitacoes+5)) {
+                    if ($i >= ($pagina) && $i <= ($pagina+5)) {
                         
-                        if ($i==$pagina_solicitacoes) {
+                        if ($i==$pagina) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina=$i\">$i</a> ";
                         } 
                     }          
                 }
 
-                if ($pagina_solicitacoes<($totalPaginasSlc-4)) {
+                if ($pagina<($totalPaginasSlc-4)) {
                     ?>
-                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina_solicitacoes=<?php echo $pagina_solicitacoes+1?>"> >> </a>
+                        <a href="?menuop=pre_solicitacoes&idSolicitacao=<?=$oid_solicitacao?>&<?=$qualStatus?>&pagina=<?php echo $pagina+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina_solicitacoes=$totalPaginasSlc\">Fim</a>";
+                echo " <a href=\"?menuop=pre_solicitacoes&idSolicitacao=$oid_solicitacao&$qualStatus&pagina=$totalPaginasSlc\">Fim</a>";
             ?>
         </div>
     </div>

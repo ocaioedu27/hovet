@@ -10,7 +10,7 @@ if ($sessionUserType != 2 && $sessionUserType != 3) {
 }
 
 
-if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+if (isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
 	foreach ( $_GET as $chave => $valor ) {
         $valor_tmp = $chave;
@@ -24,27 +24,70 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 }
 
 $idUsuario = "";
-if (isset($_GET[$usuarioId])) {
+if (strlen($_GET[$usuarioId])) {
     $idUsuario = $_GET[$usuarioId];
 }else {
-    echo "<script language='javascript'>window.alert('//Verifica-id - O ID da solicitação não foi definido!! Retornando para a página de solicitações'); </script>";
-    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=solicitacoes';</script>";
+    echo "<script language='javascript'>window.alert('//Verifica-id - O ID não foi definido!!'); </script>";
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=". $painel."';</script>";
+}
+
+
+// Verifica os usuários                        
+$sql_verifica_se_existe = "";
+
+$sqlBuscaDiretor = "SELECT 
+                    id
+                FROM 
+                    usuarios 
+                WHERE 
+                    tipo_usuario_id=5";
+            
+$r = mysqli_query($conexao,$sqlBuscaDiretor) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+// echo $r->num_rows;
+
+$sqlTipoUsuarios = 'SELECT * FROM tipo_usuario WHERE id!=2';
+if($r->num_rows == 1){
+    $sqlTipoUsuarios .= ' and id!=5';
+}
+
+// echo $sqlTipoUsuarios;
+
+$tipos_usu= mysqli_query($conexao,$sqlTipoUsuarios) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
+$tiposUsu = mysqli_fetch_all($tipos_usu);
+// var_dump($tiposUsu);
+$strOptions;
+foreach($tiposUsu as $tipoUsu){
+    $id = $tipoUsu[0];
+    $tipo = $tipoUsu[1];
+    $strOptions .= '<option>'. $id .' - '. $tipo .'</option>';
+
 }
 
 $sql = "SELECT 
-            u.usuario_id,
-            u.usuario_nome_completo,
-            u.usuario_sobrenome,
-            u.usuario_primeiro_nome,
-            u.usuario_mail,
-            t.tipo_usuario_tipo,
-            u.usuario_siape 
-            FROM usuarios AS u 
-            INNER JOIN tipo_usuario AS t 
-            ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
-            WHERE u.usuario_id={$idUsuario}";
+            u.id,
+            u.nome_completo,
+            u.sobrenome,
+            u.primeiro_nome,
+            u.mail,
+            u.status,
+            t.tipo,
+            t.id as tipo_usuario_id,
+            u.siape 
+        FROM 
+            usuarios AS u 
+        INNER JOIN 
+            tipo_usuario AS t 
+        ON
+            u.tipo_usuario_id = t.id 
+        WHERE 
+            u.id={$idUsuario}";
+
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
+
+$statusUsuBool = $dados['status'];
+$statusUsu = $statusUsuBool ? 'Ativo':'Inativo';
+
 ?>
 
 <div class="container cadastro_all">
@@ -60,27 +103,40 @@ $dados = mysqli_fetch_assoc($result);
             </a>
         </div>
         <form class="form_cadastro" action="index.php?menuop=atualizar_usuario&atualizar_dados_usuario" method="post">
+
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="idUsuario">ID</label>
-                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["usuario_id"]?>" readonly>
+                    <input type="text" class="form-control largura_um_quarto" name="idUsuario" value="<?=$dados["id"]?>" readonly>
                 </div>
+            </div>
+
+            <div class="form-group valida_movimentacao">
 
                 <div class="display-flex-cl">
                     <label for="nomeCompletoUsuario">Nome Completo</label>
-                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" required>
+                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["nome_completo"]?>" required>
+                </div>
+                
+                <div class="display-flex-cl">
+                    <label for="idUsuario">Status</label>
+                    <select class="form-control" name="statusUsu">
+                        <option value="<?=$statusUsuBool?>"><?=$statusUsu?></option>
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                    </select>
                 </div>
             </div>
             
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="primeiroNomeUsuario">Primeiro Nome</label>
-                    <input type="text" class="form-control largura_metade" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" required>
+                    <input type="text" class="form-control" name="primeiroNomeUsuario" value="<?=$dados["primeiro_nome"]?>" required>
                 </div>
 
                 <div class="display-flex-cl">
                     <label for="sobrenomeUsuario">Sobrenome</label>
-                    <input type="text" class="form-control largura_metade" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" required>
+                    <input type="text" class="form-control" name="sobrenomeUsuario" value="<?=$dados["sobrenome"]?>" required>
                 </div>  
             </div>
 
@@ -88,24 +144,15 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="display-flex-cl">
                     <label for="tipoUsuario">Tipo de usuário</label>
-                    <select class="form-control largura_um_terco" name="tipoUsuario">
-                        <?php
-                        
-                        $sql_allTipos = "SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=2";
-                        $result_allTipos = mysqli_query($conexao,$sql_allTipos) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
-                        
-                        while($tipoUsu = mysqli_fetch_assoc($result_allTipos)){
-                        ?>
-                            <option><?=$tipoUsu["tipo_usuario_id"]?> - <?=$tipoUsu["tipo_usuario_tipo"]?></option>
-                        <?php
-                            }
-                        ?>
+                    <select class="form-control" name="tipoUsuario">
+                        <option value="<?=$dados['tipo_usuario_id']?>"><?=$dados["tipo"]?></option>
+                         <?=$strOptions?>
                     </select>
                 </div>
 
                 <div class="display-flex-cl">
                     <label for="">Atualmente: </label>
-                    <input type="text" class="form-control" value="<?=$dados["tipo_usuario_tipo"]?>" style="color: red;" readonly>
+                    <input type="text" class="form-control" value="<?=$dados["tipo"]?>" style="color: red;" readonly>
                 </div>
             </div>
 
@@ -113,24 +160,29 @@ $dados = mysqli_fetch_assoc($result);
 
                 <div class="diplay-flex-cl">
                     <label for="mailUsuario">E-mail</label>
-                    <input type="email" class="form-control largura_um_terco" name="mailUsuario" value="<?=$dados["usuario_mail"]?>" required>
+                    <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["mail"]?>" required>
                 </div>
 
                 <div class="diplay-flex-cl">
                     <label for="siapeUsuario">SIAPE</label>
-                    <input type="text" class="form-control" name="siapeUsuario" value="<?=$dados["usuario_siape"]?>" readonly>
+                    <input type="text" class="form-control" name="siapeUsuario" maxlength="8" onkeyup="verifica_valor('valor_siape_1', 'msg_alerta_1', 'btn_cad_user', '0')" id="valor_siape_1" value="<?=$dados["siape"]?>" placeholder="Informe o SIAPE..." required>
+                    <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_1">
+                        <label>Valor inválido! Por favor, altere para um valor válido!
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                        </label>
+                    </span>
                 </div>
             </div>
 
             <div class="form-group valida_movimentacao">
-                <a href="index.php?menuop=trocar_senha_usuario&idUsuario=<?=$dados['usuario_id']?>">Trocar a Senha</a>
+                <a href="index.php?menuop=trocar_senha_usuario&idUsuario=<?=$dados['id']?>">Trocar a Senha</a>
             </div>
 
-            <div class="form-group valida_movimentacao">
+            <div class="d-flex justify-content-center">
 
-                <div class="diplay-flex-cl">
-                    <label>Insira sua senha para confirmar</label>
-                    <input type="password" class="form-control largura_um_terco" name="validaSenhaUsuario" required>
+                <div class="d-flex flex-column justify-content-center">
+                    <label style="text-align: center;">Insira sua senha para confirmar</label>
+                    <input type="password" class="form-control" name="validaSenhaUsuario" required>
                 </div>
             </div>
 

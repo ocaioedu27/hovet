@@ -1,20 +1,4 @@
 <div class="container container_home" style="padding: 20px;">
-    <!-- <section class="menu_lateral">
-        <div class="">
-            <div class="menu_op menu lateral">
-                <div>
-                    <p>teste</p>
-                    <ul>
-                        <li>teste</li>
-                        <li>teste</li>
-                        <li>teste</li>
-                        <li>teste</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
     <section>
         <div>
             <h1>Bem Vindo ao Sistem de Gerenciamento de Estoques do HOVET</h1>
@@ -42,11 +26,11 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(*) as dispensario_Qtd FROM dispensario WHERE dispensario_Validade>curdate()";
+                                    $sql = "SELECT COUNT(id) as qtd FROM dispensario WHERE validade>curdate()";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
-                                <h2><?=$dados['dispensario_Qtd']?></h2>
+                                <h2><?=$dados['qtd']?></h2>
                                 <?php
                                     }
                                 ?>
@@ -62,7 +46,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(dispensario_id) as vencidos_proxVencimento FROM dispensario where dispensario_Validade<=curdate() or dispensario_Validade <= curdate() - interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() - interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>
@@ -93,19 +77,19 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_slc_qtd 
+                                    $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
                                                 
                                             FROM pre_solicitacoes s
                                             
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                ON s.tp_movimentacoes_id = tp.id
 
                                                 INNER JOIN status_slc st
-                                                ON s.pre_slc_status_slc_id = st.status_slc_id
+                                                ON s.status_slc_id = st.id
                                                 
-                                            WHERE s.pre_slc_solicitante = {$sessionUserID} 
-                                                AND tp.tipos_movimentacoes_movimentacao LIKE 'Requisição%' 
-                                                AND st.status_slc_status LIKE 'Pend%'";
+                                            WHERE s.usuario_id = {$sessionUserID} 
+                                                AND tp.movimentacao LIKE 'Requisição%' 
+                                                AND st.status LIKE 'Pend%'";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);
                                 ?>
@@ -120,19 +104,19 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(s.pre_slc_id) as pre_slc_qtd 
+                                    $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
                                                 
                                             FROM pre_solicitacoes s
                                             
                                                 INNER JOIN tipos_movimentacoes tp
-                                                ON s.pre_slc_tp_movimentacoes_id = tp.tipos_movimentacoes_id
+                                                ON s.tp_movimentacoes_id = tp.id
 
                                                 INNER JOIN status_slc st
-                                                ON s.pre_slc_status_slc_id = st.status_slc_id
+                                                ON s.status_slc_id = st.id
                                                 
-                                            WHERE s.pre_slc_solicitante = {$sessionUserID} 
-                                                AND tp.tipos_movimentacoes_movimentacao LIKE 'Devolução%' 
-                                                AND st.status_slc_status LIKE 'Pend%'";
+                                            WHERE s.usuario_id = {$sessionUserID} 
+                                                AND tp.movimentacao LIKE 'Devolução%' 
+                                                AND st.status LIKE 'Pend%'";
                                                 
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($rs);

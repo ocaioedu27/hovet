@@ -1,6 +1,3 @@
-<header>
-    <h2>Inserir Insumo no Depósito</h2>
-</header>
 <?php
 
     if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
@@ -63,6 +60,38 @@
             $validadeInsumodeposito = $dados_enviados_array['validadeInsumodeposito'][$chave_cad_deposito];
             $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_deposito];
             $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
+
+            // var_dump($tem_nota_fiscal);
+
+            $sql = "INSERT INTO deposito (
+                qtd,
+                validade,
+                origem_item,
+                id_origem,
+                insumos_id,
+                estoque_id
+                )
+                VALUES(
+                    {$quantidadeInsumodeposito},
+                    '{$validadeInsumodeposito}',
+                    '{$origem_item}',
+                    '{$origem_id}',
+                    {$insumoID_Insumodeposito},
+                    {$depositoDestinoInsumodeposito}
+                )";
+
+            if (mysqli_query($conexao, $sql)) { 
+                echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
+                // echo "insumo inserido com sucesso";   
+            } else {
+                die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+            }
+
+            $sqlGetDepId = "SELECT d.deposito_id, i.nome as insumo_nome FROM deposito d INNER JOIN insumos i ON d.insumos_id = i.id WHERE id_origem = '$origem_id'";
+            $rGetDepId = mysqli_query($conexao, $sqlGetDepId);
+            $dadosGetId = mysqli_fetch_assoc($rGetDepId);
+            $dep_id = $dadosGetId['deposito_id'];
+            $insumo_nome = $dadosGetId['insumo_nome'];
             
             $tem_nota_fiscal = $_FILES['nota_fiscal_deposito'];
 
@@ -101,23 +130,25 @@
 
                     // echo "<br> vai pro insert";
                     $sql_salva_db = "INSERT INTO compras 
-                                        (compras_nome,
-                                        compras_num_nf, 
-                                        compras_caminho,
-                                        compras_qtd_guardada,
-                                        compras_quem_guardou_id,
-                                        compras_tipos_movimentacoes_id,
-                                        compras_fornecedor_id)
-                                        VALUE (
+                                        (nome_nf,
+                                        num_nf, 
+                                        caminho,
+                                        qtd_guardada,
+                                        usuario_id,
+                                        tipos_movimentacoes_id,
+                                        fornecedor_id,
+                                        deposito_id)
+                                    VALUE (
                                         '{$nome_nota_fiscal_deposito}',
                                         '{$num_nota_fiscal}',
                                         '{$path_nota_fiscal}',
                                         {$quantidadeInsumodeposito},
                                         {$quem_guardou},
                                         {$tipo_movimentacao},
-                                        {$fornecedorCadInsumoDep}
-                                        )";
-    
+                                        {$fornecedorCadInsumoDep},
+                                        {$dep_id}
+                                    )";
+        
                     $inseriu_no_banco = mysqli_query($conexao,$sql_salva_db);
                     if($inseriu_no_banco){
                         echo "<script language='javascript'>window.alert('Nota fiscal salva na base de dados!!'); </script>";
@@ -133,22 +164,20 @@
             } else{
                 // echo "<br/>é doação";
                 $sql_doacao = "INSERT INTO doacoes (
-                    doacoes_qtd_doada,
-                    doacoes_oid_operacao,
-                    doacoes_tipos_movimentacoes_id,
-                    doacoes_quem_guardou_id,
-                    doacoes_insumos_id,
-                    doacoes_fornecedor_id,
-                    doacoes_estoque_id
+                    qtd_doada,
+                    oid_operacao,
+                    tipos_movimentacoes_id,
+                    usuario_id,
+                    fornecedor_id,
+                    deposito_id
                 )
                 VALUES (
                     {$quantidadeInsumodeposito},
                     '{$origem_id}',
                     {$tipo_movimentacao},
                     {$quem_guardou},
-                    {$insumoID_Insumodeposito},
                     {$fornecedorCadInsumoDep},
-                    {$depositoDestinoInsumodeposito}
+                    {$dep_id}
                 )";
 
 
@@ -160,48 +189,17 @@
                 }
             }
 
-            // var_dump($tem_nota_fiscal);
 
-            $sql = "INSERT INTO deposito (
-                deposito_qtd,
-                deposito_validade,
-                deposito_origem_item,
-                deposito_id_origem,
-                deposito_insumos_id,
-                deposito_estoque_id
-                )
-                VALUES(
-                    {$quantidadeInsumodeposito},
-                    '{$validadeInsumodeposito}',
-                    '{$origem_item}',
-                    '{$origem_id}',
-                    {$insumoID_Insumodeposito},
-                    {$depositoDestinoInsumodeposito}
-                )";
-
-            if (mysqli_query($conexao, $sql)) { 
-                echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
-                // echo "insumo inserido com sucesso";   
-            } else {
-                die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
-            }
-
-
-            if ($tipo_movimentacao == 1) {
-                $local_origem = "Compra";
-            } else {
-                $local_origem = "Doação";
-            }
+            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
     
             $local_destino = "Depósito " . $qualEstoque[-1];
     
-            $usuario_id = $quem_guardou;
-    
-            $insumo_id = $insumoID_Insumodeposito;
+            $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
             
-            atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id);
+            atualiza_movimentacao($conexao, $tipo_movimentacao, $origem_item, $local_destino, $usuario_id_nome, $insumo_nome);
+
         }
+
     } else {
         echo "error";
     }

@@ -1,3 +1,72 @@
+<?php
+$qtd_registros = 10;
+
+$pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
+
+$inicio = ($qtd_registros * $pagina) - $qtd_registros;
+
+$txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
+
+$sql = "SELECT 
+            c.nome_nf,
+            c.num_nf,
+            c.id as compra_id,
+            c.caminho,
+            c.data_upload,
+            f.razao_social
+            FROM 
+                compras c
+            INNER JOIN 
+                fornecedores f
+            ON 
+                f.id = c.fornecedor_id
+            WHERE
+                c.num_nf = '{$txt_pesquisa}' or
+                c.nome_nf LIKE '%{$txt_pesquisa}%' or
+                c.data_upload LIKE '%{$txt_pesquisa}%'
+            ORDER BY 
+                data_upload ASC 
+            LIMIT 
+                $inicio,$qtd_registros";
+$rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+$resultados = '';
+if ($rs->num_rows > 0){
+    while($dados_para_while = mysqli_fetch_assoc($rs)){
+        $compra_id = $dados_para_while['compra_id'];
+        $num_nf = $dados_para_while["num_nf"];
+        $razao_social = $dados_para_while["razao_social"];
+        $compras_caminho = $dados_para_while["caminho"];
+        $nome_nf = $dados_para_while["nome_nf"];
+        $data_upload = date("d/m/Y H:i", strtotime($dados_para_while["data_upload"]));
+
+        $resultados .= '
+            <tr class="tabela_dados">
+                <td>'. $compra_id .'</td>
+                <td>'. $num_nf .'</td>
+                <td>'. $razao_social .'</td>
+                <td>
+                    <a target="_blank" href="'.$compras_caminho.'">'. $nome_nf .'</a>
+                </td>
+                <td>'. $data_upload .'</td>
+                <td>
+                    <a href="index.php?menuop=compra_por_nf&numNotaFiscal='.$num_nf.'">Informações</a>
+                </td>
+            </tr>';
+
+        $qtd_linhas_tabelas++;
+
+    }
+} else{
+    $resultados = '
+        <tr class="tabela_dados">
+            <td colspan="6" class="text-center">Nenhum registro para exibir!</td>
+        </tr>';
+
+}  
+
+?>
+
 <section class="painel_insumos">
     <div class="container">
         <div class="menu_header">
@@ -6,7 +75,7 @@
             </div>
             <div>
                 <form action="index.php?menuop=compra" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_compras" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -28,86 +97,45 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                        $quantidade_registros_compras = 10;
-
-                        $pagina_compras = (isset($_GET['pagina_compras']))?(int)$_GET['pagina_compras']:1;
-
-                        $inicio_compras = ($quantidade_registros_compras * $pagina_compras) - $quantidade_registros_compras;
-
-                        $txt_pesquisa_compras = (isset($_POST["txt_pesquisa_compras"]))?$_POST["txt_pesquisa_compras"]:"";
-
-                        $sql = "SELECT 
-                                    c.compras_nome,
-                                    c.compras_num_nf,
-                                    c.compras_id,
-                                    c.compras_caminho,
-                                    c.compras_data_upload,
-                                    f.fornecedores_razao_social
-                                    FROM compras c
-                                    INNER JOIN fornecedores f
-                                    ON f.fornecedores_id = c.compras_fornecedor_id
-                                    WHERE
-                                        c.compras_num_nf = '{$txt_pesquisa_compras}' or
-                                        c.compras_nome LIKE '%{$txt_pesquisa_compras}%' or
-                                        c.compras_data_upload LIKE '%{$txt_pesquisa_compras}%'
-                                        ORDER BY compras_data_upload ASC 
-                                        LIMIT $inicio_compras,$quantidade_registros_compras";
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                        while($dados = mysqli_fetch_assoc($rs)){
-                        
-                    ?>
-                    <tr class="tabela_dados">
-                        <td><?=$dados["compras_id"]?></td>
-                        <td><?=$dados["compras_num_nf"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><a target="_blank" href="<?=$dados['compras_caminho']?>"><?=$dados["compras_nome"]?></a></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['compras_data_upload']));?></td>
-                        <td>
-                            <a href="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$dados["compras_num_nf"]?>">Informações
-                        </td>
-                    </tr>
-                    <?php
-                        }
-                    ?>
+                    <?=$resultados?>
                 </tbody>
             </table>
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT compras_id FROM compras";
+                    $sqlTotalInsumos = "SELECT id FROM compras";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
-                    $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_compras);
+                    $totalPaginasInsumos = ceil($numTotalInsumos/$qtd_registros);
                     
-                    echo "<a href=\"?menuop=compra&pagina_compras=1\">Início</a> ";
+                    echo "<a href=\"?menuop=compra&pagina=1\">Início</a> ";
 
-                    if ($pagina_compras>6) {
+                    if ($pagina>6) {
                         ?>
-                            <a href="?menuop=compra?pagina_compras=<?php echo $pagina_compras-1?>"> << </a>
+                            <a href="?menuop=compra?pagina=<?php echo $pagina-1?>"> << </a>
                         <?php
                     } 
 
                     for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_compras) && $i <= ($pagina_compras+5)) {
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
                             
-                            if ($i==$pagina_compras) {
+                            if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=compra&pagina_compras=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=compra&pagina=$i\">$i</a> ";
                             } 
                         }          
                     }
 
-                    if ($pagina_compras<($totalPaginasInsumos-5)) {
+                    if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=compra?pagina_compras=<?php echo $pagina_compras+1?>"> >> </a>
+                            <a href="?menuop=compra?pagina=<?php echo $pagina+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=compra&pagina_compras=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=compra&pagina=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

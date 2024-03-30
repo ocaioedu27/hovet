@@ -6,13 +6,15 @@ include_once("../db/connect.php");
 
 include_once("../db/protect.php");
 
-include_once("../pgs_modelo/caracteres_sem_acento.php");
+include_once("../pgs_modelo/funcoes.php");
 
 include_once("../pgs_modelo/permissoes_usuarios.php");
 
 $sessionUserID = $_SESSION['usuario_id'];
 
 $sessionUserType = $_SESSION['usuario_tipo_usuario_id'];
+$userFirstName = $_SESSION['usuario_primeiro_nome'];
+// $sessionUserStatus = $_SESSION['usuario_status'];
 
 $qtd_linhas_tabelas = 0;
 
@@ -22,25 +24,6 @@ $qualEstoque = "";
 
 // echo "<br>!!!!!!!!!! AJUSTAR O BUILD SQL DO SISTEMA !!!!!!!!!!<br><br>";
 
-function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id, $insumo_id){
-
-    $sql_identifica_movimentacao = "INSERT 
-                                        INTO movimentacoes 
-                                        (movimentacoes_origem,
-                                        movimentacoes_destino,
-                                        movimentacoes_tipos_movimentacoes_id,
-                                        movimentacoes_usuario_id,
-                                        movimentacoes_insumos_id) 
-                                        VALUE ('{$local_origem}','{$local_destino}',{$tipo_movimentacao},{$usuario_id},{$insumo_id})";
-
-    if (mysqli_query($conexao, $sql_identifica_movimentacao)) { 
-        echo "<script language='javascript'>window.alert('Movimentação registrada com sucesso!!'); </script>";
-        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito';</script>";   
-    } else {
-        die("Erro ao executar a atualização da movimentação. " . mysqli_error($conexao));   
-    }
-
-}
 
 if ($sessionUserType!=2 && $sessionUserType!=3) {
     // echo "minhas_solicitacoes";
@@ -54,11 +37,6 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 }
 
 $painel = $painel_tmp; 
-
-$teste_array = array(
-    "cp_nome" => "Sistema Controller",
-    "permissoes_nome" => "Cadastrar"
-);
 
 $array_permissoes_opcoes_sistema = [9,10,11,12,19,20,21,22,23];
 
@@ -126,9 +104,6 @@ if ($sessionUserType == 2) {
                                 <li>
                                     <a href="index.php?menuop=pagina_principal">Página Principal</a>
                                 </li>
-                                <!-- <li>
-                                    <a href="index.php?menuop=permissoes" id="listar">Gerênciar Permissões</a>
-                                </li> -->
                                 <li>
                                     <a href="index.php?menuop=dashboard" id="listar">Dashboard</a>
                                 </li>
@@ -178,16 +153,16 @@ if ($sessionUserType == 2) {
                                     <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
                                 </li>
                                 <?php
-                                    $sql = "SELECT * FROM estoques WHERE estoques_nome LIKE '{$painel}%' ORDER BY estoques_nome ASC";
+                                    $sql = "SELECT * FROM estoques WHERE nome LIKE '{$painel}%' ORDER BY nome ASC";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     
                                     while($dados = mysqli_fetch_assoc($rs)){
-                                        $estoqueNomeReal = $dados['estoques_nome_real'];
+                                        $estoqueNomeReal = $dados['nome_real'];
                                         $tipoEstoque = substr($estoqueNomeReal, 0, -1);
         
                                 ?>
                                 <li>
-                                    <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['estoques_nome']?></a>
+                                    <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['nome']?></a>
                                 </li>
                                 <?php
                                     }
@@ -206,14 +181,14 @@ if ($sessionUserType == 2) {
                                     <a href="index.php?menuop=insumos">Todos os Insumos</a>
                                 </li>
                                 <?php
-                                    $sql = "SELECT * FROM tipos_insumos ORDER BY tipos_insumos_tipo ASC";
+                                    $sql = "SELECT * FROM tipos_insumos ORDER BY tipo ASC";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     
                                     while($dados = mysqli_fetch_assoc($rs)){
         
                                 ?>
                                 <li>
-                                    <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>"><?=$dados['tipos_insumos_tipo']?></a>
+                                    <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['id']?>"><?=$dados['tipo']?></a>
                                 </li>
                                 <?php
                                     }
@@ -235,14 +210,14 @@ if ($sessionUserType == 2) {
                                     <a href="index.php?menuop=fornecedores">Todos os Fornecedores</a>
                                 </li>
                                 <?php
-                                    $sql = "SELECT * FROM categorias_fornecedores ORDER BY cf_categoria ASC";
+                                    $sql = "SELECT * FROM categorias_fornecedores ORDER BY categoria ASC";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     
                                     while($dados = mysqli_fetch_assoc($rs)){
         
                                 ?>
                                 <li>
-                                    <a href="index.php?menuop=fornecedores&fornecedores_ctg_id=<?=$dados['cf_id']?>"><?=$dados['cf_categoria']?></a>
+                                    <a href="index.php?menuop=fornecedores&fornecedores_ctg_id=<?=$dados['id']?>"><?=$dados['categoria']?></a>
                                 </li>
                                 <?php
                                     }
@@ -255,7 +230,7 @@ if ($sessionUserType == 2) {
                     <div class="dropdown">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
-                            <?php echo $_SESSION['usuario_primeiro_nome'];?>
+                            <?=$userFirstName;?>
                         </span>
                         <div class="dropdown-content sair no-margin">
                             <ul>
@@ -348,6 +323,45 @@ if ($sessionUserType == 2) {
                     } else{
 
                         include_once("estoques/inserir_estoque.php");
+                        break;
+                    }
+                
+                case 'editar_estoque':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("estoques/editar-estoque.php");
+                        break;
+                    }
+                
+                case 'atualizar_estoque':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("estoques/atualizar-estoque.php");
+                        break;
+                    }
+                
+                case 'excluir_estoque':
+
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("estoques/excluir-estoque.php");
                         break;
                     }
 
@@ -494,6 +508,19 @@ if ($sessionUserType == 2) {
                         break;
                     }
                     
+                case 'atualizar_proprios_dados':
+
+                    if (!$sessionUserType) {
+
+                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
+                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
+
+                    } else{
+
+                        include_once("usuarios/funcionarios/atualizar_proprios_dados.php");
+                        break;
+                    }
+                    
                 case 'editar_usuario':
 
                     if ($sessionUserType != 2) {
@@ -561,7 +588,7 @@ if ($sessionUserType == 2) {
                 
                 case 'cadastro_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -574,7 +601,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -587,7 +614,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -600,7 +627,7 @@ if ($sessionUserType == 2) {
     
                 case 'atualizar_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -613,7 +640,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -621,84 +648,6 @@ if ($sessionUserType == 2) {
                     } else{
 
                         include_once("usuarios/fornecedores/excluir_fornecedores.php");
-                        break;
-                    }
-
-                case 'instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/painel_instituicoes.php");
-                        break;
-                    }
-                
-                case 'cadastro_instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/cadastro_instituicoes.php");
-                        break;
-                    }
-
-                case 'inserir_instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/inserir_instituicoes.php");
-                        break;
-                    }
-
-                case 'editar_instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/editar_instituicoes.php");
-                        break;
-                    }
-    
-                case 'atualizar_instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/atualizar_instituicoes.php");
-                        break;
-                    }
-
-                case 'excluir_instituicoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/instituicoes/excluir_instituicoes.php");
                         break;
                     }
 
@@ -1248,84 +1197,6 @@ if ($sessionUserType == 2) {
                         break;
                     }
 
-                case 'permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/painel_permissoes.php");
-                        break;
-                    }
-
-                case 'cadastrar_permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/cadastro_permissao.php");
-                        break;
-                    }
-
-                case 'inserir_permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/inserir_permissao.php");
-                        break;
-                    }
-
-                case 'editar_permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/editar_permissao.php");
-                        break;
-                    }
-
-                case 'atualizar_permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/atualizar_permissao.php");
-                        break;
-                    }
-
-                case 'excluir_permissoes':
-
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
-
-                        echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
-                        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
-
-                    } else{
-
-                        include_once("usuarios/permissoes/excluir_permissao.php");
-                        break;
-                    }
-
                 case 'gerenciar_permissoes_usuario':
 
                     if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
@@ -1380,7 +1251,7 @@ if ($sessionUserType == 2) {
 
                 case 'categorias_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1393,7 +1264,7 @@ if ($sessionUserType == 2) {
 
                 case 'cadastroCategoriaFornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_adm_diretor)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1406,7 +1277,7 @@ if ($sessionUserType == 2) {
 
                 case 'inserir_categoria_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1419,7 +1290,7 @@ if ($sessionUserType == 2) {
 
                 case 'editar_categoria_fornecedores':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1432,7 +1303,7 @@ if ($sessionUserType == 2) {
 
                 case 'atualizar_categoria_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";
@@ -1445,7 +1316,7 @@ if ($sessionUserType == 2) {
 
                 case 'excluir_categoria_fornecedor':
 
-                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm)) {
+                    if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {
 
                         echo "<script language='javascript'>window.alert('Você não tem permissão para acessar está página!!'); </script>";
                         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=pagina_principal'</script>";

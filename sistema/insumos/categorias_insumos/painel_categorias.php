@@ -58,11 +58,11 @@ if ($qualEstoque_dep != "") {
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Categoria</th>
                         <th>Insumos na Categoria</th>
                         <th>Descrição</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -117,6 +117,12 @@ if ($qualEstoque_dep != "") {
                     ?>
                     <tr>
                     <tr class="tabela_dados">
+                        <td><?=$dados["tipos_insumos_id"]?></td>
+                        <td>
+                            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>" class="form-control"><?=$dados['tipos_insumos_tipo']?></a>
+                        </td>
+                        <td><?=$dados_info["qtd_insumos"]?></td>
+                        <td><?=$dados["tipos_insumos_descricao"]?></td>
                         <td class="operacoes" id="td_operacoes_editar_deletar">
                             <a href="index.php?menuop=editar_categoria_insumos&id=<?=$dados["tipos_insumos_id"]?>" class="confirmaEdit">
                                 <button class="btn">
@@ -133,12 +139,6 @@ if ($qualEstoque_dep != "") {
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["tipos_insumos_id"]?></td>
-                        <td>
-                            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>" class="form-control"><?=$dados['tipos_insumos_tipo']?></a>
-                        </td>
-                        <td><?=$dados_info["qtd_insumos"]?></td>
-                        <td><?=$dados["tipos_insumos_descricao"]?></td>
                     </tr>
                     <?php
                         }
