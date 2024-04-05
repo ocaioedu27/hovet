@@ -86,47 +86,47 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
                         $sql = "SELECT
-                                    s.pre_slc_id,
-                                    u.usuario_primeiro_nome,
-                                    i.insumos_nome,
-                                    s.pre_slc_qtd_solicitada,
-                                    s.pre_slc_oid_solicitacao,
-                                    s.pre_slc_data,
-                                    st.setores_setor,
-                                    s.pre_slc_justificativa,
-                                    stt.status_slc_status,
-                                    es.estoques_nome,
-                                    tp.tipos_movimentacoes_movimentacao
+                                    s.id,
+                                    u.primeiro_nome,
+                                    i.nome as insumos_nome,
+                                    s.qtd_solicitada,
+                                    s.oid_solicitacao,
+                                    s.data,
+                                    st.setor,
+                                    s.justificativa,
+                                    stt.status,
+                                    es.nome as estoques_nome,
+                                    tp.movimentacao
                                     
                                 FROM pre_solicitacoes s
                                     
                                     INNER JOIN usuarios u
-                                    ON s.pre_slc_solicitante = u.usuario_id
+                                    ON s.usuario_id = u.id
                                     
                                     INNER JOIN dispensario d
-                                    ON s.pre_slc_dispensario_id = d.dispensario_id
+                                    ON s.dispensario_id = d.id
                                     
                                     INNER JOIN insumos i
-                                    ON d.dispensario_insumos_id = i.insumos_id 
+                                    ON d.insumos_id = i.id 
                                     
                                     INNER JOIN setores st
-                                    ON s.pre_slc_setor_destino = st.setores_id
+                                    ON s.setor_destino_id = st.id
                                     
                                     INNER JOIN status_slc stt
-                                    ON s.pre_slc_status_slc_id = stt.status_slc_id
+                                    ON s.status_slc_id = stt.id
                                     
                                     INNER JOIN estoques es
-                                    ON s.pre_slc_dips_solicitado = es.estoques_id
+                                    ON d.estoque_id = es.id
                                     
                                     INNER JOIN tipos_movimentacoes tp
-                                    ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
+                                    ON tp.id = s.tp_movimentacoes_id
                                 
                                 WHERE
-                                    s.pre_slc_oid_solicitacao = '{$oid_solicitacao}' AND stt.status_slc_status = '{$qualStatus}' AND (i.insumos_nome LIKE '%{$txt_pesquisa}%' or
-                                    u.usuario_primeiro_nome LIKE '%{$txt_pesquisa}%' or
-                                    tp.tipos_movimentacoes_movimentacao LIKE '%{$txt_pesquisa}%')
+                                    s.oid_solicitacao = '{$oid_solicitacao}' AND stt.status = '{$qualStatus}' AND (i.nome LIKE '%{$txt_pesquisa}%' or
+                                    u.primeiro_nome LIKE '%{$txt_pesquisa}%' or
+                                    tp.movimentacao LIKE '%{$txt_pesquisa}%')
                                     
-                                ORDER BY pre_slc_data DESC 
+                                ORDER BY data DESC 
                                     
                                 LIMIT $inicio,$quantidade_registros_solicitacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -135,27 +135,27 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                             // $valor_form = $dados_para_while['estoques_nome_real'];
                             $qtd_linhas_tabelas++;
 
-                            $pre_slc_id = $dados_para_while['pre_slc_id'];
+                            $pre_slc_id = $dados_para_while['id'];
                             // echo $pre_slc_id;
                         
                     ?>
                     <tr>
                         <td><?=$oid_solicitacao?></td>
-                        <td><?=$dados_para_while["usuario_primeiro_nome"]?></td>
+                        <td><?=$dados_para_while["primeiro_nome"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
-                        <td><?=$dados_para_while["pre_slc_qtd_solicitada"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados_para_while['pre_slc_data']));?></td>
+                        <td><?=$dados_para_while["qtd_solicitada"]?></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($dados_para_while['data']));?></td>
                         <td>
                             <?php
-                                $movimentacao_tmp = $dados_para_while["tipos_movimentacoes_movimentacao"];
+                                $movimentacao_tmp = $dados_para_while["movimentacao"];
                                 $tipo_slc = strtok($movimentacao_tmp, " ");
                                 echo $tipo_slc;
                             ?>
                         </td>
                         <td style="color: 
                         <?php
-                            $status_slc = $dados_para_while["status_slc_status"];
+                            $status_slc = $dados_para_while["status"];
                             if($status_slc == "Pendente"){
                                 echo "goldenrod";
                             } elseif ($status_slc == "Aprovada"){
@@ -189,11 +189,11 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         <div class="paginacao">
             <?php
                 $sqlTotalSlc = "SELECT 
-                                    pre_slc_id 
+                                    id 
                                 FROM 
                                     pre_solicitacoes
                                 WHERE 
-                                    pre_slc_oid_solicitacao = '{$oid_solicitacao}'";
+                                    oid_solicitacao = '{$oid_solicitacao}'";
 
                 $queryTotalSlc = mysqli_query($conexao,$sqlTotalSlc) or die(mysqli_error($conexao));
 

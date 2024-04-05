@@ -92,38 +92,33 @@ if ($qualEstoque_dep != "") {
             $insumos_cads_list = array();
 
             $sql = "SELECT
-                        d.id, 
-                        d.qtd,
-                        date_format(d.validade, '%d/%m/%Y') as validadedeposito,
-                        es.nome as estoques_nome,
-                        es.nome_real,
-                        i.nome as insumos_nome,
-                        i.unidade,
-                        datediff(d.validade, curdate()) as diasParaVencimentodeposito,
-                        i.qtd_critica
-                        FROM deposito d 
-
-                        INNER JOIN insumos i 
-                        ON d.insumos_id = i.id
-
-                        INNER JOIN tipos_insumos tp
-                        ON tp.id = i.tipo_insumos_id
-
-                        INNER JOIN estoques es
-                        ON d.estoque_id = es.id 
-
-                        WHERE
-                            es.nome_real = '{$qualEstoque}' and
-                            (d.id='{$txt_pesquisa_deposito}' or
-                            i.nome LIKE '%{$txt_pesquisa_deposito}%' or
-                            tp.tipo LIKE '%{$txt_pesquisa_deposito}%')
-                            ORDER BY i.nome ASC 
-                            LIMIT $inicio_deposito,$quantidade_registros_deposito";
+                        DISTINCT i.nome as insumos_nome
+                    FROM 
+                        deposito d 
+                    INNER JOIN 
+                        insumos i 
+                    ON 
+                        d.insumos_id = i.id
+                    INNER JOIN 
+                        tipos_insumos tp
+                    ON 
+                        tp.id = i.tipo_insumos_id
+                    INNER JOIN 
+                        estoques es
+                    ON 
+                        d.estoque_id = es.id 
+                    WHERE
+                        es.nome_real = '{$qualEstoque}' and
+                        (d.id='{$txt_pesquisa_deposito}' or
+                        i.nome LIKE '%{$txt_pesquisa_deposito}%' or
+                        tp.tipo LIKE '%{$txt_pesquisa_deposito}%')
+                        ORDER BY i.nome ASC 
+                        LIMIT $inicio_deposito,$quantidade_registros_deposito";
 
             // echo $sql;
             $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
-            // var_dump($rs);
+            $qtd_resultados = $rs->num_rows;
             while($dados_para_while = mysqli_fetch_assoc($rs)){
                 $qtd_linhas_tabelas++;
                 $i = $qtd_linhas_tabelas-1;
@@ -155,6 +150,7 @@ if ($qualEstoque_dep != "") {
                         
                         $i = count($insumos_cads_list)-1;
                         // var_dump( $insumos_cads_list);
+                        $qtdResult = 0;
                         while ($i >= 0) {
                             // echo $insumos_cads_list[$i];
                             $insumo_selecionado = $insumos_cads_list[$i];
@@ -176,22 +172,38 @@ if ($qualEstoque_dep != "") {
                             es.nome_real = '{$qualEstoque}' and i.nome='{$insumo_selecionado}'";
                         
                             $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//Deposito/quantidade_insumos_deposito/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
+                            
+                            $resultados = '';
+                            if ($resultado_qtd->num_rows > 0){
+                                while($dados_para_while = mysqli_fetch_assoc($resultado_qtd)){
+                                    $insumos_nome = $dados_para_while['insumos_nome'];
+                                    $tipo = $dados_para_while["tipo"];
+                                    $deposito_qtd_insumo = $dados_para_while["deposito_qtd_insumo"];
+                                    $estoques_nome = $dados_para_while["estoques_nome"];
 
-                            while ($dados = mysqli_fetch_assoc($resultado_qtd)) {
-                                // var_dump($dados);
+                                    $resultados .= '
+                                        <tr class="tabela_dados">
+                                            <td class="">
+                                                <a href="index.php?menuop=deposito&'.$qualEstoque.'&'.$insumos_nome.'=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
+                                            </td>
+                                            <td><strong>'.$insumos_nome.'</strong></td>
+                                            <td>'.$tipo.'</td>
+                                            <td>'.$deposito_qtd_insumo.'</td>
+                                            <td>'.$estoques_nome.'</td>
+                                        </tr>';
+
+                                    $qtd_linhas_tabelas++;
+
+                                }
+                            } else{
+                                $resultados = '
+                                    <tr class="tabela_dados">
+                                        <td colspan="5" class="text-center">Nenhum registro para exibir!</td>
+                                    </tr>';
+
+                            } 
+                            echo $resultados;
                         
-                    ?>
-                    <tr>
-                        <td class="">
-                            <a href="index.php?menuop=deposito&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
-                        </td>
-                        <td><strong><?=$dados['insumos_nome']?></strong></td>
-                        <td><?=$dados['tipo']?></td>
-                        <td><?=$dados['deposito_qtd_insumo']?></td>
-                        <td><?=$dados['estoques_nome']?></td>
-                    </tr>
-                    <?php
-                            }
                         }
                     ?>
                 </tbody>
@@ -199,39 +211,8 @@ if ($qualEstoque_dep != "") {
         </div>
         <div class="paginacao">
             <?php
-                // $sqlTotaldeposito = "SELECT d.id 
-                //                         FROM deposito d
-                //                         INNER JOIN estoques e
-                //                         ON e.id = d.estoque_id
-                //                         WHERE e.nome_real='{$qualEstoque}'";
-                $sqlTotaldeposito = "SELECT
-                                        d.id, 
-                                        d.qtd,
-                                        date_format(d.validade, '%d/%m/%Y') as validadedeposito,
-                                        es.nome as estoques_nome,
-                                        es.nome_real,
-                                        i.nome as insumos_nome,
-                                        i.unidade,
-                                        datediff(d.validade, curdate()) as diasParaVencimentodeposito,
-                                        i.qtd_critica
-                                    FROM deposito d 
-
-                                    INNER JOIN insumos i 
-                                    ON d.insumos_id = i.id
-
-                                    INNER JOIN tipos_insumos tp
-                                    ON tp.id = i.tipo_insumos_id
-
-                                    INNER JOIN estoques es
-                                    ON d.estoque_id = es.id 
-
-                                    WHERE
-                                        es.nome_real = '{$qualEstoque}' and i.nome = '$insumo_selecionado'";
-                // $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
-
-                // $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+    
                 $numTotaldeposito = count($insumos_cads_list);
-                // echo $numTotaldeposito;
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_deposito);
                 
                 echo "<a href=\"?menuop=deposito_resumo&" . $qualEstoque . "=1\">Início</a> ";

@@ -39,27 +39,22 @@ if ($qualEstoque_dep != "") {
                 <div class="form-group valida_movimentacao">
 
                     <div class="display-flex-cl">
-                        <?php
-                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
-                        $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
-                        $dados = mysqli_fetch_assoc($result);
-                        ?>
 
                         <label>Solicitante</label>
-                        <input type="text" class="form-control largura_metade" name="solicitante_insumo_dispensario" value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
+                        <input type="text" class="form-control largura_metade" name="solicitante_insumo_dispensario" value="<?=$sessionUserID?> - <?=$userFirstName?>" readonly>
                     </div>
                         
                     <div class="display-flex-cl">
                         <label>Tipo de operação</label>
                         <select class="form-control" name="operacao_dispensario" id="qualSolicitacaoDisp" onclick="verificaSolicitacao()" required>
                             <?php
-                            $sql = "SELECT tipos_movimentacoes_id,tipos_movimentacoes_movimentacao FROM tipos_movimentacoes WHERE tipos_movimentacoes_descricao LIKE 'Quando alguém solicita%' ";
+                            $sql = "SELECT id, movimentacao FROM tipos_movimentacoes WHERE descricao LIKE 'Quando alguém solicita%' ";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
+                            <option><?=$dados["id"]?> - <?=$dados["movimentacao"]?></option>
 
                             <?php
                                 }
@@ -80,7 +75,7 @@ if ($qualEstoque_dep != "") {
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["setores_id"]?> - <?=$dados["setores_setor"]?></option>
+                            <option><?=$dados["id"]?> - <?=$dados["setor"]?></option>
 
                             <?php
                                 }
@@ -96,14 +91,14 @@ if ($qualEstoque_dep != "") {
                     <div class="display-flex-cl">
                         
                         <?php
-                        $sql = "SELECT estoques_id,estoques_nome FROM estoques WHERE estoques_nome_real='{$qualEstoque}'";
+                        $sql = "SELECT id, nome FROM estoques WHERE nome_real='{$qualEstoque}'";
                         $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
                         $dados = mysqli_fetch_assoc($result);
                         ?>
 
                         <label>Dispensário da Solicitação</label>
-                        <input type="text" class="form-control largura_um_terco" name="tipo_dispensario" value="<?=$dados['estoques_id']?> - <?=$dados['estoques_nome']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="tipo_dispensario" value="<?=$dados['id']?> - <?=$dados['nome']?>" readonly>
                     </div>
 
                 </div>
@@ -124,7 +119,7 @@ if ($qualEstoque_dep != "") {
              
                         <div class="display-flex-cl">
                             <label>Quantidade Solicitada</label>
-                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp', 'label_to_alert_1')" placeholder="Informe a quantidade..." required>
+                            <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" onkeyup="verificaValorMaximoExcedido('qtd_solicitada_dispensario1','quantidade_atual_dispensario1','alerta_valor_acima_max1','btn_slc_insumo_disp', 'label_to_alert_1', 'qualSolicitacaoDisp')" placeholder="Informe a quantidade..." required>
                             <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
                                 <label id="label_to_alert_1">Valor inválido!! <ion-icon name="alert-circle-outline"></ion-icon></label>
                             </span>

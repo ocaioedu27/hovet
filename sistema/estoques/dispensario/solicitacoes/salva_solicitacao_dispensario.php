@@ -1,6 +1,3 @@
-<header>
-    <h2>Inserir Insumo no Dispensário</h2>
-</header>
 <?php 
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
@@ -66,7 +63,7 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
         $quantidade_atual_dispensario = $dados_enviados_array['quantidade_atual_dispensario'][$chave_solic_dispensario];
         $validade_insumo_dispensario = $dados_enviados_array['validade_insumo_dispensario'][$chave_solic_dispensario];
 
-        $procura_id_insumo = mysqli_query($conexao, "SELECT dispensario_insumos_id FROM dispensario WHERE dispensario_id={$insumo_dispensario_id}") or die('//dispensario/solicita_disp/select_id_estoque - erro ao realizar consulta: ' . mysqli_error($conexao));
+        $procura_id_insumo = mysqli_query($conexao, "SELECT insumos_id FROM dispensario WHERE id={$insumo_dispensario_id}") or die('//dispensario/solicita_disp/select_id_estoque - erro ao realizar consulta: ' . mysqli_error($conexao));
         $dados = mysqli_fetch_assoc($procura_id_insumo);
         $insumo_id_tmp = $dados['dispensario_insumos_id'];
 
@@ -81,18 +78,16 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
         
 
         $sql_insert = "INSERT INTO pre_solicitacoes (
-            pre_slc_solicitante,
-            pre_slc_dips_solicitado,
-            pre_slc_setor_destino,
-            pre_slc_justificativa,
-            pre_slc_dispensario_id,
-            pre_slc_qtd_solicitada,
-            pre_slc_tp_movimentacoes_id,
-            pre_slc_status_slc_id,
-            pre_slc_oid_solicitacao)
+            usuario_id,
+            setor_destino_id,
+            justificativa,
+            dispensario_id,
+            qtd_solicitada,
+            tp_movimentacoes_id,
+            status_slc_id,
+            oid_solicitacao)
             VALUES(
                 {$solicitante_insumo_dispensario},
-                {$tipo_dispensario},
                 {$setor_destino_solicitacao_dispensario},
                 '{$justifica_requisicao}',
                 {$insumo_dispensario_id},
@@ -102,14 +97,23 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
                 '{$iod_pre_solicitacao}'
             )";
 
-        if (mysqli_query($conexao, $sql_insert)) { 
-            echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!! Registro da solicitação para acompanhamento: ". $iod_pre_solicitacao . " '); </script>";
-            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
-            echo "<br/>Chave loop: " . $chave_solic_dispensario;
+        // echo $sql_insert;
+        // exit;
+
+        try {
+            if (mysqli_query($conexao, $sql_insert)) { 
+                echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!! Registro da solicitação para acompanhamento: ". $iod_pre_solicitacao . " '); </script>";
+                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
+                echo "<br/>Chave loop: " . $chave_solic_dispensario;
             
-        } else {
-            die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
+            } else {
+                die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
+            }
+
+        } catch (\Throwable $th) {
+            echo $th;
         }
+        
     }
 
 

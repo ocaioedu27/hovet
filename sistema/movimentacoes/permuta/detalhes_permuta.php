@@ -4,44 +4,51 @@ $permutaId = $_GET["permutaId"];
 
 $sql_detalhes_permuta = "SELECT
                     p.data,
-                    p.permutas_insumos_qtd_cadastrado,
-                    p.permutas_validade_retirado,
-                    p.permutas_qtd_retirado,
-                    p.permutas_insumos_validade_cadastrado,
-                    p.permutas_oid_operacao,
-                    u.usuario_primeiro_nome,
-                    e.estoques_nome as nome_estoque_retirado,
-                    es.estoques_nome as nome_estoque_cadastrado,
-                    ins.insumos_nome as nome_insumo_cadastrado,
-                    ins.insumos_descricao as descricao_insumo_cadastrado,
-                    i.insumos_nome as nome_insumo_retirado,
-                    i.insumos_descricao as descricao_insumo_retirado,
-                    f.fornecedores_razao_social
+                    p.qtd_cadastrado,
+                    p.qtd_retirado,
+                    p.oid_operacao,
+                    u.primeiro_nome,
+                    depCad.validade as validade_cadastrado,
+                    depRem.validade as validade_retirado,
+                    esRem.nome as nome_estoque_retirado,
+                    esCad.nome as nome_estoque_cadastrado,
+                    inCad.nome as nome_insumo_cadastrado,
+                    inCad.descricao as descricao_insumo_cadastrado,
+                    inRem.nome as nome_insumo_retirado,
+                    inRem.descricao as descricao_insumo_retirado,
+                    f.razao_social,
+                    tp.movimentacao
 
                 FROM permutas p
                 
                     INNER JOIN usuarios u
-                    ON p.permutas_operador = u.usuario_id
+                    ON p.usuario_id = u.id
                 
-                    INNER JOIN deposito d 
-                    ON p.permutas_deposito_id = d.deposito_id
+                    INNER JOIN deposito depCad 
+                    ON p.deposito_id_cadastrado = depCad.id
                 
-                    INNER JOIN insumos ins
-                    ON p.permutas_insumos_id_cadastrado = ins.insumos_id
+                    INNER JOIN insumos inCad
+                    ON depCad.insumos_id = inCad.id
                 
-                    INNER JOIN insumos i
-                    ON d.deposito_insumos_id = i.insumos_id
+                    INNER JOIN deposito depRem 
+                    ON p.deposito_id_removido = depRem.id
                 
-                    INNER JOIN estoques e
-                    ON p.permutas_estoques_id_retirado = e.estoques_id
+                    INNER JOIN insumos inRem
+                    ON depCad.insumos_id = inRem.id
                 
-                    INNER JOIN estoques es
-                    ON p.permutas_estoques_id_cadastrado = es.estoques_id
+                    INNER JOIN estoques esRem
+                    ON depRem.estoque_id = esRem.id
+                
+                    INNER JOIN estoques esCad
+                    ON depCad.estoque_id = esCad.id
 
                     INNER JOIN fornecedores f
-                    ON p.permutas_fornecedor_id = f.fornecedores_id
+                    ON p.fornecedor_id = f.id
+
+                    INNER JOIN tipos_movimentacoes tp
+                    ON p.tipos_movimentacoes_id = tp.id
                 
-                    WHERE permutas_oid_operacao='{$permutaId}'";
+                    WHERE oid_operacao='{$permutaId}'";
 
 
 $result = mysqli_query($conexao,$sql_detalhes_permuta) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
@@ -53,7 +60,7 @@ $dados = mysqli_fetch_assoc($result);
     <div class="cards permuta">
         <div class="voltar">
             <h3>Detalhes da Operação de Permuta</h3>
-            <a href="index.php?menuop=permuta_por_oid&idPermuta=<?=$dados["permutas_oid_operacao"]?>" class="">
+            <a href="index.php?menuop=permuta_por_oid&idPermuta=<?=$dados["oid_operacao"]?>" class="">
                 <button class="btn">
                     <span class="icon">
                         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -69,23 +76,23 @@ $dados = mysqli_fetch_assoc($result);
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Tipo de operação</label>
-                        <input type="text" class="form-control largura_um_terco" value="Permuta" readonly>
+                        <input type="text" class="form-control largura_um_terco" value="<?=$dados['movimentacao']?>" readonly>
                     </div>
                     
                     <div class="display-flex-cl">
                         <label>Quem Realizou</label>
-                        <input type="text" class="form-control largura_um_terco" value='<?=$dados["usuario_primeiro_nome"]?>' readonly>
+                        <input type="text" class="form-control largura_um_terco" value='<?=$dados["primeiro_nome"]?>' readonly>
 
                     </div>
 
                     <div class="display-flex-cl">
                         <label>Data da transferência</label>
-                        <input type="datetime-local" class="form-control" value='<?=$dados["permutas_data"]?>' readonly>
+                        <input type="datetime-local" class="form-control" value='<?=$dados["data"]?>' readonly>
                     </div>
 
                     <div class="display-flex-cl">
                         <label>Instituição que Permutou</label>
-                        <input class="form-control" value='<?=$dados["fornecedores_razao_social"]?>' readonly>
+                        <input class="form-control" value='<?=$dados["razao_social"]?>' readonly>
                     </div>
                 </div>
             </div>
@@ -103,7 +110,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Validade</label>
-                                <input type="date" class="form-control largura_um_terco" value="<?=$dados["permutas_validade_retirado"]?>" readonly>
+                                <input type="date" class="form-control largura_um_terco" value="<?=$dados["validade_retirado"]?>" readonly>
                             </div>
                         </div>
 
@@ -111,7 +118,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Permutada</label>
-                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_qtd_retirado"]?>" readonly>
+                                <input type="number" class="form-control largura_metade" value="<?=$dados["qtd_retirado"]?>" readonly>
                             </div>
                             
                             <div class="display-flex-cl">
@@ -138,7 +145,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Validade</label>
-                                <input type="date" class="form-control largura_um_terco" value="<?=$dados["permutas_insumos_validade_cadastrado"]?>" readonly>
+                                <input type="date" class="form-control largura_um_terco" value="<?=$dados["validade_cadastrado"]?>" readonly>
                             </div>
                         </div>
 
@@ -146,7 +153,7 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl">
                                 <label>Quantidade Inserida</label>
-                                <input type="number" class="form-control largura_metade" value="<?=$dados["permutas_insumos_qtd_cadastrado"]?>" readonly>
+                                <input type="number" class="form-control largura_metade" value="<?=$dados["qtd_cadastrado"]?>" readonly>
                             </div>
                             
                             <div class="display-flex-cl">

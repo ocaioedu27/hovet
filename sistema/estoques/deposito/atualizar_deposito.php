@@ -133,6 +133,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
             deposito_id_cadastrado,
             deposito_id_removido,
             qtd_retirado,
+            qtd_cadastrado,
             oid_operacao,
             fornecedor_id,
             tipos_movimentacoes_id
@@ -142,6 +143,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$dep_id},
                 {$insumoID_InsumoPermuta},
                 {$quantidadeInsumoDepositoPermuta},
+                {$quantidadeInsumoCadPermuta},
                 '{$oid_operacao}',
                 {$instituicaoPermutaDep},
                 {$movimentacao_permuta_deposito}

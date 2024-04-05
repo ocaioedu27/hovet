@@ -90,7 +90,7 @@ if ($rs->num_rows > 0){
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT id FROM permutas";
+                    $sqlTotalInsumos = "SELECT oid_operacao FROM permutas";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
@@ -118,7 +118,13 @@ if ($rs->num_rows > 0){
 
                     if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=permuta&pagina=<?php echo $pagina+1?>"> >> </a>
+                            <a href="?menuop=permuta&pagina=<?php echo $pagina+2?>"> >> </a>
+                        <?php
+                    }
+
+                    if ($pagina<($totalPaginasInsumos-1)) {
+                        ?>
+                            <a href="?menuop=permuta&pagina=<?php echo $pagina+1?>"> > </a>
                         <?php
                     }
                     

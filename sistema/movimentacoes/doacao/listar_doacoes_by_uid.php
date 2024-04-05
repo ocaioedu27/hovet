@@ -60,54 +60,53 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
 
                         $sql = "SELECT 
-                                    d.doacoes_oid_operacao,
-                                    d.doacoes_data_operacao,
-                                    f.fornecedores_razao_social,
-                                    i.insumos_id,
-                                    i.insumos_nome,
-                                    f.fornecedores_razao_social,
-                                    e.estoques_nome
+                                    d.oid_operacao,
+                                    d.data_operacao,
+                                    f.razao_social,
+                                    i.id,
+                                    i.nome as insumo_nome,
+                                    e.nome as estoque_nome
                                 FROM 
                                     doacoes d
 
                                 INNER JOIN 
                                     fornecedores f
                                 ON 
-                                    f.fornecedores_id = d.doacoes_fornecedor_id
+                                    f.id = d.fornecedor_id
 
                                 INNER JOIN 
                                     deposito dep
                                 ON 
-                                    dep.deposito_id_origem = d.doacoes_oid_operacao
+                                    dep.id_origem = d.oid_operacao
 
                                 INNER JOIN 
                                     insumos i
                                 ON 
-                                    d.doacoes_insumos_id = i.insumos_id
+                                    dep.insumos_id = i.id
 
                                 INNER JOIN 
                                     estoques e
                                 ON 
-                                    dep.deposito_estoque_id = e.estoques_id
+                                    dep.estoque_id = e.id
                                     
                                 WHERE
-                                    d.doacoes_oid_operacao = '{$oid_operacao}' and
-                                    d.doacoes_data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
-                                    GROUP BY insumos_nome 
-                                    ORDER BY doacoes_data_operacao ASC 
+                                    d.oid_operacao = '{$oid_operacao}' and
+                                    d.data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
+                                    GROUP BY i.nome 
+                                    ORDER BY d.data_operacao ASC 
                                     LIMIT $inicio_doacoes,$quantidade_registros_doacoes";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["doacoes_oid_operacao"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['doacoes_data_operacao']));?></td>
-                        <td><?=$dados["estoques_nome"]?></td>
+                        <td><?=$dados["oid_operacao"]?></td>
+                        <td><?=$dados["insumo_nome"]?></td>
+                        <td><?=$dados["razao_social"]?></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($dados['data_operacao']));?></td>
+                        <td><?=$dados["estoque_nome"]?></td>
                         <td>
-                            <a href="index.php?menuop=doacao_detalhes&oidDoacao=<?=$dados["doacoes_oid_operacao"]?>&insumoId=<?=$dados['insumos_id']?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=doacao_detalhes&oidDoacao=<?=$dados["oid_operacao"]?>&insumoId=<?=$dados['id']?>">Ver Detalhes</a>
                         </td>
                     </tr>
                     <?php
@@ -124,9 +123,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                             doacoes
                                         WHERE 
                                             doacoes_oid_operacao = '{$oid_operacao}'";
-                    $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
+                    // $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
-                    $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
+                    // $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
+                    $numTotalInsumos = $rs->num_rows;
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_doacoes);
                     
                     echo "<a href=\"?menuop=doacao_por_oid&oidDoacao=$oid_operacao&pagina_doacoes=1\">Início</a> ";

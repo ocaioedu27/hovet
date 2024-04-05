@@ -2,9 +2,9 @@
 
 $quantidade_registros_doacoes = 10;
 
-$pagina_doacoes = (isset($_GET['pagina_doacoes']))?(int)$_GET['pagina_doacoes']:1;
+$pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-$inicio_doacoes = ($quantidade_registros_doacoes * $pagina_doacoes) - $quantidade_registros_doacoes;
+$inicio_doacoes = ($quantidade_registros_doacoes * $pagina) - $quantidade_registros_doacoes;
 
 $txt_pesquisa_doacoes = (isset($_POST["txt_pesquisa_doacoes"]))?$_POST["txt_pesquisa_doacoes"]:"";
 
@@ -15,13 +15,10 @@ $sql = "SELECT
 
         FROM 
             doacoes d
-            
         INNER JOIN 
             fornecedores f
-            
         ON 
             f.id = d.fornecedor_id
-            
         WHERE
             d.oid_operacao = '{$txt_pesquisa_doacoes}' or
             d.data_operacao LIKE '%{$txt_pesquisa_doacoes}%'
@@ -41,7 +38,7 @@ if ($rs->num_rows > 0){
             <tr class="tabela_dados">
                 <td>'. $oid_operacao .'</td>
                 <td>'. $razao_social .'</td>
-                <td>'. $data_upload .'</td>
+                <td>'. $data_operacao .'</td>
                 <td>
                     <a href="index.php?menuop=doacao_por_oid&oidDoacao='.$oid_operacao.'">Informações</a>
                 </td>
@@ -93,39 +90,51 @@ if ($rs->num_rows > 0){
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT id FROM doacoes";
+                    $sqlTotalInsumos = "SELECT DISTINCT oid_operacao FROM doacoes";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_doacoes);
                     
-                    echo "<a href=\"?menuop=doacao&pagina_doacoes=1\">Início</a> ";
-
-                    if ($pagina_doacoes>6) {
+                    echo "<a href=\"?menuop=doacao&pagina=1\">Início</a> ";
+                    
+                    if ($pagina>1) {
                         ?>
-                            <a href="?menuop=doacao?&pagina_doacoes=<?php echo $pagina_doacoes-1?>"> << </a>
+                            <a href="?menuop=doacao&pagina=<?php echo $pagina-1?>"> < </a>
+                        <?php
+                    } 
+
+                    if ($pagina>6) {
+                        ?>
+                            <a href="?menuop=doacao&pagina=<?php echo $pagina-2?>"> << </a>
                         <?php
                     } 
 
                     for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_doacoes) && $i <= ($pagina_doacoes+5)) {
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
                             
-                            if ($i==$pagina_doacoes) {
+                            if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=doacao&pagina_doacoes=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=doacao&pagina=$i\">$i</a> ";
                             } 
                         }          
                     }
 
-                    if ($pagina_doacoes<($totalPaginasInsumos-5)) {
+                    if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=doacao&pagina_doacoes=<?php echo $pagina_doacoes+1?>"> >> </a>
+                            <a href="?menuop=doacao&pagina=<?php echo $pagina+2?>"> >> </a>
+                        <?php
+                    }
+
+                    if ($pagina<($totalPaginasInsumos-1)) {
+                        ?>
+                            <a href="?menuop=doacao&pagina=<?php echo $pagina+1?>"> > </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=doacao&pagina_doacoes=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=doacao&pagina=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

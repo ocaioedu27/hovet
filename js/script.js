@@ -205,25 +205,46 @@ function verificaSolicitacao() {
 
 
 //PARA VERIFICAR SE A QUANTIDADE INSERIDA É MAIOR QUE O VALOR MAXIMO
-function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlerta, idButton, id_label_title) {
+function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlerta, idButton, id_label_title,id_slc = null) {
 
   let valorInserido = document.getElementById(idValorInserido).value;
   let valorMaximo = document.getElementById(idValorMaximo).value;
   let spanAlert = document.getElementById(idSpanAlerta);
   let label_title = document.getElementById(id_label_title);
   let button = document.getElementById(idButton);
-  let tipo_slc = document.getElementById("qualSolicitacaoDisp");
-  tipo_slc = tipo_slc.value;
+  // let tipo_slc = document.getElementById("qualSolicitacaoDisp");
+  let tipo_slc = document.getElementById(id_slc);
+  if(tipo_slc != null){
+    tipo_slc = tipo_slc.value;
+  }else{
+    tipo_slc = "dispensario";
+  }
 
-  let comp_maior = parseInt(valorInserido) >= parseInt(valorMaximo);
-  let comp_valor_maximo_atendido = parseInt(valorInserido) > parseInt(valorMaximo);
-  let comp_zero = parseInt(valorInserido) <= 0;
+
+  const listCatacteresEspeciais = ['!', '@', '#', '$', '%', '&', '*', '-', '+', '=', '_'];
+  let exist_especiais = true
+  let comp_maior = true
+  let comp_valor_maximo_atendido = true
+  let comp_zero = true
+  if (!valorInserido){
+    console.log("está vazio")
+  }else{
+
+    exist_especiais = valorInserido.includes(listCatacteresEspeciais);
+    comp_maior = parseInt(valorInserido) >= parseInt(valorMaximo);
+    comp_valor_maximo_atendido = parseInt(valorInserido) > parseInt(valorMaximo);
+    comp_zero = parseInt(valorInserido) <= 0;
+  }
+  console.log('Valor inserido: ' + valorInserido);
+  console.log('inseido é caractere especial? ' + exist_especiais);
   console.log('inseido é maior que o que foi solicitado? ' + comp_valor_maximo_atendido);
   console.log('inseido é maior que o maximo? ' + comp_maior);
   console.log('inseido é menor que zero? ' + comp_zero);
   console.log('\n');
-  let msg_maior = "Valor inválido!! Insira um valor abaixo do que há disponível";
-  let msg_zero = "Valor inválido!! Insira um valor maior que zero";
+  let msg_vazio = "Insira um valor!";
+  let msg_especiais = "Valor inválido! Insira apenas números!";
+  let msg_maior = "Valor inválido!! Insira um valor abaixo do que há disponível.";
+  let msg_zero = "Valor inválido!! Insira um valor maior que zero.";
   let msg_valor_acima_slc = "Valor inválido!! Insira um valor abaixo ou igual ao valor solicitado.";
   let msg_to_return = "";
 
@@ -248,7 +269,6 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
     console.log("Está no envio de slc \n\n\n");
 
     let chave = "Devolução";
-    var listCatacteresEspeciais = ['!', '@', '#', '$', '%', '&', '*', '-', '+', '=', '_'];
 
     if (tipo_slc.toLowerCase().includes(chave.toLowerCase())) {
 
@@ -271,10 +291,16 @@ function verificaValorMaximoExcedido(idValorInserido, idValorMaximo, idSpanAlert
         button.type = 'button';
       }
 
-      if (comp_zero){
-        msg_to_return = msg_zero;
-      }else if (comp_maior) {
-        msg_to_return = msg_maior;
+      if(!valorInserido){
+        msg_to_return = msg_vazio;
+      }else{
+        if (comp_zero){
+          msg_to_return = msg_zero;
+        }else if (comp_maior) {
+          msg_to_return = msg_maior;
+        }else if(exist_especiais){
+          msg_to_return = msg_especiais; 
+        }
       }
 
     }

@@ -28,7 +28,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             </div>
             <div>
                 <form action="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_compras" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -55,65 +55,65 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     <?php
                         $quantidade_registros_compras = 10;
 
-                        $pagina_compras = (isset($_GET['pagina_compras']))?(int)$_GET['pagina_compras']:1;
+                        $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-                        $inicio_compras = ($quantidade_registros_compras * $pagina_compras) - $quantidade_registros_compras;
+                        $inicio_compras = ($quantidade_registros_compras * $pagina) - $quantidade_registros_compras;
 
-                        $txt_pesquisa_compras = (isset($_POST["txt_pesquisa_compras"]))?$_POST["txt_pesquisa_compras"]:"";
+                        $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
                         $sql = "SELECT 
-                                    c.compras_nome,
-                                    c.compras_num_nf,
-                                    c.compras_id,
-                                    c.compras_caminho,
-                                    c.compras_data_upload,
-                                    i.insumos_id,
-                                    i.insumos_nome,
-                                    f.fornecedores_razao_social,
-                                    e.estoques_nome
+                                    c.nome_nf,
+                                    c.num_nf,
+                                    c.id,
+                                    c.caminho,
+                                    c.data_upload,
+                                    i.id as insumos_id,
+                                    i.nome as insumos_nome,
+                                    f.razao_social,
+                                    e.nome as estoques_nome
                                     FROM 
                                         compras c
 
                                     INNER JOIN 
                                         fornecedores f
                                     ON 
-                                        f.fornecedores_id = c.compras_fornecedor_id
+                                        f.id = c.fornecedor_id
 
                                     INNER JOIN 
                                         deposito d
                                     ON 
-                                        d.deposito_id_origem = c.compras_num_nf
+                                        d.id_origem = c.num_nf
 
                                     INNER JOIN 
                                         insumos i
                                     ON 
-                                        d.deposito_insumos_id = i.insumos_id
+                                        d.insumos_id = i.id
 
                                     INNER JOIN 
                                         estoques e
                                     ON 
-                                        d.deposito_estoque_id = e.estoques_id
+                                        d.estoque_id = e.id
 
                                     WHERE
-                                        c.compras_num_nf = {$num_nf} and (
-                                        i.insumos_nome LIKE '%{$txt_pesquisa_compras}%')
+                                        c.num_nf = {$num_nf} and (
+                                        i.nome LIKE '%{$txt_pesquisa}%')
 
-                                        ORDER BY compras_data_upload ASC 
+                                        ORDER BY data_upload ASC 
                                         LIMIT $inicio_compras,$quantidade_registros_compras";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                         
                     ?>
                     <tr class="tabela_dados">
-                        <td><?=$dados["compras_id"]?></td>
+                        <td><?=$dados["id"]?></td>
                         <td><?=$dados["insumos_nome"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><?=$dados["compras_num_nf"]?></td>
-                        <td><a target="_blank" href="<?=$dados['compras_caminho']?>"><?=$dados["compras_nome"]?></a></td>
-                        <td><?php echo date("d/m/Y H:i", strtotime($dados['compras_data_upload']));?></td>
+                        <td><?=$dados["razao_social"]?></td>
+                        <td><?=$dados["num_nf"]?></td>
+                        <td><a target="_blank" href="<?=$dados['caminho']?>"><?=$dados["nome_nf"]?></a></td>
+                        <td><?php echo date("d/m/Y H:i", strtotime($dados['data_upload']));?></td>
                         <td><?=$dados["estoques_nome"]?></td>
                         <td>
-                            <a href="index.php?menuop=compra_detalhes&numNotaFiscal=<?=$dados["compras_num_nf"]?>&insumoId=<?=$dados['insumos_id']?>">Ver Detalhes</a>
+                            <a href="index.php?menuop=compra_detalhes&numNotaFiscal=<?=$dados["num_nf"]?>&insumoId=<?=$dados['insumos_id']?>">Ver Detalhes</a>
                         </td>
                     </tr>
                     <?php
@@ -125,43 +125,43 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <div class="paginacao">
                 <?php
                     $sqlTotalInsumos = "SELECT
-                                            compras_id
+                                            id
                                         FROM 
                                             compras 
                                         WHERE
-                                            compras_num_nf = {$num_nf}";
+                                            num_nf = {$num_nf}";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_compras);
                     
-                    echo "<a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina_compras=1\">Início</a> ";
+                    echo "<a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina=1\">Início</a> ";
 
-                    if ($pagina_compras>6) {
+                    if ($pagina>6) {
                         ?>
-                            <a href="?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>&pagina_compras=<?php echo $pagina_compras-1?>"> << </a>
+                            <a href="?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>&pagina=<?php echo $pagina-1?>"> << </a>
                         <?php
                     } 
 
                     for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_compras) && $i <= ($pagina_compras+5)) {
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
                             
-                            if ($i==$pagina_compras) {
+                            if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina_compras=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina=$i\">$i</a> ";
                             } 
                         }          
                     }
 
-                    if ($pagina_compras<($totalPaginasInsumos-5)) {
+                    if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>&pagina_compras=<?php echo $pagina_compras+1?>"> >> </a>
+                            <a href="?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>&pagina=<?php echo $pagina+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina_compras=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

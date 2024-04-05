@@ -297,7 +297,7 @@ create table doacoes (
 	id int primary key auto_increment,
     data_operacao datetime not null default current_timestamp(),
     qtd_doada int not null,
-    oid_operacao varchar (50),
+    oid_operacao varchar (50) unique not null,
     tipos_movimentacoes_id int,
     foreign key (tipos_movimentacoes_id) references tipos_movimentacoes(id) on delete set null,
     usuario_id int,

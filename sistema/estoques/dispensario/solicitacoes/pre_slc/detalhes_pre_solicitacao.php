@@ -39,49 +39,49 @@ if (isset($_GET[$idSolicitacao])) {
 }
 
 $sql_detalhes_slc = "SELECT
-                        s.pre_slc_id,
-                        s.pre_slc_qtd_solicitada,
-                        s.pre_slc_data,
-                        s.pre_slc_justificativa,
-                        u.usuario_id,
-                        u.usuario_primeiro_nome,
-                        i.insumos_nome,
-                        i.insumos_descricao,
-                        st.setores_setor,
-                        st.setores_id,
-                        stt.status_slc_status,
-                        es.estoques_id,
-                        es.estoques_nome,
-                        tp.tipos_movimentacoes_movimentacao,
-                        tp.tipos_movimentacoes_id,
-                        d.dispensario_id,
-                        d.dispensario_validade,
-                        d.dispensario_qtd
+                        s.id,
+                        s.qtd_solicitada,
+                        s.data,
+                        s.justificativa,
+                        u.id as usuario_id,
+                        u.primeiro_nome,
+                        i.nome as insumos_nome,
+                        i.descricao,
+                        st.setor,
+                        st.id as setores_id,
+                        stt.status,
+                        es.id as estoques_id,
+                        es.nome as estoques_nome,
+                        tp.movimentacao,
+                        tp.id as tipos_movimentacoes_id,
+                        d.id as dispensario_id,
+                        d.validade,
+                        d.qtd
 
                     FROM pre_solicitacoes s
 
                         INNER JOIN usuarios u
-                        ON s.pre_slc_solicitante = u.usuario_id
+                        ON s.usuario_id = u.id
 
                         INNER JOIN dispensario d
-                        ON s.pre_slc_dispensario_id = d.dispensario_id
+                        ON s.dispensario_id = d.id
 
                         INNER JOIN insumos i
-                        ON d.dispensario_insumos_id = i.insumos_id 
+                        ON d.insumos_id = i.id 
 
                         INNER JOIN setores st
-                        ON s.pre_slc_setor_destino = st.setores_id
+                        ON s.setor_destino_id = st.id
 
                         INNER JOIN status_slc stt
-                        ON s.pre_slc_status_slc_id = stt.status_slc_id
+                        ON s.status_slc_id = stt.id
 
                         INNER JOIN estoques es
-                        ON s.pre_slc_dips_solicitado = es.estoques_id
+                        ON d.estoque_id = es.id
 
                         INNER JOIN tipos_movimentacoes tp
-                        ON tp.tipos_movimentacoes_id = s.pre_slc_tp_movimentacoes_id
+                        ON tp.id = s.tp_movimentacoes_id
                     
-                    WHERE pre_slc_id={$solicitacoesId}";
+                    WHERE s.id={$solicitacoesId}";
 
 $result = mysqli_query($conexao,$sql_detalhes_slc) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
@@ -113,12 +113,12 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
 
                     <div class="display-flex-cl">
                         <label>Solicitante</label>
-                        <input type="text" class="form-control largura_metade" name="solicitante_insumo_dispensario" value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
+                        <input type="text" class="form-control largura_metade" name="solicitante_insumo_dispensario" value="<?=$dados['usuario_id']?> - <?=$dados['primeiro_nome']?>" readonly>
                     </div>
                         
                     <div class="display-flex-cl">
                         <label>Tipo de operação</label>
-                        <input type="text" class="form-control" name="operacao_dispensario" id="qualSolicitacaoDisp" onclick="verificaSolicitacao()" value="<?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?>" readonly>
+                        <input type="text" class="form-control" name="operacao_dispensario" id="qualSolicitacaoDisp" onclick="verificaSolicitacao()" value="<?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["movimentacao"]?>" readonly>
                     </div>
 
                 </div>
@@ -127,12 +127,12 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
 
                     <div class="display-flex-cl">
                         <label id="vaiOuVem">Setor</label>
-                        <input type="text" class="form-control largura_metade" name="setor_destino_solicitacao_dispensario" id="" value="<?=$dados["setores_id"]?> - <?=$dados["setores_setor"]?>" readonly>
+                        <input type="text" class="form-control largura_metade" name="setor_destino_solicitacao_dispensario" id="" value="<?=$dados["setores_id"]?> - <?=$dados["setor"]?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
                         <label>Data e horário da solicitação</label>
-                        <input type="datetime-local" class="form-control largura_um_terco"  name="data_operacao_dispensario" id="" value="<?=$dados['pre_slc_data']?>" readonly>
+                        <input type="datetime-local" class="form-control largura_um_terco"  name="data_operacao_dispensario" id="" value="<?=$dados['data']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
@@ -160,17 +160,17 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 
                             <div class="display-flex-cl">
                                 <label>Quantidade Solicitada</label>
-                                <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" value="<?=$dados['pre_slc_qtd_solicitada']?>"  onchange="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')" readonly>
+                                <input type="number" class="form-control largura_um_terco" name="quantidade_insumo_solic_dispensario[]" id="qtd_solicitada_dispensario1" min="1" value="<?=$dados['qtd_solicitada']?>"  onchange="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova')" readonly>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Validade do Insumo</label>
-                                <input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario1" value="<?=$dados['dispensario_validade']?>" readonly>
+                                <input type="date" class="form-control largura_um_terco" name="validade_insumo_dispensario[]" id="validade_insumo_dispensario1" value="<?=$dados['validade']?>" readonly>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Disponível no Dispensário</label>
-                                <input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario1" value="<?=$dados['dispensario_qtd']?>" readonly>
+                                <input type="number" class="form-control largura_um_terco" name="quantidade_atual_dispensario[]" id="quantidade_atual_dispensario1" value="<?=$dados['qtd']?>" readonly>
                             </div>
                         </div>
 
@@ -178,11 +178,11 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
 
                             <div class="display-flex-cl">
                                 <label>Descrição</label>
-                                <textarea type="text" class="form-control" id="descricaoInsumoSclDisp1" readonly><?=$dados['insumos_descricao']?></textarea>
+                                <textarea type="text" class="form-control" id="descricaoInsumoSclDisp1" readonly><?=$dados['descricao']?></textarea>
                             </div>
                             <div class="display-flex-cl" id="quantidade_atendida_insumo_solic_dispensario">
                                 <label>Quantidade atendida</label>
-                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario_pre_slc" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['pre_slc_qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova', 'id_label_to_alert')">
+                                <input type="number" class="form-control largura_um_quarto" name="quantidade_atendida_insumo_solic_dispensario" id="qtd_atendida_dispensario_pre_slc" min="0" max="<?=$dados['pre_slc_qtd_solicitada']?>" value="<?=$dados['qtd_solicitada']?>" onkeyup="verificaValorMaximoExcedido('qtd_atendida_dispensario_pre_slc','qtd_solicitada_dispensario1','alerta_valor_acima_max1','operacao_slc_aprova', 'id_label_to_alert')">
                                 <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
                                     <label id="id_label_to_alert"><ion-icon name="alert-circle-outline"></ion-icon></label>
                                 </span>
@@ -197,7 +197,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Justificativa</label>
-                        <textarea name="justifica_requisicao" cols="25" rows="4" class="form-control" readonly><?=$dados['pre_slc_justificativa']?></textarea>
+                        <textarea name="justifica_requisicao" cols="25" rows="4" class="form-control" readonly><?=$dados['justificativa']?></textarea>
                     </div>
                 </div>
                     
