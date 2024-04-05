@@ -15,10 +15,10 @@
     $sql = "UPDATE 
                 tipos_insumos
             SET 
-                tipos_insumos_tipo = '{$nomeCategoria}',
-                tipos_insumos_descricao = '{$descCategoria}'
+                tipo = '{$nomeCategoria}',
+                descricao = '{$descCategoria}'
             WHERE 
-                tipos_insumos_id={$idCategoria}";
+                id={$idCategoria}";
 
     // echo "<br>SQL: " . $sql;
 

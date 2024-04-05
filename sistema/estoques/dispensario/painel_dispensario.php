@@ -98,39 +98,39 @@ if ($qualEstoque_disp != "") {
                         $insumos_cads_list = array();
 
                         $sql = "SELECT 
-                                    disp.dispensario_id,
-                                    disp.dispensario_qtd,
-                                    date_format(disp.dispensario_validade, '%d/%m/%Y') AS validadeDispensario,
-                                    i.insumos_nome,
-                                    i.insumos_unidade,
-                                    i.insumos_qtd_critica,
-                                    datediff(disp.dispensario_validade, curdate()) AS diasParaVencimentoDispensario,
-                                    lcd.local_nome,
-                                    es.estoques_nome,
-                                    es.estoques_nome_real,
-                                    tp.tipos_insumos_tipo
+                                    disp.id,
+                                    disp.qtd,
+                                    date_format(disp.validade, '%d/%m/%Y') AS validadeDispensario,
+                                    i.nome as insumos_nome,
+                                    i.unidade,
+                                    i.qtd_critica,
+                                    datediff(disp.validade, curdate()) AS diasParaVencimentoDispensario,
+                                    lcd.nome as local_nome,
+                                    es.nome as estoques_nome,
+                                    es.nome_real,
+                                    tp.tipo
 
                                     FROM dispensario disp
 
                                     INNER JOIN deposito deps
-                                    ON disp.dispensario_deposito_id = deps.deposito_id
+                                    ON disp.deposito_id = deps.id
 
                                     INNER JOIN insumos i
-                                    ON disp.dispensario_insumos_id = i.insumos_id
+                                    ON disp.insumos_id = i.id
 
                                     INNER JOIN tipos_insumos tp
-                                    ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+                                    ON tp.id = i.tipo_insumos_id
 
                                     INNER JOIN local_dispensario lcd 
-                                    ON disp.dispensario_local_id = lcd.local_id
+                                    ON disp.local_id = lcd.id
 
                                     INNER JOIN estoques es
-                                    ON disp.dispensario_estoques_id = es.estoques_id
+                                    ON disp.estoque_id = es.id
 
                                     WHERE
-                                    es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome = '{$qualInsumo}' and (lcd.local_nome LIKE '%{$txt_pesquisa_dispensario}%')
+                                    es.nome_real = '{$qualEstoque}' and i.nome = '{$qualInsumo}' and (lcd.nome LIKE '%{$txt_pesquisa_dispensario}%')
 
-                                    ORDER BY insumos_nome ASC 
+                                    ORDER BY i.nome ASC 
                                     LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
 
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -173,9 +173,9 @@ if ($qualEstoque_disp != "") {
                             
                             ?>
                         </td>
-                        <td><?=$dados["dispensario_qtd"]?></td>
-                        <td><?=$dados["insumos_unidade"]?></td>
-                        <td><?=$dados["tipos_insumos_tipo"]?></td>
+                        <td><?=$dados["qtd"]?></td>
+                        <td><?=$dados["unidade"]?></td>
+                        <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["estoques_nome"]?></td>
                         <td><?=$dados["validadeDispensario"]?></td>
                         <td><?=$dados["local_nome"]?></td>
@@ -225,17 +225,22 @@ if ($qualEstoque_disp != "") {
                             $i--;
                             
                             $sql_qtd = "SELECT 
-                            sum(d.dispensario_qtd) as dispensario_qtd_insumo,
-                            i.insumos_nome,
-                            i.insumos_qtd_critica,
-                            es.estoques_nome
-                            FROM dispensario d 
-                            INNER JOIN insumos i
-                            ON d.dispensario_insumos_id = i.insumos_id
-                            INNER JOIN estoques es
-                            ON es.estoques_id = d.dispensario_estoques_id
+                                sum(d.qtd) as dispensario_qtd_insumo,
+                                i.nome as insumos_nome,
+                                i.qtd_critica,
+                                es.nome as estoques_nome
+                            FROM 
+                                dispensario d 
+                            INNER JOIN 
+                                insumos i
+                            ON 
+                                d.insumos_id = i.id
+                            INNER JOIN 
+                                estoques es
+                            ON 
+                                es.id = d.estoque_id
                             WHERE 
-                            es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome='{$insumo_selecionado}'";
+                                es.nome_real = '{$qualEstoque}' and i.nome='{$insumo_selecionado}'";
                         
                             $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//dispensario/quantidade_insumos_dispensario/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
 
@@ -250,7 +255,7 @@ if ($qualEstoque_disp != "") {
                         <td class="<?php
                         
                         $qtd_cadastrada = $dados["dispensario_qtd_insumo"];
-                        $qtd_critica = $dados["insumos_qtd_critica"];
+                        $qtd_critica = $dados["qtd_critica"];
                         $qtd_toleravel = $qtd_critica+($qtd_critica*20/100);
 
                         $class_bg = "";
@@ -285,11 +290,11 @@ if ($qualEstoque_disp != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldispensario = "SELECT d.dispensario_id 
+                $sqlTotaldispensario = "SELECT d.id 
                                             FROM dispensario d
                                             INNER JOIN estoques e
-                                            ON e.estoques_id = d.dispensario_estoques_id
-                                            WHERE e.estoques_nome_real='{$qualEstoque}'";
+                                            ON e.id = d.estoque_id
+                                            WHERE e.nome_real='{$qualEstoque}'";
                 $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
 
                 $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);

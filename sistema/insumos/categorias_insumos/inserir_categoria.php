@@ -15,7 +15,7 @@
             echo "<br> Nome da nova categoria: " . $nomeNovaCategoriaInsumo;
             echo "<br> Descrição: " . $descNovaCategoriaInsumo;
 
-            $sql_verifica_se_existe = "SELECT * FROM tipos_insumos WHERE tipos_insumos_tipo='{$nomeNovaCategoriaInsumo}'";
+            $sql_verifica_se_existe = "SELECT * FROM tipos_insumos WHERE tipo='{$nomeNovaCategoriaInsumo}'";
 
             $result_check_exist = mysqli_query($conexao, $sql_verifica_se_existe);
 
@@ -26,8 +26,8 @@
                 // echo "seguindo para o insert";
 
                 $sql = "INSERT INTO tipos_insumos (
-                    tipos_insumos_tipo,
-                    tipos_insumos_descricao)
+                    tipo,
+                    descricao)
                     VALUES(
                         '{$nomeNovaCategoriaInsumo}',
                         '{$descNovaCategoriaInsumo}'

@@ -1,6 +1,4 @@
-<header>
-    <h2>Atualizar Insumo</h2>
-</header>
+
 <?php 
 
     $stringList = array();
@@ -33,12 +31,12 @@
     $tipoInsumo = strtok($tipoInsumo, " ");
 
     $sql = "UPDATE insumos SET 
-        insumos_nome = '{$nomeInsumo}',
-        insumos_unidade = '{$unidadeInsumo}',
-        insumos_descricao = '{$descricaoInsumo}',
-        insumos_qtd_critica = {$qtdCriticaInsumo},
-        insumos_tipo_insumos_id = {$tipoInsumo}
-        WHERE insumos_id={$idInsumo}
+        nome = '{$nomeInsumo}',
+        unidade = '{$unidadeInsumo}',
+        descricao = '{$descricaoInsumo}',
+        qtd_critica = {$qtdCriticaInsumo},
+        tipo_insumos_id = {$tipoInsumo}
+        WHERE id={$idInsumo}
         ";
         if(mysqli_query($conexao, $sql)){
 			echo "<script language='javascript'>window.alert('Insumo atualizado com sucesso!'); </script>";

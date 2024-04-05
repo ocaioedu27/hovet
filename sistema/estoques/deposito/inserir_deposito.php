@@ -20,6 +20,11 @@
     }
 
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $msg_insumo_inserido = "Cadastro realizado com sucesso! Insumo ";
+    $msg_compra = " Compra registrada com sucesso! Insumo ";
+    $msg_doacao = " Doação registrada com sucesso! Insumo ";
+    $msg_mov = " Movimentação registrada com sucesso! Insumo ";
+    $msg_final = "";
 
     // var_dump($dados_enviados_array);
 
@@ -54,12 +59,12 @@
 
         foreach ($dados_enviados_array['insumoID_Insumodeposito'] as $chave_cad_deposito => $valor_cad_deposito) {
 
-            $insumoID_Insumodeposito = $valor_cad_deposito;
-            $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito, " ");
+            $insumoID_Insumodeposito_id_nome = $valor_cad_deposito;
+            $insumoID_Insumodeposito = strtok($insumoID_Insumodeposito_id_nome, " ");
             $quantidadeInsumodeposito = $dados_enviados_array['quantidadeInsumodeposito'][$chave_cad_deposito];
             $validadeInsumodeposito = $dados_enviados_array['validadeInsumodeposito'][$chave_cad_deposito];
-            $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_deposito];
-            $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
+            $depositoDestinoInsumodeposito_completo = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_deposito];
+            $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito_completo, " ");
 
             // var_dump($tem_nota_fiscal);
 
@@ -80,18 +85,23 @@
                     {$depositoDestinoInsumodeposito}
                 )";
 
-            if (mysqli_query($conexao, $sql)) { 
-                echo "<script language='javascript'>window.alert('Insumo inserido no Depósito com sucesso!!'); </script>";
-                // echo "insumo inserido com sucesso";   
-            } else {
-                die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
-            }
+            $partes_nome_insumo = explode(' - ',$insumoID_Insumodeposito_id_nome);
+            $nome_insumo = $partes_nome_insumo[1];
 
-            $sqlGetDepId = "SELECT d.deposito_id, i.nome as insumo_nome FROM deposito d INNER JOIN insumos i ON d.insumos_id = i.id WHERE id_origem = '$origem_id'";
-            $rGetDepId = mysqli_query($conexao, $sqlGetDepId);
-            $dadosGetId = mysqli_fetch_assoc($rGetDepId);
-            $dep_id = $dadosGetId['deposito_id'];
-            $insumo_nome = $dadosGetId['insumo_nome'];
+            try {
+
+                $inserir_inusmo_no_banco = mysqli_query($conexao, $sql);
+                
+                if ($inserir_inusmo_no_banco) {
+                    $id_insumo_inserido = mysqli_insert_id($conexao);
+                    $msg_final .= $msg_insumo_inserido ."". $nome_insumo;
+
+                } else {
+                    die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
+                }   
+            } catch (\Throwable $th) {
+                echo "//deposito/insere_dep - Erro: " . $th;
+            }
             
             $tem_nota_fiscal = $_FILES['nota_fiscal_deposito'];
 
@@ -146,12 +156,12 @@
                                         {$quem_guardou},
                                         {$tipo_movimentacao},
                                         {$fornecedorCadInsumoDep},
-                                        {$dep_id}
+                                        {$id_insumo_inserido}
                                     )";
         
                     $inseriu_no_banco = mysqli_query($conexao,$sql_salva_db);
                     if($inseriu_no_banco){
-                        echo "<script language='javascript'>window.alert('Nota fiscal salva na base de dados!!'); </script>";
+                        $msg_final .= $msg_compra . $nome_insumo;
                     }
                     else{
                         die("//deposito/quarda_nota_fisca/inserir_db/ erro ao realizar a inserção: " . mysqli_error($conexao));
@@ -177,28 +187,31 @@
                     {$tipo_movimentacao},
                     {$quem_guardou},
                     {$fornecedorCadInsumoDep},
-                    {$dep_id}
+                    {$id_insumo_inserido}
                 )";
 
 
                 if (mysqli_query($conexao, $sql_doacao)) { 
-                    echo "<script language='javascript'>window.alert('Doação registrada com sucesso!!'); </script>";
-                    // echo "insumo inserido com sucesso";   
+                    $msg_final .= $msg_doacao . $nome_insumo;
                 } else {
                     die("//deposito/registra_doacao - Erro ao executar a inserção na tablea de doações. " . mysqli_error($conexao));   
                 }
             }
 
-
-            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
-    
-            $local_destino = "Depósito " . $qualEstoque[-1];
+            $partes_nome_estoque = explode(' - ',$depositoDestinoInsumodeposito_completo);
+            $local_destino = $partes_nome_estoque[1];
     
             $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
             
-            atualiza_movimentacao($conexao, $tipo_movimentacao, $origem_item, $local_destino, $usuario_id_nome, $insumo_nome);
+            if (atualiza_movimentacao($conexao, $tipo_movimentacao, $origem_item, $local_destino, $usuario_id_nome, $nome_insumo)){
+                $msg_final .= $msg_mov . $nome_insumo;
+            }
 
         }
+
+        echo '<script language="javascript">window.alert("'.$msg_final.'!!")</script>';
+        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
+
 
     } else {
         echo "error";

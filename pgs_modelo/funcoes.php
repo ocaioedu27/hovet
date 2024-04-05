@@ -27,14 +27,21 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
                                         destino,
                                         tipos_movimentacoes_id,
                                         usuario_id_nome,
-                                        insumos_nome) 
+                                        insumo_nome) 
                                         VALUE ('{$local_origem}','{$local_destino}',{$tipo_movimentacao},'{$usuario_id_nome}','{$insumo_nome}')";
 
-    if (mysqli_query($conexao, $sql_identifica_movimentacao)) { 
-        echo "<script language='javascript'>window.alert('Movimentação registrada com sucesso!!'); </script>";
-        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito';</script>";   
+    try {
+        $inseriu = mysqli_query($conexao, $sql_identifica_movimentacao);
+    } catch (\Throwable $th) {
+        echo "//cadMovimentacao - error: " . $th;
+    }
+    
+    if ($inseriu) { 
+        // echo "<script language='javascript'>window.alert('Movimentação registrada com sucesso!!'); </script>";
+        return true;
     } else {
-        die("Erro ao executar a atualização da movimentação. " . mysqli_error($conexao));   
+        die("Erro ao executar a atualização da movimentação. " . mysqli_error($conexao));
+        return false;
     }
 
 }

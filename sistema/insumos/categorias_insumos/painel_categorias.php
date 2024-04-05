@@ -86,52 +86,52 @@ if ($qualEstoque_dep != "") {
                         // echo $painel;
 
                         $sql = "SELECT 
-                                    tp.tipos_insumos_id,
-                                    tp.tipos_insumos_tipo,
-                                    tp.tipos_insumos_descricao
+                                    id,
+                                    tipo,
+                                    descricao
                                 FROM 
-                                    tipos_insumos tp
+                                    tipos_insumos
                                 WHERE
-                                    tp.tipos_insumos_id = '{$txt_pesquisa_insumos}' or tp.tipos_insumos_tipo LIKE '{$painel}%'
-                                    ORDER BY tipos_insumos_tipo ASC 
+                                    id = '{$txt_pesquisa_insumos}' or tipo LIKE '{$painel}%'
+                                    ORDER BY tipo ASC 
                                     LIMIT $inicio_insumos,$quantidade_registros_insumos";
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                         while($dados = mysqli_fetch_assoc($rs)){
                             $qtd_linhas_tabelas++;
 
-                            $tipo_de_insumo_bruto = $dados['tipos_insumos_tipo'];
-                            $tipo_de_insumo_id = $dados['tipos_insumos_id'];
+                            $tipo_de_insumo_bruto = $dados['tipo'];
+                            $tipo_de_insumo_id = $dados['id'];
                             // echo $tipo_de_insumo_id;
 
                             $nome_real_estoque = retiraAcentos($tipo_de_insumo_bruto);
 
                             $sql = "SELECT 
-                                        count(i.insumos_id) as qtd_insumos
+                                        count(i.id) as qtd_insumos
                                     FROM 
                                         insumos i
                                     WHERE
-                                        i.insumos_tipo_insumos_id = {$tipo_de_insumo_id}";
+                                        i.tipo_insumos_id = {$tipo_de_insumo_id}";
                             $rs_info = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                             $dados_info = mysqli_fetch_assoc($rs_info);
                         
                     ?>
                     <tr>
                     <tr class="tabela_dados">
-                        <td><?=$dados["tipos_insumos_id"]?></td>
+                        <td><?=$dados["id"]?></td>
                         <td>
-                            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['tipos_insumos_id']?>" class="form-control"><?=$dados['tipos_insumos_tipo']?></a>
+                            <a href="index.php?menuop=insumos&categoriaInsumoId=<?=$dados['id']?>" class="form-control"><?=$dados['tipo']?></a>
                         </td>
                         <td><?=$dados_info["qtd_insumos"]?></td>
-                        <td><?=$dados["tipos_insumos_descricao"]?></td>
-                        <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_categoria_insumos&id=<?=$dados["tipos_insumos_id"]?>" class="confirmaEdit">
+                        <td><?=$dados["descricao"]?></td>
+                        <td class="" id="td_operacoes_editar_deletar">
+                            <a href="index.php?menuop=editar_categoria_insumos&id=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_categoria_insumos&id=<?=$dados["tipos_insumos_id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_categoria_insumos&id=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -149,7 +149,7 @@ if ($qualEstoque_dep != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotalinsumos = "SELECT tipos_insumos_id FROM tipos_insumos";
+                $sqlTotalinsumos = "SELECT id FROM tipos_insumos";
                 $queryTotalinsumos = mysqli_query($conexao,$sqlTotalinsumos) or die(mysqli_error($conexao));
 
                 $numTotalinsumos = mysqli_num_rows($queryTotalinsumos);

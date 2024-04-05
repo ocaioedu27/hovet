@@ -27,7 +27,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="pdf/relatorio_validade.php" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
+                        <a href="pdf/relatorio_validade.php?estoque=deposito" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
                     </td>
                     <td>
                         <span>Insumos prestes a vencer em 30 dias ou já vencidos.</span>

@@ -52,7 +52,7 @@ if ($qualEstoque_dep != "") {
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["tipos_movimentacoes_id"]?> - <?=$dados["tipos_movimentacoes_movimentacao"]?></option>
+                            <option><?=$dados["id"]?> - <?=$dados["movimentacao"]?></option>
 
                             <?php
                                 }
@@ -62,14 +62,14 @@ if ($qualEstoque_dep != "") {
                     
                     <div class="display-flex-cl">
                         <?php
-                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
+                        $sql = "SELECT * FROM usuarios WHERE id={$sessionUserID}";
                         $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
                         $dados = mysqli_fetch_assoc($result)
                         ?>
 
                         <label for="quem_esta_guardando_dep">Quem está guardando</label>
-                        <input type="text" class="form-control largura_um_terco" name="quem_esta_guardando_dep" value="<?=$dados['usuario_id']?> - <?=$dados['usuario_primeiro_nome']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="quem_esta_guardando_dep" value="<?=$dados['id']?> - <?=$dados['primeiro_nome']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
@@ -99,12 +99,12 @@ if ($qualEstoque_dep != "") {
                         <label>Fornecedor</label>
                         <select class="form-control" name="fornecedorCadInsumoDep" id="fornecedorCadInsumoDep" required>
                             <?php
-                            $sql = "SELECT * FROM fornecedores";
+                            $sql = "SELECT * FROM fornecedores WHERE ctg_fornecedores_id = 1";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["fornecedores_id"]?> - <?=$dados["fornecedores_razao_social"]?></option>
+                            <option><?=$dados["id"]?> - <?=$dados["razao_social"]?></option>
 
                             <?php
                                 }
@@ -124,7 +124,7 @@ if ($qualEstoque_dep != "") {
                         <div class="display-flex-cl">
                             <label>Nome</label>
                             <input type="text" class="form-control" name="insumoID_Insumodeposito[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="Pesquise pelo nome do insumo..." required/>
-                            <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.2% auto;"></span>
+                            <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
                         </div>
 
                         <div class="display-flex-cl">
@@ -148,8 +148,8 @@ if ($qualEstoque_dep != "") {
                             
                         <div class="display-flex-cl">
                             <label>Depósito de Destino</label>
-                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o depósito..." required>
-                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 8% auto;"></span>
+                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="estoqueDestino1" onkeyup="searchInput_cadDeposito(this.value, 1, 5, 'deposito')" placeholder="Informe o depósito..." required>
+                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1"></span>
                         </div>
                     </div>
 

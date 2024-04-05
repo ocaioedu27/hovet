@@ -30,16 +30,16 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $string_link_procurar_insumo = "insumos&categoriaInsumoId=" . $categoriaId;
 
         $sql_nome = "SELECT
-                        tipos_insumos_tipo
+                        tipo
                     FROM 
                         tipos_insumos
                     WHERE
-                        tipos_insumos_id = {$categoriaId}";
+                        id = {$categoriaId}";
 
         $resultado_nome = mysqli_query($conexao,$sql_nome) or die("Erro ao coletar o nome da categoria! " . mysqli_error($conexao));
         $categoria_nome_tmp = mysqli_fetch_assoc($resultado_nome);
 
-        $categoria_nome = $categoria_nome_tmp['tipos_insumos_tipo'];
+        $categoria_nome = $categoria_nome_tmp['tipo'];
         
     } else {
         $categoria_id_for_select = "IS NOT NULL";
@@ -67,7 +67,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             </div>
             <div>
                 <form action="index.php?menuop=<?=$string_link_procurar_insumo?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_insumos" placeholder="Buscar">
+                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -92,33 +92,33 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     <?php
                         $quantidade_registros_insumos = 10;
 
-                        $pagina_insumos = (isset($_GET['pagina_insumos']))?(int)$_GET['pagina_insumos']:1;
+                        $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
 
-                        $inicio_insumos = ($quantidade_registros_insumos * $pagina_insumos) - $quantidade_registros_insumos;
+                        $inicio_insumos = ($quantidade_registros_insumos * $pagina) - $quantidade_registros_insumos;
 
-                        $txt_pesquisa_insumos = (isset($_POST["txt_pesquisa_insumos"]))?$_POST["txt_pesquisa_insumos"]:"";
+                        $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
                         $sql = "SELECT 
-                                    i.insumos_id,
-                                    i.insumos_nome, 
-                                    i.insumos_unidade, 
-                                    i.insumos_descricao,
-                                    t.tipos_insumos_tipo,
-                                    i.insumos_qtd_critica
+                                    i.id,
+                                    i.nome, 
+                                    i.unidade, 
+                                    i.descricao,
+                                    t.tipo,
+                                    i.qtd_critica
                                 FROM 
                                     insumos i
                                 INNER JOIN 
                                     tipos_insumos t
                                 ON
-                                    i.insumos_tipo_insumos_id = t.tipos_insumos_id
+                                    i.tipo_insumos_id = t.id
                                 WHERE
-                                    i.insumos_tipo_insumos_id $categoria_id_for_select AND 
-                                    (i.insumos_id='{$txt_pesquisa_insumos}' or
-                                    i.insumos_nome LIKE '%{$txt_pesquisa_insumos}%' or
-                                    t.tipos_insumos_tipo LIKE '%{$txt_pesquisa_insumos}%' or
-                                    i.insumos_unidade LIKE '%{$txt_pesquisa_insumos}%' or
-                                    i.insumos_descricao LIKE '%{$txt_pesquisa_insumos}%')
-                                    ORDER BY insumos_nome ASC 
+                                    i.tipo_insumos_id $categoria_id_for_select AND 
+                                    (i.id='{$txt_pesquisa}' or
+                                    i.nome LIKE '%{$txt_pesquisa}%' or
+                                    t.tipo LIKE '%{$txt_pesquisa}%' or
+                                    i.unidade LIKE '%{$txt_pesquisa}%' or
+                                    i.descricao LIKE '%{$txt_pesquisa}%')
+                                    ORDER BY nome ASC 
                                     LIMIT $inicio_insumos,$quantidade_registros_insumos";
 
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -128,14 +128,14 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     ?>
                     <tr class="tabela_dados">
                         <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["insumos_id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_insumo&categoriaInsumoId=<?=$categoriaId?>&idInsumo=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -143,11 +143,11 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["insumos_id"]?></td>
-                        <td><?=$dados["insumos_nome"]?></td>
-                        <td><?=$dados["insumos_unidade"]?></td>
-                        <td><?=$dados["tipos_insumos_tipo"]?></td>
-                        <td><?=$dados["insumos_descricao"]?></td>
+                        <td><?=$dados["id"]?></td>
+                        <td><?=$dados["nome"]?></td>
+                        <td><?=$dados["unidade"]?></td>
+                        <td><?=$dados["tipo"]?></td>
+                        <td><?=$dados["descricao"]?></td>
                     </tr>
                     <?php
                         }
@@ -158,39 +158,39 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         </div>
             <div class="paginacao">
                 <?php
-                    $sqlTotalInsumos = "SELECT insumos_id FROM insumos WHERE insumos_tipo_insumos_id $categoria_id_for_select";
+                    $sqlTotalInsumos = "SELECT id FROM insumos WHERE tipo_insumos_id $categoria_id_for_select";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_insumos);
                     
-                    echo "<a href=\"?menuop=$string_link_procurar_insumo&pagina_insumos=1\">Início</a> ";
+                    echo "<a href=\"?menuop=$string_link_procurar_insumo&pagina=1\">Início</a> ";
 
-                    if ($pagina_insumos>6) {
+                    if ($pagina>6) {
                         ?>
-                            <a href="?menuop=<?=$string_link_procurar_insumo?>&pagina_insumos=<?php echo $pagina_insumos-1?>"> << </a>
+                            <a href="?menuop=<?=$string_link_procurar_insumo?>&pagina=<?php echo $pagina-1?>"> << </a>
                         <?php
                     } 
 
                     for($i=1;$i<=$totalPaginasInsumos;$i++){
 
-                        if ($i >= ($pagina_insumos) && $i <= ($pagina_insumos+5)) {
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
                             
-                            if ($i==$pagina_insumos) {
+                            if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
-                                echo " <a href=\"?menuop=$string_link_procurar_insumo&pagina_insumos=$i\">$i</a> ";
+                                echo " <a href=\"?menuop=$string_link_procurar_insumo&pagina=$i\">$i</a> ";
                             } 
                         }          
                     }
 
-                    if ($pagina_insumos<($totalPaginasInsumos-5)) {
+                    if ($pagina<($totalPaginasInsumos-5)) {
                         ?>
-                            <a href="?menuop=<?=$string_link_procurar_insumo?>&pagina_insumos=<?php echo $pagina_insumos+1?>"> >> </a>
+                            <a href="?menuop=<?=$string_link_procurar_insumo?>&pagina=<?php echo $pagina+1?>"> >> </a>
                         <?php
                     }
                     
-                    echo " <a href=\"?menuop=$string_link_procurar_insumo&pagina_insumos=$totalPaginasInsumos\">Fim</a>";
+                    echo " <a href=\"?menuop=$string_link_procurar_insumo&pagina=$totalPaginasInsumos\">Fim</a>";
                 ?>
             </div>
     </div>

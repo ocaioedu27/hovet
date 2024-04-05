@@ -53,7 +53,7 @@
                                 <div class="display-flex-row">
                                     <div class="display-flex-cl">
                                         <input type="text" class="form-control" name="categoria_insumo[]" id="tipos_insumo_1"     onkeyup="searchInput_cadDeposito(this.value, 1, 6)" placeholder="Pesquise..." required>
-                                        <span class="ajuste_span" id="resultado_cad_categoria_insumo_1" style="margin: 11.1% auto;"></span>
+                                        <span class="ajuste_span" id="resultado_cad_categoria_insumo_1"></span>
                                     </div>
                                     <button class="btn" type="button" onclick="adicionaCampoCad(13, 'categoria_insumo', 'resultado_cad_categoria_insumo_1', 6, 'tipos_insumo_1')" style="padding: 0;">+</button>
                                 </div>

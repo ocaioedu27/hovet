@@ -51,10 +51,10 @@ $tipoEstoque = $tipoEstoque;
                     <div class="display-flex-cl">
                         <?php
                             $sql_mov = "SELECT 
-                                tipos_movimentacoes_id,
-                                tipos_movimentacoes_movimentacao
+                                id,
+                                movimentacao
                                 FROM tipos_movimentacoes
-                                WHERE tipos_movimentacoes_movimentacao='Move para o Dispensário'";
+                                WHERE movimentacao='Move para o Dispensário'";
                                 
                             $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//dispensario/sql_mov - erro ao realiza" . mysqli_error($conexao));
 
@@ -62,18 +62,18 @@ $tipoEstoque = $tipoEstoque;
                             
                         ?>
                         <label for="mov_dep_to_disp">Tipo de operação</label>
-                        <input type="text" class="form-control largura_um_terco" name="mov_dep_to_disp" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="mov_dep_to_disp" value="<?=$dados_mov['id']?> - <?=$dados_mov['movimentacao']?>" readonly>
                     </div>
                     
                     <div class="display-flex-cl">
                         <?php
-                        $sql = "SELECT * FROM usuarios WHERE usuario_id={$sessionUserID}";
+                        $sql = "SELECT * FROM usuarios WHERE id={$sessionUserID}";
                         $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                         
                         $dados_user = mysqli_fetch_assoc($result)
                         ?>
                         <label for="solicitante_retira_dispensario">Solicitante</label>
-                        <input type="text" class="form-control largura_um_terco" name="solicitante_retira_dispensario" value="<?=$dados_user['usuario_id']?> - <?=$dados_user['usuario_primeiro_nome']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="solicitante_retira_dispensario" value="<?=$dados_user['id']?> - <?=$dados_user['primeiro_nome']?>" readonly>
                     </div>
 
                     <div class="display-flex-cl">
@@ -91,8 +91,7 @@ $tipoEstoque = $tipoEstoque;
                         <div class="display-flex-cl">
                             <label>Insumo</label>
                             <input type="text" class="form-control" name="insumoID_Insumodispensario[]" id="insumoID_Insumodispensario1" onkeyup="searchInput_cadDeposito(this.value, 1, 2)" placeholder="Procure pelo nome do insumo..." required>
-                            <span class="ajuste_span" id="resultado_cad_disp_insumos1" style="
-    margin: 6.5% auto;"></span>
+                            <span class="ajuste_span" id="resultado_cad_disp_insumos1"></span>
                         </div>
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDisponivelDeposito">Disponível no Depósito</label>
@@ -101,8 +100,8 @@ $tipoEstoque = $tipoEstoque;
                             
                         <div class="display-flex-cl">
                             <label>Dispensário de Destino</label>
-                            <input type="text" class="form-control" name="depositoDestinoInsumodeposito[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o dispensário..." required>
-                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 6.5% auto;"></span>
+                            <input type="text" class="form-control" name="dispensarioDestino[]" id="estoqueDestino1" onkeyup="searchInput_cadDeposito(this.value, 1, 5,'dispensario')" placeholder="Informe o dispensário..." required>
+                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1"></span>
                         </div>
 
                     </div>

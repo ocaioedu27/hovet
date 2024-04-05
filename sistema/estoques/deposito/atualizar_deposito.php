@@ -144,10 +144,10 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$quantidadeInsumoDepositoPermuta},
                 '{$oid_operacao}',
                 {$instituicaoPermutaDep},
-                {$movimentacao_permuta_deposito},
+                {$movimentacao_permuta_deposito}
             )";
 
-        // echo "<br>" . $sql_insert_permuta;
+        echo "<br>" . $sql_insert_permuta;
         
         try {
             $inserir = mysqli_query($conexao, $sql_insert_permuta);

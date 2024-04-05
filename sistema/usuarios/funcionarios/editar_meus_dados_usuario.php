@@ -12,42 +12,49 @@ if (!has_permission($array_permissoes_user,$array_permissoes_opcoes_sistema)) {
 
 $idUsuario = $sessionUserID;
 
+$visualizacao;
+if($sessionUserType == 2){
+    $visualizacao = 'required';
+}else{
+    $visualizacao = 'readonly';
+}
+
 $sql = "SELECT 
-            u.usuario_id,
-            u.usuario_nome_completo,
-            u.usuario_sobrenome,
-            u.usuario_primeiro_nome,
-            u.usuario_mail,
-            u.usuario_status,
-            t.tipo_usuario_tipo,
-            u.usuario_siape
+            u.id,
+            u.nome_completo,
+            u.sobrenome,
+            u.primeiro_nome,
+            u.mail,
+            u.status,
+            t.tipo,
+            u.siape
         FROM usuarios AS u
             
         INNER JOIN tipo_usuario AS t
-        ON u.usuario_tipo_usuario_id = t.tipo_usuario_id 
+        ON u.tipo_usuario_id = t.id 
             
-        WHERE u.usuario_id={$idUsuario}";
+        WHERE u.id={$idUsuario}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
 
-$statusUsu = $dados['usuario_status']? 'Ativo':'Inativo';
+$statusUsu = $dados['status']? 'Ativo':'Inativo';
 
 // Verifica os usuários                        
 $sql_verifica_se_existe = "";
 
 $sqlBuscaDiretor = "SELECT 
-                    usuario_id
+                    id
                 FROM 
                     usuarios 
                 WHERE 
-                    usuario_tipo_usuario_id=5";
+                    tipo_usuario_id=5";
             
 $r = mysqli_query($conexao,$sqlBuscaDiretor) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 // echo $r->num_rows;
 
-$sqlTipoUsuarios = 'SELECT * FROM tipo_usuario WHERE tipo_usuario_id!=2';
+$sqlTipoUsuarios = 'SELECT * FROM tipo_usuario WHERE id!=2';
 if($r->num_rows == 1){
-    $sqlTipoUsuarios .= ' and tipo_usuario_id!=5';
+    $sqlTipoUsuarios .= ' and id!=5';
 }
 
 // echo $sqlTipoUsuarios;
@@ -81,26 +88,26 @@ foreach($tiposUsu as $tipoUsu){
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="idUsuario">ID</label>
-                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["usuario_id"]?>" readonly>
+                    <input type="text" class="form-control largura_metade" name="idUsuario" value="<?=$dados["id"]?>" readonly>
                 </div>
             </div>
 
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="nomeCompletoUsuario">Nome Completo</label>
-                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["usuario_nome_completo"]?>" placeholder="Informe o nome completo..." required>
+                    <input type="text" class="form-control" name="nomeCompletoUsuario" value="<?=$dados["nome_completo"]?>" placeholder="Informe o nome completo..." required>
                 </div>
             </div>
             
             <div class="form-group valida_movimentacao">
                 <div class="display-flex-cl">
                     <label for="primeiroNomeUsuario">Primeiro Nome</label>
-                    <input type="text" class="form-control" name="primeiroNomeUsuario" value="<?=$dados["usuario_primeiro_nome"]?>" placeholder="Informe o primeiro nome..." required>
+                    <input type="text" class="form-control" name="primeiroNomeUsuario" value="<?=$dados["primeiro_nome"]?>" placeholder="Informe o primeiro nome..." required>
                 </div>
 
                 <div class="display-flex-cl">
                     <label for="sobrenomeUsuario">Sobrenome</label>
-                    <input type="text" class="form-control" name="sobrenomeUsuario" value="<?=$dados["usuario_sobrenome"]?>" placeholder="Informe o sobrenome..." required>
+                    <input type="text" class="form-control" name="sobrenomeUsuario" value="<?=$dados["sobrenome"]?>" placeholder="Informe o sobrenome..." required>
                 </div>  
             </div>
 
@@ -115,13 +122,13 @@ foreach($tiposUsu as $tipoUsu){
 
                 <div class="display-flex-cl">
                     <label for="">Atualmente: </label>
-                    <input type="text" class="form-control" value="<?=$dados["tipo_usuario_tipo"]?>" style="color: red;" readonly>
+                    <input type="text" class="form-control" value="<?=$dados["tipo"]?>" style="color: red;" readonly>
                 </div>
                 
                 <div class="display-flex-cl">
                     <label for="idUsuario">Status</label>
                     <input type="text" class="form-control" name="mostraStatus" value="<?=$statusUsu?>" readonly>
-                    <input type="hidden" class="form-control" name="statusUsu" value="<?=$dados['usuario_status']?>" readonly>
+                    <input type="hidden" class="form-control" name="statusUsu" value="<?=$dados['status']?>" readonly>
                 </div>
             </div>
 
@@ -129,12 +136,12 @@ foreach($tiposUsu as $tipoUsu){
 
                 <div class="diplay-flex-cl">
                     <label for="mailUsuario">E-mail</label>
-                    <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["usuario_mail"]?>" placeholder="Informe o nome completo..." required>
+                    <input type="email" class="form-control" name="mailUsuario" value="<?=$dados["mail"]?>" placeholder="Informe o nome completo..." required>
                 </div>
 
                 <div class="diplay-flex-cl">
                     <label for="siapeUsuario">SIAPE</label>
-                    <input type="text" class="form-control" name="siapeUsuario" maxlength="8" onkeyup="verifica_valor('valor_siape_1', 'msg_alerta_1', 'btn_cad_user', '0')" id="valor_siape_1" value="<?=$dados["usuario_siape"]?>" placeholder="Informe o SIAPE..." required>
+                    <input type="text" class="form-control" name="siapeUsuario" maxlength="8" onkeyup="verifica_valor('valor_siape_1', 'msg_alerta_1', 'btn_cad_user', '0')" id="valor_siape_1" value="<?=$dados["siape"]?>" placeholder="Informe o SIAPE..." required>
                     <span class="alerta_senhas_iguais" style="display: none;" id="msg_alerta_1">
                         <label>Valor inválido! Por favor, altere para um valor válido!
                             <ion-icon name="alert-circle-outline"></ion-icon>
@@ -144,7 +151,7 @@ foreach($tiposUsu as $tipoUsu){
             </div>
 
             <div class="form-group valida_movimentacao">
-                <a href="index.php?menuop=trocar_senha_usuario&idUsuario=<?=$dados['usuario_id']?>">Trocar a Senha</a>
+                <a href="index.php?menuop=trocar_senha_usuario&idUsuario=<?=$dados['id']?>">Trocar a Senha</a>
             </div>
 
             <div class="d-flex justify-content-center">

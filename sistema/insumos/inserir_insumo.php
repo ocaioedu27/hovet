@@ -36,11 +36,11 @@
             $tipoInsumo = strtok($tipoInsumo, " ");
 
             $sql = "INSERT INTO insumos (
-                insumos_nome,
-                insumos_unidade,
-                insumos_descricao,
-                insumos_qtd_critica,
-                insumos_tipo_insumos_id)
+                nome,
+                unidade,
+                descricao,
+                qtd_critica,
+                tipo_insumos_id)
                 VALUES(
                     '{$nomeInsumo}',
                     '{$unidadeInsumo}',

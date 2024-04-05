@@ -33,6 +33,17 @@
                             </span>
                         </div>
                     </div>
+
+                    <div class="form-group valida_movimentacao">
+                        <div class="display-flex-cl">
+                            <label>Estoque de preferência</label>
+                            <select name="estoquePreferencia" class="form-control" required>
+                                <option value="all">Todos os estoques</option>
+                                <option value="1">Depósito</option>
+                                <option value="2">Dispensário</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
             </div>

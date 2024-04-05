@@ -120,36 +120,36 @@ if ($qualEstoque_dep != "") {
                         $insumos_cads_list = array();
 
                         $sql = "SELECT
-                                    d.deposito_id, 
-                                    d.deposito_qtd,
-                                    d.deposito_origem_item,
-                                    date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-                                    es.estoques_nome,
-                                    es.estoques_nome_real,
-                                    i.insumos_nome,
-                                    i.insumos_unidade,
-                                    datediff(d.deposito_validade, curdate()) as diasParaVencimentodeposito,
-                                    i.insumos_qtd_critica,
-                                    tp.tipos_insumos_tipo
+                                    d.id, 
+                                    d.qtd,
+                                    d.origem_item,
+                                    date_format(d.validade, '%d/%m/%Y') as validadedeposito,
+                                    es.nome as estoques_nome,
+                                    es.nome_real,
+                                    i.nome as insumos_nome,
+                                    i.unidade,
+                                    datediff(d.validade, curdate()) as diasParaVencimentodeposito,
+                                    i.qtd_critica,
+                                    tp.tipo
 
                                     FROM deposito d 
 
                                     INNER JOIN insumos i 
-                                    ON d.deposito_insumos_id = i.insumos_id
+                                    ON d.insumos_id = i.id
                                     
                                     INNER JOIN tipos_insumos tp
-                                    ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+                                    ON tp.id = i.tipo_insumos_id
                                     
                                     INNER JOIN estoques es
-                                    ON d.deposito_estoque_id = es.estoques_id 
+                                    ON d.estoque_id = es.id 
                                     WHERE
-                                        es.estoques_nome_real = '{$qualEstoque}' 
-                                        and i.insumos_nome='{$qualInsumo}' 
-                                        and (i.insumos_unidade LIKE '%{$txt_pesquisa_deposito}%' 
-                                        or d.deposito_origem_item LIKE '%{$txt_pesquisa_deposito}%'
-                                        or tp.tipos_insumos_tipo LIKE '%{$txt_pesquisa_deposito}%')
+                                        es.nome_real = '{$qualEstoque}' 
+                                        and i.nome='{$qualInsumo}' 
+                                        and (i.unidade LIKE '%{$txt_pesquisa_deposito}%' 
+                                        or d.origem_item LIKE '%{$txt_pesquisa_deposito}%'
+                                        or tp.tipo LIKE '%{$txt_pesquisa_deposito}%')
 
-                                    ORDER BY insumos_nome ASC 
+                                    ORDER BY i.nome ASC 
                                     LIMIT $inicio_deposito,$quantidade_registros_deposito";
 
                         if (empty($txt_pesquisa_deposito)) {   
@@ -175,7 +175,7 @@ if ($qualEstoque_dep != "") {
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados_para_while["deposito_id"]?></td>
+                        <td><?=$dados_para_while["id"]?></td>
                         <td>
                             <?php
                             
@@ -193,11 +193,11 @@ if ($qualEstoque_dep != "") {
                             
                             ?>
                         </td>
-                        <td><?=$dados_para_while["deposito_qtd"]?></td>
-                        <td><?=$dados_para_while["insumos_unidade"]?></td>
-                        <td><?=$dados_para_while["tipos_insumos_tipo"]?></td>
+                        <td><?=$dados_para_while["qtd"]?></td>
+                        <td><?=$dados_para_while["unidade"]?></td>
+                        <td><?=$dados_para_while["tipo"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
-                        <td><?=$dados_para_while["deposito_origem_item"]?></td>
+                        <td><?=$dados_para_while["origem_item"]?></td>
                         <td><?=$dados_para_while["validadedeposito"]?></td>
                         <td class="<?php 
                                 $dias = ['30','45'];
@@ -257,17 +257,22 @@ if ($qualEstoque_dep != "") {
                             $i--;
                             
                             $sql_qtd = "SELECT 
-                            sum(d.deposito_qtd) as deposito_qtd_insumo,
-                            i.insumos_nome,
-                            i.insumos_qtd_critica,
-                            es.estoques_nome
-                            FROM deposito d 
-                            INNER JOIN insumos i
-                            ON d.deposito_insumos_id = i.insumos_id
-                            INNER JOIN estoques es
-                            ON es.estoques_id = d.deposito_estoque_id
-                            WHERE 
-                            es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome='{$insumo_selecionado}'";
+                                            sum(d.qtd) as deposito_qtd_insumo,
+                                            i.nome as insumos_nome,
+                                            i.qtd_critica,
+                                            es.nome as estoques_nome
+                                        FROM 
+                                            deposito d 
+                                        INNER JOIN 
+                                            insumos i
+                                        ON 
+                                            d.insumos_id = i.id
+                                        INNER JOIN 
+                                            estoques es
+                                        ON 
+                                            es.id = d.estoque_id
+                                        WHERE 
+                                            es.nome_real = '{$qualEstoque}' and i.nome='{$insumo_selecionado}'";
                         
                             $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//Deposito/quantidade_insumos_deposito/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
 
@@ -282,7 +287,7 @@ if ($qualEstoque_dep != "") {
                         <td class="<?php
                         
                         $qtd_cadastrada = $dados["deposito_qtd_insumo"];
-                        $qtd_critica = $dados["insumos_qtd_critica"];
+                        $qtd_critica = $dados["qtd_critica"];
                         $qtd_toleravel = $qtd_critica+($qtd_critica*20/100);
 
                         $class_bg = "";
@@ -321,13 +326,20 @@ if ($qualEstoque_dep != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldeposito = "SELECT d.deposito_id 
-                                        FROM deposito d
-                                        INNER JOIN insumos i
-                                        ON i.insumos_id = d.deposito_insumos_id
-                                        INNER JOIN estoques e
-                                        ON e.estoques_id = d.deposito_estoque_id
-                                        WHERE e.estoques_nome_real='{$qualEstoque}' and i.insumos_nome='{$qualInsumo}'";
+                $sqlTotaldeposito = "SELECT 
+                                        d.id 
+                                    FROM 
+                                        deposito d
+                                    INNER JOIN 
+                                        insumos i
+                                    ON 
+                                        i.id = d.insumos_id
+                                    INNER JOIN 
+                                        estoques e
+                                    ON 
+                                        e.id = d.estoque_id
+                                    WHERE 
+                                        e.nome_real='{$qualEstoque}' and i.nome='{$qualInsumo}'";
                 $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
 
                 $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);

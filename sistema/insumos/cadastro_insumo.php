@@ -80,7 +80,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         <div class="display-flex-cl">
                             <label>Tipo de Insumo</label>
                             <input type="text" class="form-control" name="tipoInsumo[]" id="tipos_insumo_1" onkeyup="searchInput_cadDeposito(this.value, 1,6)" placeholder="Informe o nome da categoria..." required/>
-                            <span class="ajuste_span" id="resultado_cad_categoria_insumo_1" style="margin: 9.2% auto; width: auto;"></span>
+                            <span class="ajuste_span" id="resultado_cad_categoria_insumo_1"></span>
                         </div>
 
                     </div>
@@ -89,7 +89,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
                         <div class="display-flex-cl">
                             <label>Descrição</label>
-                            <textarea class="form-control largura_metade" name="descricaoInsumo[]" rows="3" required></textarea>
+                            <textarea class="form-control" name="descricaoInsumo[]" rows="3" required></textarea>
                         </div>
 
                         <button class="btn" type="button" onclick="adicionaCampoCad(3)" style="padding: 0;">+</button>

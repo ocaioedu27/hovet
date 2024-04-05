@@ -16,55 +16,93 @@ $html .= "<img src='logo_hovet.jpg'>";
 
 //Coleta de dados caso seja personalizado
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$estoquesTipo = ['deposito', 'dispensario'];
+$estoquesPorGet = $_GET['estoque'] ? $_GET['estoque'] : 'all';
+
+// echo $estoquesPorGet;
+// exit;
 
 $sql = "";
+$arrValores = [];
     
-if (!empty($dados)) {
+if (isset($dados)) {
     // echo "tem post";
     $data_referencia = mysqli_real_escape_string($conexao,$_POST["data_referencia"]);
     $intervalo_dias = mysqli_real_escape_string($conexao,$_POST["intervalo_dias"]);
+    $estoquePreferencia = mysqli_real_escape_string($conexao,$_POST["estoquePreferencia"]);
 
     $html .= "<h3 align='center'>Relatório de insumos prestes a expirar nos próximos $intervalo_dias dias<br></h3>";
 
-    $sql= "SELECT 
-                d.deposito_id, 
-                d.deposito_qtd,
-                date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-                i.insumos_nome,
-                i.insumos_unidade,
-                datediff(d.deposito_validade, curdate()) as diasvencimento,
-                es.estoques_nome
-            FROM 
-                deposito d 
-            INNER JOIN 
-                insumos i 
-            ON
-                d.deposito_insumos_id = i.insumos_id
-            INNER JOIN 
-                estoques es
-            ON
-                es.estoques_id = d.deposito_estoque_id
-            WHERE 
-                deposito_validade<='{$data_referencia}' + interval {$intervalo_dias} day ORDER BY insumos_nome ASC";
+    for ($i=0; $i < count($estoquesTipo); $i++) { 
+
+        $sql= "SELECT 
+                    d.id, 
+                    d.qtd,
+                    date_format(d.validade, '%d/%m/%Y') as validade,
+                    i.nome,
+                    i.unidade,
+                    datediff(d.validade, curdate()) as diasvencimento,
+                    es.nome as estoques_nome
+                FROM 
+                    ". $estoquesTipo[$i] ." d 
+                INNER JOIN 
+                    insumos i 
+                ON
+                    d.insumos_id = i.id
+                INNER JOIN 
+                    estoques es
+                ON
+                    es.id = d.estoque_id
+                WHERE 
+                    d.validade<='{$data_referencia}' + interval {$intervalo_dias} day ORDER BY i.nome ASC";
+                    
+        echo '<br>' . $sql;
+        $result = $conexao->query($sql);
+        if ($result->num_rows > 0){
+            $dados_tmp = $result->fetch_assoc();
+
+            var_dump($dados_tmp);
+            array_push($arrValores, $dados_tmp);
+        }
+    }
+
+    var_dump($arrValores);
 
 } else {
+    echo 'sem post';
     $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
 
-    $sql= "SELECT 
-            d.deposito_id, 
-            d.deposito_qtd,
-            date_format(d.deposito_validade, '%d/%m/%Y') as validadedeposito,
-            i.insumos_nome,
-            i.insumos_unidade,
-            datediff(d.deposito_validade, curdate()) as diasvencimento,
-            es.estoques_nome
-        FROM deposito d 
+    $sql = "SELECT 
+                d.id, 
+                d.qtd,
+                date_format(d.validade, '%d/%m/%Y') as validade,
+                i.nome,
+                i.unidade,
+                datediff(d.validade, curdate()) as diasvencimento,
+                es.nome as estoques_nome
+            FROM ";
+
+    if($estoquesPorGet != "all"){
+
+        $sql .= "$estoquesPorGet d 
         inner join insumos i 
-        on d.deposito_insumos_id = i.insumos_id
+        on d.insumos_id = i.id
         inner join estoques es
-        on es.estoques_id = d.deposito_estoque_id
-        where deposito_validade<=curdate() + interval 30 day ORDER BY insumos_nome ASC";
+        on es.id = d.estoque_id
+        where d.validade<=curdate() + interval 30 day ORDER BY i.nome ASC";
+
+    } else{
+        $sql .= " $estoquePorGet d 
+        inner join insumos i 
+        on d.insumos_id = i.id
+        inner join estoques es
+        on es.id = d.estoque_id
+        where d.validade<=curdate() + interval 30 day ORDER BY i.nome ASC";
+    }
 }
+
+// echo $sql;
+exit;
 
 $res = $conexao->query($sql);
 date_default_timezone_set('America/Sao_Paulo');
@@ -78,10 +116,10 @@ if($res->num_rows > 0){
     while($row = $res->fetch_object()){
         
         $html .= "<tr>";
-        $html .= "<td>".$row->deposito_id."</td>";
-        $html .= "<td>".$row->insumos_nome."</td>";
-        $html .= "<td>".$row->deposito_qtd."</td>";
-        $html .= "<td>".$row->validadedeposito."</td>";
+        $html .= "<td>".$row->id."</td>";
+        $html .= "<td>".$row->nome."</td>";
+        $html .= "<td>".$row->qtd."</td>";
+        $html .= "<td>".$row->validade."</td>";
         $html .= "<td>".$row->estoques_nome."</td>";
         $dias = ['30','45'];
 
@@ -112,7 +150,6 @@ if($res->num_rows > 0){
     $html .= "";
 
 }else{
-    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
     $html .="<p>Nenhum dado foi encontrado para este relatorio.</p>";
     //echo "Sem resultado";
 }

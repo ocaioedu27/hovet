@@ -1,5 +1,5 @@
 
-async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadType, userIdToVerify) {
+async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadType, origem=null) {
     // console.log('//searchInput_cadDisp - o ID do campo digitado é: '+id_campo_digitado);
     if (cadType == 1) { 
       if (valor_to_search.length >= 2) {
@@ -265,8 +265,8 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
   
       if (valor_to_search.length >= 2) {
         console.log("//procura_estoque/ - Pesquisar: " + valor_to_search);
-  
-        const dados_estoque_destino = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?cad_deposito_estoque_nome='+ valor_to_search);
+
+        const dados_estoque_destino = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?cad_deposito_estoque_nome='+ valor_to_search+'&origem='+origem);
         // console.log('//permuta/ - retornou a pesquisa')
   
         if (dados_estoque_destino) {
@@ -362,7 +362,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
       if (valor_to_search.length >= 2) {
         console.log("//procura_permissao/ - Pesquisar: " + valor_to_search);
   
-        const returned_dados_permissoes = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?dados_permissoes='+ valor_to_search+ '&usuarioId='+userIdToVerify);
+        const returned_dados_permissoes = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?dados_permissoes='+ valor_to_search+ '&usuarioId='+origem);
         // console.log('//permuta/ - retornou a pesquisa')
   
         // let teste_ = JSON.stringify(returned_dados_permissoes);

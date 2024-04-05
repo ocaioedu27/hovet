@@ -2,9 +2,8 @@
 
 $permutaId = $_GET["permutaId"];
 
-$sql_detalhes_permuta = "SELECT p.permutas_id,
-                    p.permutas_qtd_retirado,
-                    p.permutas_data,
+$sql_detalhes_permuta = "SELECT
+                    p.data,
                     p.permutas_insumos_qtd_cadastrado,
                     p.permutas_validade_retirado,
                     p.permutas_qtd_retirado,

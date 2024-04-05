@@ -44,22 +44,33 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
         $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
         $localInsumodispensario = strtok($localInsumodispensario, " ");
-        $depositoDestinoInsumodeposito = $dados_enviados_array['depositoDestinoInsumodeposito'][$chave_cad_dispensario];
-        $depositoDestinoInsumodeposito = strtok($depositoDestinoInsumodeposito, " ");
-        // echo "<br> Dispensario de destino" . $depositoDestinoInsumodeposito;
+        $dispensarioDestino = $dados_enviados_array['dispensarioDestino'][$chave_cad_dispensario];
+        $dispensarioDestino = strtok($dispensarioDestino, " ");
+        // echo "<br> Dispensario de destino" . $dispensarioDestino;
 
         $querySearchInsumoDep = "SELECT 
                                     d.insumos_id as dep_insumo_id,
-                                    i.nome as insumo_nome
+                                    i.nome as insumo_nome,
+                                    i.id as insumo_id
                                 FROM 
                                     deposito d
+                                INNER JOIN 
+                                    insumos i
+                                ON
+                                    d.insumos_id = i.id
                                 WHERE 
-                                    d.insumos_id={$id_insumo_dep_to_disp}";
+                                    d.id={$id_insumo_dep_to_disp}";
 
-        $procura_id_insumo_dep = mysqli_query($conexao, $querySearchInsumoDep) or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
+        try {
+            $procura_id_insumo_dep = mysqli_query($conexao, $querySearchInsumoDep) or die('//dispensario/inserir_dispensario/select_id_insumo - erro ao realizar consulta: ' . mysqli_error($conexao));
+            //code...
+        } catch (\Throwable $th) {
+            echo $th;
+        }
         $array_insumo_id = mysqli_fetch_assoc($procura_id_insumo_dep);
         $dep_insumo_id = $array_insumo_id['dep_insumo_id'];
         $insumo_nome = $array_insumo_id['insumo_nome'];
+        $insumo_id = $array_insumo_id['insumo_id'];
         
         // echo '<br/>id do insumo: ' . $insumo_id;
         // echo "<br/>Chave para o insumo: $chave_cad_dispensario";
@@ -76,17 +87,23 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
             deposito_id,
             local_id,
             insumos_id,
-            estoques_id)
+            estoque_id)
             VALUES(
                 {$quantidadeInsumoDispensario},
                 '{$validadeInsumoDeposito}',
                 {$id_insumo_dep_to_disp},
                 {$localInsumodispensario},
-                {$dep_insumo_id},
-                {$depositoDestinoInsumodeposito}
+                {$insumo_id},
+                {$dispensarioDestino}
             )";
 
-        if (mysqli_query($conexao, $sql_insert)) { 
+        try {
+            //code...
+            $inseriu = mysqli_query($conexao, $sql_insert);
+        } catch (\Throwable $th) {
+            echo $th;
+        }
+        if ($inseriu) { 
             echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
             echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
         } else {

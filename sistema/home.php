@@ -26,7 +26,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(id) as qtd FROM dispensario WHERE validade>curdate()";
+                                    $sql = "SELECT COUNT(id) as qtd FROM dispensario";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -46,7 +46,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() - interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade=curdate() or validade >= curdate() - interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>
@@ -68,7 +68,7 @@
                         </span>
                     </div>
                     <div class="cards cards_info">
-                        <div class="display-flex-row just-content-spc-around">
+                        <div class="d-flex flex-column">
                             <div class="sub_dados">
                                 <div class="titulo">
                                     <h4>Requisições</h4>
@@ -76,25 +76,71 @@
                                         <ion-icon name="file-tray-full-outline"></ion-icon>
                                     </span>
                                 </div>
-                                <?php
-                                    $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
-                                                
-                                            FROM pre_solicitacoes s
-                                            
-                                                INNER JOIN tipos_movimentacoes tp
-                                                ON s.tp_movimentacoes_id = tp.id
+                                <div class="d-flex">
+                                    <div>
+                                        <?php
+                                            $sql = "SELECT 
+                                                        COUNT(s.id) as pre_slc_qtd  
+                                                    FROM 
+                                                        pre_solicitacoes s
+                                                    INNER JOIN tipos_movimentacoes tp
+                                                    ON s.tp_movimentacoes_id = tp.id
 
-                                                INNER JOIN status_slc st
-                                                ON s.status_slc_id = st.id
-                                                
-                                            WHERE s.usuario_id = {$sessionUserID} 
-                                                AND tp.movimentacao LIKE 'Requisição%' 
-                                                AND st.status LIKE 'Pend%'";
-                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                    $dados = mysqli_fetch_assoc($rs);
-                                ?>
-                                <h2><?=$dados['pre_slc_qtd']?></h2>
-                                <p>Total Pendentes</p>
+                                                    INNER JOIN status_slc st
+                                                    ON s.status_slc_id = st.id
+                                                        
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Requisição%' 
+                                                        AND st.status LIKE 'Aprov%'";
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Aprovadas</p>
+                                    </div>
+                                    <div>
+                                        <?php
+                                            $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
+                                                        
+                                                    FROM pre_solicitacoes s
+                                                    
+                                                        INNER JOIN tipos_movimentacoes tp
+                                                        ON s.tp_movimentacoes_id = tp.id
+
+                                                        INNER JOIN status_slc st
+                                                        ON s.status_slc_id = st.id
+                                                        
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Requisição%' 
+                                                        AND st.status LIKE 'Pend%'";
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Pendentes</p>
+                                    </div>
+                                    <div>
+                                        <?php
+                                            $sql = "SELECT 
+                                                        COUNT(s.id) as pre_slc_qtd  
+                                                    FROM 
+                                                        pre_solicitacoes s
+                                                    INNER JOIN tipos_movimentacoes tp
+                                                    ON s.tp_movimentacoes_id = tp.id
+
+                                                    INNER JOIN status_slc st
+                                                    ON s.status_slc_id = st.id
+                                                        
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Requisição%' 
+                                                        AND st.status LIKE 'Recu%'";
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Recusadas</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="sub_dados">
                                 <div class="titulo">
@@ -103,26 +149,65 @@
                                         <ion-icon name="file-tray-full-outline"></ion-icon>
                                     </span>
                                 </div>
-                                <?php
-                                    $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
-                                                
-                                            FROM pre_solicitacoes s
-                                            
-                                                INNER JOIN tipos_movimentacoes tp
-                                                ON s.tp_movimentacoes_id = tp.id
+                                <div class="d-flex">
+                                    <div>
+                                        <?php
+                                            $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
+                                                    FROM pre_solicitacoes s
+                                                    INNER JOIN tipos_movimentacoes tp
+                                                    ON s.tp_movimentacoes_id = tp.id
+                                                    INNER JOIN status_slc st
+                                                    ON s.status_slc_id = st.id
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Devolução%' 
+                                                        AND st.status LIKE 'Pend%'";
+                                                        
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Aprovadas</p>
+                                    </div>
+                                    <div>
 
-                                                INNER JOIN status_slc st
-                                                ON s.status_slc_id = st.id
-                                                
-                                            WHERE s.usuario_id = {$sessionUserID} 
-                                                AND tp.movimentacao LIKE 'Devolução%' 
-                                                AND st.status LIKE 'Pend%'";
-                                                
-                                    $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-                                    $dados = mysqli_fetch_assoc($rs);
-                                ?>
-                                <h2><?=$dados['pre_slc_qtd']?></h2>
-                                <p>Total Pendentes</p>
+                                        <?php
+                                            $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
+                                                    FROM pre_solicitacoes s
+                                                    INNER JOIN tipos_movimentacoes tp
+                                                    ON s.tp_movimentacoes_id = tp.id
+                                                    INNER JOIN status_slc st
+                                                    ON s.status_slc_id = st.id
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Devolução%' 
+                                                        AND st.status LIKE 'Pend%'";
+                                                        
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Pendentes</p>
+                                    </div>
+                                    <div>
+
+                                        <?php
+                                            $sql = "SELECT COUNT(s.id) as pre_slc_qtd 
+                                                    FROM pre_solicitacoes s
+                                                    INNER JOIN tipos_movimentacoes tp
+                                                    ON s.tp_movimentacoes_id = tp.id
+                                                    INNER JOIN status_slc st
+                                                    ON s.status_slc_id = st.id
+                                                    WHERE s.usuario_id = {$sessionUserID} 
+                                                        AND tp.movimentacao LIKE 'Devolução%' 
+                                                        AND st.status LIKE 'Recu%'";
+                                                        
+                                            $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+                                            $dados = mysqli_fetch_assoc($rs);
+                                        ?>
+                                        <h2><?=$dados['pre_slc_qtd']?></h2>
+                                        <p>Total Recusadas</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

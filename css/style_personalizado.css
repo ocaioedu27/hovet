@@ -710,18 +710,21 @@ section.menu_lateral{
 }
 
 .ajuste_span{
-    position: absolute;
-    margin: 6% auto;
+    margin-top: 5px;
 }
 
 .ajuste_span ul{
-    color: #04AA6D;
-    background: beige;
+    background: rgb(42, 42, 42);
     padding: 5px;
+    border-radius: 20px;
 }
 
 .ajuste_span li{
-    color: #0ad188;
+    color: #ffffff;
+}
+
+.ajuste_span li:first-child{
+    margin-left: 10px;
 }
 
 .alerta_senhas_iguais {

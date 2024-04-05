@@ -39,10 +39,10 @@ if ($qualEstoque_dep != "") {
                     <div class="display-flex-cl">
                         <?php
                             $sql_mov = "SELECT 
-                                tipos_movimentacoes_id,
-                                tipos_movimentacoes_movimentacao
+                                id,
+                                movimentacao
                                 FROM tipos_movimentacoes
-                                WHERE tipos_movimentacoes_movimentacao='Permuta'";
+                                WHERE movimentacao='Permuta'";
                                 
                             $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//permuta/sql_mov - erro ao realiza" . mysqli_error($conexao));
 
@@ -50,18 +50,18 @@ if ($qualEstoque_dep != "") {
                             
                         ?>
                         <label>Tipo de operação</label>
-                        <input type="text" class="form-control largura_um_terco" name="movimentacao_permuta_deposito" value="<?=$dados_mov['tipos_movimentacoes_id']?> - <?=$dados_mov['tipos_movimentacoes_movimentacao']?>" readonly>
+                        <input type="text" class="form-control largura_um_terco" name="movimentacao_permuta_deposito" value="<?=$dados_mov['id']?> - <?=$dados_mov['movimentacao']?>" readonly>
                     </div>
                     
                     <div class="display-flex-cl">
                         <label>Quem está realizando</label>
                             <?php
-                            $sql = "SELECT * FROM usuarios WHERE usuario_id={$_SESSION['usuario_id']}";
+                            $sql = "SELECT * FROM usuarios WHERE id={$_SESSION['usuario_id']}";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
                             $dados = mysqli_fetch_assoc($result);
                             ?>
-                        <input type="text" class="form-control largura_um_terco" name="quemRealizouPermutaDep" value='<?=$dados["usuario_id"]?> - <?=$dados["usuario_primeiro_nome"]?>' readonly>
+                        <input type="text" class="form-control largura_um_terco" name="quemRealizouPermutaDep" value='<?=$dados["id"]?> - <?=$dados["primeiro_nome"]?>' readonly>
 
                     </div>
 
@@ -74,12 +74,12 @@ if ($qualEstoque_dep != "") {
                         <label>Institução a Permutar</label>
                         <select class="form-control" name="instituicaoPermutaDep" id="instituicaoPermutaDep" required>
                             <?php
-                            $sql = "SELECT fornecedores_id ,fornecedores_razao_social FROM fornecedores WHERE fornecedores_ctg_fornecedores_id=2";
+                            $sql = "SELECT id ,razao_social FROM fornecedores WHERE ctg_fornecedores_id=2";
                             $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
                             
                             while($dados = mysqli_fetch_assoc($result)){
                             ?>
-                            <option><?=$dados["fornecedores_id"]?> - <?=$dados["fornecedores_razao_social"]?></option>
+                            <option><?=$dados["id"]?> - <?=$dados["razao_social"]?></option>
 
                             <?php
                                 }
@@ -99,7 +99,7 @@ if ($qualEstoque_dep != "") {
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
                                 <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoPermuta[]" id="permuta_deposito_insumo_id_1" onkeyup="searchInput_cadDeposito(this.value, 1, 4)" placeholder="informe o nome do insumo..." required>
-                                <span class="ajuste_span" id="resultado_permuta_insumos1" style="margin: 6.5% auto;"></span>
+                                <span class="ajuste_span" id="resultado_permuta_insumos1"></span>
                             </div>
 
                             <div class="display-flex-cl">
@@ -142,8 +142,8 @@ if ($qualEstoque_dep != "") {
                         <div class="form-group valida_movimentacao">
                             <div class="display-flex-cl">
                                 <label>Insumo</label>
-                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoCadPermuta[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1, null)" placeholder="informe o nome do insumo..." required>
-                                <span class="ajuste_span" id="resultado_cad_deposito_insumos1" style="margin: 6.5% auto;"></span>
+                                <input type="text" class="form-control largura_um_terco" name="insumoID_InsumoCadPermuta[]" id="insumoID_Insumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 1)" placeholder="informe o nome do insumo..." required>
+                                <span class="ajuste_span" id="resultado_cad_deposito_insumos1"></span>
                             </div>
 
                             <div class="display-flex-cl">
@@ -167,8 +167,8 @@ if ($qualEstoque_dep != "") {
                             
                             <div class="display-flex-cl">
                                 <label>Depósito de Destino</label>
-                                <input type="text" class="form-control largura_um_terco" name="depositoDestinoInsumoPermuta[]" id="depositoDestinoInsumodeposito1" onkeyup="searchInput_cadDeposito(this.value, 1, 5)" placeholder="Informe o Destino..." required>
-                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1" style="margin: 6.5% auto;"></span>
+                                <input type="text" class="form-control largura_um_terco" name="depositoDestinoInsumoPermuta[]" id="estoqueDestino1" onkeyup="searchInput_cadDeposito(this.value, 1, 5, 'deposito')" placeholder="Informe o Destino..." required>
+                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1"></span>
                             </div>
                         </div>
                         <div class="form-group valida_movimentacao">

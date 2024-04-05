@@ -49,7 +49,7 @@
             $tipos_movimentacoes_movimentacao = $dados['movimentacao'];
             $movimentacoes_origem = $dados["origem"];
             $movimentacoes_destino = $dados['destino'];
-            // $usuario_nome_completo = $dados['nome_completo'];
+            $usuario_id_nome = $dados['usuario_id_nome'];
             
 
             $resultados .= '
@@ -60,6 +60,7 @@
                     <td>'. $tipos_movimentacoes_movimentacao .'</td>
                     <td>'. $movimentacoes_origem .'</td>
                     <td>'. $movimentacoes_destino .'</td>
+                    <td>'. $usuario_id_nome .'</td>
                     <td class="operacoes" id="td_operacoes_editar_deletar">
                         <a href="index.php?menuop=excluir_mov&movId=' . $movimentacoes_id . '" class="confirmaDelete">
                             <button class="btn">

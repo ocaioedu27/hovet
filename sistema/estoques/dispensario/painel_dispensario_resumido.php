@@ -68,33 +68,27 @@ if ($qualEstoque_dep != "") {
             $insumos_cads_list = array();
 
             $sql = "SELECT
-                        d.dispensario_id, 
-                        d.dispensario_qtd,
-                        date_format(d.dispensario_validade, '%d/%m/%Y') as validadedeposito,
-                        es.estoques_nome,
-                        es.estoques_nome_real,
-                        i.insumos_nome,
-                        i.insumos_unidade,
-                        datediff(d.dispensario_validade, curdate()) as diasParaVencimento,
-                        i.insumos_qtd_critica
-                        FROM dispensario d 
+                        i.nome as insumos_nome
+                    FROM 
+                        dispensario d 
+                    INNER JOIN 
+                        insumos i 
+                    ON 
+                        d.insumos_id = i.id
 
-                        INNER JOIN insumos i 
-                        ON d.dispensario_insumos_id = i.insumos_id
+                    INNER JOIN tipos_insumos tp
+                    ON tp.id = i.tipo_insumos_id
 
-                        INNER JOIN tipos_insumos tp
-                        ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+                    INNER JOIN estoques es
+                    ON d.estoque_id = es.id 
+                    WHERE
+                        es.nome_real = '{$qualEstoque}' and
+                        (i.nome LIKE '%{$txt_pesquisa_dispensario}%' or
+                        tp.tipo LIKE '%{$txt_pesquisa_dispensario}%')
+                        ORDER BY i.nome ASC 
+                        LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
 
-                        INNER JOIN estoques es
-                        ON d.dispensario_estoques_id = es.estoques_id 
-                        WHERE
-                            es.estoques_nome_real = '{$qualEstoque}' and
-                            (i.insumos_nome LIKE '%{$txt_pesquisa_dispensario}%' or
-                            tp.tipos_insumos_tipo LIKE '%{$txt_pesquisa_dispensario}%')
-                            ORDER BY insumos_nome ASC 
-                            LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
-
-            
+            // echo $sql;
             $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
             // var_dump($rs);
@@ -135,23 +129,23 @@ if ($qualEstoque_dep != "") {
                             $i--;
                             
                             $sql_qtd = "SELECT 
-                            sum(d.dispensario_qtd) as dispensario_qtd_insumo,
-                            i.insumos_nome,
-                            es.estoques_nome,
-                            tp.tipos_insumos_tipo
+                            sum(d.qtd) as dispensario_qtd_insumo,
+                            i.nome as insumos_nome,
+                            es.nome as estoques_nome,
+                            tp.tipo
                             FROM dispensario d 
 
                             INNER JOIN insumos i
-                            ON d.dispensario_insumos_id = i.insumos_id
+                            ON d.insumos_id = i.id
 
                             INNER JOIN tipos_insumos tp
-                            ON tp.tipos_insumos_id = i.insumos_tipo_insumos_id
+                            ON tp.id = i.tipo_insumos_id
 
                             INNER JOIN estoques es
-                            ON es.estoques_id = d.dispensario_estoques_id
+                            ON es.id = d.estoque_id
 
                             WHERE 
-                            es.estoques_nome_real = '{$qualEstoque}' and i.insumos_nome='{$insumo_selecionado}'";
+                            es.nome_real = '{$qualEstoque}' and i.nome='{$insumo_selecionado}'";
                         
                             $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//Dispensario/quantidade_insumos_deposito/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
 
@@ -164,7 +158,7 @@ if ($qualEstoque_dep != "") {
                             <a href="index.php?menuop=dispensario&<?=$qualEstoque?>&<?=$dados['insumos_nome']?>=1" class="form-group" style="padding: 0 20px; margin-bottom: 0;">Visualizar Detalhes</a>
                         </td>
                         <td><strong><?=$dados['insumos_nome']?></strong></td>
-                        <td><?=$dados['tipos_insumos_tipo']?></td>
+                        <td><?=$dados['tipo']?></td>
                         <td><?=$dados['dispensario_qtd_insumo']?></td>
                         <td><?=$dados['estoques_nome']?></td>
                     </tr>
@@ -177,14 +171,20 @@ if ($qualEstoque_dep != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldeposito = "SELECT d.dispensario_id 
-                                        FROM dispensario d
-                                        INNER JOIN estoques e
-                                        ON e.estoques_id = d.dispensario_estoques_id
-                                        WHERE e.estoques_nome_real='{$qualEstoque}'";
-                $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
-
-                $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+                // $sqlTotaldeposito = "SELECT 
+                //                         d.id 
+                //                     FROM 
+                //                         dispensario d
+                //                     INNER JOIN 
+                //                         estoques e
+                //                     ON 
+                //                         e.id = d.estoque_id
+                //                     WHERE 
+                //                         e.nome_real='{$qualEstoque}'";
+                // $queryTotaldeposito = mysqli_query($conexao,$sqlTotaldeposito) or die(mysqli_error($conexao));
+                // $numTotaldeposito = mysqli_num_rows($queryTotaldeposito);
+                
+                $numTotaldeposito = count($insumos_cads_list);
                 $totalPaginasdeposito = ceil($numTotaldeposito/$quantidade_registros_dispensario);
                 
                 echo "<a href=\"?menuop=dispensario_resumo&" . $qualEstoque . "=1\">Início</a> ";

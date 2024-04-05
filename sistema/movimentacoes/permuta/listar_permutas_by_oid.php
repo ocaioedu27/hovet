@@ -27,44 +27,41 @@
     $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
     $sql = "SELECT 
-                p.permutas_id,
-                p.permutas_qtd_retirado,
-                p.permutas_oid_operacao,
-                p.permutas_data,
-                p.permutas_insumos_qtd_cadastrado,
-                u.usuario_primeiro_nome,
-                e.estoques_nome as nome_estoque_retirado,
-                es.estoques_nome as nome_estoque_cadastrado,
-                ins.insumos_nome as nome_insumo_cadastrado,
-                i.insumos_nome as nome_insumo_retirado,
-                f.fornecedores_razao_social
+                p.oid_operacao,
+                p.data,
+                ins.nome as nome_insumo_cadastrado,
+                i.nome as nome_insumo_retirado,
+                f.razao_social
 
             FROM permutas p
             
                 INNER JOIN usuarios u
-                ON p.permutas_operador = u.usuario_id
+                ON p.usuario_id = u.id
             
-                INNER JOIN deposito d 
-                ON p.permutas_deposito_id = d.deposito_id
-            
-                INNER JOIN insumos ins
-                ON p.permutas_insumos_id_cadastrado = ins.insumos_id
+                INNER JOIN deposito dep_cad
+                ON p.deposito_id_cadastrado = dep_cad.id
             
                 INNER JOIN insumos i
-                ON d.deposito_insumos_id = i.insumos_id
-            
+                ON dep_cad.insumos_id = i.id
+
                 INNER JOIN estoques e
-                ON p.permutas_estoques_id_retirado = e.estoques_id
+                ON dep_cad.estoque_id = e.id
+            
+                INNER JOIN deposito dep_remv 
+                ON p.deposito_id_removido = dep_remv.id
+            
+                INNER JOIN insumos ins
+                ON dep_remv.insumos_id = ins.id
             
                 INNER JOIN estoques es
-                ON p.permutas_estoques_id_cadastrado = es.estoques_id
+                ON dep_remv.estoque_id = es.id
 
                 INNER JOIN fornecedores f
-                ON p.permutas_fornecedor_id = f.fornecedores_id
+                ON p.fornecedor_id = f.id
                 
                 WHERE
-                    p.permutas_oid_operacao='{$oid_operacao}'
-                    ORDER BY permutas_data DESC 
+                    p.oid_operacao='{$oid_operacao}'
+                    ORDER BY p.data DESC 
                     LIMIT $inicio_permutas,$qtd_registro";
     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
@@ -72,12 +69,11 @@
     if ($rs->num_rows > 0){
         while($dados = mysqli_fetch_assoc($rs)){
             
-            $permutas_id = $dados['permutas_id'];
-            $permutas_oid_operacao = $dados["permutas_oid_operacao"];
+            $permutas_oid_operacao = $dados["oid_operacao"];
             $nome_insumo_retirado = $dados['nome_insumo_retirado'];
-            $fornecedores_razao_social = $dados["fornecedores_razao_social"];
+            $fornecedores_razao_social = $dados["razao_social"];
             $nome_insumo_cadastrado = $dados['nome_insumo_cadastrado'];
-            $permutas_data = date("d/m/Y H:i", strtotime($dados["permutas_data"]));
+            $permutas_data = date("d/m/Y H:i", strtotime($dados["data"]));
 
             $resultados .= '
                 <tr class="tabela_dados">
@@ -140,11 +136,11 @@
                     // echo $oid_operacao;
 
                     $sqlTotalInsumos = "SELECT 
-                                            permutas_id 
+                                            id 
                                         FROM 
                                             permutas
                                         WHERE 
-                                            permutas_oid_operacao = '{$oid_operacao}'";
+                                            oid_operacao = '{$oid_operacao}'";
                     $queryTotalInsumos = mysqli_query($conexao,$sqlTotalInsumos) or die(mysqli_error($conexao));
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);

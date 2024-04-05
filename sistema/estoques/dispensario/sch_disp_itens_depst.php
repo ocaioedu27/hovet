@@ -5,20 +5,19 @@
 
     function retornaDadosDeposito($cad_disp_insumos_nome, $conn){
         $resultado_insumoDeposito = "SELECT
-                                        d.deposito_id,
-                                        d.deposito_qtd,
-                                        d.deposito_validade,
-                                        d.deposito_insumos_id,
-                                        i.insumos_descricao,
-                                        i.insumos_nome,
-                                        es.estoques_nome,
-                                        es.estoques_id
+                                        d.id as deposito_id,
+                                        d.qtd,
+                                        d.validade,
+                                        i.descricao,
+                                        i.nome as insumos_nome,
+                                        es.nome as estoques_nome,
+                                        es.id as estoques_id
                                         FROM deposito d 
                                         INNER JOIN insumos i
-                                        ON d.deposito_insumos_id = i.insumos_id
+                                        ON d.insumos_id = i.id
                                         INNER JOIN estoques es
-                                        ON d.deposito_estoque_id = es.estoques_id
-                                        WHERE i.insumos_nome LIKE '%{$cad_disp_insumos_nome}%' LIMIT 10";
+                                        ON d.estoque_id = es.id
+                                        WHERE i.nome LIKE '%{$cad_disp_insumos_nome}%' LIMIT 10";
         $resultado_insumoDeposito = mysqli_query($conn, $resultado_insumoDeposito) or die("//dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
 
         $valores_deposito = array();
@@ -32,9 +31,9 @@
                     
                     'idInsumoDeposito' => $row_insumoDeposito['deposito_id'],
                     'nomeInsumoDeposito' => $row_insumoDeposito['insumos_nome'],
-                    'quantidadeInsumoDeposito' => $row_insumoDeposito['deposito_qtd'],
-                    'validadeInsumoDeposito' => $row_insumoDeposito['deposito_validade'],
-                    'descricaoInsumoDeposito' => $row_insumoDeposito['insumos_descricao'],
+                    'quantidadeInsumoDeposito' => $row_insumoDeposito['qtd'],
+                    'validadeInsumoDeposito' => $row_insumoDeposito['validade'],
+                    'descricaoInsumoDeposito' => $row_insumoDeposito['descricao'],
                     'depositoOrigemId' => $row_insumoDeposito['estoques_id'],
                     'depositoOrigemNome' => $row_insumoDeposito['estoques_nome']
                 ];
@@ -53,16 +52,15 @@
     // para cadastrar dados no deposito a partir de informacoes dos insumos cadastrados no sistema
     function retorna_dados_insumos($cad_deposito_insumos_nome, $conn){
         $sql_insumo = "SELECT
-                                insumos_descricao,
-                                insumos_nome,
-                                insumos_qtd_critica,
-                                insumos_id
-                                FROM insumos
-                                WHERE  
-                                insumos_nome LIKE '%{$cad_deposito_insumos_nome}%' LIMIT 10";
+                            descricao,
+                            nome,
+                            qtd_critica,
+                            id
+                        FROM 
+                            insumos
+                        WHERE  
+                            nome LIKE '%{$cad_deposito_insumos_nome}%' LIMIT 10";
         $resultado_insumo = mysqli_query($conn, $sql_insumo) or die("//dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
-
-        $valores_deposito = array();
 
         $quantidade = $resultado_insumo->num_rows;
 
@@ -71,10 +69,10 @@
         
                 $valores_insumos[] = [
                     
-                    'idInsumo' => $row_insumoDeposito['insumos_id'],
-                    'nomeInsumo' => $row_insumoDeposito['insumos_nome'],
-                    'qtdCriticaInsumo' => $row_insumoDeposito['insumos_qtd_critica'],
-                    'descricaoInsumo' => $row_insumoDeposito['insumos_descricao']
+                    'idInsumo' => $row_insumoDeposito['id'],
+                    'nomeInsumo' => $row_insumoDeposito['nome'],
+                    'qtdCriticaInsumo' => $row_insumoDeposito['qtd_critica'],
+                    'descricaoInsumo' => $row_insumoDeposito['descricao']
                 ];
         
             }
@@ -88,11 +86,25 @@
         return json_encode($retorna_valores);
     }
 
-    function retorna_dados_estoques($cad_deposito_estoque_nome, $conn){
-        $sql_insumo = "SELECT * FROM estoques
-                                WHERE  
-                                estoques_nome LIKE '%{$cad_deposito_estoque_nome}%' LIMIT 10";
-        $resultado_estoques = mysqli_query($conn, $sql_insumo) or die("//estoques/dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
+    function retorna_dados_estoques($cad_deposito_estoque_nome, $conn, $origem){
+        $sql_insumo = "SELECT 
+                        e.id,
+                        e.nome
+                    FROM 
+                        estoques e
+                    INNER JOIN 
+                        tipos_estoques tp
+                    ON
+                        e.tipos_estoques_id = tp.id
+                    WHERE
+                        e.nome LIKE '%{$cad_deposito_estoque_nome}%' and tp.tipo LIKE '%$origem%'
+                    LIMIT 10";
+        try {
+            $resultado_estoques = mysqli_query($conn, $sql_insumo) or die("//estoques/dispensario/sch_disp_itens_depst/ - Erro: " . mysqli_error($conn));
+        //code...
+        } catch (\Throwable $th) {
+            echo $th;
+        }
 
         $valores_estoques = array();
 
@@ -103,8 +115,8 @@
         
                 $valores_estoques[] = [
                     
-                    'estoqueId' => $row_estoques['estoques_id'],
-                    'estoqueNome' => $row_estoques['estoques_nome']
+                    'estoqueId' => $row_estoques['id'],
+                    'estoqueNome' => $row_estoques['nome']
                 ];
         
             }
@@ -124,7 +136,7 @@
                         FROM 
                             tipos_insumos
                         WHERE  
-                            tipos_insumos_tipo LIKE '%{$valor_to_search}%' LIMIT 10";
+                            tipo LIKE '%{$valor_to_search}%' LIMIT 10";
 
         $resultado = mysqli_query($conn, $sql_insumo) or die("//estoques/dispensario/sch_disp_itens_depst/sql_pesquisa - Erro: " . mysqli_error($conn));
 
@@ -137,9 +149,9 @@
         
                 $valores_categorias[] = [
                     
-                    'categoriaId' => $row_categorias['tipos_insumos_id'],
-                    'categoria_nome' => $row_categorias['tipos_insumos_tipo'],
-                    'categoria_desc' => $row_categorias['tipos_insumos_descricao']
+                    'categoriaId' => $row_categorias['id'],
+                    'categoria_nome' => $row_categorias['tipo'],
+                    'categoria_desc' => $row_categorias['descricao']
                 ];
         
             }
@@ -155,15 +167,15 @@
     function retornInsumosDisp($insumos_nome, $conn){
 
         $resultado_insumo_dispensario = "SELECT
-                                            d.dispensario_id,
-                                            d.dispensario_qtd,
-                                            d.dispensario_validade,
-                                            i.insumos_descricao,
-                                            i.insumos_nome
+                                            d.id,
+                                            d.qtd,
+                                            d.validade,
+                                            i.descricao,
+                                            i.nome
                                             FROM dispensario d 
                                             INNER JOIN insumos i
-                                            ON d.dispensario_insumos_id = i.insumos_id
-                                            WHERE i.insumos_nome LIKE '%{$insumos_nome}%' LIMIT 10";
+                                            ON d.insumos_id = i.id
+                                            WHERE i.nome LIKE '%{$insumos_nome}%' LIMIT 10";
         $resultado_insumo_dispensario = mysqli_query($conn, $resultado_insumo_dispensario) or die("//dispensario/sch_disp_itens/ - Erro: " . mysqli_error($conn));
 
         $valores_insumos_disp = array();
@@ -175,11 +187,11 @@
         
                 $valores_insumos_disp[] = [
                     
-                    'idInsumoDisp' => $row_insumoDeposito['dispensario_id'],
-                    'nomeInsumoDisp' => $row_insumoDeposito['insumos_nome'],
-                    'qtdDisponivelInsumoDisp' => $row_insumoDeposito['dispensario_qtd'],
-                    'validadeInsumoDisp' => $row_insumoDeposito['dispensario_validade'],
-                    'descricaoInsumoDisp' => $row_insumoDeposito['insumos_descricao']
+                    'idInsumoDisp' => $row_insumoDeposito['id'],
+                    'nomeInsumoDisp' => $row_insumoDeposito['nome'],
+                    'qtdDisponivelInsumoDisp' => $row_insumoDeposito['qtd'],
+                    'validadeInsumoDisp' => $row_insumoDeposito['validade'],
+                    'descricaoInsumoDisp' => $row_insumoDeposito['descricao']
                 ];
         
             }
@@ -295,13 +307,13 @@
     function retorna_movimentacoes($value_to_compare, $conn){
 
         $sql = "SELECT 
-                    tipos_movimentacoes_id,
-                    tipos_movimentacoes_movimentacao,
-                    tipos_movimentacoes_descricao
+                    id,
+                    movimentacao,
+                    descricao
                 FROM
                     tipos_movimentacoes
                 WHERE 
-                    tipos_movimentacoes_movimentacao LIKE '%{$value_to_compare}%'";
+                    movimentacao LIKE '%{$value_to_compare}%'";
 
         $result = mysqli_query($conn, $sql) or die("//dispensario/sch_disp_itens/ - Erro: " . mysqli_error($conn));
 
@@ -314,9 +326,9 @@
         
                 $valores[] = [
                     
-                    'id_mov' => $array_row['tipos_movimentacoes_id'],
-                    'nome_mov' => $array_row['tipos_movimentacoes_movimentacao'],
-                    'desc_mov' => $array_row['tipos_movimentacoes_descricao']
+                    'id_mov' => $array_row['id'],
+                    'nome_mov' => $array_row['movimentacao'],
+                    'desc_mov' => $array_row['descricao']
                 ];
         
             }
@@ -335,7 +347,7 @@
                         FROM 
                             categorias_fornecedores
                         WHERE  
-                            cf_categoria LIKE '%{$valor_to_search}%' LIMIT 10";
+                            categoria LIKE '%{$valor_to_search}%' LIMIT 10";
 
         $resultado = mysqli_query($conn, $sql) or die("//estoques/dispensario/sch_disp_itens_depst/sql_pesquisa - Erro: " . mysqli_error($conn));
 
@@ -348,9 +360,9 @@
         
                 $valores_categorias[] = [
                     
-                    'categoriaId' => $row_categorias['cf_id'],
-                    'categoria_nome' => $row_categorias['cf_categoria'],
-                    'categoria_desc' => $row_categorias['cf_descricao']
+                    'categoriaId' => $row_categorias['id'],
+                    'categoria_nome' => $row_categorias['categoria'],
+                    'categoria_desc' => $row_categorias['descricao']
                 ];
         
             }
@@ -395,10 +407,12 @@
 
     // para retornar dados da tabela de estoques no momento do cadastro de insumos no deposito
     $cad_deposito_estoque_nome = $_GET['cad_deposito_estoque_nome'];
-
+    $origem = $_GET['origem'];
+    // var_dump($_GET);
+    // echo '<br>' . $origem;
     if(isset($cad_deposito_estoque_nome)){
 
-        echo retorna_dados_estoques($cad_deposito_estoque_nome, $conexao);
+        echo retorna_dados_estoques($cad_deposito_estoque_nome, $conexao, $origem);
     }
 
     // Para procurar por categorias

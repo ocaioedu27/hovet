@@ -40,7 +40,7 @@
                                 <div class="display-flex-row">
                                     <div class="display-flex-cl">
                                         <input type="text" class="form-control" name="tipo_movimentacao[]" id="tipo_movimentacao_1"     onkeyup="searchInput_cadDeposito(this.value, 1, 8)" placeholder="Informe o tipo de movimentação..." required>
-                                        <span class="ajuste_span" id="sugestao_resultado_span_1" style="margin: 11.1% auto;"></span>
+                                        <span class="ajuste_span" id="sugestao_resultado_span_1"></span>
                                     </div>
                                     <button class="btn" type="button" onclick="adicionaCampoCad(13, 'tipo_movimentacao', 'sugestao_resultado_span_1',8,'tipo_movimentacao_1')" style="padding: 0;">+</button>
                                 </div>

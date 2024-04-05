@@ -103,9 +103,9 @@ function getInsumoId(idInsumo, descricaoInsumo, nomeINsumo, id_campo_digitado, q
   } else if (cadType == 5){
     // PARA PROCURAR ESTOQUE
     
-    let depositoDestinoInsumodeposito_to_complete = document.getElementById('depositoDestinoInsumodeposito'+id_campo_digitado+'');
+    let estoqueDestino_to_complete = document.getElementById('estoqueDestino'+id_campo_digitado+'');
 
-    depositoDestinoInsumodeposito_to_complete.value = idInsumo+' - '+nomeINsumo;
+    estoqueDestino_to_complete.value = idInsumo+' - '+nomeINsumo;
 
     // span_para_fechar.innerHTML = '';
     fechaSpan("resultado_cad_deposito_estoque" , id_campo_digitado)

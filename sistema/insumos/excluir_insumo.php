@@ -22,9 +22,17 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
     $idInsumo = $_GET[$insumo_id];
 
+    if (empty($_GET['idInsumo'])){
+        
+        echo "<script language='javascript'>window.alert('preencha o ID!!'); </script>";
+        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=insumos&categoriaInsumoId=$categoriaId';</script>";
+        exit;
+
+    }
+
 }
 
-$sql = "SELECT * FROM insumos WHERE insumos_id={$idInsumo}";
+$sql = "SELECT * FROM insumos WHERE id={$idInsumo}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
 if($result->num_rows >0){
