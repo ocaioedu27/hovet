@@ -27,7 +27,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="pdf/relatorio_validade.php?estoque=deposito" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
+                        <a href="pdf/relatorio_validade.php?op=all" target="_blank">Relatório de insumos prestes a expirar (mês/ano)</a>
                     </td>
                     <td>
                         <span>Insumos prestes a vencer em 30 dias ou já vencidos.</span>
@@ -51,7 +51,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="pdf/relatorio_criticos.php" target="_blank">Relatório de insumos com estoque crítico</a>
+                        <a href="pdf/relatorio_criticos.php?op=all" target="_blank">Relatório de insumos com estoque crítico</a>
                     </td>
                     <td>
                         <span>Todos os insumos que estiverem com estoque abaixo do que foi definido como estoque crítico para o insumo.</span>
@@ -75,7 +75,7 @@
                         </a>
                     </td>
                     <td>
-                        <a href="pdf/relatorio_movimentacao.php" target="_blank">Relatório de todas as movimentações</a>
+                        <a href="pdf/relatorio_movimentacao.php?op=all" target="_blank">Relatório de todas as movimentações</a>
                     </td>
                     <td>
                         <span>Todas as movimentações anteriores à data atual.</span>

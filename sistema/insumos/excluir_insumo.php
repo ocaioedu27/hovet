@@ -36,7 +36,7 @@ $sql = "SELECT * FROM insumos WHERE id={$idInsumo}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
 if($result->num_rows >0){
-    $sqlDelete=mysqli_query($conexao, "DELETE from insumos WHERE insumos_id=$idInsumo");
+    $sqlDelete=mysqli_query($conexao, "DELETE from insumos WHERE id=$idInsumo");
     echo "<script language='javascript'>window.alert('Item excluído com sucesso!!'); </script>";
     echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=insumos&categoriaInsumoId=$categoriaId';</script>";
 }

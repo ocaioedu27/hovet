@@ -131,7 +131,9 @@ if ($qualEstoque_dep != "") {
                     <?php
                         
                         $i = count($insumos_cads_list)-1;
-                        if ($i>0){
+
+                        if ($i >= 0){
+
                             while ($i >= 0) {
                                 // echo $insumos_cads_list[$i];
                                 $insumo_selecionado = $insumos_cads_list[$i];

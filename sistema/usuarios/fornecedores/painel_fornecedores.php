@@ -32,16 +32,16 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
         $string_link_procurar_fornecedor = "fornecedores&fornecedores_ctg_id=" . $categoriaId;
 
         $sql_nome = "SELECT
-                        cf_categoria
+                        categoria
                     FROM 
                         categorias_fornecedores
                     WHERE
-                        cf_id = {$categoriaId}";
+                        id = {$categoriaId}";
 
         $resultado_nome = mysqli_query($conexao,$sql_nome) or die("Erro ao coletar o nome da categoria! " . mysqli_error($conexao));
         $categoria_nome_tmp = mysqli_fetch_assoc($resultado_nome);
 
-        $categoria_nome = $categoria_nome_tmp['cf_categoria'];
+        $categoria_nome = $categoria_nome_tmp['categoria'];
         
     } else {
         $categoria_id_for_select = "IS NOT NULL";
@@ -82,13 +82,13 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <table id="tabela_listar">
                 <thead>
                     <tr class="tabela_dados">
-                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Razão Social</th>
                         <th>E-mail</th>
                         <th>Logradouro</th>
                         <th>CPF / CNPJ</th>
                         <th>Categoria</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,29 +102,29 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
                         $sql = "SELECT 
-                                    f.fornecedores_id,
-                                    f.fornecedores_razao_social,
-                                    f.fornecedores_cpf_cnpj,
-                                    f.fornecedores_end_logradouro,
-                                    f.fornecedores_end_email,
-                                    c.cf_categoria
+                                    f.id,
+                                    f.razao_social,
+                                    f.cpf_cnpj,
+                                    f.end_logradouro,
+                                    f.end_email,
+                                    c.categoria
                                 FROM 
                                     fornecedores f
                                 INNER JOIN 
                                     categorias_fornecedores c
                                 ON 
-                                    c.cf_id = f.fornecedores_ctg_fornecedores_id
+                                    c.id = f.ctg_fornecedores_id
 
                                 WHERE
-                                    f.fornecedores_ctg_fornecedores_id {$categoria_id_for_select} 
+                                    f.ctg_fornecedores_id {$categoria_id_for_select} 
                                     and 
-                                    (f.fornecedores_id='{$txt_pesquisa}' or
-                                    f.fornecedores_razao_social LIKE '%{$txt_pesquisa}%' or
-                                    f.fornecedores_cpf_cnpj LIKE '%{$txt_pesquisa}%' or
-                                    f.fornecedores_end_logradouro LIKE '%{$txt_pesquisa}%' or
-                                    f.fornecedores_end_email LIKE '%{$txt_pesquisa}%' or
-                                    c.cf_categoria LIKE '%{$txt_pesquisa}%')
-                                    ORDER BY fornecedores_razao_social ASC 
+                                    (f.id='{$txt_pesquisa}' or
+                                    f.razao_social LIKE '%{$txt_pesquisa}%' or
+                                    f.cpf_cnpj LIKE '%{$txt_pesquisa}%' or
+                                    f.end_logradouro LIKE '%{$txt_pesquisa}%' or
+                                    f.end_email LIKE '%{$txt_pesquisa}%' or
+                                    c.categoria LIKE '%{$txt_pesquisa}%')
+                                    ORDER BY f.razao_social ASC 
                                     LIMIT $inicio,$qtd_registros";
 
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
@@ -139,15 +139,21 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         
                     ?>
                     <tr class="tabela_dados">
+                        <td><?=$dados["id"]?></td>
+                        <td><?=$dados["razao_social"]?></td>
+                        <td><?=$dados["end_email"]?></td>
+                        <td><?=$dados["end_logradouro"]?></td>
+                        <td><?=$dados["cpf_cnpj"]?></td>
+                        <td><?=$dados["categoria"]?></td>
                         <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["fornecedores_id"]?>" class="confirmaEdit">
+                            <a href="index.php?menuop=editar_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["id"]?>" class="confirmaEdit">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="create-outline"></ion-icon>
                                     </span>
                                 </button>
                             </a>
-                            <a href="index.php?menuop=excluir_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["fornecedores_id"]?>" class="confirmaDelete">
+                            <a href="index.php?menuop=excluir_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["id"]?>" class="confirmaDelete">
                                 <button class="btn">
                                     <span class="icon">
                                         <ion-icon name="trash-outline"></ion-icon>
@@ -155,12 +161,6 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["fornecedores_id"]?></td>
-                        <td><?=$dados["fornecedores_razao_social"]?></td>
-                        <td><?=$dados["fornecedores_end_email"]?></td>
-                        <td><?=$dados["fornecedores_end_logradouro"]?></td>
-                        <td><?=$dados["fornecedores_cpf_cnpj"]?></td>
-                        <td><?=$dados["cf_categoria"]?></td>
                     </tr>
                     <?php
                         }
@@ -174,7 +174,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             ?>
             <div class="paginacao">
                 <?php
-                    $sqlTotal = "SELECT fornecedores_id FROM fornecedores WHERE fornecedores_ctg_fornecedores_id $categoria_id_for_select";
+                    $sqlTotal = "SELECT id FROM fornecedores WHERE ctg_fornecedores_id $categoria_id_for_select";
                     $queryTotal = mysqli_query($conexao,$sqlTotal) or die(mysqli_error($conexao));
 
                     $numTotal = mysqli_num_rows($queryTotal);

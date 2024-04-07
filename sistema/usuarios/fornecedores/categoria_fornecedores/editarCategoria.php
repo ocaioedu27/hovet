@@ -1,14 +1,23 @@
 <?php
 $id = $_GET["id"];
 
+
+if (empty($_GET['id'])){
+        
+    echo "<script language='javascript'>window.alert('Preencha o ID!!'); </script>";
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=categorias_fornecedores';</script>";
+    exit;
+
+}
+
 $sql = "SELECT 
-            cf_id,
-            cf_categoria,
-            cf_descricao
+            id,
+            categoria,
+            descricao
         FROM
             categorias_fornecedores
         WHERE
-            cf_id={$id}";
+            id={$id}";
 
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
@@ -37,12 +46,12 @@ $dados = mysqli_fetch_assoc($result);
 
                             <div class="display-flex-cl" style="width: auto;">
                                 <label>ID</label>
-                                <input type="text" class="form-control" name="idCategoria" value="<?=$dados['cf_id']?>" readonly>
+                                <input type="text" class="form-control" name="idCategoria" value="<?=$dados['id']?>" readonly>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Categoria</label>
-                                <input type="text" class="form-control" name="nomeCategoria" placeholder="Infome o nome..." value="<?=$dados['cf_categoria']?>" required>
+                                <input type="text" class="form-control" name="nomeCategoria" placeholder="Infome o nome..." value="<?=$dados['categoria']?>" required>
                             </div>
 
                         </div>
@@ -50,7 +59,7 @@ $dados = mysqli_fetch_assoc($result);
                         <div class="form-group">
                             <div class="display-flex-cl">
                                 <label>Descrição da Categoria</label>
-                                <textarea class="form-control" name="descCategoria" rows="3" placeholder="Infome a descrição..." ><?=$dados['cf_descricao']?></textarea>
+                                <textarea class="form-control" name="descCategoria" rows="3" placeholder="Infome a descrição..." ><?=$dados['descricao']?></textarea>
                             </div>
                         </div>
                     </div>

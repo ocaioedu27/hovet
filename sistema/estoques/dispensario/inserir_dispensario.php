@@ -20,6 +20,9 @@ if ($qualEstoque_dep != "") {
 }
 
 $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$msg_insumo_inserido = "\nCadastro realizado com sucesso! Insumo: ";
+$msg_mov = " Movimentação registrada com sucesso! Insumo: ";
+$msg_final = "";
 
 // var_dump($dados_enviados_array);
 
@@ -44,16 +47,21 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
         $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
         $localInsumodispensario = strtok($localInsumodispensario, " ");
-        $dispensarioDestino = $dados_enviados_array['dispensarioDestino'][$chave_cad_dispensario];
-        $dispensarioDestino = strtok($dispensarioDestino, " ");
+        $dispensarioDestino_completo = $dados_enviados_array['dispensarioDestino'][$chave_cad_dispensario];
+        $dispensarioDestino = strtok($dispensarioDestino_completo, " ");
         // echo "<br> Dispensario de destino" . $dispensarioDestino;
 
         $querySearchInsumoDep = "SELECT 
                                     d.insumos_id as dep_insumo_id,
                                     i.nome as insumo_nome,
-                                    i.id as insumo_id
+                                    i.id as insumo_id,
+                                    e.nome as estoque_nome
                                 FROM 
                                     deposito d
+                                INNER JOIN 
+                                    estoques e
+                                ON
+                                    d.estoque_id = e.id
                                 INNER JOIN 
                                     insumos i
                                 ON
@@ -70,15 +78,9 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $array_insumo_id = mysqli_fetch_assoc($procura_id_insumo_dep);
         $dep_insumo_id = $array_insumo_id['dep_insumo_id'];
         $insumo_nome = $array_insumo_id['insumo_nome'];
+        $estoque_nome = $array_insumo_id['estoque_nome'];
         $insumo_id = $array_insumo_id['insumo_id'];
         
-        // echo '<br/>id do insumo: ' . $insumo_id;
-        // echo "<br/>Chave para o insumo: $chave_cad_dispensario";
-        // echo "<br/>Id do insumo no deposito: $id_insumo_dep_to_disp";
-        // echo "<br/>Id do insumo: $insumo_id";
-        // echo "<br/>Quantidade: $quantidadeInsumoDispensario";
-        // echo "<br/>Validade: $validadeInsumoDeposito";
-        // echo "<br/>Local: $localInsumodispensario";
         // echo "<hr>";
 
         $sql_insert = "INSERT INTO dispensario (
@@ -104,26 +106,38 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
             echo $th;
         }
         if ($inseriu) { 
-            echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
-            echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
+            // echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
+            $msg_final .= $msg_insumo_inserido . $insumo_nome;
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
         }
+
+        $tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
+        $tipo_movimentacao = strtok($tipo_movimentacao, " ");
+
+        $partes = explode(' - ', $dispensarioDestino_completo);
+
+        $local_destino = $partes[1];
+
+        $local_origem = $estoque_nome;
+
+
+        $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
+
+        if(atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome)){
+            $msg_final .= $msg_mov . $insumo_nome;
+        }
+
     }
+
+    echo '<script language="javascript">window.alert("'.$msg_final.'")</script>';
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
+
+
 } else {
     echo "error";
 }
 
 
-$tipo_movimentacao = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
-$tipo_movimentacao = strtok($tipo_movimentacao, " ");
-
-$local_origem = "Depósito";
-
-$local_destino = "Dispensário " . $qualEstoque[-1];
-
-$usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
-
-atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome);
 
 ?>

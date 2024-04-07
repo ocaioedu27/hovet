@@ -23,16 +23,16 @@
             $observacaoFornecedor = $dados_enviados_array['observacaoFornecedor'][$chave_cad_fornecedor];
 
             $sql = "INSERT INTO fornecedores (
-                fornecedores_razao_social,
-                fornecedores_ctg_fornecedores_id,
-                fornecedores_cpf_cnpj,
-                fornecedores_end_logradouro,
-                fornecedores_end_num,
-                fornecedores_end_bairro,
-                fornecedores_end_cep,
-                fornecedores_end_email,
-                fornecedores_end_telefone,
-                fornecedores_observacao)
+                razao_social,
+                ctg_fornecedores_id,
+                cpf_cnpj,
+                end_logradouro,
+                end_num,
+                end_bairro,
+                end_cep,
+                end_email,
+                end_telefone,
+                observacao)
                 VALUES(
                     '{$razaoSocialFornecedor}',
                     {$categoriaFornecedor},

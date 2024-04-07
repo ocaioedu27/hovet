@@ -1,5 +1,6 @@
 <?php
-include("../../db/connect.php");
+include_once("../../db/connect.php");
+include_once("../../pgs_modelo/funcoes.php");
 
 $html .= "<!DOCTYPE html>";
 $html .= "<html lang='pt-BR'>";
@@ -16,84 +17,67 @@ $html .= "<img src='logo_hovet.jpg'>";
 
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 // var_dump($dados);
-$sql = "";
+$sql = "SELECT
+            m.id,
+            m.origem,
+            m.destino,
+            m.usuario_id_nome,
+            date_format(m.data_operacao, '%d/%m/%Y %H:%i:%s') AS data_operacao,
+            m.insumo_nome,
+            m.usuario_id_nome,
+            tm.movimentacao
+        FROM 
+            historico_movimentacoes m
+        INNER JOIN 
+            tipos_movimentacoes tm
+        ON 
+            m.tipos_movimentacoes_id = tm.id";
     
 if (!empty($dados)) {
     // echo "tem post";
     $data_referencia = mysqli_real_escape_string($conexao,$_POST["data_referencia"]);
     $intervalo_dias = mysqli_real_escape_string($conexao,$_POST["intervalo_dias"]);
+    $tipoMovimentacao = $_POST["tipo_movimentacao"];
 
     $str_filter = ""; 
     $movimentacoes_str = ""; 
 
-    foreach ($dados['tipo_movimentacao'] as $key => $value){
+    foreach ($tipoMovimentacao as $key => $value){
         $nome_mov = substr($value,3);
         $movimentacoes_str .= " e " . $nome_mov;
 
         $id_mov_tmp = strtok($value, " ");
-        $filter_id_tmp = "tm.tipos_movimentacoes_id=" . $id_mov_tmp;
+        $filter_id_tmp = "tm.id=" . $id_mov_tmp;
         $str_filter .= " or " . $filter_id_tmp;
     }
 
     $str_filter = substr($str_filter, 4);
     $movimentacoes_str = substr($movimentacoes_str, 2);
-    $html .= "<h3 align='center'>Relatório da(s) movimentação(ões) $movimentacoes_str anterior(es) à data atual somada a $intervalo_dias dias<br></h3>";
+    $dataFormatada = date("d/m/Y", strtotime($data_referencia));
 
-    $sql= "SELECT
-            i.insumos_nome,
-            i.insumos_descricao,
-            m.movimentacoes_id,
-            m.movimentacoes_origem,
-            m.movimentacoes_destino,
-            tm.tipos_movimentacoes_movimentacao,
-            m.movimentacoes_usuario_id,
-            date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
-            u.usuario_nome_completo
-        
-        FROM movimentacoes m
-        
-        INNER JOIN insumos i
-        ON m.movimentacoes_insumos_id = i.insumos_id
-        INNER JOIN usuarios u
-        ON u.usuario_id = m.movimentacoes_usuario_id
-        INNER JOIN tipos_movimentacoes tm
-        ON m.movimentacoes_tipos_movimentacoes_id = tm.tipos_movimentacoes_id
-        
-        WHERE m.movimentacoes_data_operacao <= '{$data_referencia}' + interval {$intervalo_dias} day and ($str_filter)
+    $html .= "<h3 align='center'>Relatório de movimentações referentes à data $dataFormatada somada a $intervalo_dias dias<br></h3>";
 
-        ORDER BY insumos_nome  
+    $sql .= " WHERE m.data_operacao <= '{$data_referencia}' + interval {$intervalo_dias} day and ($str_filter)
+
+        ORDER BY m.insumo_nome  
     ";
 
 } else {
-    $html .= "<h3 align='center'>Relatorio de todas as movimentações anteriores à data atual<br></h3>";
+    $html .= "<h3 align='center'>Relatorio de todas as movimentações anteriores ou iguais à data atual<br></h3>";
 
-    $sql= "SELECT
-            i.insumos_nome,
-            i.insumos_descricao,
-            m.movimentacoes_id,
-            m.movimentacoes_origem,
-            m.movimentacoes_destino,
-            tm.tipos_movimentacoes_movimentacao,
-            m.movimentacoes_usuario_id,
-            date_format(m.movimentacoes_data_operacao, '%d/%m/%Y %H:%i:%s') AS movimentacoes_data_operacao,
-            u.usuario_nome_completo
-        
-        FROM movimentacoes m
-        
-        INNER JOIN insumos i
-        ON m.movimentacoes_insumos_id = i.insumos_id
-        INNER JOIN usuarios u
-        ON u.usuario_id = m.movimentacoes_usuario_id
-        INNER JOIN tipos_movimentacoes tm
-        ON m.movimentacoes_tipos_movimentacoes_id = tm.tipos_movimentacoes_id
-        
-        WHERE m.movimentacoes_data_operacao <= curdate()
+    $sql .= " WHERE m.data_operacao <= curdate()
 
-        ORDER BY insumos_nome  
+        ORDER BY m.insumo_nome  
     ";
 }
+echo '<br><br>'.$sql.'<br><br>';
+// exit;
     
-$res = mysqli_query($conexao, $sql) or die("<br>//relatorio_movimentacao - Erro ao realizar a consulta: " . mysqli_error($conexao));
+try {
+    $res = mysqli_query($conexao, $sql) or die("<br>//relatorio_movimentacao - Erro ao realizar a consulta: " . mysqli_error($conexao));
+} catch (\Throwable $th) {
+    echo $th;
+}
 
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('d/m/Y H:i');
@@ -107,13 +91,13 @@ if($res->num_rows > 0){
         while($row = $res->fetch_object()){
             
             $html .= "<tr>";
-            $html .= "<td>".$row->movimentacoes_id."</td>";
-            $html .= "<td>".$row->insumos_nome."</td>";
-            $html .= "<td>".$row->movimentacoes_data_operacao."</td>";
-            $html .= "<td>".$row->tipos_movimentacoes_movimentacao."</td>";
-            $html .= "<td>".$row->movimentacoes_origem."</td>";
-            $html .= "<td>".$row->movimentacoes_destino."</td>";
-            $html .= "<td>".$row->usuario_nome_completo."</td>";
+            $html .= "<td>".$row->id."</td>";
+            $html .= "<td>".$row->insumo_nome."</td>";
+            $html .= "<td>".$row->data_operacao."</td>";
+            $html .= "<td>".$row->movimentacao."</td>";
+            $html .= "<td>".$row->origem."</td>";
+            $html .= "<td>".$row->destino."</td>";
+            $html .= "<td>".$row->usuario_id_nome."</td>";
             $html .= "</tr>";
         }
 
@@ -130,8 +114,9 @@ $html .= "<p>Relatorio gerado em $agora</p>";
 $html .= "</body>";
 $html .= "</html>";
 
-// echo $html;
-    
+echo $html;
+exit;
+   
 require __DIR__.'/vendor/autoload.php';  
     
 use Dompdf\Dompdf;

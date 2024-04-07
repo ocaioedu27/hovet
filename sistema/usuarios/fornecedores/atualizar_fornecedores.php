@@ -64,17 +64,20 @@
         $observacaoFornecedor = "---";
     }
 
-    $sql = "UPDATE fornecedores SET 
-        fornecedores_razao_social = '{$razaoSocialFornecedor}',
-        fornecedores_end_logradouro = '{$logradouroFornecedor}',
-        fornecedores_end_num = '{$numEnderecoFornecedor}',
-        fornecedores_end_bairro = '{$bairroFornecedor}',
-        fornecedores_end_cep = '{$cepFornecedor}',
-        fornecedores_cpf_cnpj = '{$cnpjCpfFornecedor}',
-        fornecedores_end_email = '{$emailFornecedor}',
-        fornecedores_end_telefone = '{$foneFacFornecedor}',
-        fornecedores_observacao = '{$observacaoFornecedor}'
-        WHERE fornecedores_id={$idFornecedor}";
+    $sql = "UPDATE 
+                fornecedores 
+            SET 
+                razao_social = '{$razaoSocialFornecedor}',
+                end_logradouro = '{$logradouroFornecedor}',
+                end_num = '{$numEnderecoFornecedor}',
+                end_bairro = '{$bairroFornecedor}',
+                end_cep = '{$cepFornecedor}',
+                cpf_cnpj = '{$cnpjCpfFornecedor}',
+                end_email = '{$emailFornecedor}',
+                end_telefone = '{$foneFacFornecedor}',
+                observacao = '{$observacaoFornecedor}'
+            WHERE 
+                id={$idFornecedor}";
 
         if(mysqli_query($conexao, $sql)){
     

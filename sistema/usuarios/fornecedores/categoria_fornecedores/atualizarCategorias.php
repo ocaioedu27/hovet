@@ -5,8 +5,6 @@
     $nomeCategoria = mysqli_real_escape_string($conexao,$_POST["nomeCategoria"]);
     $descCategoria = mysqli_real_escape_string($conexao,$_POST["descCategoria"]);
     
-    // $tipoInsumo = $tipoInsumo[0];
-    // $tipoInsumo = strtok($tipoInsumo, " ");
     echo "<br>id: " . $idCategoria;
     echo "<br>Nome: " . $nomeCategoria;
     echo "<br>Desc: " . $descCategoria;
@@ -15,10 +13,10 @@
     $sql = "UPDATE 
                 categorias_fornecedores
             SET 
-                cf_categoria = '{$nomeCategoria}',
-                cf_descricao = '{$descCategoria}'
+                categoria = '{$nomeCategoria}',
+                descricao = '{$descCategoria}'
             WHERE 
-                cf_id={$idCategoria}";
+                id={$idCategoria}";
 
     // echo "<br>SQL: " . $sql;
 

@@ -62,4 +62,12 @@
             </div>
         </form>
     </div>
+    <div class="d-flex">
+        <div>
+            <h2>Lista de movimentações</h2>
+            <ul>
+
+            </ul>
+        </div>
+    </div>
 </div>

@@ -20,10 +20,20 @@
         $idCategoria = $stringList[1];
 
         $categoriaId = $_GET[$idCategoria];
+        $url = "&categoriaInsumoId=$categoriaId";
+        if (empty($categoriaId)) {
+            // echo "vazio";
+            $url = "";
+        }
+
+        // exit;
 
     }
 
     $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    $msg_final = "";
+    $msg_insumo_inserido = "Cadastro realizado com sucesso! Insumo ";
+
     
     if (!empty($dados_enviados_array['btnAdicionarInsumo'])) {
 
@@ -50,14 +60,16 @@
                 )";
 
             if(mysqli_query($conexao, $sql)){
-                echo "<script language='javascript'>window.alert('Insumo cadastrado com sucesso!'); </script>";
-                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=insumos&categoriaInsumoId=$categoriaId';</script>";
+                $msg_final .= '\n' . $msg_insumo_inserido . $nomeInsumo;
 
             } else{
                 die("//cadastro de insumos - Erro ao cadastrar insumo: " . mysqli_error($conexao));
             }
 
         }
+
+        echo "<script language='javascript'>window.alert('".$msg_final."'); </script>";
+        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=insumos".$url."';</script>";
 
     } else {
         echo '//Insumos/CadInsumos - nenhum formulário enviado';

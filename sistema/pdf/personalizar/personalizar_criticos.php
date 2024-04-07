@@ -18,19 +18,10 @@
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">
                             <label>Estoque a Verificar</label>
-                            <select class="form-control" name="tipo_estoque">
-                                <option>- Selecione -</option>
-                                <?php
-
-                                    $sql = "SELECT estoques_id, estoques_nome FROM estoques";
-                                    $resultado = mysqli_query($conexao, $sql) or die("//personalizar_criticos - erro ao realizar a consulta: " . mysqli_error($conexao));
-                                    while ($dados_estoques = mysqli_fetch_assoc($resultado)) {
-
-                                ?>
-                                    <option><?=$dados_estoques["estoques_id"]?> - <?=$dados_estoques["estoques_nome"]?></option>
-                                <?php
-                                    }
-                                ?>
+                            <select name="tipo_estoque" class="form-control" required>
+                                <option value="all">Todos os estoques</option>
+                                <option value="1">Depósito</option>
+                                <option value="2">Dispensário</option>
                             </select>
                         </div>
                     </div>

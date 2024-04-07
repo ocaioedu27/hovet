@@ -94,7 +94,7 @@
                 
                 if ($inserir_inusmo_no_banco) {
                     $id_insumo_inserido = mysqli_insert_id($conexao);
-                    $msg_final .= $msg_insumo_inserido ."". $nome_insumo;
+                    $msg_final .= '\n\n' . $msg_insumo_inserido ."". $nome_insumo;
 
                 } else {
                     die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
@@ -209,7 +209,7 @@
 
         }
 
-        echo '<script language="javascript">window.alert("'.$msg_final.'!!")</script>';
+        echo '<script language="javascript">window.alert("'.$msg_final.'")</script>';
         echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
 
 

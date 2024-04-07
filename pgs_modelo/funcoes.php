@@ -46,4 +46,45 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
 }
 
+function getVencidosEstoques($conexao,$estoquePreferencia, $data_referencia, $intervalo_dias){
+    $arrValores = [];
+
+    $sql= "SELECT 
+            d.id, 
+            d.qtd,
+            date_format(d.validade, '%d/%m/%Y') as validade,
+            i.nome,
+            i.unidade,
+            datediff(d.validade, curdate()) as diasvencimento,
+            es.nome as estoques_nome
+        FROM 
+            ". $estoquePreferencia ." d 
+        INNER JOIN 
+            insumos i 
+        ON
+            d.insumos_id = i.id
+        INNER JOIN 
+            estoques es
+        ON
+            es.id = d.estoque_id
+        WHERE 
+            d.validade<='{$data_referencia}' + interval {$intervalo_dias} day ORDER BY i.nome ASC";
+        
+    // echo '<br><br>' . $sql;
+    try {
+        $result = $conexao->query($sql);
+        if ($result->num_rows > 0){
+            for ($j=0; $j < $result->num_rows; $j++) {
+                $dados_tmp = $result->fetch_assoc();
+                array_push($arrValores, $dados_tmp);
+            }
+        }    
+    } catch (\Throwable $th) {
+        echo "//funcoes/getVencidosEstoques - erro ao realizar a coleta de dados: " . $th;
+        die($conexao);
+    }
+
+    return $arrValores;
+}
+
 ?>

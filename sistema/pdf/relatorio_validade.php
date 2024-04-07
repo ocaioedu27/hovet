@@ -1,5 +1,6 @@
 <?php
-include("../../db/connect.php");
+include_once("../../db/connect.php");
+include_once("../../pgs_modelo/funcoes.php");
 
 $html .= "<!DOCTYPE html>";
 $html .= "<html lang='pt-BR'>";
@@ -17,10 +18,7 @@ $html .= "<img src='logo_hovet.jpg'>";
 //Coleta de dados caso seja personalizado
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $estoquesTipo = ['deposito', 'dispensario'];
-$estoquesPorGet = $_GET['estoque'] ? $_GET['estoque'] : 'all';
-
-// echo $estoquesPorGet;
-// exit;
+$estoquesPorGet = $_GET['op'] ? $_GET['op'] : 'all';
 
 $sql = "";
 $arrValores = [];
@@ -33,117 +31,99 @@ if (isset($dados)) {
 
     $html .= "<h3 align='center'>Relatório de insumos prestes a expirar nos próximos $intervalo_dias dias<br></h3>";
 
-    for ($i=0; $i < count($estoquesTipo); $i++) { 
+    if($estoquePreferencia != 'all'){
 
-        $sql= "SELECT 
-                    d.id, 
-                    d.qtd,
-                    date_format(d.validade, '%d/%m/%Y') as validade,
-                    i.nome,
-                    i.unidade,
-                    datediff(d.validade, curdate()) as diasvencimento,
-                    es.nome as estoques_nome
-                FROM 
-                    ". $estoquesTipo[$i] ." d 
-                INNER JOIN 
-                    insumos i 
-                ON
-                    d.insumos_id = i.id
-                INNER JOIN 
-                    estoques es
-                ON
-                    es.id = d.estoque_id
-                WHERE 
-                    d.validade<='{$data_referencia}' + interval {$intervalo_dias} day ORDER BY i.nome ASC";
-                    
-        echo '<br>' . $sql;
-        $result = $conexao->query($sql);
-        if ($result->num_rows > 0){
-            $dados_tmp = $result->fetch_assoc();
+        $arrTmp = getVencidosEstoques($conexao, $estoquePreferencia, $data_referencia, $intervalo_dias);
+        
+        $arrValores = $arrTmp;
 
-            var_dump($dados_tmp);
-            array_push($arrValores, $dados_tmp);
+    }else{
+        
+        for ($i=0; $i < count($estoquesTipo); $i++) { 
+
+            $arrTmp = getVencidosEstoques($conexao, $estoquesTipo[$i], $data_referencia, $intervalo_dias);
+            for ($j=0; $j < count($arrTmp); $j++) { 
+                array_push($arrValores, $arrTmp[$j]);                
+            }
         }
     }
 
-    var_dump($arrValores);
 
 } else {
-    echo 'sem post';
-    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos 30 dias<br></h3>";
+    // echo 'sem post';
+    $intervalo_dias = 30;
+    $html .= "<h3 align='center'>Relatorio de Insumos Prestes a Expirar nos Próximos $intervalo_dias dias<br></h3>";
+    $data_referencia = date('Y-m-d');
 
-    $sql = "SELECT 
-                d.id, 
-                d.qtd,
-                date_format(d.validade, '%d/%m/%Y') as validade,
-                i.nome,
-                i.unidade,
-                datediff(d.validade, curdate()) as diasvencimento,
-                es.nome as estoques_nome
-            FROM ";
+    if($estoquesPorGet != 'all'){
 
-    if($estoquesPorGet != "all"){
+        $arrTmp = getVencidosEstoques($conexao, $estoquesPorGet, $data_referencia, $intervalo_dias);
+        
+        $arrValores = $arrTmp;
 
-        $sql .= "$estoquesPorGet d 
-        inner join insumos i 
-        on d.insumos_id = i.id
-        inner join estoques es
-        on es.id = d.estoque_id
-        where d.validade<=curdate() + interval 30 day ORDER BY i.nome ASC";
+    }else{
+        
+        for ($i=0; $i < count($estoquesTipo); $i++) { 
 
-    } else{
-        $sql .= " $estoquePorGet d 
-        inner join insumos i 
-        on d.insumos_id = i.id
-        inner join estoques es
-        on es.id = d.estoque_id
-        where d.validade<=curdate() + interval 30 day ORDER BY i.nome ASC";
+            $arrTmp = getVencidosEstoques($conexao, $estoquesTipo[$i], $data_referencia, $intervalo_dias);
+            for ($j=0; $j < count($arrTmp); $j++) { 
+                array_push($arrValores, $arrTmp[$j]);                
+            }
+        }
     }
 }
 
 // echo $sql;
-exit;
+// exit;
 
-$res = $conexao->query($sql);
 date_default_timezone_set('America/Sao_Paulo');
 $agora = date('d/m/Y H:i');
 
-if($res->num_rows > 0){
+
+if(count($arrValores) > 0){
+
     $html .= "<table border=1 cellspacing=3>";
     $html .= "<thead><tr><th> ID </th><th> Insumo </th><th> Quantidade </th><th> Validade </th><th> Guardado em </th><th> Aviso de Vencimento </th></tr></thead>";
     $html .= "<tbody>";
     
-    while($row = $res->fetch_object()){
-        
+    for ($h=0; $h < count($arrValores); $h++) { 
+        $id = $arrValores[$h]['id'];
+        $nome = $arrValores[$h]['nome'];
+        $qtd = $arrValores[$h]['qtd'];
+        $validade = $arrValores[$h]['validade'];
+        $diasvencimento = $arrValores[$h]['diasvencimento'];
+        $estoques_nome = $arrValores[$h]['estoques_nome'];
+
         $html .= "<tr>";
-        $html .= "<td>".$row->id."</td>";
-        $html .= "<td>".$row->nome."</td>";
-        $html .= "<td>".$row->qtd."</td>";
-        $html .= "<td>".$row->validade."</td>";
-        $html .= "<td>".$row->estoques_nome."</td>";
+        $html .= "<td>".$id."</td>";
+        $html .= "<td>".$nome."</td>";
+        $html .= "<td>".$qtd."</td>";
+        $html .= "<td>".$validade."</td>";
+        $html .= "<td>".$estoques_nome."</td>";
         $dias = ['30','45'];
 
         $mensagem_aviso = '';
         $class_to_add = '';
 
-        if($row->diasvencimento <= $dias[0]){                                    
+        if($diasvencimento <= $dias[0]){                                    
             $class_to_add = "vermelho";
-        } else if($row->diasvencimento <= $dias[1]){
+        } else if($diasvencimento <= $dias[1]){
             $class_to_add = "amarelo";
-        } else if($row->diasvencimento > $dias[1]){
+        } else if($diasvencimento > $dias[1]){
             $class_to_add = "verde";
         }
             
-        if ($row->diasvencimento <= 0){
+        if ($diasvencimento <= 0){
             $mensagem_aviso = "INSUMO VENCIDO!";
         } else{
-            $mensagem_aviso = $row->diasvencimento . " dia(s) para o vencimento";
+            $mensagem_aviso = $diasvencimento . " dia(s) para o vencimento";
         }
             
         $html .="<td class=". $class_to_add . ">". $mensagem_aviso;
         
         $html .= "</tr>";
     }
+    
     $html .= "</tbody>";
     $html .= "</table>";
     $html .= "</div>";
@@ -153,9 +133,13 @@ if($res->num_rows > 0){
     $html .="<p>Nenhum dado foi encontrado para este relatorio.</p>";
     //echo "Sem resultado";
 }
+
 $html .= "<p>Relatorio gerado em " . $agora ."</p>";
 $html .= "</body>";
 $html .= "</html>";
+
+// echo $html;
+// exit;
 
 require __DIR__.'/vendor/autoload.php';
 

@@ -39,8 +39,8 @@
                             <label>Estoque de preferência</label>
                             <select name="estoquePreferencia" class="form-control" required>
                                 <option value="all">Todos os estoques</option>
-                                <option value="1">Depósito</option>
-                                <option value="2">Dispensário</option>
+                                <option value="deposito">Depósito</option>
+                                <option value="dispensario">Dispensário</option>
                             </select>
                         </div>
                     </div>

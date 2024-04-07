@@ -20,6 +20,11 @@ if ($qualEstoque_dep != "") {
 }
 
 $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+$msg_insumo_inserido = "Cadastro realizado com sucesso! Insumo: ";
+$msg_insumo_atualizado = "Quantidade de insumo atualizada com sucesso! Insumo: ";
+$msg_permuta = "Permuta registrada com sucesso!";
+$msg_mov = "Movimentação registrada com sucesso!";
+$msg_final = "";
 
 // var_dump($dados_enviados_array);
 
@@ -48,8 +53,11 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
     foreach ($dados_enviados_array['insumoID_InsumoPermuta'] as $chave_permuta_dep => $valor_permuta_dep) {
 
         //para o insumo que será permutado - sairá do depósito
-        $insumoID_InsumoPermuta = $valor_permuta_dep;
-        $insumoID_InsumoPermuta = strtok($insumoID_InsumoPermuta, " ");
+        $insumoID_InsumoPermuta_insumo_removido = $valor_permuta_dep;
+        $insumoID_InsumoPermuta = strtok($insumoID_InsumoPermuta_insumo_removido, " ");
+        $partestmp = explode( " - ", $insumoID_InsumoPermuta_insumo_removido);
+        $insumo_nome_atualizado = $partestmp[1];
+
         // echo "<br/> Insumo do deposito: " . $insumoID_InsumoPermuta;
 
         $quantidadeInsumoDepositoPermuta = $dados_enviados_array['quantidadeInsumoDepositoPermuta'][$chave_permuta_dep];
@@ -70,8 +78,10 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
 
 
         //para o insumo que será cadastrado
-        $insumoID_InsumoCadPermuta = $dados_enviados_array['insumoID_InsumoCadPermuta'][$chave_permuta_dep];
-        $insumoID_InsumoCadPermuta = strtok($insumoID_InsumoCadPermuta, " ");
+        $insumoID_InsumoCadPermuta_completo = $dados_enviados_array['insumoID_InsumoCadPermuta'][$chave_permuta_dep];
+        $insumoID_InsumoCadPermuta = strtok($insumoID_InsumoCadPermuta_completo, " ");
+        $partes = explode( " - ", $insumoID_InsumoCadPermuta_completo);
+        $insumo_nome_cadastrado = $partes[1];
         // echo "<br/>ID do Insumo a ser cadastrado no deposito: " . $insumoID_InsumoCadPermuta;
 
         $validadeInsumoCadPermuta = $dados_enviados_array['validadeInsumoCadPermuta'][$chave_permuta_dep];
@@ -92,8 +102,9 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                             WHERE 
                                 id = {$insumoID_InsumoPermuta}";
 
-        if (mysqli_query($conexao, $sql_update_dep)) { 
-            echo "<script language='javascript'>window.alert('quantiade do insumo atualiada no Depósito com sucesso!!'); </script>";
+        $fezUpdate = mysqli_query($conexao, $sql_update_dep);
+        if ($fezUpdate) { 
+            $msg_final .= '\n\n' . $msg_insumo_atualizado . $insumo_nome_atualizado;
         } else {
             die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
         }
@@ -115,18 +126,16 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$depositoDestinoInsumoPermuta}
             )";
 
-        if (mysqli_query($conexao, $sql_insert_dep)) { 
-            echo "<script language='javascript'>window.alert('Insumo Cadastrado no Depósito com sucesso!!'); </script>";
+        $inserirDep = mysqli_query($conexao, $sql_insert_dep);
+        if ($inserirDep) { 
+            $id_insumo_inserido = mysqli_insert_id($conexao);
+            $msg_final .= '\n' . $msg_insumo_inserido . $insumo_nome_cadastrado;
             // echo "insumo inserido com sucesso";   
         } else {
             die("//deposito/insere_dep - Erro ao executar a inserção no Depósito. " . mysqli_error($conexao));   
         }
 
-        $sqlGetDepId = "SELECT d.id as deposito_id, i.nome as insumo_nome FROM deposito d INNER JOIN insumos i ON d.insumos_id = i.id WHERE d.id_origem = '$oid_operacao'";
-        $rGetDepId = mysqli_query($conexao, $sqlGetDepId);
-        $dadosGetId = mysqli_fetch_assoc($rGetDepId);
         $dep_id = $dadosGetId['deposito_id'];
-        $insumo_nome = $dadosGetId['insumo_nome'];
 
         $sql_insert_permuta = "INSERT INTO permutas (
             usuario_id,
@@ -140,7 +149,7 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
             )
             VALUES(
                 {$quemRealizouPermutaDep},
-                {$dep_id},
+                {$id_insumo_inserido},
                 {$insumoID_InsumoPermuta},
                 {$quantidadeInsumoDepositoPermuta},
                 {$quantidadeInsumoCadPermuta},
@@ -149,11 +158,11 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
                 {$movimentacao_permuta_deposito}
             )";
 
-        echo "<br>" . $sql_insert_permuta;
+        // echo "<br>" . $sql_insert_permuta;
         
         try {
             $inserir = mysqli_query($conexao, $sql_insert_permuta);
-            echo "<script language='javascript'>window.alert('Permuta registrada com sucesso!!'); </script>"; 
+            $msg_final .= '\n' . $msg_permuta;
             
         } catch (\Throwable $th) {
             //throw $th;
@@ -161,7 +170,6 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
             die("Erro ao cadastrar na tabela de permutas. " . mysqli_error($conexao)); 
         }
 
-        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
 
         $tipo_movimentacao = $movimentacao_permuta_deposito;
 
@@ -171,8 +179,15 @@ if (!empty($dados_enviados_array['btnPermutaInsumoDeposito'])) {
 
         $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
 
-        atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome);
+        if(atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome_atualizado)){
+            $msg_final .= '\n' . $msg_mov;
+        }
+
     }
+
+    echo "<script language='javascript'>window.alert('". $msg_final ."!'); </script>"; 
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
+    
 } else {
     echo "error";
 }

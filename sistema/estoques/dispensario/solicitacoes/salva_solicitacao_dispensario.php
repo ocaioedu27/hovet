@@ -21,6 +21,9 @@ if ($qualEstoque_dep != "") {
 
 $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+$msg_slc = "Solicitação enviada com sucesso!! Registro da solicitação para acompanhamento: ";
+$msg_final = "";
+
 if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
 
     $solicitante_insumo_dispensario = mysqli_real_escape_string($conexao,$_POST["solicitante_insumo_dispensario"]);
@@ -48,8 +51,8 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
 
     $status_slc_id = 3;
 
-    $iod_pre_solicitacao = uniqid();
-    // echo $iod_pre_solicitacao;
+    $oid_operacao = uniqid();
+    // echo $oid_operacao;
 
     $contador_slc = 0;
 
@@ -69,7 +72,7 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
 
 
         echo "<br/>contador no loop: " . $contador_slc;
-        echo "<br/>Oid da solicitacao: " . $iod_pre_solicitacao;
+        echo "<br/>Oid da solicitacao: " . $oid_operacao;
         echo "<br/>Id do insumo do dispensario: " . $insumo_dispensario_id;
         echo "<br/>Quantidade solicitada: " . $quantidade_insumo_solic_dispensario;
         echo "<br/>Quantidade atual no dispensario: " . $quantidade_atual_dispensario;
@@ -94,17 +97,16 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
                 {$quantidade_insumo_solic_dispensario},
                 {$operacao_dispensario},
                 {$status_slc_id},
-                '{$iod_pre_solicitacao}'
+                '{$oid_operacao}'
             )";
 
         // echo $sql_insert;
         // exit;
 
         try {
-            if (mysqli_query($conexao, $sql_insert)) { 
-                echo "<script language='javascript'>window.alert('Solicitação enviada com sucesso!! Registro da solicitação para acompanhamento: ". $iod_pre_solicitacao . " '); </script>";
-                echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
-                echo "<br/>Chave loop: " . $chave_solic_dispensario;
+            $guardar_slq = mysqli_query($conexao, $sql_insert);
+            if ($guardar_slq) { 
+                echo "";
             
             } else {
                 die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   
@@ -115,6 +117,11 @@ if (!empty($dados_enviados_array['btnSolicitarInsumoDispensario'])) {
         }
         
     }
+    $msg_final .= '\n'.$msg_slc . $oid_operacao;
+
+    echo '<script language="javascript">window.alert("'.$msg_final.'")</script>';
+    // exit;
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $qualEstoque . "=1';</script>";
 
 
 } else {
