@@ -17,11 +17,11 @@
                 <div>
                     <div class="form-group valida_movimentacao">
                         <div class="display-flex-cl">
-                            <label>Estoque a Verificar</label>
+                            <label>Tipo de estoque</label>
                             <select name="tipo_estoque" class="form-control" required>
                                 <option value="all">Todos os estoques</option>
-                                <option value="1">Depósito</option>
-                                <option value="2">Dispensário</option>
+                                <option value="deposito">Depósito</option>
+                                <option value="dispensario">Dispensário</option>
                             </select>
                         </div>
                     </div>

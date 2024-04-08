@@ -46,7 +46,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade=curdate() or validade >= curdate() - interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() + interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>

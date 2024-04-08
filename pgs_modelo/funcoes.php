@@ -87,4 +87,135 @@ function getVencidosEstoques($conexao,$estoquePreferencia, $data_referencia, $in
     return $arrValores;
 }
 
+function getCriticosEstoques($conexao,$estoquePreferencia, $where = null){
+    $arrValores = [];
+    $where = strlen($where)>0 ? " WHERE " . $where : "";
+
+    $sql= "SELECT 
+                distinct i.nome,
+                i.id,
+                i.descricao,
+                i.qtd_critica, 
+                d.estoque_id,
+                tp.tipo, 
+                es.nome as estoqueNome,
+                es.nome_real as estoqueNomeReal
+            FROM 
+                {$estoquePreferencia} d 
+            INNER JOIN 
+                insumos i
+            ON 
+                d.insumos_id = i.id
+            INNER JOIN 
+                tipos_insumos tp
+            ON 
+                tp.id = i.tipo_insumos_id
+            INNER JOIN 
+                estoques es
+            ON 
+                es.id = d.estoque_id" . $where;
+
+    // echo $sql;
+        
+    try {
+        $result = $conexao->query($sql);
+        if ($result->num_rows > 0){
+            for ($j=0; $j < $result->num_rows; $j++) {
+                $dados_tmp = $result->fetch_assoc();
+                array_push($arrValores, $dados_tmp);
+            }
+        }    
+    } catch (\Throwable $th) {
+        echo "//funcoes/getVencidosEstoques - erro ao realizar a coleta de dados: " . $th;
+        die($conexao);
+    }
+
+    return $arrValores;
+}
+
+
+
+function selectDados($conexao, $from, $fields = null, $where = null){
+    $arrValores = [];
+    $where = strlen($where)>0 ? " WHERE " . $where : "";
+    $fields = strlen($fields)>0 ? $fields : "*";
+
+    $sql= "SELECT ".$fields." FROM ".$from .$where;
+        
+    try {
+        $result = $conexao->query($sql);
+        if ($result->num_rows > 0){
+            for ($j=0; $j < $result->num_rows; $j++) {
+                $dados_tmp = $result->fetch_assoc();
+                array_push($arrValores, $dados_tmp);
+            }
+        }    
+    } catch (\Throwable $th) {
+        echo "//funcoes/getVencidosEstoques - erro ao realizar a coleta de dados: " . $th;
+        die($conexao);
+    }
+
+    return $arrValores;
+}
+
+
+
+/**
+ * Método responsável por trazer dados do banco de dados utilizando inner join.
+ * A forma correta de usar é 'linkar' as tabelas e seus atributos que serão usadas no inner join ao chamar a função, você deve alternar os atributos de cada tabela.
+ * Por exemplo: selectInnnerJoin(['att1','att2', ...], 'deposito', ['tipo_insumo_id']);
+ * @param array $attrsToReturn -> Atributos a serem retornados
+ * @param string $tableToFrom -> tabela para usar após o ... FROM <table_here> ...
+ * @param array $arrayAttFrom-> atributos que são referentes à tabela do from e serão usados na forma: ON tableFrom.AttFrom = tableInner.AttInner
+ * @param array $arrTableToInner-> Tabelas que serão usadas no INNER JOIN: INNER JOIN tableInner
+ * @param array $arrayAttFrom-> atributos que são referentes à tabela do from e serão usados na forma: ON tableFrom.AttFrom = tableInner.AttInner
+ * @param string $where -> clausula where
+ * 
+ */
+function selectInnnerJoin($conexao, $attrsToReturn, $tableToFrom, $arrayAttFrom, $arrTableToInner, $arrAttrsTableInner, $where = null){
+    $arrValores = [];
+    // echo '<br>chegou aqui';
+    $where = strlen($where) ? ' WHERE ' . $where : '';
+
+    $query = '
+        SELECT 
+            '. implode(',',$attrsToReturn).'
+        FROM 
+            '.$tableToFrom;
+
+    $inner = '';
+
+    for ($i=0; $i < count($arrayAttFrom); $i++) { 
+
+        $inner .= "
+            INNER JOIN " . $arrTableToInner[$i] .'
+            ON '. $tableToFrom.'.'. $arrayAttFrom[$i] .' = '. $arrTableToInner[$i] .'.'. $arrAttrsTableInner[$i] .'';
+    
+    }
+
+    $query = $query . $inner . ' ' .$where;
+
+    // echo $query;
+
+    try {
+        $result = $conexao->query($query);
+        if ($result->num_rows > 0){
+            for ($j=0; $j < $result->num_rows; $j++) {
+                $dados_tmp = $result->fetch_assoc();
+                // echo '<br>' . $dados_tmp['qtd_insumos'];
+                array_push($arrValores, $dados_tmp);
+            }
+        }    
+    } catch (\Throwable $th) {
+        echo "//funcoes/getVencidosEstoques - erro ao realizar a coleta de dados: " . $th;
+        die($conexao);
+    }
+
+    // echo "<pre>"; print_r($query); echo "</pre>"; exit;
+
+    return $arrValores;
+
+}
+
+
 ?>

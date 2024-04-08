@@ -70,7 +70,7 @@ if (!empty($dados)) {
         ORDER BY m.insumo_nome  
     ";
 }
-echo '<br><br>'.$sql.'<br><br>';
+// echo '<br><br>'.$sql.'<br><br>';
 // exit;
     
 try {
@@ -114,8 +114,8 @@ $html .= "<p>Relatorio gerado em $agora</p>";
 $html .= "</body>";
 $html .= "</html>";
 
-echo $html;
-exit;
+// echo $html;
+// exit;
    
 require __DIR__.'/vendor/autoload.php';  
     

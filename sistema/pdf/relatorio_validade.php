@@ -20,7 +20,6 @@ $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 $estoquesTipo = ['deposito', 'dispensario'];
 $estoquesPorGet = $_GET['op'] ? $_GET['op'] : 'all';
 
-$sql = "";
 $arrValores = [];
     
 if (isset($dados)) {
@@ -86,7 +85,7 @@ if(count($arrValores) > 0){
     $html .= "<thead><tr><th> ID </th><th> Insumo </th><th> Quantidade </th><th> Validade </th><th> Guardado em </th><th> Aviso de Vencimento </th></tr></thead>";
     $html .= "<tbody>";
     
-    for ($h=0; $h < count($arrValores); $h++) { 
+    for ($h=0; $h < count($arrValores); $h++) {
         $id = $arrValores[$h]['id'];
         $nome = $arrValores[$h]['nome'];
         $qtd = $arrValores[$h]['qtd'];

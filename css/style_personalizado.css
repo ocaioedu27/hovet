@@ -770,6 +770,22 @@ div#permuta_dep {
     margin: 0 auto !important;
 }
 
+.banner-dados {
+    font-size: smaller;
+    overflow: auto;
+}
+
+.banner-dados > ul > li {
+    margin-top: 5px;
+    border-radius: 0 0 0 4px;
+    padding: 5px;
+    border-bottom: 1px solid #04AA6D;
+}
+
+.wd-auto{
+    width: auto;
+}
+
 /* Espaço para as media queries */
 
 @media only screen and (max-width: 1480px){

@@ -144,8 +144,8 @@ if ($qualEstoque_disp != "") {
                         
                     ?>
                     <tr>
-                        <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=excluir_dispensario&idInsumodispensario=<?=$dados["dispensario_id"]?>"
+                        <td class="" id="td_operacoes_editar_deletar">
+                            <a href="index.php?menuop=excluir_dispensario&idInsumodispensario=<?=$dados["id"]?>"
                                 class="confirmaDelete">
                                 <button class="btn">
 
@@ -155,7 +155,7 @@ if ($qualEstoque_disp != "") {
                                 </button>
                             </a>
                         </td>
-                        <td><?=$dados["dispensario_id"]?></td>
+                        <td><?=$dados["id"]?></td>
                         <td>
                             <?php
                             

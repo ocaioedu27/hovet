@@ -39,7 +39,7 @@
                                 <label>Tipo de movimentação</label>
                                 <div class="display-flex-row">
                                     <div class="display-flex-cl">
-                                        <input type="text" class="form-control" name="tipo_movimentacao[]" id="tipo_movimentacao_1"     onkeyup="searchInput_cadDeposito(this.value, 1, 8)" placeholder="Informe o tipo de movimentação..." required>
+                                        <input type="text" class="form-control" name="tipo_movimentacao[]" id="tipo_movimentacao_1" onkeyup="searchInput_cadDeposito(this.value, 1, 8)" placeholder="Informe o tipo de movimentação..." required>
                                         <span class="ajuste_span" id="sugestao_resultado_span_1"></span>
                                     </div>
                                     <button class="btn" type="button" onclick="adicionaCampoCad(13, 'tipo_movimentacao', 'sugestao_resultado_span_1',8,'tipo_movimentacao_1')" style="padding: 0;">+</button>
@@ -62,11 +62,26 @@
             </div>
         </form>
     </div>
-    <div class="d-flex">
+    <div class="cards d-flex ml-3 p-3 wd-auto">
         <div>
-            <h2>Lista de movimentações</h2>
+            <h5>Lista de movimentações para pesquisa</h5>
+            <hr>
+        </div>
+        <div class="banner-dados">
             <ul>
+                <?php
+                    $query = "SELECT * FROM tipos_movimentacoes";
+                    $result = $conexao->query($query);
+                    // var_dump($result);
+                    $dados = $result->fetch_all();
+                    // var_dump($dados);
+                    
+                    for ($i=0; $i < $result->num_rows; $i++) { 
+                        $movimentacao = $dados[$i][1];
+                        echo '<li>' . $movimentacao . '</li>';
+                    }
 
+                ?>
             </ul>
         </div>
     </div>
