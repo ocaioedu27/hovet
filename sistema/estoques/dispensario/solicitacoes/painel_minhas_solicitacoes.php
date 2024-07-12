@@ -92,6 +92,7 @@ $resultados = '';
 if ($rs->num_rows > 0){
     while($dados_para_while = mysqli_fetch_assoc($rs)){
         
+        $id = $dados_para_while["id"];
         $oid_solicitacao = $dados_para_while["oid_solicitacao"];
         $movimentacao_tmp = $dados_para_while["movimentacao"];
         $movimentacao = strtok($movimentacao_tmp, " ");

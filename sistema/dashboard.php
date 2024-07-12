@@ -28,7 +28,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(id) as deposito_Qtd FROM deposito WHERE validade>curdate()";
+                                    $sql = "SELECT COUNT(id) as deposito_Qtd FROM deposito";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>

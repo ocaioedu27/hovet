@@ -116,11 +116,15 @@ if(count($arrValores) > 0){
         // $resInsumos = selectDados($conexao, $estoqueNomeReal, "sum(qtd) as qtd_insumos", "");
         $resInsumos = selectInnnerJoin($conexao, ['sum(qtd) as qtdTotalEmEstoque'] ,$estoqueNomeReal, ['estoque_id'],['estoques'],['id'], $where);
 
+        // echo '<pre>';
+        // echo '<br><br>';
         // var_dump($resInsumos);
+        // echo '</pre>';
         $qtdTotalEmEstoque = $resInsumos[0]['qtdTotalEmEstoque'];
         // echo $qtdTotalEmEstoque;
 
         if($qtdTotalEmEstoque <= $qtd_critica){
+            // echo '<br>Este vai';
             $resultado .= "<tr>";
             $resultado .= "<td>".$nome."</td>";
             $resultado .= "<td>".$tipo_insumo."</td>";

@@ -21,8 +21,13 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
 var_dump($_GET);
 
+echo '<br>';
+
 $idSolicitacao = $_GET[$varIdSolicitacao];
 $dados_enviados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+echo '<br>';
+
 var_dump($dados_enviados);
 
 // var_dump($stringList);
@@ -42,7 +47,7 @@ $sql = "SELECT
             tp.movimentacao,
             tp.id as tipos_movimentacoes_id,
             d.id as dispensario_id,
-            d.estoques_id,
+            d.estoque_id,
             d.qtd as dispensario_qtd,
             d.insumos_id,
             u.id as usuario_id,
@@ -78,13 +83,17 @@ $sql = "SELECT
     
         WHERE s.id={$idSolicitacao}";
 
-$result = mysqli_query($conexao, $sql) or die("//Solicitacoes/atualizar_status_solicitacao/ - Erro ao realizar a consulta. " . mysqli_error($conexao));
+try {
+    $result = mysqli_query($conexao, $sql) or die("//Solicitacoes/atualizar_status_solicitacao/ - Erro ao realizar a consulta. " . mysqli_error($conexao));    
+} catch (\Throwable $th) {
+    echo $th;
+}
 
 $dados_sql = mysqli_fetch_assoc($result);
 
 $dispensario_id = $dados_sql['dispensario_id'];
 
-// echo "<br/>//Coleta-valores/ dispensario id - " . $dispensario_id;
+echo "<br/>//Coleta-valores/ dispensario id - " . $dispensario_id;
 
 $quem_solicitou = $dados_sql['usuario_id'];
 
@@ -164,6 +173,8 @@ if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
                                 WHERE 
                                     id={$idSolicitacao}";
 
+        // exit;
+
         $deuCerto_altera_status = mysqli_query($conexao, $sql_altera_status);
 
         if ($deuCerto_altera_status) {
@@ -197,6 +208,7 @@ if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
 
         $sql_update_disp_qtd_subtrair = "CALL updateDispensarioQtd($nova_quantidade, $dispensario_id)";
 
+        // exit;
         $sql_atualizou_qtd = mysqli_query($conexao, $sql_update_disp_qtd_subtrair);
 
         if ($sql_atualizou_qtd) {
@@ -220,6 +232,7 @@ if ($novo_status_slc == "aprovar" || !empty($dados_enviados["btnAprovaSlc"])) {
 
         $sql_altera_status = "UPDATE pre_solicitacoes SET status_slc_id=2 WHERE id={$idSolicitacao}";
 
+        // exit;
         $deuCerto = mysqli_query($conexao, $sql_altera_status);
 
         if ($deuCerto) {
@@ -260,4 +273,5 @@ $local_destino = $local_destino_tmp;
 
 $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
 
-atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome);
+// exit;
+atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumos_nome);

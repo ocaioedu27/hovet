@@ -140,7 +140,7 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         
                     ?>
                     <tr>
-                        <td><?=$oid_solicitacao?></td>
+                        <td><?=$dados_para_while["id"]?></td>
                         <td><?=$dados_para_while["primeiro_nome"]?></td>
                         <td><?=$dados_para_while["insumos_nome"]?></td>
                         <td><?=$dados_para_while["estoques_nome"]?></td>
