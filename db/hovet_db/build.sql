@@ -229,8 +229,7 @@ INSERT INTO `fornecedores` (`fornecedores_id`, `fornecedores_razao_social`, `for
 (5, 'VetBR Saúde Animal', '12391210213990', 'Rua Castelo Branco', '1011', '---', '00000000', 'vetbr.saude.animal@mail.com', '20320435', 'Entrar em contato para compra de medicamentos controlados', 1),
 (6, 'PetLand', '91231823198239', 'Rua Ramiro Barcelos', '213', '---', '00000000', 'petland@mail.com', '34050560', 'Fornecedor de medicamentos de procedimentos', 1),
 (8, 'HV-UFPA', '59201323912300', 'R. Augusto Corrêa', '01', '---', '00000000', 'hv-ufpa@mail.com', '000000000', 'Contato para permuta', 2),
-(9, 'HV-UEPA', '93459203021303', 'Tv. Perebebuí', '2623', 'Guamá', '00000000', 'hv-uepa@mail.com', '000000000', 'contato para permuta', 2),
-(10, 'Beatriz Andrade', '01223443276', 'Travessa Dos Apinagés', '380', 'Batista Campos', '66025002', 'bea.andrade@mail.com', '91985420199', 'Realiza doações a cada 3 meses.', 3);
+(9, 'HV-UEPA', '93459203021303', 'Tv. Perebebuí', '2623', 'Guamá', '00000000', 'hv-uepa@mail.com', '000000000', 'contato para permuta', 2);
     
 
 create table status_slc (
