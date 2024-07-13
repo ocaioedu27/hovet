@@ -39,11 +39,11 @@ Instalação do MySQL e Apache Server e interpretador do PHP: XAMMP
 
     - No Windows: Normalmente, a pasta “htdocs” está dentro da pasta XAMPP.
         cd \xampp\htdocs
-    - No Linux: A pasta fica em /opt/lampp/htdocs/
+    - No Linux: A pasta fica em /opt/lampp/htdocs/:
         cd /opt/lampp/htdocs/
 
 2. Clone o projeto: Baixe ou clone o repositório onde o projeto está hospedado:
-    git clone <URL_do_repositorio>
+    git clone https://github.com/ocaioedu27/hovet.git
 
 3. Navegue até o diretório do projeto clonado:
     cd hovet/
