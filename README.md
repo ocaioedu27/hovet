@@ -22,39 +22,38 @@ Instalação do MySQL e Apache Server e interpretador do PHP: XAMMP
 
 **No Linux (Ubuntu/Debian)**
 
-1. Atualize o Gerenciador de Pacotes: Abra o terminal e atualize o gerenciador de pacotes para garantir que você tenha as informações de pacotes mais recentes:
-    a) Atualize a lista de pacotes disponíveis:
-        sudo apt update
-    b) Atualize os pacotes instalados para as versões mais recentes:
-        sudo apt upgrade
-    c) Altere as permissões do instalador para torná-lo executável:
-        chmod +x xampp-linux-*-installer.run
-    APÊNDICE A. Configuração do Projeto 13
-    d) Execute o instalador com privilégios de root no terminal:
-        sudo ./xampp-linux-*-installer.run
+1. Atualize o Gerenciador de Pacotes: Abra o terminal e atualize o gerenciador de pacotes para garantir que você tenha as informações de pacotes mais recentes:<br>
+    a) Atualize a lista de pacotes disponíveis:<br>
+        sudo apt update<br>
+    b) Atualize os pacotes instalados para as versões mais recentes:<br>
+        sudo apt upgrade<br>
+    c) Altere as permissões do instalador para torná-lo executável:<br>
+        chmod +x xampp-linux-*-installer.run<br>
+    d) Execute o instalador com privilégios de root no terminal:<br>
+        sudo ./xampp-linux-*-installer.run<br>
 
 **Pré-configuração para rodar o sistema:**
 
 1. Vá até o diretório de instalação do XAMPP
 
-    - No Windows: Normalmente, a pasta “htdocs” está dentro da pasta XAMPP.
+    - No Windows: Normalmente, a pasta “htdocs” está dentro da pasta XAMPP.<br>
         cd \xampp\htdocs
-    - No Linux: A pasta fica em /opt/lampp/htdocs/:
+    - No Linux: A pasta fica em /opt/lampp/htdocs/:<br>
         cd /opt/lampp/htdocs/
 
-2. Clone o projeto: Baixe ou clone o repositório onde o projeto está hospedado:
+2. Clone o projeto: Baixe ou clone o repositório onde o projeto está hospedado:<br>
     git clone https://github.com/ocaioedu27/hovet.git
 
-3. Navegue até o diretório do projeto clonado:
+3. Navegue até o diretório do projeto clonado:<br>
     cd hovet/
 
-4. Configurações para o banco de dados: Dentro do arquivo config.php localizado na pasta /hovet/db/:
-    define(”SERVIDOR”, ”localhost”); // url do servidor
-    define(”USUARIO”, ”root”); // Usuário do banco de dados
-    define(”SENHA”, ””); // Senha do usuário do banco de dados
-    define(”BANCO”, ”hovet_db”); // Nome do banco de dados
-
-Verifique se os dados de conexão com seu banco estão propriamente configurados.
+4. Configurações para o banco de dados: Dentro do arquivo config.php localizado na pasta /hovet/db/:<br>
+    define(”SERVIDOR”, ”localhost”); // url do servidor<br>
+    define(”USUARIO”, ”root”); // Usuário do banco de dados<br>
+    define(”SENHA”, ””); // Senha do usuário do banco de dados<br>
+    define(”BANCO”, ”hovet_db”); // Nome do banco de dados<br>
+<br>
+Verifique se os dados de conexão com seu banco estão propriamente configurados.<br>
 
 5. Validar se está ativo o apache server e o banco de dados:
     -  No Windows:
