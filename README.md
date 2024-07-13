@@ -52,7 +52,7 @@ Instalação do MySQL e Apache Server e interpretador do PHP: XAMMP
     define(”USUARIO”, ”root”); // Usuário do banco de dados<br>
     define(”SENHA”, ””); // Senha do usuário do banco de dados<br>
     define(”BANCO”, ”hovet_db”); // Nome do banco de dados<br>
-<br>
+
 Verifique se os dados de conexão com seu banco estão propriamente configurados.<br>
 
 5. Validar se está ativo o apache server e o banco de dados:
