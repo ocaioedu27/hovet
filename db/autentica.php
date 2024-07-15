@@ -23,7 +23,7 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 			// echo $statusUsu;
 			// exit;
 			if ($statusUsu == 0) {
-				echo "<script language='javascript'>window.alert('Usuário Inativo! Fale com o adminstrador do Sistema para reativar sua conta.)!!'); </script>";
+				echo "<script language='javascript'>window.alert('Usuário Inativo! Fale com o adminstrador do Sistema para reativar sua conta!!'); </script>";
 				echo "<script language='javascript'>window.location='/hovet/index.php';</script>";
 				exit;
 			}
