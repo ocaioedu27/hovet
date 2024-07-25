@@ -34,35 +34,20 @@ if ($qualEstoque_dep != "") {
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Resumo de Insumos - Depósito <?=$qualEstoque[-1]?></h3>
-                <div class="dropdown" id="operacao_cadastro">
-                    <a href="#">
+                <div class="" id="operacao_cadastro">
+                    <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>">
                         <button class="btn">Cadastrar</button>
                     </a>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>">Cadstrar Novo Insumo</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <div class="dropdown" id="operacao_retirar">
-                    <a href="#">
-                        <button class="btn">Retirar</button>
+                    <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
+                        <button class="btn">Abastecer Dispensário</button>
                     </a>
-                    <div class="dropdown-content">
-                        <ul>
-                            <li>
-                                <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">Mover para o dispensário</a>
-                            </li>
-                            <li>
-                                <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">Permutar</a>
-                            </li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="" id="operacao_cadastro">
+                    <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">
+                        <button class="btn">Permutar</button>
+                    </a>
                 </div>
             </div>
             <div>

@@ -20,7 +20,7 @@ if ($qualEstoque_dep != "") {
 }
 
 $dados_enviados_array = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$msg_insumo_inserido = "\nCadastro realizado com sucesso! Insumo: ";
+$msg_insumo_inserido = "Cadastro realizado com sucesso! Insumo: ";
 $msg_mov = " Movimentação registrada com sucesso! Insumo: ";
 $msg_final = "";
 
@@ -106,7 +106,6 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
             echo $th;
         }
         if ($inseriu) { 
-            // echo "<script language='javascript'>window.alert('Insumo inserido no Dispensário com sucesso!!'); </script>";
             $msg_final .= $msg_insumo_inserido . $insumo_nome;
         } else {
             die("Erro ao executar a inserção no Dispensário. " . mysqli_error($conexao));   

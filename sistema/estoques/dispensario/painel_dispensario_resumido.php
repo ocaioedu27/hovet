@@ -35,7 +35,7 @@ if ($qualEstoque_dep != "") {
             <div class="menu_user">
                 <h3>Resumo de Insumos - Dispensário <?=$qualEstoque[-1]?></h3>
                 <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
-                    <button class="btn" id="operacao_cadastro">Inserir</button>
+                    <button class="btn" id="operacao_cadastro">Abastecer</button>
                 </a>
                 <a href="index.php?menuop=solicitar_dispensario&<?=$qualEstoque?>">
                     <button class="btn">Solicitar insumos</button>
