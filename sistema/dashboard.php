@@ -28,7 +28,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(id) as deposito_Qtd FROM deposito";
+                                    $sql = "SELECT sum(qtd) as deposito_Qtd FROM deposito";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -48,11 +48,20 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day";
+                                    $sql = "SELECT sum(qtd) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     ($vencidos = mysqli_fetch_assoc($result));
                                 ?>
-                                <h2><?=$vencidos['vencidos_proxVencimento']?></h2>
+                                <h2>
+                                    <?php
+                                        $qtdVencidos = $vencidos['vencidos_proxVencimento'];
+                                        if ($qtdVencidos < 0) {
+                                            echo "0";
+                                        }else{
+                                            echo $qtdVencidos;
+                                        }
+                                    ?>
+                                </h2>
                                 <p>Próximos ou Vencidos</p>
                             </div>
                         </div>
@@ -79,7 +88,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT COUNT(id) as dispensario_Qtd FROM dispensario";
+                                    $sql = "SELECT sum(qtd) as dispensario_Qtd FROM dispensario";
                                     $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     while($dados = mysqli_fetch_assoc($rs)){
                                 ?>
@@ -97,11 +106,20 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() + interval 30 day";
+                                    $sql = "SELECT sum(qtd) as vencidos_proxVencimento FROM dispensario where validade<=curdate() or validade <= curdate() + interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     $vencidos = mysqli_fetch_assoc($result);
                                 ?>
-                                <h2><?=$vencidos['vencidos_proxVencimento']?></h2>
+                                <h2>
+                                    <?php
+                                        $qtdVencidos = $vencidos['vencidos_proxVencimento'];
+                                        if ($qtdVencidos < 0) {
+                                            echo "0";
+                                        }else{
+                                            echo $qtdVencidos;
+                                        }
+                                    ?>
+                                </h2>
                                 <p>Próximos ou Vencidos</p>
                             </div>
                         </div>
