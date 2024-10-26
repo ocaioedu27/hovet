@@ -1,14 +1,9 @@
 <?php 
 
-// echo $qualEstoque;
-
-// $qualEstoque = (isset($_POST["dispensario"]))?$_POST["dispensario"]:"";
-
-// $qualEstoque_dep = $_POST['deposito'];
 $stringList = array();
 
 
-if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
+if (isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
 	foreach ( $_GET as $chave => $valor ) {
         $valor_tmp = $chave;
@@ -21,18 +16,16 @@ if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
     $estoqueNomeReal = $stringList[1];
     $nome_insumo_tmp = $stringList[2];
     $nome_insumo = str_replace('_', ' ', $nome_insumo_tmp);
-    
-    // echo "<br>Nome real: $estoqueNomeReal<br>Nome do insumo: $nome_insumo";
 }
 
 $qualInsumo = $nome_insumo;
 
-$qualEstoque_disp = $estoqueNomeReal;
+$qualEstoque_farm = $estoqueNomeReal;
 
 
 
-if ($qualEstoque_disp != "") {
-    $qualEstoque = $qualEstoque_disp;
+if ($qualEstoque_farm != "") {
+    $qualEstoque = $qualEstoque_farm;
 }
 
 
@@ -42,17 +35,17 @@ if ($qualEstoque_disp != "") {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Dispensário <?=$qualEstoque[-1]?> - <?=$nome_insumo?></h3>
-                <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
+                <h3>Farmácia <?=$qualEstoque[-1]?> - <?=$nome_insumo?></h3>
+                <a href="index.php?menuop=cad_farm&<?=$qualEstoque?>">
                     <button class="btn" id="operacao_cadastro">Abastecer</button>
                 </a>
-                <a href="index.php?menuop=solicitar_dispensario&<?=$qualEstoque?>">
-                    <button class="btn">Solicitar insumos</button>
+                <a href="index.php?menuop=doar_farmacia&<?=$qualEstoque?>">
+                    <button class="btn">Doar</button>
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=1" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_dispensario" placeholder="Buscar">
+                <form action="index.php?menuop=farmacia&<?=$qualEstoque?>&<?=$qualInsumo?>=1" method="post" class="form_buscar">
+                    <input type="text" name="txt_search" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -65,7 +58,6 @@ if ($qualEstoque_disp != "") {
             <table id="tabela_listar">
                 <thead>
                     <tr>
-                        <th id="th_operacoes_editar_deletar">Operações</th>
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Quantidade</th>
@@ -73,66 +65,64 @@ if ($qualEstoque_disp != "") {
                         <th>Categoria</th>
                         <th>Estoque Cadastrado</th>
                         <th>Validade</th>
-                        <th>Local</th>
                         <th>Dias para o vencimento</th>
+                        <th id="th_operacoes_editar_deletar">Operações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                        $quantidade_registros_dispensario = 10;
+                        $quantidade_registros_farmacia = 10;
 
-                        // echo "<br>" . $quantidade_registros_dispensario;
+                        // echo "<br>" . $quantidade_registros_farmacia;
 
-                        $pagina_dispensario = (isset($_GET[$qualInsumo]))?(int)$_GET[$qualInsumo]:1;
+                        $pagina_farmacia = (isset($_GET[$qualInsumo]))?(int)$_GET[$qualInsumo]:1;
 
-                        // echo "<br>" . $pagina_dispensario;
+                        // echo "<br>" . $pagina_farmacia;
 
-                        $inicio_dispensario = ($quantidade_registros_dispensario * $pagina_dispensario) - $quantidade_registros_dispensario;
+                        $inicio_farmacia = ($quantidade_registros_farmacia * $pagina_farmacia) - $quantidade_registros_farmacia;
 
-                        // echo "<br>" . $inicio_dispensario;
+                        // echo "<br>" . $inicio_farmacia;
 
-                        $txt_pesquisa_dispensario = (isset($_POST["txt_pesquisa_dispensario"]))?$_POST["txt_pesquisa_dispensario"]:"";
+                        $txt_search = (isset($_POST["txt_search"]))?$_POST["txt_search"]:"";
 
-                        // echo "<br>" . $txt_pesquisa_dispensario;
+                        // echo "<br>" . $txt_search;
 
                         // $sql_listar = "";
                         $insumos_cads_list = array();
 
+                        //echo "<br>" . $qualInsumo;
+
                         $sql = "SELECT 
-                                    disp.id,
-                                    disp.qtd,
-                                    date_format(disp.validade, '%d/%m/%Y') AS validadeDispensario,
+                                    farm.id,
+                                    farm.qtd,
+                                    date_format(farm.validade, '%d/%m/%Y') AS validadefarmacia,
                                     i.nome as insumos_nome,
                                     i.unidade,
                                     i.qtd_critica,
-                                    datediff(disp.validade, curdate()) AS diasParaVencimentoDispensario,
-                                    lcd.nome as local_nome,
+                                    datediff(farm.validade, curdate()) AS diasParaVencimentofarmacia,
                                     es.nome as estoques_nome,
                                     es.nome_real,
                                     tp.tipo
 
-                                    FROM dispensario disp
+                                    FROM farmacia farm
 
                                     INNER JOIN deposito deps
-                                    ON disp.deposito_id = deps.id
+                                    ON farm.deposito_id = deps.id
 
                                     INNER JOIN insumos i
-                                    ON disp.insumos_id = i.id
+                                    ON farm.insumos_id = i.id
 
                                     INNER JOIN tipos_insumos tp
                                     ON tp.id = i.tipo_insumos_id
 
-                                    INNER JOIN local_dispensario lcd 
-                                    ON disp.local_id = lcd.id
-
                                     INNER JOIN estoques es
-                                    ON disp.estoque_id = es.id
+                                    ON farm.estoque_id = es.id
 
                                     WHERE
-                                    es.nome_real = '{$qualEstoque}' and i.nome = '{$qualInsumo}' and (lcd.nome LIKE '%{$txt_pesquisa_dispensario}%')
+                                    es.nome_real = '{$qualEstoque}' and i.nome = '{$qualInsumo}'
 
                                     ORDER BY i.nome ASC 
-                                    LIMIT $inicio_dispensario,$quantidade_registros_dispensario";
+                                    LIMIT $inicio_farmacia,$quantidade_registros_farmacia";
 
                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
@@ -145,24 +135,11 @@ if ($qualEstoque_disp != "") {
                         
                     ?>
                     <tr>
-                        <td class="" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=excluir_dispensario&idInsumodispensario=<?=$dados["id"]?>"
-                                class="confirmaDelete">
-                                <button class="btn">
-
-                                    <span class="icon">
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </span>
-                                </button>
-                            </a>
-                        </td>
                         <td><?=$dados["id"]?></td>
                         <td>
                             <?php
                             
                             $insumos_nome = $dados["insumos_nome"];
-                            // echo $insumos_nome;
-                            // echo $insumos_cads_list[0];
 
                             $estaNaLista = in_array($insumos_nome, $insumos_cads_list);
 
@@ -178,24 +155,34 @@ if ($qualEstoque_disp != "") {
                         <td><?=$dados["unidade"]?></td>
                         <td><?=$dados["tipo"]?></td>
                         <td><?=$dados["estoques_nome"]?></td>
-                        <td><?=$dados["validadeDispensario"]?></td>
-                        <td><?=$dados["local_nome"]?></td>
+                        <td><?=$dados["validadefarmacia"]?></td>
                         <td <?php 
                                 $dias = ['30','45'];
  
-                                if($dados["diasParaVencimentoDispensario"] <= $dias[0]){                                    
+                                if($dados["diasParaVencimentofarmacia"] <= $dias[0]){                                    
                                 ?> class="vermelho" <?php
-                                } else if($dados["diasParaVencimentoDispensario"] <= $dias[1]){
+                                } else if($dados["diasParaVencimentofarmacia"] <= $dias[1]){
                                     ?> class="amarelo" <?php
-                                } else if($dados["diasParaVencimentoDispensario"] > $dias[1]){
+                                } else if($dados["diasParaVencimentofarmacia"] > $dias[1]){
                                     ?> class="verde" <?php
                                 } 
-                                ?>><?php if ($dados["diasParaVencimentoDispensario"] <= 0){
+                                ?>><?php if ($dados["diasParaVencimentofarmacia"] <= 0){
                                     echo "INSUMO VENCIDO!";
                                 } else{
-                                    echo $dados["diasParaVencimentoDispensario"] . " dia(s) para o vencimento";
+                                    echo $dados["diasParaVencimentofarmacia"] . " dia(s) para o vencimento";
                                 }
                                 ?>
+                        </td>
+                        <td class="" id="td_operacoes_editar_deletar">
+                            <a href="index.php?menuop=excl_farm&idInsumoFarm=<?=$dados["id"]?>"
+                                class="confirmaDelete">
+                                <button class="btn">
+
+                                    <span class="icon">
+                                        <ion-icon name="trash-outline"></ion-icon>
+                                    </span>
+                                </button>
+                            </a>
                         </td>
                     </tr>
                     <?php
@@ -226,24 +213,24 @@ if ($qualEstoque_disp != "") {
                             $i--;
                             
                             $sql_qtd = "SELECT 
-                                sum(d.qtd) as dispensario_qtd_insumo,
+                                sum(farm.qtd) as farm_qtd_insumo,
                                 i.nome as insumos_nome,
                                 i.qtd_critica,
                                 es.nome as estoques_nome
                             FROM 
-                                dispensario d 
+                                farmacia farm 
                             INNER JOIN 
                                 insumos i
                             ON 
-                                d.insumos_id = i.id
+                                farm.insumos_id = i.id
                             INNER JOIN 
                                 estoques es
                             ON 
-                                es.id = d.estoque_id
+                                es.id = farm.estoque_id
                             WHERE 
                                 es.nome_real = '{$qualEstoque}' and i.nome='{$insumo_selecionado}'";
                         
-                            $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//dispensario/quantidade_insumos_dispensario/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
+                            $resultado_qtd = mysqli_query($conexao, $sql_qtd) or die("//farmacia/quantidade_insumos_farmacia/calcula_qtd - erro ao realizar a consulta: " . mysqli_error($conexao));
 
                             while ($dados = mysqli_fetch_assoc($resultado_qtd)) {
                                 // var_dump($dados);
@@ -251,11 +238,11 @@ if ($qualEstoque_disp != "") {
                     ?>
                     <tr>
                         <td><?=$dados['insumos_nome']?></td>
-                        <td><?=$dados['dispensario_qtd_insumo']?></td>
+                        <td><?=$dados['farm_qtd_insumo']?></td>
                         <td><?=$dados['estoques_nome']?></td>
                         <td class="<?php
                         
-                        $qtd_cadastrada = $dados["dispensario_qtd_insumo"];
+                        $qtd_cadastrada = $dados["farm_qtd_insumo"];
                         $qtd_critica = $dados["qtd_critica"];
                         $qtd_toleravel = $qtd_critica+($qtd_critica*20/100);
 
@@ -291,43 +278,49 @@ if ($qualEstoque_disp != "") {
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotaldispensario = "SELECT d.id 
-                                            FROM dispensario d
-                                            INNER JOIN estoques e
-                                            ON e.id = d.estoque_id
-                                            WHERE e.nome_real='{$qualEstoque}'";
-                $queryTotaldispensario = mysqli_query($conexao,$sqlTotaldispensario) or die(mysqli_error($conexao));
+                $sqlTotalfarmacia = "SELECT 
+                                        farm.id 
+                                    FROM 
+                                        farmacia farm
+                                    INNER JOIN 
+                                        estoques e
+                                    ON 
+                                        e.id = farm.estoque_id
+                                    WHERE 
+                                        e.nome_real='{$qualEstoque}'";
 
-                $numTotaldispensario = mysqli_num_rows($queryTotaldispensario);
-                $totalPaginasdispensario = ceil($numTotaldispensario/$quantidade_registros_dispensario);
+                $queryTotalfarmacia = mysqli_query($conexao,$sqlTotalfarmacia) or die(mysqli_error($conexao));
+
+                $numTotalfarmacia = mysqli_num_rows($queryTotalfarmacia);
+                $totalPaginasfarmacia = ceil($numTotalfarmacia/$quantidade_registros_farmacia);
                 
-                echo "<a href=\"?menuop=dispensario&" . $qualEstoque ."&" . $qualInsumo . "=1\">Início</a> ";
+                echo "<a href=\"?menuop=farmacia&" . $qualEstoque ."&" . $qualInsumo . "=1\">Início</a> ";
 
-                if ($pagina_dispensario>6) {
+                if ($pagina_farmacia>6) {
                     ?>
-                        <a href="?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_dispensario-1?>"> << </a>
+                        <a href="?menuop=farmacia&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_farmacia-1?>"> << </a>
                     <?php
                 } 
 
-                for($i=1;$i<=$totalPaginasdispensario;$i++){
+                for($i=1;$i<=$totalPaginasfarmacia;$i++){
 
-                    if ($i >= ($pagina_dispensario) && $i <= ($pagina_dispensario+5)) {
+                    if ($i >= ($pagina_farmacia) && $i <= ($pagina_farmacia+5)) {
                         
-                        if ($i==$pagina_dispensario) {
+                        if ($i==$pagina_farmacia) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "&" . $qualInsumo . "=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=farmacia&" . $qualEstoque . "&" . $qualInsumo . "=$i\">$i</a> ";
                         } 
                     }          
                 }
 
-                if ($pagina_dispensario<($totalPaginasdispensario-5)) {
+                if ($pagina_farmacia<($totalPaginasfarmacia-5)) {
                     ?>
-                        <a href="?menuop=dispensario&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_dispensario+1?>"> >> </a>
+                        <a href="?menuop=farmacia&<?=$qualEstoque?>&<?=$qualInsumo?>=<?php echo $pagina_farmacia+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=dispensario&" . $qualEstoque . "&" . $qualInsumo ."=$totalPaginasdispensario\">Fim</a>";
+                echo " <a href=\"?menuop=farmacia&" . $qualEstoque . "&" . $qualInsumo ."=$totalPaginasfarmacia\">Fim</a>";
             ?>
         </div>
     </div>

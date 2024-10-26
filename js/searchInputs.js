@@ -409,9 +409,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
         }
       }
   
-    } else if (cadType == 8) {
-      // PARA PROCURAR TIPOS DE MOVIMENTAÇÕES
-  
+    } else if (cadType == 8) {// PARA PROCURAR TIPOS DE MOVIMENTAÇÕES
       if (valor_to_search.length >= 2) {
         console.log("//searchInput_cadDeposito/movimentacoes - Pesquisar: " + valor_to_search);
   
@@ -457,9 +455,7 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
           
         }
       }
-    } else if (cadType == 9) {
-      // PARA PROCURAR CATEGORIA DE FORNECEDORES
-  
+    } else if (cadType == 9) {// PARA PROCURAR CATEGORIA DE FORNECEDORES
       if (valor_to_search.length >= 2) {
         console.log("//procura_categoria/ - Pesquisar: " + valor_to_search);
   
@@ -506,5 +502,78 @@ async function searchInput_cadDeposito(valor_to_search, id_campo_digitado, cadTy
           
         }
       }
+    } else if (cadType == 10) {// PROCURAR POR INSUMOS DA FARMÁCIA
+       
+      if (valor_to_search.length >= 2) {
+        // console.log("//dispensario/ - Pesquisar: " + valor_to_search);
+  
+        const dados_cad_deposito = await fetch('./estoques/dispensario/sch_disp_itens_depst.php?doar_farmacia='+ valor_to_search);
+  
+        if (dados_cad_deposito) {
+          
+          const resposta = await dados_cad_deposito.json();
+  
+          console.log('//dispensario/dados_cad_deposito = '+ resposta);
+  
+          var html_listados = '<ul class="display-flex-cl">';
+  
+          if (resposta['erro']) {
+  
+            html_listados += '<li onclick=\'fechaSpan("resultado_cad_disp_insumos",'+id_campo_digitado+')\'>'+resposta['msg_error']+'</li>';
+            // html_listados += '<li>'+resposta['msg_error_insumos']+'</li>';
+          } else {
+  
+            for (let i = 0; i < resposta['dados'].length; i++) {
+  
+              html_listados += '<div class="display-flex-row">'
+
+              let idInsumo = resposta['dados'][i].idInsumo;
+              let descricaoInsumo = resposta['dados'][i].descricaoInsumo;
+              let nomeInsumo = resposta['dados'][i].nomeInsumo;
+              let qtdDisponivel = resposta['dados'][i].qtdDisponivelInsumo;
+              let validadeInsumo = resposta['dados'][i].validadeInsumo;
+              
+              html_listados += '<li onclick=\'getInsumoId('+ idInsumo +',"'+ descricaoInsumo +'","'+ nomeInsumo +'", '+id_campo_digitado+','+ qtdDisponivel +', 2,"'+ validadeInsumo +'")\'>'+ idInsumo + ' - ' + nomeInsumo +'</li>';
+  
+              html_listados += '<li>|</li>';
+  
+              html_listados += '<li>'+resposta['dados'][i].descricaoInsumo +'</li>';
+  
+              html_listados += '<li>|</li>';
+  
+              let validade_bruta = new Date(resposta['dados'][i].validadeInsumo);
+              let validade_ano = validade_bruta.getFullYear();
+              let validade_mes = validade_bruta.getMonth();
+              let validade_dia = validade_bruta.getDay();
+  
+              if (validade_mes<10) {
+                validade_mes = '0'+validade_mes+'';
+              }
+  
+              if (validade_dia<10) {
+                validade_dia = '0'+validade_dia+'';
+              }
+  
+              html_listados += '<li>'+validade_dia+'/'+validade_mes+'/'+validade_ano+'</li>';
+  
+              html_listados += '</div>'
+              
+            }
+          }
+  
+          html_listados += '</ul>';
+  
+          let resultado_cad_deposito_insumos = document.getElementById('resultado_cad_disp_insumos'+id_campo_digitado+'');
+  
+          resultado_cad_deposito_insumos.innerHTML = html_listados;
+  
+        } else {
+  
+          console.log('json vazio');
+          
+        }
+        
+      } 
+      
     }
 }

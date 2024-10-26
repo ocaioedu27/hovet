@@ -19,11 +19,11 @@
     $sql = "UPDATE 
                 estoques
             SET 
-                estoques_nome = '{$nomeCategoria}',
-                estoques_tipos_estoques_id = {$tipoEstoque},
-                estoques_descricao = '{$descCategoria}'
+                nome = '{$nomeCategoria}',
+                tipos_estoques_id = {$tipoEstoque},
+                descricao = '{$descCategoria}'
             WHERE 
-                estoques_id={$idCategoria}";
+                id={$idCategoria}";
 
     // echo "<br>SQL: " . $sql;
 

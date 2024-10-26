@@ -375,13 +375,44 @@
         return json_encode($retorna_valores);
     }
 
-    function findKeyWord($texto,$palavra){
+    function retornaDadosFarmacia($insumos_nome, $conn){
 
-        if(preg_match("%\b{$palavra}\b%",$texto)){
-            return true;
-        } else {
-            return false;
+        $query = "SELECT
+                    farm.id,
+                    farm.qtd,
+                    farm.validade,
+                    i.descricao,
+                    i.nome
+                FROM farmacia farm 
+                INNER JOIN insumos i
+                ON farm.insumos_id = i.id
+                WHERE i.nome LIKE '%{$insumos_nome}%' LIMIT 10";
+
+        $resultado = mysqli_query($conn, $query) or die("//dispensario/sch_disp_itens/ - Erro: " . mysqli_error($conn));
+
+        $valores_insumos_disp = array();
+
+        $quantidade = $resultado->num_rows;
+
+        if ($quantidade != 0) {
+            while ($dados = mysqli_fetch_assoc($resultado)) {
+        
+                $data[] = [
+                    
+                    'idInsumo' => $dados['id'],
+                    'nomeInsumo' => $dados['nome'],
+                    'qtdDisponivelInsumo' => $dados['qtd'],
+                    'validadeInsumo' => $dados['validade'],
+                    'descricaoInsumo' => $dados['descricao']
+                ];
+        
+            }
+            $response = ['erro' => false, 'dados' => $data];
+
+        } else{
+            $response = ['erro' => true, 'msg_error' => 'Insumo não encontrado'];
         }
+        return json_encode($response);
     }
 
     // para solicitar insumos no dispensario a partir de dados lá cadastrados
@@ -462,5 +493,12 @@
     if(isset($cad_cateogia_fornecedor)){
 
         echo retorna_categoria_fornecedor($cad_cateogia_fornecedor, $conexao);
+    }
+
+    // para doar insumos da farmácia
+    $doar_farmacia = $_GET['doar_farmacia'];
+
+    if(isset($doar_farmacia)){
+        echo retornaDadosFarmacia($doar_farmacia, $conexao);
     }
 ?>

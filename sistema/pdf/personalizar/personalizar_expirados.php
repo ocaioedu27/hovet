@@ -1,3 +1,27 @@
+<?php
+
+$origem="";
+
+$sql_insumo = "SELECT id, tipo FROM tipos_estoques";
+
+$rs = mysqli_query($conexao, $sql_insumo) or die("Erro ao realizar a consulta de tipos de estoques: ". mysqli_error($conexao));
+
+if($rs->num_rows > 0){
+
+    $string_options = '<option value="all">Todos os estoques</option>';
+
+    while($dados = mysqli_fetch_assoc($rs)){
+        $id = $dados["id"];
+        $nome = $dados["tipo"];
+        $nome_sem_acentos = retiraAcentos($nome);
+        $string_options .= '<option value="'. $nome_sem_acentos .'">'. $id .' - '. $nome. '</option>';
+    }
+
+    //echo "<br>" . $string_options;
+}
+
+?>
+
 <div class="container cadastro_all">
     <div class="cards cadastro_insumo">
         <div class="voltar">
@@ -38,9 +62,7 @@
                         <div class="display-flex-cl">
                             <label>Estoque de preferência</label>
                             <select name="estoquePreferencia" class="form-control" required>
-                                <option value="all">Todos os estoques</option>
-                                <option value="deposito">Depósito</option>
-                                <option value="dispensario">Dispensário</option>
+                                <?=$string_options?>
                             </select>
                         </div>
                     </div>

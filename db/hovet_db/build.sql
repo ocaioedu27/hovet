@@ -158,6 +158,23 @@ create table dispensario(
     foreign key (estoque_id) references estoques(id) on delete cascade
 );
 
+
+######################################################
+# Farmácia
+
+create table farmacia(
+	id int primary key auto_increment,
+    qtd int not null,
+    validade date not null,
+    deposito_id int,
+	foreign key(deposito_id) references deposito(id) on delete cascade,
+    insumos_id int,
+    foreign key (insumos_id) references insumos(id) on delete set null,
+    estoque_id int,
+    foreign key (estoque_id) references estoques(id) on delete cascade
+);
+
+
 ######################################################
 
 create table tipos_movimentacoes(
@@ -172,7 +189,9 @@ insert into tipos_movimentacoes values
     (null,"Doação", "Doação de insumo(s) que irão para o Depósito."),
     (null,"Permuta", "Troca de insumo(s) do Depósito com outras instituições."),
     (null,"Exclusão", "Exclusão de um insumo"),
-    (null, "Move para o Dispensário", "Movimentação de itens do Depósito para o Dispensário"),
+    (null, "Abastecer o Dispensário", "Movimentação de itens do Depósito para o Dispensário"),
+    (null, "Abastecer a Farmácia", "Quando a farmácia é abastecida com itens do depósito"),
+    (null, "Doar insumos da Farmácia", "Quando um ou mais insumos da farmácia são doados"),
 	(null, "Requisição de insumos do Dispensário", "Quando alguém solicita a retirada de insumos do Dispensário"), 
 	(null, "Devolução de insumos para o Dispensário", "Quando alguém solicita a devolução de insumos para o Dispensário"),
 	(null, "Aprovação de solicitação de insumo no Dispensário", "Quando alguém aprova uma solicitação do Dispensário"),
@@ -314,6 +333,23 @@ DELIMITER $$
 CREATE TRIGGER after_deposito_from_dispensario
 	AFTER INSERT 
     ON dispensario
+    FOR EACH ROW
+    BEGIN
+		UPDATE deposito as deps set
+		qtd = qtd - NEW.qtd
+		WHERE id = NEW.deposito_id;
+END$$
+
+DELIMITER ;
+
+
+# Trigger para atualizar o depósito depois que se abastece a farmácia
+
+DELIMITER $$
+
+CREATE TRIGGER after_deposito_from_farmacia
+	AFTER INSERT 
+    ON farmacia
     FOR EACH ROW
     BEGIN
 		UPDATE deposito as deps set

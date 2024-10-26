@@ -20,7 +20,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	}
 
     $estoqueNomeReal = $stringList[1];
-    $nome_insumo = $stringList[2];
+    $nome_insumo_tmp = $stringList[2];
+    $nome_insumo = str_replace('_', ' ', $nome_insumo_tmp);
 
 }
 
@@ -40,7 +41,7 @@ if ($qualEstoque_dep != "") {
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Depósito <?=$qualEstoque[-1]?></h3>
+                <h3>Depósito <?=$qualEstoque[-1]?> - <?=$nome_insumo?></h3>
                 <div class="" id="operacao_cadastro">
                     <a href="index.php?menuop=cadastro_deposito&<?=$qualEstoque?>">
                         <button class="btn">Cadastrar</button>
@@ -49,6 +50,11 @@ if ($qualEstoque_dep != "") {
                 <div class="dropdown" id="operacao_retirar">
                     <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
                         <button class="btn">Abastecer Dispensário</button>
+                    </a>
+                </div>
+                <div class="dropdown" id="operacao_retirar">
+                    <a href="index.php?menuop=cad_farm&<?=$qualEstoque?>">
+                        <button class="btn">Abastecer Farmácia</button>
                     </a>
                 </div>
                 <div class="" id="operacao_cadastro">

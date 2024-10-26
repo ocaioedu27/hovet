@@ -48,7 +48,7 @@
                                     </span>
                                 </div>
                                 <?php
-                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() - interval 30 day";
+                                    $sql = "SELECT count(id) as vencidos_proxVencimento FROM deposito where validade<=curdate() or validade <= curdate() + interval 30 day";
                                     $result = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                     ($vencidos = mysqli_fetch_assoc($result));
                                 ?>
@@ -227,9 +227,9 @@
                                     $result = mysqli_query($conexao,$sql) or die(mysqli_error($conexao));
                                     $dados = mysqli_fetch_assoc($result);
                                 ?>
-                                <h4>Retiradas</h5>
+                                <h4>Abastecimentos</h5>
                                     <h5><?=$dados['quantidade_retiradas']?></h5>
-                                <p>Total de Retiradas</p>
+                                <p>Total de Abastecimentos</p>
                             </div>
                             <div>
                                 <?php

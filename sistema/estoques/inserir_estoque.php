@@ -1,5 +1,5 @@
 <header>
-    <h2>Inserir Insumo</h2>
+    <h2>Inserir Estoque</h2>
 </header>
 <?php 
 
@@ -23,21 +23,25 @@
             echo "<br> Descrição: " . $descricaoNovoEstoque;
             echo "<br> Nome real: " . $nome_real_estoque;
 
-            $sql_verifica_se_existe = "SELECT * FROM estoques WHERE estoques_nome='{$nomeNovoEstoque}' or estoques_nome_real='{$nome_real_estoque}'";
+            $sql_verifica_se_existe = "SELECT * FROM estoques WHERE nome='{$nomeNovoEstoque}' or nome_real='{$nome_real_estoque}'";
 
-            $result_check_exist = mysqli_query($conexao, $sql_verifica_se_existe);
+            echo "Preparando o select: " . $sql_verifica_se_existe;
+
+            $result_check_exist = mysqli_query($conexao, $sql_verifica_se_existe) or die("Erro ao fazer a validação se o estoque já existe: " . mysqli_error($conexao));
+
+            echo "Rodou o select";
 
             if ($result_check_exist->num_rows > 0) {
                 echo "<script language='javascript'>window.alert('Erro - Nome de Estoque JÁ CADASTRADO! Informe um nome ainda não cadastrado para prosseguir!'); </script>";
                 echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=cadastro_estoque';</script>";
             } else {
-                // echo "seguindo para o insert";
+                echo "seguindo para o insert";
 
                 $sql = "INSERT INTO estoques (
-                    estoques_nome,
-                    estoques_nome_real,
-                    estoques_tipos_estoques_id,
-                    estoques_descricao)
+                    nome,
+                    nome_real,
+                    tipos_estoques_id,
+                    descricao)
                     VALUES(
                         '{$nomeNovoEstoque}',
                         '{$nome_real_estoque}',

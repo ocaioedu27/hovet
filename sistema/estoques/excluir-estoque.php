@@ -22,12 +22,12 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
 }
 
-$sql = "SELECT estoques_id FROM estoques WHERE estoques_id={$categoriaId}";
+$sql = "SELECT id FROM estoques WHERE id={$categoriaId}";
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 
 if($result->num_rows>0){
 
-    $sqlDelete = mysqli_query($conexao, "DELETE FROM estoques WHERE estoques_id=$categoriaId");
+    $sqlDelete = mysqli_query($conexao, "DELETE FROM estoques WHERE id=$categoriaId");
     
     echo "<script language='javascript'>window.alert('Item excluído com sucesso!!'); </script>";
     echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=estoques';</script>";

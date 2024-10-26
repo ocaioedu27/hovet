@@ -24,9 +24,9 @@ $msg_insumo_inserido = "Cadastro realizado com sucesso! Insumo: ";
 $msg_mov = " Movimentação registrada com sucesso! Insumo: ";
 $msg_final = "";
 
-// var_dump($dados_enviados_array);
+//var_dump($dados_enviados_array);
 
-if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
+if (!empty($dados_enviados_array)) {
 
     $mov_dep_to_disp = mysqli_real_escape_string($conexao,$_POST["mov_dep_to_disp"]);
     // echo "<br/> tipo de movimentação guardou: " . $mov_dep_to_disp;
@@ -45,11 +45,9 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         // echo "<br/>Id do insumo no deposito: $id_insumo_dep_to_disp";
         $quantidadeInsumoDispensario = $dados_enviados_array['quantidadeInsumoDispensario'][$chave_cad_dispensario];
         $validadeInsumoDeposito = $dados_enviados_array['validadeInsumoDeposito'][$chave_cad_dispensario];
-        $localInsumodispensario = $dados_enviados_array['localInsumodispensario'][$chave_cad_dispensario];
-        $localInsumodispensario = strtok($localInsumodispensario, " ");
-        $dispensarioDestino_completo = $dados_enviados_array['dispensarioDestino'][$chave_cad_dispensario];
+        $dispensarioDestino_completo = $dados_enviados_array['farmaciaDestino'][$chave_cad_dispensario];
         $dispensarioDestino = strtok($dispensarioDestino_completo, " ");
-        echo "<br> Dispensario de destino" . $dispensarioDestino_completo;
+        echo "<br> Dispensario de destino: " . $dispensarioDestino;
 
         $querySearchInsumoDep = "SELECT 
                                     d.insumos_id as dep_insumo_id,
@@ -81,24 +79,22 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         $estoque_nome = $array_insumo_id['estoque_nome'];
         $insumo_id = $array_insumo_id['insumo_id'];
         
-        // echo "<hr>";
+        echo "<br>" . $insumo_id;
 
-        $sql_insert = "INSERT INTO dispensario (
-            qtd,
-            validade,
-            deposito_id,
-            local_id,
-            insumos_id,
-            estoque_id)
+        $sql_insert = "INSERT 
+            INTO farmacia (
+                    qtd,
+                    validade,
+                    deposito_id,
+                    insumos_id,
+                    estoque_id)
             VALUES(
                 {$quantidadeInsumoDispensario},
                 '{$validadeInsumoDeposito}',
                 {$id_insumo_dep_to_disp},
-                {$localInsumodispensario},
                 {$insumo_id},
                 {$dispensarioDestino}
-            )";
-
+        )";
 
         try {
             //code...
@@ -106,6 +102,7 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         } catch (\Throwable $th) {
             echo $th;
         }
+
         if ($inseriu) { 
             $msg_final .= $msg_insumo_inserido . $insumo_nome;
         } else {
@@ -119,7 +116,6 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
 
         $local_destino = $partes[1];
 
-        // definição do nome real do estoque de destino para url redirecionar corretamente 
         $where = "id=" . $partes[0];
         $atributo_desejado = "nome_real";
         $tabela_to_select = "estoques";
@@ -135,10 +131,11 @@ if (!empty($dados_enviados_array['btnAdicionarInsumoDispensario'])) {
         if(atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $local_destino, $usuario_id_nome, $insumo_nome)){
             $msg_final .= $msg_mov . $insumo_nome;
         }
+
     }
 
     echo '<script language="javascript">window.alert("'.$msg_final.'")</script>';
-    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=dispensario_resumo&" . $local_destino_nome_real . "=1';</script>";
+    echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=farmacia_resumo&" . $local_destino_nome_real . "=1';</script>";
 
 
 } else {

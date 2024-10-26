@@ -78,6 +78,7 @@ form.form_cadastro{
     flex-wrap: wrap;
     padding: 10px;
     max-width: 100%;
+    width: 100%;
     gap: 10px;
 }
 
@@ -465,6 +466,7 @@ span.icon {
 .cards.cadastro_insumo{
     width: auto;
     height: auto;
+    align-items: center;
 }
 
 .cards.cadastro_fornecedor{

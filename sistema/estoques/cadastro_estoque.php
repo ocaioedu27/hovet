@@ -1,3 +1,24 @@
+<?php
+
+$sql_tipos_estoques = "SELECT id, tipo FROM tipos_estoques";
+$rs = mysqli_query($conexao, $sql_tipos_estoques) or die("Erro ao realizar a consulta de tipos de estoques: ". mysqli_error($conexao));
+
+if($rs->num_rows > 0){
+
+    $string_options = "";
+
+    while($dados = mysqli_fetch_assoc($rs)){
+        $id = $dados["id"];
+        $tipo = $dados["tipo"];
+
+        $string_options .= "<option>". $id ." - ". $tipo. "</option>";
+    }
+
+    echo "<br>" . $string_options;
+}
+
+?>
+
 <div class="container cadastro_all">
     <div class="cards cadastro_estoque">
         <div class="voltar">
@@ -27,8 +48,7 @@
                             <div class="display-flex-cl">
                                 <label>Tipo do Novo Estoque</label>
                                 <select class="form-control" name="tipoNovoEstoque[]" required>
-                                    <option>1 - Depósito</option>
-                                    <option>2 - Dispensário</option>
+                                    <?=$string_options?>
                                 </select>
                             </div>
                         </div>
@@ -41,7 +61,7 @@
                         </div>
                     </div>
 
-                    <button class="btn" type="button" onclick="adicionaCampoCad(6)" style="padding: 0;">+</button>
+                    <button class="btn" type="button" onclick="adicionaCampoCad(6, null, null, null, null, <?=$string_options?>)" style="padding: 0;">+</button>
 
                 </div> 
 

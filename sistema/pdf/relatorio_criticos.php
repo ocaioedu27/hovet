@@ -16,7 +16,7 @@ $html .= "<div class='container'>";
 $html .= "<img src='logo_hovet.jpg'>";
 
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-$estoquesTipo = ['deposito', 'dispensario'];
+$estoquesTipo = ['deposito', 'dispensario', 'farmacia'];
 $estoquesPorGet = $_GET['op'] ? $_GET['op'] : 'all';
 $arrValores = [];
 

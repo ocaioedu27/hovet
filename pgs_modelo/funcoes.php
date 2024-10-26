@@ -23,12 +23,10 @@ function atualiza_movimentacao($conexao, $tipo_movimentacao, $local_origem, $loc
 
     $sql_identifica_movimentacao = "INSERT 
                                         INTO historico_movimentacoes 
-                                        (origem,
-                                        destino,
-                                        tipos_movimentacoes_id,
-                                        usuario_id_nome,
-                                        insumo_nome) 
-                                        VALUE ('{$local_origem}','{$local_destino}',{$tipo_movimentacao},'{$usuario_id_nome}','{$insumo_nome}')";
+                                            (origem,destino,tipos_movimentacoes_id,usuario_id_nome,insumo_nome)
+                                        VALUES 
+                                            ('{$local_origem}','{$local_destino}',{$tipo_movimentacao},'{$usuario_id_nome}','{$insumo_nome}')";
+    
 
     try {
         $inseriu = mysqli_query($conexao, $sql_identifica_movimentacao);
@@ -140,7 +138,7 @@ function selectDados($conexao, $from, $fields = null, $where = null){
     $where = strlen($where)>0 ? " WHERE " . $where : "";
     $fields = strlen($fields)>0 ? $fields : "*";
 
-    $sql= "SELECT ".$fields." FROM ".$from .$where;
+    $sql= "SELECT ". $fields . " FROM " . $from . " " . $where;
         
     try {
         $result = $conexao->query($sql);
@@ -151,7 +149,7 @@ function selectDados($conexao, $from, $fields = null, $where = null){
             }
         }    
     } catch (\Throwable $th) {
-        echo "//funcoes/getVencidosEstoques - erro ao realizar a coleta de dados: " . $th;
+        echo "<br>//funcoes/selectDados - erro ao realizar a coleta de dados: " . $th;
         die($conexao);
     }
 
@@ -215,6 +213,20 @@ function selectInnnerJoin($conexao, $attrsToReturn, $tableToFrom, $arrayAttFrom,
 
     return $arrValores;
 
+}
+
+function formatarString($string) {
+    $texto = substr($string, 0, -1); 
+    $ultimoCaracter = substr($string, -1);
+
+    $textoFormatado = ucfirst($texto);
+
+    return $textoFormatado . ' ' . $ultimoCaracter;
+}
+
+function removerEspacos($string) {
+    // Remove todos os espaços da string
+    return str_replace(' ', '', $string);
 }
 
 

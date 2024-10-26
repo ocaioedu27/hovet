@@ -200,6 +200,15 @@
 
             $partes_nome_estoque = explode(' - ',$depositoDestinoInsumodeposito_completo);
             $local_destino = $partes_nome_estoque[1];
+
+            $where = "id=" . $partes_nome_estoque[0];
+            $atributo_desejado = "nome_real";
+            $tabela_to_select = "estoques";
+            
+            //selectDados($conexao, $from, $fields = null, $where = null)
+            $dados_local_destino = selectDados($conexao, $tabela_to_select, $atributo_desejado, $where);
+            $local_destino_nome_real = $dados_local_destino[0][$atributo_desejado];
+
     
             $usuario_id_nome = $sessionUserID . ' - ' . $userFirstName;
             
@@ -210,7 +219,7 @@
         }
 
         echo '<script language="javascript">window.alert("'.$msg_final.'")</script>';
-        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $qualEstoque . "=1';</script>";
+        echo "<script language='javascript'>window.location='/hovet/sistema/index.php?menuop=deposito_resumo&" . $local_destino_nome_real . "=1';</script>";
 
 
     } else {

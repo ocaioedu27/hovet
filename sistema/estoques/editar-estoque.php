@@ -2,19 +2,19 @@
 $id = $_GET["id"];
 
 $sql = "SELECT 
-            e.estoques_id,
-            e.estoques_nome,
-            e.estoques_descricao,
-            t.tipos_estoques_id,
-            t.tipos_estoques_tipo
+            e.id,
+            e.nome,
+            e.descricao,
+            t.id as tp_id,
+            t.tipo
         FROM
             estoques e
         INNER JOIN 
             tipos_estoques t
         ON
-            e.estoques_tipos_estoques_id = t.tipos_estoques_id
+            e.tipos_estoques_id = t.id
         WHERE
-            estoques_id={$id}";
+            e.id={$id}";
 
 $result = mysqli_query($conexao,$sql) or die("Erro ao realizar a consulta. " . mysqli_error($conexao));
 $dados = mysqli_fetch_assoc($result);
@@ -54,27 +54,23 @@ for($i = 0; $i < count($dadosTpEstoque); $i++){
                 <hr>
                 <div class="display-flex-row">
                     <div class="">
-
                         <div class="form-group valida_movimentacao">
-
                             <div class="display-flex-cl" style="width: auto;">
                                 <label>ID</label>
-                                <input type="text" class="form-control largura_um_quarto" name="idEstoque" value="<?=$dados['estoques_id']?>" readonly>
+                                <input type="text" class="form-control largura_um_quarto" name="idEstoque" value="<?=$dados['id']?>" readonly>
                             </div>
-
                         </div>
 
                         <div class="form-group valida_movimentacao">
-
                             <div class="display-flex-cl">
                                 <label>Nome</label>
-                                <input type="text" class="form-control" name="nomeEstoque" value="<?=$dados['estoques_nome']?>" placeholder="Informe o nome..." required>
+                                <input type="text" class="form-control" name="nomeEstoque" value="<?=$dados['nome']?>" placeholder="Informe o nome..." required>
                             </div>
 
                             <div class="display-flex-cl">
                                 <label>Tipo do Estoque</label>
                                 <select class="form-control" name="tipoEstoque" required>
-                                    <option><?=$dados['tipos_estoques_id']?> - <?=$dados['tipos_estoques_tipo']?></option>
+                                    <option><?=$dados['tp_id']?> - <?=$dados['tipo']?></option>
                                     <?=$stringTpEstoque?>
                                 </select>
                             </div>
@@ -84,20 +80,16 @@ for($i = 0; $i < count($dadosTpEstoque); $i++){
 
                             <div class="display-flex-cl">
                                 <label>Descrição</label>
-                                <textarea name="descEstoque" class="form-control" rows="3" placeholder="Infome a descrição..." ><?=$dados['estoques_descricao']?></textarea>
+                                <textarea name="descEstoque" class="form-control" rows="3" placeholder="Infome a descrição..." ><?=$dados['descricao']?></textarea>
                             </div>
                         </div>
                     </div>
-
                 </div> 
-
             </div>
-
             <div class="form-group valida_movimentacao">
                 <label>Confirmo que os dados estão validados</label>
                 <input type="checkbox" class="form-control-sm" name="valida_dados_insercao_categoria" required>
             </div>
-
             
             <div class="form-group">
                 <input type="submit" value="Atualizar" name="btnEditar" class="btn_cadastrar">

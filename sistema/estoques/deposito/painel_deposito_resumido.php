@@ -44,6 +44,11 @@ if ($qualEstoque_dep != "") {
                         <button class="btn">Abastecer Dispensário</button>
                     </a>
                 </div>
+                <div class="dropdown" id="operacao_retirar">
+                    <a href="index.php?menuop=cad_farm&<?=$qualEstoque?>">
+                        <button class="btn">Abastecer Farmácia</button>
+                    </a>
+                </div>
                 <div class="" id="operacao_cadastro">
                     <a href="index.php?menuop=permutar_deposito&<?=$qualEstoque?>">
                         <button class="btn">Permutar</button>

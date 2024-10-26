@@ -7,7 +7,6 @@ $inicio = ($qtd_registros * $pagina) - $qtd_registros;
 
 $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
 
-
 if ($sessionUserType!=2 && $sessionUserType!=3) {
     $painel_tmp = "Disp";
 }else {
@@ -15,23 +14,15 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
 }
 
 $painel = $painel_tmp; 
-// echo $painel;
 
 $sql = "SELECT 
-            e.id,
-            e.nome,
-            e.nome_real,
-            e.descricao,
-            tp.tipo
+            id,
+            tipo
         FROM 
-            estoques e
-        INNER JOIN 
-            tipos_estoques tp
-        ON 
-            e.tipos_estoques_id = tp.id
+            tipos_estoques
         WHERE
-            e.id = '{$txt_pesquisa}' or e.nome LIKE '{$painel}%' or e.descricao LIKE '{$txt_pesquisa}' or e.nome LIKE '{$txt_pesquisa}'
-            ORDER BY nome ASC 
+            id = '{$txt_pesquisa}' or tipo LIKE '{$txt_pesquisa}%'
+            ORDER BY tipo ASC 
             LIMIT $inicio,$qtd_registros";
 $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
 
@@ -40,31 +31,26 @@ if ($rs->num_rows > 0){
     while($dados = mysqli_fetch_assoc($rs)){
         $qtd_linhas_tabelas++;
 
-        $tipo_de_estoque_bruto = $dados['tipo'];
-        $estoques_nome_real = $dados['nome_real'];
-        $estoques_nome = $dados['nome'];
-        $nome_real_estoque = retiraAcentos($tipo_de_estoque_bruto);
-
         $id = $dados["id"];
-        $descricao = $dados["descricao"];
+        $tipo = $dados['tipo'];
+        $tipo_estoque_sem_acento = retiraAcentos($tipo);
+
 
         $resultados .= '
             <tr class="tabela_dados">
                 <td>'. $id .'</td>
                 <td>
-                    <a href="index.php?menuop='.$nome_real_estoque.'_resumo&'.$estoques_nome_real.'=1" class="form-control">'.$estoques_nome.'</a>
+                    <a href="index.php?menuop='.$tipo_estoque_sem_acento.'_resumo&'.$tipo_estoque_sem_acento.'=1" class="form-control">'.$tipo.'</a>
                 </td>
-                <td>'. $tipo_de_estoque_bruto .'</td>
-                <td>'. $descricao .'</td>
                 <td class="" id="td_operacoes_editar_deletar">
-                    <a href="index.php?menuop=editar_estoque&id='.$id.'" class="confirmaEdit">
+                    <a href="index.php?menuop=edit_tp_estoque&id='.$id.'" class="confirmaEdit">
                         <button class="btn">
                             <span class="icon">
                                 <ion-icon name="create-outline"></ion-icon>
                             </span>
                         </button>
                     </a>
-                    <a href="index.php?menuop=excluir_estoque&id='.$id.'" class="confirmaDelete">
+                    <a href="index.php?menuop=excl_tp_estoque&id='.$id.'" class="confirmaDelete">
                         <button class="btn">
                             <span class="icon">
                                 <ion-icon name="trash-outline"></ion-icon>
@@ -77,7 +63,7 @@ if ($rs->num_rows > 0){
 } else{
     $resultados = '
         <tr class="tabela_dados">
-            <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+            <td colspan="3" class="text-center">Nenhum registro para exibir!</td>
         </tr>';
 
 }
@@ -87,16 +73,13 @@ if ($rs->num_rows > 0){
     <div class="container">
         <div class="menu_header">
             <div class="menu_user">
-                <h3>Estoques</h3>
-                <a href="index.php?menuop=cadastro_estoque">
-                    <button class="btn" id="operacao_cadastro">Novo Estoque</button>
-                </a>
-                <a href="index.php?menuop=tp_estoque">
-                    <button class="btn" id="operacao_cadastro">Gerenciar Tipos de Estoque</button>
+                <h3>Tipos de Estoque</h3>
+                <a href="index.php?menuop=cad_tp_estoque">
+                    <button class="btn" id="operacao_cadastro">Novo Tipo de Estoque</button>
                 </a>
             </div>
             <div>
-                <form action="index.php?menuop=estoques" method="post" class="form_buscar">
+                <form action="index.php?menuop=tipos_estoque" method="post" class="form_buscar">
                     <input type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
@@ -111,9 +94,7 @@ if ($rs->num_rows > 0){
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>Tipo de Estoque</th>
-                        <th>Descrição</th>
+                        <th>Tipo</th>
                         <th id="th_operacoes_editar_deletar">Operações</th>
                     </tr>
                 </thead>
@@ -128,17 +109,17 @@ if ($rs->num_rows > 0){
         </div>
         <div class="paginacao">
             <?php
-                $sqlTotalEstoques = "SELECT id FROM estoques";
+                $sqlTotalEstoques = "SELECT id FROM tipos_estoques";
                 $queryTotalEstoques = mysqli_query($conexao,$sqlTotalEstoques) or die(mysqli_error($conexao));
 
                 $numTotalEstoques = mysqli_num_rows($queryTotalEstoques);
                 $totalPaginasEstoques = ceil($numTotalEstoques/$qtd_registros);
                 
-                echo "<a href=\"?menuop=estoques&pagina=1\">Início</a> ";
+                echo "<a href=\"?menuop=tipos_estoque&pg=1\">Início</a> ";
 
                 if ($pagina>6) {
                     ?>
-                        <a href="?menuop=estoques?pagina=<?php echo $pagina-1?>"> << </a>
+                        <a href="?menuop=tipos_estoque&pg=<?php echo $pagina-1?>"> << </a>
                     <?php
                 } 
 
@@ -149,18 +130,18 @@ if ($rs->num_rows > 0){
                         if ($i==$pagina) {
                             echo "<span>$i</span>";
                         } else {
-                            echo " <a href=\"?menuop=estoques&pagina=$i\">$i</a> ";
+                            echo " <a href=\"?menuop=tipos_estoque&pg=$i\">$i</a> ";
                         } 
                     }          
                 }
 
                 if ($pagina<($totalPaginasEstoques-5)) {
                     ?>
-                        <a href="?menuop=estoques?pagina=<?php echo $pagina+1?>"> >> </a>
+                        <a href="?menuop=tipos_estoque&pg=<?php echo $pagina+1?>"> >> </a>
                     <?php
                 }
                 
-                echo " <a href=\"?menuop=estoques&pagina=$totalPaginasEstoques\">Fim</a>";
+                echo " <a href=\"?menuop=tipos_estoque&pg=$totalPaginasEstoques\">Fim</a>";
             ?>
         </div>
     </div>

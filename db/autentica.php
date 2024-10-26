@@ -29,7 +29,6 @@ if(isset($_POST['mail']) || isset($_POST['senha'])){
 			}
 
 			if (password_verify($senha, $usuario['senha'])) {
-			
 				if(!isset($_SESSION)){
 					session_start();
 				}

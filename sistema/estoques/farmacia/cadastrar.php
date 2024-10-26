@@ -29,12 +29,42 @@ if ($qualEstoque_dep != "") {
 
 $tipoEstoque = $tipoEstoque;
 
+// procurar pelos tipos de estoque
+$origem = "farma";
+$sql_insumo = "SELECT 
+                    e.id,
+                    e.nome
+                FROM 
+                    estoques e
+                INNER JOIN 
+                    tipos_estoques tp
+                ON
+                    e.tipos_estoques_id = tp.id
+                WHERE
+                    e.nome LIKE '%{$cad_deposito_estoque_nome}%' and tp.tipo LIKE '%$origem%'";
+
+$rs = mysqli_query($conexao, $sql_insumo) or die("Erro ao realizar a consulta de tipos de estoques: ". mysqli_error($conexao));
+
+if($rs->num_rows > 0){
+
+    $string_options = "";
+
+    while($dados = mysqli_fetch_assoc($rs)){
+        $id = $dados["id"];
+        $nome = $dados["nome"];
+
+        $string_options .= "<option>". $id ." - ". $nome. "</option>";
+    }
+
+    //echo "<br>" . $string_options;
+}
+
 ?>
 
 <div class="container cadastro_all">
     <div class="cards cadastro_dispensario">
         <div class="voltar">
-            <h4>Abastecendo Dispensário</h4>
+            <h4>Abastecendo a Farmácia</h4>
             <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$qualEstoque?>=1" class="confirmaVolta">
                 <button class="btn">
                     <span class="icon">
@@ -43,7 +73,7 @@ $tipoEstoque = $tipoEstoque;
                 </button>
             </a>
         </div>
-        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=inserir_dispensario&<?=$qualEstoque?>" method="post">
+        <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=insert_farm&<?=$qualEstoque?>" method="post">
             <div class="dados_solicitacao">
                 <hr>
                 <h3 class="">Dados de Auditoria</h3>
@@ -54,14 +84,14 @@ $tipoEstoque = $tipoEstoque;
                                 id,
                                 movimentacao
                                 FROM tipos_movimentacoes
-                                WHERE movimentacao='Abastecer Dispensário'";
+                                WHERE movimentacao='Abastecer a farmácia'";
                                 
                             $resultado_mov = mysqli_query($conexao, $sql_mov) or die("//dispensario/sql_mov - erro ao realiza" . mysqli_error($conexao));
 
                             $dados_mov = mysqli_fetch_assoc($resultado_mov);
                             
                         ?>
-                        <label for="mov_dep_to_disp">Tipo de operação</label>
+                        <label >Tipo de operação</label>
                         <input type="text" class="form-control" name="mov_dep_to_disp" value="<?=$dados_mov['id']?> - <?=$dados_mov['movimentacao']?>" readonly>
                     </div>
                     
@@ -72,7 +102,7 @@ $tipoEstoque = $tipoEstoque;
                         
                         $dados_user = mysqli_fetch_assoc($result)
                         ?>
-                        <label for="solicitante_retira_dispensario">Solicitante</label>
+                        <label>Solicitante</label>
                         <input type="text" class="form-control largura_um_terco" name="solicitante_retira_dispensario" value="<?=$dados_user['id']?> - <?=$dados_user['primeiro_nome']?>" readonly>
                     </div>
 
@@ -83,7 +113,7 @@ $tipoEstoque = $tipoEstoque;
                 </div>
             </div>
             
-            <div id="dados_insumo_disp">
+            <div id="dados_cad_farm">
                 <hr>
                 <h3 class="">Dados do Insumo</h3>
                 <div>
@@ -95,13 +125,14 @@ $tipoEstoque = $tipoEstoque;
                         </div>
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDisponivelDeposito">Disponível no Depósito</label>
-                            <input type="text" class="form-control largura_um_terco" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" onchange="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp')" readonly>
+                            <input type="text" class="form-control" name="quantidadeInsumoDisponivelDeposito" id="quantidadeInsumoDisponivelDeposito1" onchange="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_cad')" readonly>
                         </div>
                             
                         <div class="display-flex-cl">
-                            <label>Dispensário de Destino</label>
-                            <input type="text" class="form-control" name="dispensarioDestino[]" id="estoqueDestino1" onkeyup="searchInput_cadDeposito(this.value, 1, 5,'dispensario')" placeholder="Informe o dispensário..." required>
-                            <span class="ajuste_span" id="resultado_cad_deposito_estoque1"></span>
+                            <label>Farmácia de Destino</label>
+                            <select class="form-control" name="farmaciaDestino[]" id="estoquesDestino1">
+                                <?=$string_options?>
+                            </select>
                         </div>
 
                     </div>
@@ -109,7 +140,7 @@ $tipoEstoque = $tipoEstoque;
 
                         <div class="display-flex-cl">
                             <label for="quantidadeInsumoDispensario">Quantidade Transferida</label>
-                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" onkeyup="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_mv_insumo_dep_to_disp', 'label_mesage_to_insert_1')" placeholder="Informe a quantidade..." required>
+                            <input type="number" class="form-control" name="quantidadeInsumoDispensario[]" min="1" id="quantidadeMovidaParaDispensario1" onkeyup="verificaValorMaximoExcedido('quantidadeMovidaParaDispensario1','quantidadeInsumoDisponivelDeposito1','alerta_valor_acima_max1','btn_cad', 'label_mesage_to_insert_1')" placeholder="Informe a quantidade..." required>
                             <span class="alerta_senhas_iguais" style="display: none; margin-top: 2%;" id="alerta_valor_acima_max1">
                                 <label id="label_mesage_to_insert_1">Valor acima ou igual do que há disponível!<ion-icon name="alert-circle-outline"></ion-icon></label>
                             </span>
@@ -119,15 +150,6 @@ $tipoEstoque = $tipoEstoque;
                             <label for="validadeInsumoDeposito">Validade</label>
                             <input type="date" class="form-control" name="validadeInsumoDeposito[]" id="validadeInsumoDeposito1" readonly>
                         </div>
-
-                        <div class="display-flex-cl">
-                            <label for="localInsumodispensario">Local</label>
-                            <select class="form-control" name="localInsumodispensario[]" id="localInsumodispensario1" required>
-                                <option>1 - Armário</option>
-                                <option>2 - Estante</option>
-                                <option>3 - Gaveteiro</option>
-                            </select>
-                        </div>
                         
                     </div>
                     <div class="form-group valida_movimentacao">
@@ -136,7 +158,7 @@ $tipoEstoque = $tipoEstoque;
                             <textarea name="descricaoInsumoDeposito" cols="10" rows="2" class="form-control largura_metade" id="descricaoInsumoDeposito1" readonly></textarea>
                         </div>
 
-                        <button class="btn" type="button" onclick="adicionaCampoCad(2)" style="padding: 0;">+</button>
+                        <button class="btn" type="button" onclick="adicionaCampoCad(16, null, null, null, null, null, 'estoquesDestino1', 'estoquesDestino')" style="padding: 0;">+</button>
                     </div>
                 </div>
             </div>
@@ -147,7 +169,7 @@ $tipoEstoque = $tipoEstoque;
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Cadastrar" name="btnAdicionarInsumoDispensario" class="btn_cadastrar" id="btn_mv_insumo_dep_to_disp">
+                <input type="submit" value="Cadastrar" name="btn_cad" class="btn_cadastrar" id="btn_cad">
             </div>
         </form>
     </div>

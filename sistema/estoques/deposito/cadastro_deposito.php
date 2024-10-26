@@ -44,7 +44,7 @@ if ($qualEstoque_dep != "") {
                 <div class="form-group valida_movimentacao">
                     <div class="display-flex-cl">
                         <label>Operação</label>
-                        <select class="form-control largura_um_terco" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
+                        <select class="form-control" name="tipo_insercao_deposito" id="tipo_operacao_cad_dep" onclick="removerCampoCadDeposito(null, true, null)" required>
                             <?php
                             
                             $sql = "SELECT * FROM tipos_movimentacoes WHERE movimentacao = 'Compra' or movimentacao = 'Doacao'";
