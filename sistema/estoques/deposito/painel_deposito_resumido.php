@@ -39,12 +39,12 @@ if ($qualEstoque_dep != "") {
                         <button class="btn">Cadastrar</button>
                     </a>
                 </div>
-                <div class="dropdown" id="operacao_retirar">
+                <div class="" id="operacao_retirar">
                     <a href="index.php?menuop=cadastro_dispensario&<?=$qualEstoque?>">
                         <button class="btn">Abastecer Dispensário</button>
                     </a>
                 </div>
-                <div class="dropdown" id="operacao_retirar">
+                <div class="" id="operacao_retirar">
                     <a href="index.php?menuop=cad_farm&<?=$qualEstoque?>">
                         <button class="btn">Abastecer Farmácia</button>
                     </a>
@@ -55,9 +55,9 @@ if ($qualEstoque_dep != "") {
                     </a>
                 </div>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=deposito_resumo&<?=$qualEstoque?>=1" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa_deposito" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

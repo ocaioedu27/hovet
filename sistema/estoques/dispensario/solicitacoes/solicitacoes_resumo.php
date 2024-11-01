@@ -112,26 +112,26 @@ if ($rs->num_rows > 0){
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Solicitações</h3>
-                <?php
-                    
-                    $sqlStatusTipo = "SELECT * FROM status_slc";
-                    $resultTotalStatus = mysqli_query($conexao,$sqlStatusTipo) or die("//sql_status - erro ao realizar a consulta: " . mysqli_error($conexao));
-
-                    while($tipo_status_slc = mysqli_fetch_assoc($resultTotalStatus)){
-                    
-                    ?>
-                    
-                    <a href="index.php?menuop=solicitacoes_resumo&<?=$tipo_status_slc['status']?>">
-                        <button class="btn"><?=$tipo_status_slc['status']?>s</button>
+                <div class="menu-hamburguer" onclick="habilitaDropdown('dropdown-content', 'block')">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="dropdown-content dropdown-content-on" id="dropdown-content">
+                    <a href="index.php?menuop=solicitacoes_resumo&Aprovada">
+                        <button class="btn">Aprovadas</button>
                     </a>
-
-                <?php
-                    }
-                ?>
+                    <a href="index.php?menuop=solicitacoes_resumo&Pendente">
+                        <button class="btn">Pendentes</button>
+                    </a>
+                    <a href="index.php?menuop=solicitacoes_resumo&Recusada">
+                        <button class="btn">Recusadas</button>
+                    </a>
+                </div>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=solicitacoes_resumo&<?=$qualStatus?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -188,17 +188,21 @@ if ($rs->num_rows > 0){
                     <?php
                 } 
 
-                for($i=1;$i<=$totalPaginasSlc;$i++){
-                    // print_r($i);
 
-                    if ($i >= ($pagina) && $i <= ($pagina+5)) {
-                        
-                        if ($i==$pagina) {
-                            echo "<span>$i</span>";
-                        } else {
-                            echo " <a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina=$i\">$i</a> ";
-                        } 
-                    }          
+                if ($totalPaginasSlc == 0) {
+                    echo "<span>". $totalPaginasSlc + 1 ."</span>";
+                }else{
+                    for($i=1;$i<=$totalPaginasSlc;$i++){
+
+                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
+                            
+                            if ($i==$pagina) {
+                                echo "<span>$i</span>";
+                            } else {
+                                echo " <a href=\"?menuop=solicitacoes_resumo&" . $qualStatus . "&pagina=$i\">$i</a> ";
+                            } 
+                        }          
+                    }
                 }
 
                 if ($pagina<($totalPaginasSlc-4)) {

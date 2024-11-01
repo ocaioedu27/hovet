@@ -230,4 +230,75 @@ function removerEspacos($string) {
 }
 
 
+/**
+ * Método responsável por comparar movimentacoes a partir de dados
+ * @param array $dados -> dados que serão utilizados para as validações
+ * @param string $movimentacao -> movimentação desejada
+ * @param string $status-> status desejado
+ * utilizado no home.php
+ * 
+ */
+function processaSolicitacoes($dados){
+    // variaveis e constantes
+    $requisicoes = "requis";
+    $devolucoes = "devolu";
+    
+    $aprovada = "aprovada";
+    $recusada = "recusada"; 
+    $pendente = "pendente";
+
+    $movimetacoes = [
+        $requisicoes,
+        $devolucoes
+        ];
+    $requisicoes_array = [
+        $aprovada => 0,
+        $recusada => 0,
+        $pendente => 0,
+    ];
+    $devolucoes_array = [
+        $aprovada => 0,
+        $recusada => 0,
+        $pendente => 0,
+    ];
+    $solicitacoes = [
+        $requisicoes=>$requisicoes_array,
+        $devolucoes=>$devolucoes_array
+    ];
+
+    for ($i=0; $i < count($dados); $i++) {
+        $movimentacao_para_comparar = substr(strtolower($dados[$i][0]), 0, 6);
+        $status_para_comparar = strtolower($dados[$i][1]);
+
+        $qtd_atual_req_aprov = $solicitacoes[$requisicoes][$aprovada];
+        $qtd_atual_req_recu = $solicitacoes[$requisicoes][$recusada];
+        $qtd_atual_req_pend = $solicitacoes[$requisicoes][$pendente];
+
+        $qtd_atual_devol_aprov = $solicitacoes[$devolucoes][$aprovada];
+        $qtd_atual_devol_recu = $solicitacoes[$devolucoes][$recusada];
+        $qtd_atual_devol_pend = $solicitacoes[$devolucoes][$pendente];
+
+        if ($movimentacao_para_comparar == $requisicoes) {
+            if ($status_para_comparar == $aprovada) {
+                $solicitacoes[$requisicoes][$aprovada] = $qtd_atual_req_aprov + 1;
+            }elseif ($status_para_comparar == $recusada) {
+                $solicitacoes[$requisicoes][$recusada] = $qtd_atual_req_recu + 1;
+            }elseif ($status_para_comparar == $pendente) {
+                $solicitacoes[$requisicoes][$pendente] = $qtd_atual_req_pend + 1;
+            }
+        }else{
+            if ($status_para_comparar == $aprovada) {
+                $solicitacoes[$devolucoes][$aprovada] = $qtd_atual_devol_aprov + 1;
+            }elseif ($status_para_comparar == $recusada) {
+                $solicitacoes[$devolucoes][$recusada] = $qtd_atual_devol_recu + 1;
+            }elseif ($status_para_comparar == $pendente) {
+                $solicitacoes[$devolucoes][$pendente] = $qtd_atual_devol_pend + 1;
+            }
+        }
+    }
+
+    return $solicitacoes;
+}
+
+
 ?>

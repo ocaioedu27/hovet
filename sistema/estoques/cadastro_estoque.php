@@ -14,7 +14,7 @@ if($rs->num_rows > 0){
         $string_options .= "<option>". $id ." - ". $tipo. "</option>";
     }
 
-    echo "<br>" . $string_options;
+    //echo "<br>" . $string_options;
 }
 
 ?>
@@ -47,7 +47,7 @@ if($rs->num_rows > 0){
 
                             <div class="display-flex-cl">
                                 <label>Tipo do Novo Estoque</label>
-                                <select class="form-control" name="tipoNovoEstoque[]" required>
+                                <select class="form-control" name="tipoNovoEstoque[]" id="origem1" required>
                                     <?=$string_options?>
                                 </select>
                             </div>
@@ -61,7 +61,7 @@ if($rs->num_rows > 0){
                         </div>
                     </div>
 
-                    <button class="btn" type="button" onclick="adicionaCampoCad(6, null, null, null, null, <?=$string_options?>)" style="padding: 0;">+</button>
+                    <button class="btn" type="button" onclick="adicionaCampoCad(6, null, null, null, null, null, 'origem1', 'destino')" style="padding: 0;">+</button>
 
                 </div> 
 

@@ -9,7 +9,6 @@
             <div class="group_cards">
                 <div class="content_cards">
                     <div class="titulo">
-                        <!-- <h2 title="Informações de todos os Depósitos">Depósitos</h2> -->
                         <h2 title="Informações de todos os Depósitos">
                             <a href="index.php?menuop=estoques">Depósitos</a>
                         </h2>

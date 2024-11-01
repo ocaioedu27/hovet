@@ -11,7 +11,7 @@ body{
 
 .wrapper{
    position: relative;
-   width: 400px;
+   width: auto;
    height: 440px;
    background: transparent;
    border: 2px solid rgba(255, 255, 255, .5);
@@ -167,4 +167,12 @@ body{
    border: 2px solid;
    background: none;
    width: 50%;
+}
+
+
+
+@media (max-width: 641px) {
+   .wrapper .form-box{
+      width: 90%;
+   }
 }

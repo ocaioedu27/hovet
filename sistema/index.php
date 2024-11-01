@@ -92,8 +92,13 @@ if ($sessionUserType == 2) {
                         <img class="float-left" src="../img/logo_hovet.jpg">
                     </a>
                 </div>
+                <div class="menu-hamburguer" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <div class="display-flex-row">
-                    <div class="menu_op_adm">
+                    <div class="menu_op_adm" id="menu_op_adm">
                         <div class="dropdown">
                             <a href="#">Opções do Sistema</a>
                             <div class="dropdown-content" style="width: auto;">
@@ -222,28 +227,33 @@ if ($sessionUserType == 2) {
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="login_user">
-                        <div class="dropdown">
-                            <span class="icon">
-                                <ion-icon name="person-outline"></ion-icon>
-                                <?=$userFirstName;?>
-                            </span>
-                            <div class="dropdown-content sair no-margin">
-                                <ul>
-                                    <li>
-                                        <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
-                                    </li>
-                                    <li>
-                                        <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
-                                    </li>
-                                    <li>
-                                        <a href="index.php?menuop=meus_dados_usuario">Meus dados</a>
-                                    </li>
-                                    <li>
-                                        <a href="../db/logout.php">Sair</a>
-                                    </li>
-                                </ul>
+                        <div class="d-flex alg-itm-top">
+                            <div class="login_user">
+                                <div class="dropdown">
+                                    <span class="icon">
+                                        <ion-icon name="person-outline"></ion-icon>
+                                        <?=$userFirstName;?>
+                                    </span>
+                                    <div class="dropdown-content sair no-margin">
+                                        <ul>
+                                            <li>
+                                                <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
+                                            </li>
+                                            <li>
+                                                <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
+                                            </li>
+                                            <li>
+                                                <a href="index.php?menuop=meus_dados_usuario">Meus dados</a>
+                                            </li>
+                                            <li>
+                                                <a href="../db/logout.php">Sair</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="" id="botao_fechar" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
+                                <button type="button" class="botao">X</button>
                             </div>
                         </div>
                     </div>
@@ -1548,6 +1558,7 @@ if ($sessionUserType == 2) {
         <script src="../js/autocomplete.js"></script>
         
         <script type="text/javascript" src="../js/script.js"></script>
+        <script type="text/javascript" src="../js/jsResponsive.js"></script>
         <script type="text/javascript" src="../js/hasPermissions.js"></script>
         <script type="text/javascript" src="../js/adicaoRemocaoCampos.js"></script>
         <script type="text/javascript" src="../js/searchInputs.js"></script>
