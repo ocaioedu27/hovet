@@ -104,7 +104,7 @@ if ($rs->num_rows > 0){
                     <button class="btn" id="operacao_retirar">Gerenciar Tipos de Estoque</button>
                 </a>
             </div>
-            <div class="d-flex">
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=estoques" method="post" class="form_buscar">
                     <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">

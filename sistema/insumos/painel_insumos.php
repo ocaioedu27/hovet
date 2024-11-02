@@ -65,9 +65,9 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     <button class="btn">Nova Categoria</button>
                 </a>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=<?=$string_link_procurar_insumo?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

@@ -127,21 +127,23 @@ if ($rs->num_rows > 0){
         <div class="menu_header">
             <div class="menu_user">
                 <h3>Minhas Solicitações</h3>
-                <div class="menu-hamburguer" onclick="habilitaDropdown('dropdown-content', 'block')">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div class="dropdown-content dropdown-content-on" id="dropdown-content">
-                    <a href="index.php?menuop=minhas_solicitacoes&Aprovada">
-                        <button class="btn">Aprovadas</button>
-                    </a>
-                    <a href="index.php?menuop=minhas_solicitacoes&Pendente">
-                        <button class="btn">Pendentes</button>
-                    </a>
-                    <a href="index.php?menuop=minhas_solicitacoes&Recusada">
-                        <button class="btn">Recusadas</button>
-                    </a>
+                <div>
+                    <div class="menu-hamburguer" onclick="habilitaDropdown('dropdown-content', 'block')">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="dropdown-content dropdown-content-on" id="dropdown-content">
+                        <a href="index.php?menuop=minhas_solicitacoes&Aprovada">
+                            <button class="btn">Aprovadas</button>
+                        </a>
+                        <a href="index.php?menuop=minhas_solicitacoes&Pendente">
+                            <button class="btn">Pendentes</button>
+                        </a>
+                        <a href="index.php?menuop=minhas_solicitacoes&Recusada">
+                            <button class="btn">Recusadas</button>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="d-flex jf-cnt-end">

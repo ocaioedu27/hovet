@@ -92,12 +92,12 @@ if ($sessionUserType == 2) {
                         <img class="float-left" src="../img/logo_hovet.jpg">
                     </a>
                 </div>
-                <div class="menu-hamburguer" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
                 <div class="display-flex-row">
+                    <div class="menu-hamburguer" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                     <div class="menu_op_adm" id="menu_op_adm">
                         <div class="dropdown">
                             <a href="#">Opções do Sistema</a>
@@ -149,7 +149,7 @@ if ($sessionUserType == 2) {
                         </div>
                         <div class="dropdown">
                             <a href="#">Estoques</a>
-                            <div class="dropdown-content">
+                            <div class="dropdown-content" style="width: auto">
                                 <ul>
                                     <li>
                                         <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
@@ -174,7 +174,7 @@ if ($sessionUserType == 2) {
                         </div>
                         <div class="dropdown" id="listar">
                             <a href="#">Tipos de Insumos</a>
-                            <div class="dropdown-content">
+                            <div class="dropdown-content" style="width: auto">
                                 <ul>
                                     <li>
                                         <a href="index.php?menuop=categorias_insumos">Todas as Categorias de Insumos</a>
@@ -203,7 +203,7 @@ if ($sessionUserType == 2) {
                         </div>
                         <div class="dropdown" id="listar">
                             <a href="#">Tipos de Fornecedores</a>
-                            <div class="dropdown-content">
+                            <div class="dropdown-content" style="width: auto">
                                 <ul>
                                     <li>
                                         <a href="index.php?menuop=categorias_fornecedores">Todas as Categorias de Fornecedores</a>

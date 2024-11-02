@@ -125,7 +125,7 @@ input.btn_cadastrar:hover{
 .menu_user{
     display: flex;
     gap: 10px;
-    align-items: center;
+    align-items: baseline;
 }
 
 .menu_user > button{
@@ -844,8 +844,8 @@ div#permuta_dep {
         display: flex;
     }
 
-    #botao_fechar   {
-        display: none;
+    #botao_fechar{
+    display: none;
     border: 2px solid #0B0B0B;
     font-family: "montserrat", sans-serif;
     padding: 1px 8px;
@@ -859,27 +859,36 @@ div#permuta_dep {
 
 /* para antes de Desktops e laptops */
 @media (max-width: 1225px) {
+
+    .container.navbar-header{
+        flex-direction: row-reverse;
+    }
+
     .menu_header {
         align-items: normal;
         flex-direction: column-reverse;
     }
     .menu_user{
         justify-content: end;
+        align-items: center;
     }
     .cards_wrapper.gap_home {
         flex-direction: column;
+    }
+    .menu-hamburguer span{
+        display: block;
     }
 
     /* Menu lateral à direita */
     .menu_op_adm {
         position: fixed;
-        right: 0;
+        left: 0;
         top: 0;
         width: 200px;
         height: 100%;
         background-color: #333;
         padding: 10px;
-        display: flex;
+        display: none;
         flex-direction: column;
         gap: 10px;
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
@@ -899,6 +908,7 @@ div#permuta_dep {
     /* Conteúdo adicional do dropdown */
     .dropdown-content {
         display: none; /* Oculto por padrão */
+        position: relative;
         background-color: #555;
         color: white;
         padding: 8px;
@@ -929,9 +939,6 @@ div#permuta_dep {
     .menu_op_adm{
         display: none;
     }
-    .menu-hamburguer span{
-        display: block;
-    }
 
     .dropdown-content{
         position: relative;
@@ -941,6 +948,9 @@ div#permuta_dep {
 /* Estilos para smartphones */
 @media (max-width: 641px) {
     h1{
+        font-size: 1.5rem;
+    }
+    h3{
         font-size: 1.5rem;
     }
     .dropdown-content a {
