@@ -53,6 +53,85 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 }
 
 
+$qtd_registros = 10;
+
+$pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
+
+$inicio = ($qtd_registros * $pagina) - $qtd_registros;
+
+$txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
+
+$sql = "SELECT 
+            f.id,
+            f.razao_social,
+            f.cpf_cnpj,
+            f.end_logradouro,
+            f.end_email,
+            c.categoria
+        FROM 
+            fornecedores f
+        INNER JOIN 
+            categorias_fornecedores c
+        ON 
+            c.id = f.ctg_fornecedores_id
+
+        WHERE
+            f.ctg_fornecedores_id {$categoria_id_for_select} 
+            and 
+            (f.id='{$txt_pesquisa}' or
+            f.razao_social LIKE '%{$txt_pesquisa}%' or
+            f.cpf_cnpj LIKE '%{$txt_pesquisa}%' or
+            f.end_logradouro LIKE '%{$txt_pesquisa}%' or
+            f.end_email LIKE '%{$txt_pesquisa}%' or
+            c.categoria LIKE '%{$txt_pesquisa}%')
+            ORDER BY f.razao_social ASC 
+            LIMIT $inicio,$qtd_registros";
+
+$rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
+
+$resultados_to_show;
+if($rs->num_rows > 0){
+    while($dados = mysqli_fetch_assoc($rs)){
+        $qtd_linhas_tabelas++;
+
+        $id = $dados["id"];
+        $razao_social = $dados["razao_social"];
+        $end_email = $dados["end_email"];
+        $end_logradouro = $dados["end_logradouro"];
+        $cpf_cnpj = $dados["cpf_cnpj"];
+        $categoria = $dados["categoria"];
+
+        $resultados_to_show = '<tr class="tabela_dados">
+            <td>'. $id .'</td>
+            <td>'. $razao_social .'</td>
+            <td>'. $end_email .'</td>
+            <td>'. $end_logradouro .'</td>
+            <td>'. $cpf_cnpj .'></td>
+            <td>'. $categoria .'</td>
+            <td class="operacoes" id="td_operacoes_editar_deletar">
+                <a href="index.php?menuop=editar_fornecedor&fornecedores_ctg_id='. $categoriaId .'&id='. $id .'" class="confirmaEdit">
+                    <button class="btn">
+                        <span class="icon">
+                            <ion-icon name="create-outline"></ion-icon>
+                        </span>
+                    </button>
+                </a>
+                <a href="index.php?menuop=excluir_fornecedor&fornecedores_ctg_id='. $categoriaId .'&id='. $id .'" class="confirmaDelete">
+                    <button class="btn">
+                        <span class="icon">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </span>
+                    </button>
+                </a>
+            </td>
+        </tr>';
+    }
+} else{
+    $resultados_to_show = '
+        <tr class="tabela_dados">
+            <td colspan="7" class="text-center">Nenhum registro para exibir!</td>
+        </tr>';
+}
 ?>
 
 <section class="painel_insumos">
@@ -67,9 +146,9 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     <button class="btn">Nova Categoria</button>
                 </a>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=<?=$string_link_procurar_fornecedor?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
@@ -93,77 +172,8 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                 </thead>
                 <tbody>
                     <?php
-                        $qtd_registros = 10;
+                        echo $resultados_to_show;
 
-                        $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
-
-                        $inicio = ($qtd_registros * $pagina) - $qtd_registros;
-
-                        $txt_pesquisa = (isset($_POST["txt_pesquisa"]))?$_POST["txt_pesquisa"]:"";
-
-                        $sql = "SELECT 
-                                    f.id,
-                                    f.razao_social,
-                                    f.cpf_cnpj,
-                                    f.end_logradouro,
-                                    f.end_email,
-                                    c.categoria
-                                FROM 
-                                    fornecedores f
-                                INNER JOIN 
-                                    categorias_fornecedores c
-                                ON 
-                                    c.id = f.ctg_fornecedores_id
-
-                                WHERE
-                                    f.ctg_fornecedores_id {$categoria_id_for_select} 
-                                    and 
-                                    (f.id='{$txt_pesquisa}' or
-                                    f.razao_social LIKE '%{$txt_pesquisa}%' or
-                                    f.cpf_cnpj LIKE '%{$txt_pesquisa}%' or
-                                    f.end_logradouro LIKE '%{$txt_pesquisa}%' or
-                                    f.end_email LIKE '%{$txt_pesquisa}%' or
-                                    c.categoria LIKE '%{$txt_pesquisa}%')
-                                    ORDER BY f.razao_social ASC 
-                                    LIMIT $inicio,$qtd_registros";
-
-                        $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
-
-                        $msgSemDados;
-                        if($rs->num_rows<=0){
-                            $msgSemDados = "<h2 style='display:flex; justify-content: center;'>Sem dados para exibir!</h2>";
-                        }
-
-                        while($dados = mysqli_fetch_assoc($rs)){
-                            $qtd_linhas_tabelas++;
-                        
-                    ?>
-                    <tr class="tabela_dados">
-                        <td><?=$dados["id"]?></td>
-                        <td><?=$dados["razao_social"]?></td>
-                        <td><?=$dados["end_email"]?></td>
-                        <td><?=$dados["end_logradouro"]?></td>
-                        <td><?=$dados["cpf_cnpj"]?></td>
-                        <td><?=$dados["categoria"]?></td>
-                        <td class="operacoes" id="td_operacoes_editar_deletar">
-                            <a href="index.php?menuop=editar_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["id"]?>" class="confirmaEdit">
-                                <button class="btn">
-                                    <span class="icon">
-                                        <ion-icon name="create-outline"></ion-icon>
-                                    </span>
-                                </button>
-                            </a>
-                            <a href="index.php?menuop=excluir_fornecedor&fornecedores_ctg_id=<?=$categoriaId?>&id=<?=$dados["id"]?>" class="confirmaDelete">
-                                <button class="btn">
-                                    <span class="icon">
-                                        <ion-icon name="trash-outline"></ion-icon>
-                                    </span>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                    <?php
-                        }
                         echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_tabelas.'">';
                     ?>
                 </tbody>
@@ -179,6 +189,9 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
                     $numTotal = mysqli_num_rows($queryTotal);
                     $totalPaginas = ceil($numTotal/$qtd_registros);
+                    if ($totalPaginas == 0) {
+                        $totalPaginas = 1;
+                    }
                     
                     echo "<a href=\"?menuop=$string_link_procurar_fornecedor&pagina=1\">Início</a> ";
 
@@ -186,12 +199,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                         ?>
                             <a href="?menuop=<?=$string_link_procurar_fornecedor?>&pagina=<?php echo $pagina-1?>"> << </a>
                         <?php
-                    } 
+                    }
 
                     for($i=1;$i<=$totalPaginas;$i++){
-
                         if ($i >= ($pagina) && $i <= ($pagina+5)) {
-                            
                             if ($i==$pagina) {
                                 echo "<span>$i</span>";
                             } else {
@@ -199,6 +210,7 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                             } 
                         }          
                     }
+                    
 
                     if ($pagina<($totalPaginas-5)) {
                         ?>

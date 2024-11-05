@@ -1,4 +1,4 @@
-<div class="">
+<div class="container">
     <div class="tabelas">
         <table id="tabela_listar">
             <thead>

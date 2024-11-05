@@ -1,4 +1,25 @@
 <?php
+
+$stringList = array();
+$where_plus_tp_estoque = "";
+
+if (isset( $_GET['menuop'] ) && !empty($_GET['menuop'] )) {
+	foreach ( $_GET as $chave => $valor ) {
+        $valor_tmp = $chave;
+        $position = strpos($valor_tmp, "menuop");
+        $valor_est = strstr($valor_tmp,$position);
+        array_push($stringList, $valor_est);
+	}
+
+    $tamanho_array_get = count($stringList);
+    $tipo_estoque_url = $stringList[1];
+
+    if ($tipo_estoque_url != "geral" && isset($tipo_estoque_url)) {
+        $where_plus_tp_estoque = " AND tp.tipo='" . $tipo_estoque_url ."' ";
+    }
+}
+
+// definição de paginação
 $qtd_registros = 10;
 
 $pagina = (isset($_GET['pagina']))?(int)$_GET['pagina']:1;
@@ -15,8 +36,17 @@ if ($sessionUserType!=2 && $sessionUserType!=3) {
     $painel_tmp = $txt_pesquisa;
 }
 
-$painel = $painel_tmp; 
-//echo $txt_pesquisa;
+$painel = $painel_tmp;
+
+
+
+// definição do conteúdo a ser exibido
+$order_by = "
+ORDER BY 
+    nome ASC 
+LIMIT 
+    $inicio,$qtd_registros";
+
 
 $sql = "SELECT 
             e.id,
@@ -31,11 +61,13 @@ $sql = "SELECT
         ON 
             e.tipos_estoques_id = tp.id
         WHERE
-            e.id='$txt_pesquisa' or e.nome LIKE '{$painel}%' or e.descricao LIKE '{$txt_pesquisa}' or e.nome LIKE '{$txt_pesquisa}'
-        ORDER BY 
-            nome ASC 
-        LIMIT 
-            $inicio,$qtd_registros";
+            (e.id='$txt_pesquisa' or e.nome LIKE '{$painel}%' or e.descricao LIKE '{$txt_pesquisa}' or e.nome LIKE '{$txt_pesquisa}')";
+
+if ($where_plus_tp_estoque != "") {
+    $sql = $sql . $where_plus_tp_estoque . $order_by;
+} else {
+    $sql = $sql . $order_by;
+}
 
 //echo "<br>select : " . $sql;
 
@@ -87,7 +119,7 @@ if ($rs->num_rows > 0){
 } else{
     $resultados = '
         <tr class="tabela_dados">
-            <td colspan="4" class="text-center">Nenhum registro para exibir!</td>
+            <td colspan="5" class="text-center">Nenhum registro para exibir!</td>
         </tr>';
 }
 ?>

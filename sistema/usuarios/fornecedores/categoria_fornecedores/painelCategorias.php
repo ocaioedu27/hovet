@@ -44,7 +44,9 @@ if ($rs->num_rows > 0){
         $resultados .= '
             <tr class="tabela_dados">
                 <td>'. $id .'</td>
-                <td>'. $categoria .'</td>
+                <td>
+                    <a href="index.php?menuop=fornecedores&fornecedores_ctg_id='. $id .'" class="form-control">'. $categoria .'</a>
+                </td>
                 <td>'. $qtd_fornecedores .'</td>
                 <td>'. $descricao .'</td>
                 <td class="" id="td_operacoes_editar_deletar">
@@ -88,9 +90,9 @@ if ($rs->num_rows > 0){
                     <button class="btn" id="operacao_cadastro">Cadastrar Novo Fornecedor</button>
                 </a>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=categorias_fornecedores" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

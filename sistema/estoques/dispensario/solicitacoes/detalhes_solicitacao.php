@@ -149,7 +149,7 @@ echo '<input type="hidden" id="quantidade_linhas_tabelas" value="'.$qtd_linhas_t
                     <h3 class="">Dados do insumo</h3>
                     <div class="form-group valida_movimentacao">
                     
-                        <div class="display-flex-cl" style="margin-right: 30px;">
+                        <div class="display-flex-cl">
                             <label>Insumo Solicitado</label>
                             <input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id1" value="<?=$dados['dispensario_id']?> - <?=$dados['insumos_nome']?>" readonly>
                         </div>

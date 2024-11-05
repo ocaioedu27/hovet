@@ -99,7 +99,10 @@ if ($sessionUserType == 2) {
                         <span></span>
                     </div>
                     <div class="menu_op_adm" id="menu_op_adm">
-                        <div class="dropdown">
+                        <div class="" id="botao_fechar" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
+                            <button type="button" class="botao">X</button>
+                        </div>
+                        <div class="dropdown mg-t-10px">
                             <a href="#">Opções do Sistema</a>
                             <div class="dropdown-content" style="width: auto;">
                                 <ul>
@@ -227,33 +230,26 @@ if ($sessionUserType == 2) {
                                 </ul>
                             </div>
                         </div>
-                        <div class="d-flex alg-itm-top">
-                            <div class="login_user">
-                                <div class="dropdown">
-                                    <span class="icon">
-                                        <ion-icon name="person-outline"></ion-icon>
-                                        <?=$userFirstName;?>
-                                    </span>
-                                    <div class="dropdown-content sair no-margin">
-                                        <ul>
-                                            <li>
-                                                <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
-                                            </li>
-                                            <li>
-                                                <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
-                                            </li>
-                                            <li>
-                                                <a href="index.php?menuop=meus_dados_usuario">Meus dados</a>
-                                            </li>
-                                            <li>
-                                                <a href="../db/logout.php">Sair</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="" id="botao_fechar" onclick="habilitaDropdown('menu_op_adm', 'flex', 'none')">
-                                <button type="button" class="botao">X</button>
+                        <div class="dropdown login_user">
+                            <span class="icon">
+                                <ion-icon name="person-outline"></ion-icon>
+                                <?=$userFirstName;?>
+                            </span>
+                            <div class="dropdown-content sair no-margin">
+                                <ul>
+                                    <li>
+                                        <input type="hidden" id="sessionUserType" value="<?=$sessionUserType?>">
+                                    </li>
+                                    <li>
+                                        <a href="index.php?menuop=minhas_solicitacoes&Pendente=1">Minhas Solicitações</a>
+                                    </li>
+                                    <li>
+                                        <a href="index.php?menuop=meus_dados_usuario">Meus dados</a>
+                                    </li>
+                                    <li>
+                                        <a href="../db/logout.php">Sair</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -1411,8 +1407,8 @@ if ($sessionUserType == 2) {
                             break;
                         }
 
+                        
                     //farmácia
-
                     case 'farmacia_resumo':
 
                         if (!has_permission($array_permissoes_user, $array_tipos_estoquista_adm_diretor)) {

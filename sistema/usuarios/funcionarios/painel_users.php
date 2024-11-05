@@ -89,9 +89,9 @@ if ($rs->num_rows > 0){
                     <button class="btn">Cadastrar</button>
                 </a>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=usuarios" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_usuarios" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa_usuarios" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

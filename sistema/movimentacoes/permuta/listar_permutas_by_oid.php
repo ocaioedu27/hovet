@@ -102,9 +102,9 @@
             <div class="menu_user">
                 <h3>Permutas com registro "<?=$oid_operacao?>"</h3>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=permuta_por_oid&oidPermuta=<?=$oid_operacao?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

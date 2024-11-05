@@ -87,7 +87,7 @@ if ($rs->num_rows > 0) {
             <tr class="tabela_dados">
                 <td>'. $tipo_de_insumo_id .'</td>
                 <td>
-                    <a href="index.php?menuop=insumos&categoriaInsumoId=<?='. $tipo_de_insumo_id .'" class="form-control">'. $tipo_de_insumo_bruto .'</a>
+                    <a href="index.php?menuop=insumos&categoriaInsumoId='. $tipo_de_insumo_id .'" class="form-control">'. $tipo_de_insumo_bruto .'</a>
                 </td>
                 <td>'. $qtd_insumos .'</td>
                 <td>'. $descricao .'</td>

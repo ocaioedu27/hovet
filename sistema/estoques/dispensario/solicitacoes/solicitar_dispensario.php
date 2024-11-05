@@ -111,7 +111,7 @@ if ($qualEstoque_dep != "") {
                     <h3 class="">Dados do insumo</h3>
                     <div class="form-group valida_movimentacao">
                     
-                        <div class="display-flex-cl" style="margin-right: 30px;">
+                        <div class="display-flex-cl">
                             <label>Insumo Solicitado</label>
                             <input type="text" class="form-control" name="insumo_dispensario_id[]" id="insumo_dispensario_id1" onkeyup="searchInput_cadDeposito(this.value, 1, 3)" placeholder="Procure pelo nome do insumo..." required>
                             <span class="ajuste_span" id="resultado_slc_disp_insumos1"></span>

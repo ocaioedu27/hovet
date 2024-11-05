@@ -26,9 +26,9 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <div class="menu_user">
                 <h3>Compra com Número de NF <?=$num_nf?></h3>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=compra_por_nf&numNotaFiscal=<?=$num_nf?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

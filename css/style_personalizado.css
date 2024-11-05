@@ -261,7 +261,7 @@ table.tabela_listar.qtd_total {
 
 .login_user{
     width: auto;
-    height: 50px;
+    height: auto;
     background: transparent;
     border: 2px solid #fff;
     outline: none;
@@ -275,8 +275,8 @@ table.tabela_listar.qtd_total {
 }
 
 .login_user:hover{
-    background-color: #fff;
-    color: #0B0B0B;
+    color: #ffffff;
+    border: none;
 }
 
 main{
@@ -540,6 +540,7 @@ td.operacoes {
 .form-control {
     color: #0B0B0B;
     border: 1px solid #9f9898;
+    height: auto;
 }
 
 select.form-control-sm{
@@ -822,7 +823,9 @@ div#permuta_dep {
     margin: 4px;
     cursor: pointer;
     transition: color 0.4s linear;
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 
@@ -879,6 +882,10 @@ div#permuta_dep {
         display: block;
     }
 
+    .mg-t-10px{
+        margin-top: 10px;
+    }
+
     /* Menu lateral à direita */
     .menu_op_adm {
         position: fixed;
@@ -893,6 +900,11 @@ div#permuta_dep {
         gap: 10px;
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
         z-index: 9999;
+        overflow: auto;
+    }
+
+    .login_user{
+        background-color: #333;
     }
 
     /* Estilo dos itens do menu */
@@ -903,7 +915,7 @@ div#permuta_dep {
         text-align: center;
         border-radius: 4px;
         cursor: pointer;
-    }
+    }    
 
     /* Conteúdo adicional do dropdown */
     .dropdown-content {
@@ -943,6 +955,10 @@ div#permuta_dep {
     .dropdown-content{
         position: relative;
     }
+
+    td#td_operacoes_editar_deletar {
+        flex-direction: column;
+    }
 }
 
 /* Estilos para smartphones */
@@ -972,6 +988,10 @@ div#permuta_dep {
 
     .cards_info{
         width: auto;
+    }
+
+    .form-group.valida_movimentacao {
+        flex-direction: column;
     }
     
 }

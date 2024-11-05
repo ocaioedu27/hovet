@@ -1,8 +1,6 @@
 <?php
 
-use Sabberworm\CSS\Value\Value;
 $stringList = array();
-// var_dump($_GET);
 
 if (   isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 	// Cria variáveis dinamicamente
@@ -197,6 +195,9 @@ if ($rs->num_rows > 0){
                 $numTotalSlc = mysqli_num_rows($queryTotalSlc);
 
                 $totalPaginasSlc = ceil($numTotalSlc/$quantidade_registros_solicitacoes);
+                if ($totalPaginasSlc == 0) {
+                    $totalPagtotalPaginasSlcinas = 1;
+                }
 
                 echo "<a href=\"?menuop=minhas_solicitacoes&" . $qualStatus . "&pagina=1\">Início</a> ";
 
@@ -206,20 +207,16 @@ if ($rs->num_rows > 0){
                     <?php
                 } 
 
-                if ($totalPaginasSlc == 0) {
-                    echo "<span>". $totalPaginasSlc + 1 ."</span>";
-                }else{
-                    for($i=1;$i<=$totalPaginasSlc;$i++){
-    
-                        if ($i >= ($pagina) && $i <= ($pagina+5)) {
-                            
-                            if ($i==$pagina) {
-                                echo "<span>$i</span>";
-                            } else {
-                                echo " <a href=\"?menuop=minhas_solicitacoes&" . $qualStatus . "&pagina=$i\">$i</a> ";
-                            } 
-                        }          
-                    }
+                for($i=1;$i<=$totalPaginasSlc;$i++){
+
+                    if ($i >= ($pagina) && $i <= ($pagina+5)) {
+                        
+                        if ($i==$pagina) {
+                            echo "<span>$i</span>";
+                        } else {
+                            echo " <a href=\"?menuop=minhas_solicitacoes&" . $qualStatus . "&pagina=$i\">$i</a> ";
+                        } 
+                    }          
                 }
 
                 if ($pagina<($totalPaginasSlc-4)) {

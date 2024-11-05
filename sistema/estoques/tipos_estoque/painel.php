@@ -40,7 +40,7 @@ if ($rs->num_rows > 0){
             <tr class="tabela_dados">
                 <td>'. $id .'</td>
                 <td>
-                    <a href="index.php?menuop='.$tipo_estoque_sem_acento.'_resumo&'.$tipo_estoque_sem_acento.'=1" class="form-control">'.$tipo.'</a>
+                    <a href="index.php?menuop=estoques&'.$tipo.'=1" class="form-control">'.$tipo.'</a>
                 </td>
                 <td class="" id="td_operacoes_editar_deletar">
                     <a href="index.php?menuop=edit_tp_estoque&id='.$id.'" class="confirmaEdit">
@@ -78,9 +78,9 @@ if ($rs->num_rows > 0){
                     <button class="btn" id="operacao_cadastro">Novo Tipo de Estoque</button>
                 </a>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=tipos_estoque" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>

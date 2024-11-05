@@ -26,9 +26,9 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
             <div class="menu_user">
                 <h3>Doações com registro "<?=$oid_operacao?>"</h3>
             </div>
-            <div>
+            <div class="d-flex jf-cnt-end">
                 <form action="index.php?menuop=doacao_por_oid&oidDoacao=<?=$oid_operacao?>" method="post" class="form_buscar">
-                    <input type="text" name="txt_pesquisa_doacoes" placeholder="Buscar">
+                    <input class="search_bar" type="text" name="txt_pesquisa_doacoes" placeholder="Buscar">
                     <button type="submit" class="btn">
                         <span class="icon">
                             <ion-icon name="search-outline"></ion-icon>
