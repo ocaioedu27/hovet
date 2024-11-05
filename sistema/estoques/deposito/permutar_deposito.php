@@ -32,7 +32,6 @@ if ($qualEstoque_dep != "") {
         </div>
         <form class="form_cadastro" enctype="multipart/form-data" action="index.php?menuop=atualizar_deposito&<?=$qualEstoque?>" method="post">
             <hr>
-
             <div class="dados_solicitacao">
                 <h4>Dados da Movimentação</h4>
                 <div class="form-group valida_movimentacao">
@@ -92,7 +91,7 @@ if ($qualEstoque_dep != "") {
             <hr>
             <div class="display-flex-cl" id="dados_insumo_permuta_dep">
                 <h3>Dados dos Insumos</h3>
-                <div class="display-flex-row">
+                <div class="display-flex-row form-group valida_movimentacao">
                     <div id="permuta_dep">
                         <h4>Item a ser retirado do Depósito</h4>
                         <div class="form-group valida_movimentacao">

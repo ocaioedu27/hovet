@@ -145,6 +145,10 @@
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$qtd_registro);
+
+                    if ($totalPaginasInsumos == 0) {
+                        $totalPaginasInsumos = 1;
+                    }
                     
                     echo "<a href=\"?menuop=permuta_por_oid&oidPermuta=$oid_operacao&pagina=1\">Início</a> ";
 

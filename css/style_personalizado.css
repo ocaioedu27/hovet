@@ -369,7 +369,6 @@ span.icon {
 }
 
 .cards{
-    position: relative;
     width: 300px;
     height: 340px;
     background: transparent;
@@ -401,35 +400,33 @@ span.icon {
 }
 
 .cards.cadastro_fornecedor{
-    width: 60%;
+    width: auto;
     height: auto;
 }
 
 .cards.edita_insumo{
-    width: 530px;
+    width: auto;
     height: auto;
 }
 
 .cards.cadastro_usuarios{
-    width: 640px;
+    width: auto;
     height: auto;
 }
 
 .cards.edita_usuarios{
-    width: 740px;
+    width: auto;
     height: auto;
 }
 
 .cards.cadastro_deposito{
     width: auto;
     height: auto;
-    overflow-y: auto;
 }
 
 .cards.permuta{
     width: auto;
     height: auto;
-    overflow-y: auto;
 }
 
 .cards.cadastro_dispensario{
@@ -992,6 +989,10 @@ div#permuta_dep {
 
     .form-group.valida_movimentacao {
         flex-direction: column;
+    }
+
+    .largura_metade, .largura_um_quarto, .largura_um_terco{
+        width: auto !important;
     }
     
 }

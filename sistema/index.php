@@ -23,7 +23,7 @@ $qualEstoque = "";
 // echo "<br>!!!!!!!!!! \CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
 //echo "<br>!!!!!!!!!! AJUSTAR O ENVIO DE ID E TIPO DE ESTOQUE PARA O ADD CAMPOS !!!!!!!!!!<br><br>";
-// echo "<br>!!!!!!!!!! AJUSTAR A PARTE DA FARMÁCIA !!!!!!!!!!<br><br>";
+echo "<br>!!!!!!!!!! Está no banco de testes !!!!!!!!!!<br><br>";
 
 
 if ($sessionUserType!=2 && $sessionUserType!=3) {
@@ -158,16 +158,29 @@ if ($sessionUserType == 2) {
                                         <a href="index.php?menuop=estoques&geral">Todos os Estoques</a>
                                     </li>
                                     <?php
-                                        $sql = "SELECT * FROM estoques WHERE nome LIKE '{$painel}%' ORDER BY nome ASC";
+                                        $sql = "SELECT 
+                                                    e.id,
+                                                    e.nome,
+                                                    e.nome_real,
+                                                    tp.tipo
+                                                FROM 
+                                                    estoques e
+                                                INNER JOIN 
+                                                    tipos_estoques tp
+                                                ON 
+                                                    e.tipos_estoques_id = tp.id
+                                                WHERE e.nome LIKE '{$painel}%' ORDER BY nome ASC";
                                         $rs = mysqli_query($conexao,$sql) or die("Erro ao executar a consulta! " . mysqli_error($conexao));
                                         
                                         while($dados = mysqli_fetch_assoc($rs)){
+                                            $tipo_de_estoque_bruto = $dados['tipo'];
+                                            $estoque_nome = $dados['nome'];
                                             $estoqueNomeReal = $dados['nome_real'];
-                                            $tipoEstoque = substr($estoqueNomeReal, 0, -1);
+                                            $tipoEstoque = retiraAcentos($tipo_de_estoque_bruto);
             
                                     ?>
                                     <li>
-                                        <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$dados['nome']?></a>
+                                        <a href="index.php?menuop=<?=$tipoEstoque?>_resumo&<?=$estoqueNomeReal?>=1"><?=$estoque_nome?></a>
                                     </li>
                                     <?php
                                         }

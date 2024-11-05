@@ -108,6 +108,10 @@ if ($rs->num_rows > 0){
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$qtd_registros);
+
+                    if ($totalPaginasInsumos == 0) {
+                        $totalPaginasInsumos = 1;
+                    }
                     
                     echo "<a href=\"?menuop=compra&pagina=1\">Início</a> ";
 

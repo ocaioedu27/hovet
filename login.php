@@ -10,8 +10,8 @@
                 <span class="icon">
                     <ion-icon name="mail"></ion-icon>
                 </span>
-                <input type="email" name="mail" required>
-                <label>E-mail</label>
+                <input type="text" name="mail" required>
+                <label>E-mail ou SIAPE</label>
             </div>
 
             <div class="input-box">
@@ -22,11 +22,6 @@
                 <input type="password" name="senha" required>
                 <label>Senha</label>
             </div>
-
-            <!-- <div class="remember-forgot">
-                <label><input type="checkbox">Lembre de mim</label>
-                <a href="#">Esqueceu a senha?</a>
-            </div> -->
             <button class="btn" type="submit" name="btn-login">LOGIN</button>
         </form>
     </div>

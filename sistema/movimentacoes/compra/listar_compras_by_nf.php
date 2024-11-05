@@ -134,6 +134,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_compras);
+
+                    if ($totalPaginasInsumos == 0) {
+                        $totalPaginasInsumos = 1;
+                    }
                     
                     echo "<a href=\"?menuop=compra_por_nf&numNotaFiscal=$num_nf&pagina=1\">Início</a> ";
 

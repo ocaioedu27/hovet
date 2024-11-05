@@ -95,6 +95,10 @@ if ($rs->num_rows > 0){
 
                     $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_doacoes);
+
+                    if ($totalPaginasInsumos == 0) {
+                        $totalPaginasInsumos = 1;
+                    }
                     
                     echo "<a href=\"?menuop=doacao&pagina=1\">Início</a> ";
                     

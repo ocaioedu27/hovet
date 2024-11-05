@@ -1,8 +1,8 @@
 
 #Criando o banco 
-drop schema if exists hovet_db;
-create database hovet_db;
-use hovet_db;
+drop schema if exists hovet_db_teste;
+create database hovet_db_teste;
+use hovet_db_teste;
 
 
 ######################################################
@@ -88,7 +88,8 @@ create table tipos_estoques (
 
 insert into tipos_estoques values
 	(null,"Depósito"),
-	(null,"Dispensário");
+	(null,"Dispensário"),
+    (null,"Farmácia");
 
 ### Criando a tabela estoques
 create table estoques (
@@ -101,10 +102,9 @@ create table estoques (
 );
 
 insert into estoques values 
-	(null, "Depósito 1", "deposito1", 1, "Sala do depósito 1"),
-	(null, "Depósito 2", "deposito2", 1, "Sala do depósito 2"),
-    (null, "Dispensário 1", "dispensario1",2,"Sala do Dispensário 1"),
-    (null, "Dispensário 2", "dispensario2",2,"Sala do Dispensário 2");
+	(null, "Depósito", "deposito", 1, "Sala do depósito"),
+    (null, "Dispensário", "dispensario",2,"Sala do Dispensário"),
+    (null, 'Farmácia', 'farmacia', 3, 'Farmácia de medicamentos');
 
 
 #Criando a tabela do depósito

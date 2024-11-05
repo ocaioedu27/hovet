@@ -128,6 +128,10 @@ if ( isset( $_GET['menuop'] ) && ! empty( $_GET['menuop'] )) {
                     // $numTotalInsumos = mysqli_num_rows($queryTotalInsumos);
                     $numTotalInsumos = $rs->num_rows;
                     $totalPaginasInsumos = ceil($numTotalInsumos/$quantidade_registros_doacoes);
+
+                    if ($totalPaginasInsumos == 0) {
+                        $totalPaginasInsumos = 1;
+                    }
                     
                     echo "<a href=\"?menuop=doacao_por_oid&oidDoacao=$oid_operacao&pagina_doacoes=1\">Início</a> ";
 

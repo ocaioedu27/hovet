@@ -99,7 +99,7 @@ $dados = mysqli_fetch_assoc($result);
 
             <hr>
             <div class="display-flex-cl" id="dados_insumo_permuta_dep">
-                <div class="display-flex-row">
+                <div class="display-flex-row form-group valida_movimentacao">
                     <div id="permuta_dep">
                         <h4>Item retirado do Depósito</h4>
                         <div class="form-group valida_movimentacao">
