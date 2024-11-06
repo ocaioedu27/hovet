@@ -106,7 +106,7 @@ if($rs->num_rows > 0){
             <td>'. $razao_social .'</td>
             <td>'. $end_email .'</td>
             <td>'. $end_logradouro .'</td>
-            <td>'. $cpf_cnpj .'></td>
+            <td>'. $cpf_cnpj .'</td>
             <td>'. $categoria .'</td>
             <td class="operacoes" id="td_operacoes_editar_deletar">
                 <a href="index.php?menuop=editar_fornecedor&fornecedores_ctg_id='. $categoriaId .'&id='. $id .'" class="confirmaEdit">

@@ -23,7 +23,7 @@ $qualEstoque = "";
 // echo "<br>!!!!!!!!!! \CRIAR AS OPCOES PARA CADA TIPO DE PERMISSAO !!!!!!!!!!<br><br> CADASTRAR, EDITAR, DELETAR, VISUALIZAR, ETC, O QUE FOR DE NECESSARIO<br>";
 
 //echo "<br>!!!!!!!!!! AJUSTAR O ENVIO DE ID E TIPO DE ESTOQUE PARA O ADD CAMPOS !!!!!!!!!!<br><br>";
-echo "<br>!!!!!!!!!! Está no banco de testes !!!!!!!!!!<br><br>";
+//echo "<br>!!!!!!!!!! Está no banco de testes !!!!!!!!!!<br><br>";
 
 
 if ($sessionUserType!=2 && $sessionUserType!=3) {

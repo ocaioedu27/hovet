@@ -175,12 +175,12 @@ if ($rs->num_rows > 0){
                 $numTotalEstoques = mysqli_num_rows($queryTotalEstoques);
                 $totalPaginasEstoques = ceil($numTotalEstoques/$qtd_registros);
                 
-                echo "<a href=\"?menuop=estoques&pagina=1\">Início</a> ";
+                echo '<a href="?menuop=estoques&'. $tipo_estoque_url .'&pagina=1">Início</a>';
 
                 if ($pagina>6) {
-                    ?>
-                        <a href="?menuop=estoques?pagina=<?php echo $pagina-1?>"> << </a>
-                    <?php
+                    
+                    echo '<a href="?menuop=estoques&'. $tipo_estoque_url .'&pagina=' . $pagina-1 .'"> << </a>';
+                    
                 } 
 
                 for($i=1;$i<=$totalPaginasEstoques;$i++){
@@ -188,20 +188,19 @@ if ($rs->num_rows > 0){
                     if ($i >= ($pagina) && $i <= ($pagina+5)) {
                         
                         if ($i==$pagina) {
-                            echo "<span>$i</span>";
+                            echo '<span>'. $i .'</span>';
                         } else {
-                            echo " <a href=\"?menuop=estoques&pagina=$i\">$i</a> ";
+                            echo '<a href="?menuop=estoques&'. $tipo_estoque_url .'&pagina='. $i .'">'. $i .'</a>';
                         } 
                     }          
                 }
 
                 if ($pagina<($totalPaginasEstoques-5)) {
-                    ?>
-                        <a href="?menuop=estoques?pagina=<?php echo $pagina+1?>"> >> </a>
-                    <?php
+                    
+                    echo '<a href="?menuop=estoques&'. $tipo_estoque_url .'&pagina=<?php echo $pagina+1?>"> >> </a>';
                 }
                 
-                echo " <a href=\"?menuop=estoques&pagina=$totalPaginasEstoques\">Fim</a>";
+                echo '<a href="?menuop=estoques&'. $tipo_estoque_url .'&pagina='. $totalPaginasEstoques .'">Fim</a>';
             ?>
         </div>
     </div>
