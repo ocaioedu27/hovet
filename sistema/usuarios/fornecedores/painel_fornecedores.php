@@ -101,7 +101,7 @@ if($rs->num_rows > 0){
         $cpf_cnpj = $dados["cpf_cnpj"];
         $categoria = $dados["categoria"];
 
-        $resultados_to_show = '<tr class="tabela_dados">
+        $resultados_to_show .= '<tr class="tabela_dados">
             <td>'. $id .'</td>
             <td>'. $razao_social .'</td>
             <td>'. $end_email .'</td>

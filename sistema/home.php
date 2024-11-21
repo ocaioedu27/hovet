@@ -90,9 +90,7 @@ echo "<br>pendentes: " . $qtd_atual_devol_pend; */
                             </div>
                             <div class="vencimentoProx">
                                 <div class="titulo">
-                                    <h4 style="color: red;">
-                                        <a href="pdf/relatorio_validade.php" target="_blank" style="color: red;">A vencer</a>
-                                    </h4>
+                                    <h4 style="color: red;">A vencer</h4>
                                     <span class="icon">
                                         <ion-icon name="alert-circle-outline" style="color: red;"></ion-icon>
                                     </span>
